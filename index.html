@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel WWC · SBC</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f71b3'/%3E%3Crect y='26' width='32' height='6' fill='%23ff8200'/%3E%3Cpath d='M8 20l5-6 4 4 7-9' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
+  --laranja: #ff8200; --laranja-esc: #b35b00; --laranja-claro: #fff1e3;
+  --verde: #288827; --verde-claro: #e6f4e6;
+  --vermelho: #b3261e; --vermelho-claro: #fbe9e7;
+  --texto: #2b2b2b; --texto-suave: #5f6368; --borda: #dde3e8;
+  --fundo: #f3f6f9; --cartao: #ffffff;
+  --raio: 10px; --sombra: 0 1px 3px rgba(15, 40, 70, .08);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 "Open Sans", Arial, sans-serif; }
+a { color: var(--azul); }
+a:hover { color: var(--azul-esc); }
+h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
+
+/* Cabeçalho */
+.topo { background: linear-gradient(90deg, var(--azul-esc), var(--azul)); color: #fff; border-bottom: 5px solid var(--laranja); }
+.topo-int { padding: 22px 32px 20px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
+.topo .sobre { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; opacity: .85; font-weight: 600; }
+.topo h1 { font-size: 26px; font-weight: 800; margin-top: 4px; }
+.topo .subtitulo { font-size: 14px; opacity: .9; margin-top: 4px; }
+.topo .atualizado { font-size: 13px; background: rgba(255,255,255,.14); padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+
+.barra-ferramentas { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
+.barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.barra-int input[type=search] { flex: 1 1 240px; min-width: 0; padding: 8px 12px; border: 1px solid var(--borda); border-radius: 8px; font: inherit; }
+.grupo-filtro { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip-filtro { border: 1px solid var(--borda); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
+.chip-filtro[aria-pressed=true] { background: var(--azul); border-color: var(--azul); color: #fff; }
+.barra-int select { padding: 7px 10px; border: 1px solid var(--borda); border-radius: 8px; font: inherit; background: #fff; }
+.botao { border: 1px solid var(--azul); background: #fff; color: var(--azul); padding: 6px 12px; border-radius: 8px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
+.botao:hover { background: var(--azul-claro); }
+
+/* Estrutura */
+.layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 24px; padding: 24px 32px 48px; }
+.lateral { position: sticky; top: 72px; align-self: start; max-height: calc(100vh - 92px); overflow: auto; background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); padding: 14px; }
+.lateral h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--texto-suave); margin: 10px 4px 6px; }
+.lateral h2:first-child { margin-top: 0; }
+.lateral a { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; text-decoration: none; color: var(--texto); font-size: 14px; }
+.lateral a:hover { background: var(--azul-claro); }
+.lateral a .cod { font-weight: 700; min-width: 38px; }
+.lateral a .tit { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--texto-suave); font-size: 13px; }
+.ponto { width: 9px; height: 9px; border-radius: 50%; flex: none; background: #c5ccd3; }
+main { min-width: 0; display: flex; flex-direction: column; gap: 24px; }
+section.bloco { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); padding: 20px 24px; box-shadow: var(--sombra); }
+section.bloco > h2 { font-size: 19px; color: var(--azul-esc); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+section.bloco > h2::before { content: ""; width: 5px; height: 20px; background: var(--laranja); border-radius: 3px; }
+
+/* Indicadores */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+.kpi { border: 1px solid var(--borda); border-radius: var(--raio); padding: 14px 16px; background: #fff; }
+.kpi .rot { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); font-weight: 600; }
+.kpi .val { font-size: 30px; font-weight: 800; color: var(--azul-esc); line-height: 1.15; margin-top: 4px; }
+.kpi .val small { font-size: 15px; font-weight: 600; color: var(--texto-suave); }
+.kpi .det { font-size: 13px; color: var(--texto-suave); margin-top: 2px; }
+.kpi.destaque { border-color: var(--laranja); background: var(--laranja-claro); }
+.kpi.destaque .val { color: var(--laranja-esc); }
+.kpi a { text-decoration: none; }
+
+.progresso { margin-top: 18px; }
+.rotulo { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--texto-suave); margin-bottom: 6px; }
+.trilho { display: flex; height: 14px; border-radius: 999px; background: #e9eef2; overflow: hidden; }
+.trilho span { height: 100%; }
+.legenda-barra { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font-size: 13px; color: var(--texto-suave); }
+.legenda-barra i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.areas-prog { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 18px; }
+
+.contexto { margin: 16px 0 0; padding-left: 20px; color: var(--texto-suave); }
+.contexto li { margin: 3px 0; }
+
+/* Tabelas */
+.tabela-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--texto-suave); font-weight: 700; padding: 8px 10px; border-bottom: 2px solid var(--borda); white-space: nowrap; }
+td { padding: 9px 10px; border-bottom: 1px solid var(--borda); vertical-align: top; }
+tr.clicavel { cursor: pointer; }
+tr.clicavel:hover td { background: var(--azul-claro); }
+.mini-trilho { width: 90px; height: 8px; background: #e9eef2; border-radius: 999px; overflow: hidden; display: inline-block; vertical-align: middle; }
+.mini-trilho span { display: block; height: 100%; background: var(--verde); }
+
+/* Etiquetas */
+.tag { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; border: 1px solid transparent; }
+.t-azul { background: var(--azul-claro); color: var(--azul-esc); }
+.t-laranja { background: var(--laranja-claro); color: var(--laranja-esc); }
+.t-verde { background: var(--verde-claro); color: var(--verde); }
+.t-vermelho { background: var(--vermelho-claro); color: var(--vermelho); }
+.t-cinza { background: #eef1f4; color: var(--texto-suave); }
+.t-essencial { background: var(--laranja); color: #fff; }
+.t-borda { background: #fff; border-color: var(--borda); color: var(--texto-suave); }
+
+/* Pendências */
+.pend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.pend { border: 1px solid var(--borda); border-left: 5px solid var(--laranja); border-radius: 8px; padding: 12px 14px; }
+.pend h3 { font-size: 15px; margin-bottom: 6px; }
+.pend ul { margin: 6px 0 0; padding-left: 18px; }
+.pend li { margin: 4px 0; }
+
+/* Critérios */
+.area-titulo { font-size: 15px; text-transform: uppercase; letter-spacing: .06em; color: var(--texto-suave); font-weight: 800; margin: 4px 0 -8px 4px; }
+details.criterio { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+details.criterio[open] { border-color: #b9cfe0; }
+details.criterio > summary { list-style: none; cursor: pointer; padding: 16px 22px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 6px 16px; align-items: center; }
+details.criterio > summary::-webkit-details-marker { display: none; }
+.cod-grande { font-size: 22px; font-weight: 800; color: var(--azul); min-width: 64px; }
+.sum-tit { font-size: 17px; font-weight: 700; }
+.sum-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.seta { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--azul-claro); color: var(--azul); font-weight: 800; transition: transform .15s; }
+details[open] > summary .seta { transform: rotate(90deg); }
+.corpo { padding: 4px 22px 22px; border-top: 1px solid var(--borda); }
+.corpo h3 { font-size: 15px; color: var(--azul-esc); margin: 22px 0 10px; text-transform: uppercase; letter-spacing: .04em; }
+.definicao { font-size: 15px; margin-top: 16px; padding: 12px 14px; background: var(--azul-claro); border-radius: 8px; }
+.resumo { margin-top: 12px; padding: 12px 14px; border-left: 4px solid var(--laranja); background: var(--laranja-claro); border-radius: 0 8px 8px 0; }
+.alerta { margin-top: 12px; padding: 10px 14px; border-left: 4px solid var(--vermelho); background: var(--vermelho-claro); border-radius: 0 8px 8px 0; }
+.nota { color: var(--texto-suave); font-size: 14px; margin-top: 10px; }
+.acoes-card { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+.sub-lista { display: grid; gap: 10px; }
+.sub { border: 1px solid var(--borda); border-radius: 8px; padding: 10px 14px; display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 4px 12px; }
+.sub .c { font-weight: 800; color: var(--azul-esc); }
+.sub .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.sub .n { grid-column: 2; font-size: 14px; color: var(--texto-suave); }
+
+.colunas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.coluna { border-radius: 8px; padding: 12px; border: 1px solid var(--borda); }
+.coluna > h4 { font-size: 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.coluna.tem { background: var(--verde-claro); border-color: #bfe0bf; }
+.coluna.inc { background: var(--laranja-claro); border-color: #f6d3ad; }
+.coluna.nao { background: var(--vermelho-claro); border-color: #f1c6c1; }
+.item { background: #fff; border-radius: 6px; padding: 10px 12px; margin-top: 8px; font-size: 14px; }
+.item strong { display: block; margin-bottom: 3px; }
+.item .falta { margin-top: 6px; color: var(--laranja-esc); }
+.links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.links a { font-size: 13px; font-weight: 600; text-decoration: none; background: var(--azul-claro); padding: 3px 9px; border-radius: 6px; }
+.links a::after { content: " ↗"; }
+details.nao-serve { margin-top: 12px; }
+details.nao-serve > summary { cursor: pointer; font-weight: 600; color: var(--texto-suave); font-size: 14px; }
+
+.opcoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.opcao { border: 1px solid var(--borda); border-radius: 8px; padding: 12px 14px; }
+.opcao.rec { border: 2px solid var(--verde); }
+.opcao h4 { font-size: 15px; margin-bottom: 6px; }
+.opcao p { margin: 6px 0 0; font-size: 14px; }
+.opcao .pro { color: var(--verde); }
+.opcao .contra { color: var(--vermelho); }
+
+.checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.checklist li { display: flex; gap: 10px; align-items: flex-start; padding: 7px 10px; border-radius: 6px; background: #f7f9fb; }
+.checklist li.feito { color: var(--texto-suave); }
+.checklist li.feito span { text-decoration: line-through; }
+.caixa { width: 18px; height: 18px; border-radius: 4px; border: 2px solid #9aa7b2; flex: none; margin-top: 2px; display: grid; place-items: center; font-size: 12px; color: #fff; font-weight: 800; }
+.feito .caixa { background: var(--verde); border-color: var(--verde); }
+.lista-simples { margin: 0; padding-left: 20px; }
+.lista-simples li { margin: 4px 0; }
+
+.vazio-ficha { margin-top: 16px; padding: 12px 14px; border: 1px dashed #b7c3cd; border-radius: 8px; color: var(--texto-suave); font-size: 14px; }
+.oculto { display: none !important; }
+footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
+
+@media (max-width: 1100px) { .colunas { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .barra-ferramentas { position: static; }
+  html { scroll-padding-top: 12px; }
+  .layout { grid-template-columns: 1fr; padding: 16px; }
+  .lateral { position: static; max-height: none; }
+  .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; }
+  footer { padding: 0 16px 24px; }
+  section.bloco { padding: 16px; }
+  .corpo { padding: 4px 16px 16px; }
+  details.criterio > summary { padding: 14px 16px; grid-template-columns: minmax(0, 1fr) auto; }
+  .cod-grande { grid-column: 1 / -1; }
+  .sub { grid-template-columns: 1fr; }
+  .sub .n { grid-column: 1; }
+}
+@media print {
+  .barra-ferramentas, .lateral, .acoes-card { display: none !important; }
+  .layout { grid-template-columns: 1fr; padding: 0; }
+  details.criterio { break-inside: avoid-page; }
+  body { background: #fff; }
+}
+</style>
+</head>
+<body>
+<header class="topo">
+  <div class="topo-int">
+    <div>
+      <div class="sobre">Prefeitura de São Bernardo do Campo · Certificação What Works Cities</div>
+      <h1>Painel dos critérios de dados</h1>
+      <div class="subtitulo">Gestão de dados · Dados abertos · Impacto na comunidade — apoio às decisões da equipe</div>
+    </div>
+    <div class="atualizado" id="atualizado"></div>
+  </div>
+</header>
+
+<div class="barra-ferramentas">
+  <div class="barra-int">
+    <input type="search" id="busca" placeholder="Buscar em critérios, documentos e ações…" aria-label="Buscar">
+    <div class="grupo-filtro" id="filtro-area" role="group" aria-label="Filtrar por área"></div>
+    <select id="filtro-ficha" aria-label="Filtrar por andamento"></select>
+    <button class="chip-filtro" id="so-essencial" aria-pressed="false">Só essenciais</button>
+    <button class="botao" id="expandir">Expandir tudo</button>
+    <button class="botao" id="recolher">Recolher tudo</button>
+    <button class="botao" id="imprimir">Imprimir</button>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="lateral" id="lateral" aria-label="Navegação"></nav>
+  <main id="conteudo">
+    <section class="bloco" id="visao-geral">
+      <h2>Visão geral</h2>
+      <div class="kpis" id="kpis"></div>
+      <div class="progresso" id="progresso-geral"></div>
+      <div class="areas-prog" id="progresso-areas"></div>
+      <ul class="contexto" id="contexto"></ul>
+    </section>
+
+    <section class="bloco" id="ordem">
+      <h2>Ordem de trabalho</h2>
+      <div class="tabela-wrap"><table id="tabela-ordem"></table></div>
+    </section>
+
+    <section class="bloco" id="pendencias">
+      <h2>Pendências para a equipe</h2>
+      <div class="pend-grid" id="pend-grid"></div>
+    </section>
+
+    <div id="criterios"></div>
+
+    <section class="bloco" id="legenda">
+      <h2>Como ler</h2>
+      <div class="tabela-wrap"><table id="tabela-legenda"></table></div>
+    </section>
+
+    <section class="bloco" id="historico">
+      <h2>Histórico de atualizações</h2>
+      <ul class="lista-simples" id="lista-historico"></ul>
+    </section>
+  </main>
+</div>
+<footer>Página de trabalho da equipe. Não indexada por buscadores. As respostas só são inseridas na plataforma depois da validação da equipe.</footer>
+
+<script src="dados.js"></script>
+<script>
+(function () {
+  const P = window.PAINEL;
+  const $ = (s, r = document) => r.querySelector(s);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const ext = (u, t) => `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(t)}</a>`;
+
+  const FICHA = {
+    nao_iniciada: { r: 'Não iniciada', c: 't-cinza', cor: '#c5ccd3' },
+    em_analise:   { r: 'Em análise', c: 't-azul', cor: '#7fb3d9' },
+    rascunho:     { r: 'Ficha em rascunho', c: 't-laranja', cor: '#ff8200' },
+    validada:     { r: 'Validada pela equipe', c: 't-azul', cor: '#0f71b3' },
+    pronta:       { r: 'Pronta para inserir', c: 't-verde', cor: '#288827' }
+  };
+  const CLASSE = {
+    atende:      { r: 'Atende', c: 't-verde' },
+    juntando:    { r: 'Atende juntando documentos', c: 't-verde' },
+    criar:       { r: 'Dá para criar até o prazo', c: 't-laranja' },
+    criar_risco: { r: 'Dá para criar, com risco', c: 't-laranja' },
+    nao_da:      { r: 'Não dá a tempo', c: 't-vermelho' }
+  };
+  const SITUACAO = {
+    tem:     { r: 'SBC tem', c: 't-verde' },
+    parcial: { r: 'Tem, mas incompleto', c: 't-laranja' },
+    nao_tem: { r: 'Não tem', c: 't-vermelho' }
+  };
+  const PEDIDO = {
+    a_pedir:    { r: 'A pedir', c: 't-cinza' },
+    pedido:     { r: 'Pedido', c: 't-azul' },
+    recebido:   { r: 'Recebido', c: 't-verde' },
+    nao_existe: { r: 'Não existe', c: 't-vermelho' }
+  };
+  const tag = (o, extra) => o ? `<span class="tag ${o.c}">${esc(o.r)}${extra || ''}</span>` : '';
+  const fmtData = iso => { const [a, m, d] = iso.split('-'); return `${d}/${m}/${a}`; };
+  const areaNome = id => (P.areas.find(a => a.id === id) || {}).nome || id;
+  const ordenados = [...P.criterios].sort((a, b) => a.ordem - b.ordem);
+  const daArea = id => P.criterios.filter(c => c.area === id).sort((a, b) => a.codigo.localeCompare(b.codigo, 'pt', { numeric: true }));
+  const planoPct = c => c.plano && c.plano.length ? Math.round(100 * c.plano.filter(p => p.feito).length / c.plano.length) : 0;
+
+  // Cabeçalho e indicadores
+  $('#atualizado').textContent = 'Atualizado em ' + fmtData(P.atualizado);
+  const hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+  const envio = new Date(P.prazos.envio + 'T00:00:00');
+  const dias = Math.round((envio - hoje) / 86400000);
+  const total = P.criterios.length;
+  const porFicha = k => P.criterios.filter(c => c.ficha === k).length;
+  const comFicha = P.criterios.filter(c => c.ficha !== 'nao_iniciada').length;
+  const decisoes = P.criterios.filter(c => c.decisao).length;
+  const pedidosAbertos = P.criterios.flatMap(c => c.pedidos || []).filter(p => p.status !== 'recebido' && p.status !== 'nao_existe').length;
+  const subs = P.criterios.flatMap(c => c.subcriterios || []);
+  const subsAvaliados = subs.filter(s => s.situacao).length;
+
+  $('#kpis').innerHTML = [
+    `<div class="kpi destaque"><div class="rot">Dias até o envio</div><div class="val">${dias >= 0 ? dias : 0}</div><div class="det">Prazo da plataforma: ${fmtData(P.prazos.envio)} · interno: ${esc(P.prazos.interno)}</div></div>`,
+    `<div class="kpi"><div class="rot">Critérios com ficha</div><div class="val">${comFicha}<small> / ${total}</small></div><div class="det">${porFicha('pronta')} prontos para inserir · ${porFicha('validada')} validados</div></div>`,
+    `<div class="kpi"><div class="rot">Subcritérios avaliados</div><div class="val">${subsAvaliados}<small> / ${subs.length}</small></div><div class="det">situação de SBC levantada</div></div>`,
+    `<div class="kpi"><a href="#pendencias"><div class="rot">Decisões em aberto</div><div class="val">${decisoes}</div><div class="det">precisam da equipe</div></a></div>`,
+    `<div class="kpi"><a href="#pendencias"><div class="rot">Documentos a obter</div><div class="val">${pedidosAbertos}</div><div class="det">pedidos à equipe</div></a></div>`
+  ].join('');
+
+  const barra = (lista, rotulo) => {
+    const n = lista.length || 1;
+    const partes = Object.keys(FICHA).map(k => ({ k, q: lista.filter(c => c.ficha === k).length })).filter(p => p.q);
+    return `<div class="rotulo"><span>${esc(rotulo)}</span><span>${lista.filter(c => c.ficha !== 'nao_iniciada').length} de ${lista.length} com ficha</span></div>
+      <div class="trilho" role="img" aria-label="${esc(rotulo)}">${partes.map(p => `<span style="width:${100 * p.q / n}%;background:${FICHA[p.k].cor}" title="${esc(FICHA[p.k].r)}: ${p.q}"></span>`).join('')}</div>`;
+  };
+  $('#progresso-geral').innerHTML = barra(P.criterios, 'Andamento das fichas — todos os critérios') +
+    `<div class="legenda-barra">${Object.values(FICHA).map(f => `<span><i style="background:${f.cor}"></i>${esc(f.r)}</span>`).join('')}</div>`;
+  $('#progresso-areas').innerHTML = P.areas.map(a => `<div>${barra(P.criterios.filter(c => c.area === a.id), a.id + ' · ' + a.nome)}</div>`).join('');
+  $('#contexto').innerHTML = P.contexto.map(t => `<li>${esc(t)}</li>`).join('');
+
+  // Ordem de trabalho
+  $('#tabela-ordem').innerHTML = `<thead><tr><th>#</th><th>Critério</th><th>Área</th><th>Regra</th><th>Janela</th><th>Andamento</th><th>Classificação</th><th>Plano</th></tr></thead><tbody>` +
+    ordenados.map(c => `<tr class="clicavel" data-alvo="${c.codigo}">
+      <td>${c.ordem}</td>
+      <td><a href="#${c.codigo}"><strong>${c.codigo}</strong></a> ${esc(c.titulo)} ${c.essencial ? '<span class="tag t-essencial">Essencial</span>' : ''}</td>
+      <td>${esc(areaNome(c.area))}</td>
+      <td>${c.regra.min} de ${c.regra.total}</td>
+      <td>${esc(c.janela)}</td>
+      <td>${tag(FICHA[c.ficha])}</td>
+      <td>${c.classificacao ? tag(CLASSE[c.classificacao]) : '<span class="tag t-borda">Não avaliado</span>'}</td>
+      <td>${c.plano ? `<span class="mini-trilho"><span style="width:${planoPct(c)}%"></span></span> ${planoPct(c)}%` : '—'}</td>
+    </tr>`).join('') + '</tbody>';
+  document.querySelectorAll('tr.clicavel').forEach(tr => tr.addEventListener('click', e => { if (e.target.tagName !== 'A') abrir(tr.dataset.alvo, true); }));
+
+  // Pendências
+  const pend = [];
+  P.criterios.filter(c => c.decisao).forEach(c => pend.push(`<div class="pend"><h3>Decisão · ${c.codigo}</h3>
+    <div>${esc(c.decisao.titulo)}. Recomendação: opção ${esc(c.decisao.recomendada)}.</div>
+    <div class="links"><a href="#decisao-${c.codigo}" style="background:var(--laranja-claro)">Ver opções</a></div></div>`));
+  P.criterios.filter(c => c.pedidos && c.pedidos.length).forEach(c => pend.push(`<div class="pend" style="border-left-color:var(--azul)"><h3>Documentos a obter · ${c.codigo}</h3>
+    <ul>${c.pedidos.map(p => `<li>${esc(p.texto)} ${tag(PEDIDO[p.status])}</li>`).join('')}</ul>
+    <div class="links"><a href="#pedidos-${c.codigo}" style="background:var(--azul-claro)">Ir para o critério</a></div></div>`));
+  P.criterios.filter(c => c.plataforma && c.plataforma.alerta).forEach(c => pend.push(`<div class="pend" style="border-left-color:var(--vermelho)"><h3>Atenção na plataforma · ${c.codigo}</h3><div>${esc(c.plataforma.alerta)}</div>
+    <div class="links"><a href="#${c.codigo}" style="background:var(--vermelho-claro)">Ir para o critério</a></div></div>`));
+  $('#pend-grid').innerHTML = pend.join('') || '<div class="nota">Nenhuma pendência no momento.</div>';
+  $('#pend-grid').querySelectorAll('a[href^="#"]').forEach(a => a.classList.add('interno'));
+
+  // Lateral
+  $('#lateral').innerHTML = `<h2>Painel</h2>
+    <a href="#visao-geral"><span class="tit" style="color:inherit">Visão geral</span></a>
+    <a href="#ordem"><span class="tit" style="color:inherit">Ordem de trabalho</span></a>
+    <a href="#pendencias"><span class="tit" style="color:inherit">Pendências para a equipe</span></a>` +
+    P.areas.map(a => `<h2>${a.id} · ${esc(a.nome)}</h2>` + daArea(a.id)
+      .map(c => `<a href="#${c.codigo}" data-nav="${c.codigo}"><span class="ponto" style="background:${FICHA[c.ficha].cor}" title="${esc(FICHA[c.ficha].r)}"></span><span class="cod">${c.codigo}</span><span class="tit">${esc(c.titulo)}</span></a>`).join('')).join('') +
+    `<h2>Referência</h2><a href="#legenda"><span class="tit" style="color:inherit">Como ler</span></a><a href="#historico"><span class="tit" style="color:inherit">Histórico</span></a>`;
+
+  // Cartões dos critérios
+  const linksHtml = ls => ls && ls.length ? `<div class="links">${ls.map(l => ext(l.u, l.t)).join('')}</div>` : '';
+  const itemHtml = i => `<div class="item"><strong>${esc(i.titulo)}</strong>${esc(i.texto || '')}${i.falta ? `<div class="falta"><b>Falta:</b> ${esc(i.falta)}</div>` : ''}${linksHtml(i.links)}</div>`;
+
+  function cartao(c) {
+    const pf = c.plataforma || {};
+    const subsHtml = c.subcriterios.map(s => `<div class="sub"><div class="c">${s.cod}</div><div>${esc(s.texto)}
+      <div class="tags">${s.situacao ? tag(SITUACAO[s.situacao]) : '<span class="tag t-borda">Situação de SBC a levantar</span>'}${s.classificacao ? tag(CLASSE[s.classificacao]) : ''}</div></div>
+      ${s.nota ? `<div class="n">${esc(s.nota)}</div>` : ''}</div>`).join('');
+
+    let analise = '';
+    if (c.sbc) {
+      analise += `<h3>O que SBC tem</h3><div class="colunas">
+        <div class="coluna tem"><h4><span class="tag t-verde">Tem</span> pronto para usar</h4>${(c.sbc.tem || []).map(itemHtml).join('') || '<div class="nota">Nada.</div>'}</div>
+        <div class="coluna inc"><h4><span class="tag t-laranja">Tem, mas incompleto</span> o que completar</h4>${(c.sbc.incompleto || []).map(itemHtml).join('') || '<div class="nota">Nada.</div>'}</div>
+        <div class="coluna nao"><h4><span class="tag t-vermelho">Não tem</span> precisa planejar</h4>${(c.sbc.naoTem || []).map(itemHtml).join('') || '<div class="nota">Nada.</div>'}</div>
+      </div>`;
+      if (c.sbc.naoServe && c.sbc.naoServe.length) analise += `<details class="nao-serve"><summary>Já verificado e não serve a este critério (${c.sbc.naoServe.length})</summary>${c.sbc.naoServe.map(itemHtml).join('')}</details>`;
+    }
+    if (c.decisao) {
+      const d = c.decisao;
+      analise += `<h3 id="decisao-${c.codigo}">Decisão em aberto: ${esc(d.titulo)}</h3><div class="opcoes">${d.opcoes.map(o => `<div class="opcao ${o.id === d.recomendada ? 'rec' : ''}">
+        <h4>${o.id} · ${esc(o.nome)} ${o.id === d.recomendada ? '<span class="tag t-verde">Recomendada</span>' : ''}</h4>
+        <p>${esc(o.descricao)}</p><p class="pro"><b>A favor:</b> ${esc(o.pros)}</p><p class="contra"><b>Contra:</b> ${esc(o.contras)}</p></div>`).join('')}</div>
+        ${d.nota ? `<div class="nota">${esc(d.nota)}</div>` : ''}`;
+    }
+    if (c.plano && c.plano.length) {
+      const feitos = c.plano.filter(p => p.feito).length;
+      analise += `<h3>Plano de ação</h3>
+        <div class="progresso" style="margin:0 0 10px"><div class="rotulo"><span>Etapas concluídas</span><span>${feitos} de ${c.plano.length}</span></div>
+        <div class="trilho"><span style="width:${planoPct(c)}%;background:var(--verde)"></span></div></div>
+        <ul class="checklist">${c.plano.map(p => `<li class="${p.feito ? 'feito' : ''}"><span class="caixa">${p.feito ? '✓' : ''}</span><span>${esc(p.texto)}${p.ancora ? ` · <a href="#${p.ancora}">ver</a>` : ''}</span></li>`).join('')}</ul>`;
+    }
+    if (c.pedidos && c.pedidos.length) {
+      analise += `<h3 id="pedidos-${c.codigo}">Documentos a obter com a equipe</h3><ul class="checklist">${c.pedidos.map(p => `<li class="${p.status === 'recebido' ? 'feito' : ''}"><span class="caixa">${p.status === 'recebido' ? '✓' : ''}</span><span>${esc(p.texto)} ${tag(PEDIDO[p.status])}</span></li>`).join('')}</ul>`;
+    }
+    if (c.modelos && c.modelos.length) {
+      analise += `<h3>Modelos de outras cidades que ajudam</h3><div class="tabela-wrap"><table><thead><tr><th>Modelo</th><th>Ajuda em</th><th>O que aproveitar</th></tr></thead><tbody>${c.modelos.map(m => `<tr><td>${ext(m.u, m.nome)} ↗</td><td>${m.cobre.map(x => `<span class="tag t-azul">${x}</span>`).join(' ')}</td><td>${esc(m.texto)}</td></tr>`).join('')}</tbody></table></div>`;
+    }
+    if (c.pistas && c.pistas.length) {
+      analise += `<h3>Pistas da reunião da equipe (16/10) — avaliação preliminar</h3><div class="tabela-wrap"><table><thead><tr><th>Sub</th><th>Citado na reunião</th><th>Leitura preliminar</th></tr></thead><tbody>${c.pistas.map(p => `<tr><td><strong>${p.sub}</strong></td><td>${esc(p.citado)}</td><td>${esc(p.leitura)}</td></tr>`).join('')}</tbody></table></div>`;
+    }
+    if (c.ficha === 'nao_iniciada') analise += `<div class="vazio-ficha">Ficha ainda não iniciada. A análise do que SBC tem, a classificação e o plano entram aqui na vez deste critério (posição ${c.ordem} na ordem de trabalho).</div>`;
+
+    return `<details class="criterio" id="${c.codigo}" data-area="${c.area}" data-ficha="${c.ficha}" data-essencial="${c.essencial ? 1 : 0}" ${c.ficha !== 'nao_iniciada' ? 'open' : ''}>
+      <summary>
+        <div class="cod-grande">${c.codigo}</div>
+        <div><div class="sum-tit">${esc(c.titulo)}</div>
+          <div class="sum-tags">${c.essencial ? '<span class="tag t-essencial">Essencial para certificar</span>' : ''}
+            <span class="tag t-borda">Atender ${c.regra.min} de ${c.regra.total}</span>
+            <span class="tag t-borda">Janela: ${esc(c.janela)}</span>
+            ${tag(FICHA[c.ficha])}
+            ${c.classificacao ? tag(CLASSE[c.classificacao]) : ''}
+            <span class="tag t-cinza">Plataforma: ${esc(pf.resposta || 'Vazio')}</span></div></div>
+        <div class="seta" aria-hidden="true">›</div>
+      </summary>
+      <div class="corpo">
+        <div class="definicao"><b>O critério:</b> ${esc(c.definicao)}</div>
+        ${c.resumo ? `<div class="resumo"><b>Situação de SBC:</b> ${esc(c.resumo)}</div>` : ''}
+        ${pf.alerta ? `<div class="alerta"><b>Atenção:</b> ${esc(pf.alerta)}</div>` : ''}
+        ${pf.nota ? `<div class="nota"><b>Na plataforma:</b> ${esc(pf.nota)}</div>` : ''}
+        ${c.nota ? `<div class="nota">${esc(c.nota)}</div>` : ''}
+        <h3>O que precisa atender</h3><div class="sub-lista">${subsHtml}</div>
+        <h3>Evidências a apresentar</h3><ul class="lista-simples">${c.evidencias.map(e => `<li>${esc(e)}</li>`).join('')}</ul>
+        ${analise}
+        <div class="acoes-card"><button class="botao copiar" data-cod="${c.codigo}">Copiar link deste critério</button><a class="botao" href="#ordem" style="text-decoration:none">Voltar à ordem de trabalho</a></div>
+      </div>
+    </details>`;
+  }
+  $('#criterios').innerHTML = P.areas.map(a => `<div class="grupo-area" data-area="${a.id}"><div class="area-titulo">${a.id} · ${esc(a.nome)}</div><div style="display:flex;flex-direction:column;gap:14px;margin-top:16px">` +
+    daArea(a.id).map(cartao).join('') + '</div></div>').join('');
+  $('#criterios').style.cssText = 'display:flex;flex-direction:column;gap:24px';
+
+  // Legenda e histórico
+  const leg = [['Andamento da ficha', FICHA], ['Classificação', CLASSE], ['Situação de SBC no subcritério', SITUACAO], ['Documentos a obter', PEDIDO]];
+  $('#tabela-legenda').innerHTML = '<tbody>' + leg.map(([n, o]) => `<tr><td style="white-space:nowrap"><strong>${n}</strong></td><td>${Object.values(o).map(v => tag(v)).join(' ')}</td></tr>`).join('') +
+    `<tr><td><strong>Regra</strong></td><td>"Atender 2 de 3" quer dizer que basta cumprir dois dos três subcritérios.</td></tr>
+     <tr><td><strong>Janela</strong></td><td>Período em que a evidência precisa ter acontecido (por exemplo, trimestral ou nos últimos 24 meses).</td></tr>
+     <tr><td><strong>Essencial</strong></td><td>Sem ele não há certificação em nível nenhum.</td></tr></tbody>`;
+  $('#lista-historico').innerHTML = [...P.historico].sort((a, b) => b.data.localeCompare(a.data)).map(h => `<li><strong>${fmtData(h.data)}</strong> — ${esc(h.texto)}</li>`).join('');
+
+  // Filtros
+  const estado = { area: '', ficha: '', essencial: false, busca: '' };
+  $('#filtro-area').innerHTML = [`<button class="chip-filtro" data-area="" aria-pressed="true">Todas</button>`].concat(P.areas.map(a => `<button class="chip-filtro" data-area="${a.id}" aria-pressed="false">${a.id}</button>`)).join('');
+  $('#filtro-ficha').innerHTML = `<option value="">Todo andamento</option>` + Object.entries(FICHA).map(([k, v]) => `<option value="${k}">${v.r}</option>`).join('');
+  function filtrar() {
+    const q = estado.busca.trim().toLowerCase();
+    document.querySelectorAll('details.criterio').forEach(d => {
+      const ok = (!estado.area || d.dataset.area === estado.area) && (!estado.ficha || d.dataset.ficha === estado.ficha) &&
+        (!estado.essencial || d.dataset.essencial === '1') && (!q || d.textContent.toLowerCase().includes(q));
+      d.classList.toggle('oculto', !ok);
+      if (ok && q) d.open = true;
+    });
+    document.querySelectorAll('.grupo-area').forEach(g => g.classList.toggle('oculto', !g.querySelector('details.criterio:not(.oculto)')));
+  }
+  $('#filtro-area').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    estado.area = b.dataset.area;
+    $('#filtro-area').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    filtrar();
+  });
+  $('#filtro-ficha').addEventListener('change', e => { estado.ficha = e.target.value; filtrar(); });
+  $('#so-essencial').addEventListener('click', e => { estado.essencial = !estado.essencial; e.currentTarget.setAttribute('aria-pressed', estado.essencial); filtrar(); });
+  $('#busca').addEventListener('input', e => { estado.busca = e.target.value; filtrar(); });
+  $('#expandir').addEventListener('click', () => document.querySelectorAll('details.criterio:not(.oculto)').forEach(d => d.open = true));
+  $('#recolher').addEventListener('click', () => document.querySelectorAll('details.criterio').forEach(d => d.open = false));
+  $('#imprimir').addEventListener('click', () => { document.querySelectorAll('details.criterio').forEach(d => d.open = true); window.print(); });
+
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.copiar'); if (!b) return;
+    const url = location.href.split('#')[0] + '#' + b.dataset.cod;
+    (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(() => { b.textContent = 'Link copiado'; setTimeout(() => b.textContent = 'Copiar link deste critério', 1800); }, () => prompt('Copie o link:', url));
+  });
+
+  // Âncoras: abre o cartão do critério (ou o que contém o alvo) antes de rolar
+  function abrir(id, rolar) {
+    const alvo = document.getElementById(id); if (!alvo) return;
+    const card = alvo.closest('details.criterio'); if (card) { card.classList.remove('oculto'); card.open = true; card.closest('.grupo-area').classList.remove('oculto'); }
+    if (rolar) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
+  }
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]'); if (!a) return;
+    const id = decodeURIComponent(a.getAttribute('href').slice(1)); if (!id) return;
+    e.preventDefault(); abrir(id, true);
+  });
+  if (location.hash) setTimeout(() => abrir(decodeURIComponent(location.hash.slice(1)), true), 50);
+})();
+</script>
+</body>
+</html>
