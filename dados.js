@@ -3,6 +3,11 @@
 // Nada de nomes de servidores, e-mails ou telefones aqui: o painel é público (publicar.ps1 verifica).
 // Relatório de aderência, por critério (opcional): relatorio: { status: 'rascunho' | 'final', url, pendencias, atualizado: 'AAAA-MM-DD' }.
 // Sem url, o botão aparece desativado. O documento em si nunca entra neste repositório: só o link.
+// Resposta para a plataforma (começa quando a classificação chega a 'atende' ou 'juntando'):
+//   resposta: { marcar: 'Sim' | 'Em andamento' | 'Não',
+//     blocos: [{ sub: 'DM1.1', status: 'a_redigir' | 'rascunho' | 'redigido' | 'validado', texto, falta: [], ideias: [] }],
+//     evidencias: [{ titulo, sub, status: 'a_obter' | 'a_criar' | 'em_revisao' | 'pronta', link }] }
+//   No texto, marcar o que falta como [PENDENTE: descrição]; o painel destaca.
 
 const LEIS = 'https://leis.org/prefeitura/sp/sao-bernardo-do-campo/lei/';
 
@@ -24,6 +29,7 @@ window.PAINEL = {
   ],
 
   historico: [
+    { data: '2026-10-21', texto: 'Cada critério ganhou a seção "Resposta para a plataforma": resposta a marcar, texto por subcritério com pendências destacadas, o que falta fechar, ideias para discutir e evidências a anexar. A seção abre quando a ficha chega a "atende" ou "atende juntando documentos".' },
     { data: '2026-10-21', texto: 'Cada critério ganhou o atalho para o seu relatório de aderência. Fica desativado até o relatório existir.' },
     { data: '2026-10-21', texto: 'Documentos e etapas do plano só são marcados como concluídos depois de estudados, analisados e validados. Receber um documento passa a ser um estágio intermediário ("Recebido, em análise").' },
     { data: '2026-10-21', texto: 'Barras de andamento passam a encher da esquerda para a direita. Os três níveis de certificação foram explicados. Os documentos a obter ganharam barra de progresso. A legenda passou a explicar o que é uma ficha.' },

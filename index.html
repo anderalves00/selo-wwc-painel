@@ -51,6 +51,16 @@ h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
 .botao-rel.rascunho:hover { background: #ffe2c2; color: var(--laranja-esc); }
 .botao-rel.desativado { background: #eef1f4; border-color: var(--borda); color: #98a2ab; cursor: not-allowed; }
 .relatorio .nota { margin: 0; }
+.resp-topo { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: 12px 24px; align-items: end; margin-bottom: 12px; }
+.bloco-resp { border: 1px solid var(--borda); border-radius: 8px; padding: 12px 14px; }
+.bloco-cab { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 8px; color: var(--azul-esc); }
+.texto-resp { white-space: pre-wrap; background: #f7f9fb; border-radius: 6px; padding: 10px 12px; font-size: 14px; }
+.pend-mark { background: #ffe0b8; color: var(--laranja-esc); border-radius: 3px; padding: 0 3px; font-weight: 600; }
+.falta-resp, .ideias-resp { margin-top: 10px; font-size: 14px; border-radius: 6px; padding: 8px 12px; }
+.falta-resp { background: var(--laranja-claro); }
+.ideias-resp { background: var(--azul-claro); }
+.falta-resp ul, .ideias-resp ul { margin: 4px 0 0; padding-left: 18px; }
+@media (max-width: 900px) { .resp-topo { grid-template-columns: 1fr; } }
 
 /* Estrutura */
 .layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 24px; padding: 24px 32px 48px; }
@@ -295,6 +305,26 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
     nao_existe: { r: 'Não existe', c: 't-vermelho' }
   };
   const pedidoConcluido = p => p.status === 'validado' || p.status === 'nao_existe';
+  const REDACAO = {
+    a_redigir: { r: 'A redigir', c: 't-cinza' },
+    rascunho:  { r: 'Em redação', c: 't-laranja' },
+    redigido:  { r: 'Redigido, em revisão', c: 't-azul' },
+    validado:  { r: 'Validado pela equipe', c: 't-verde' }
+  };
+  const EVID = {
+    a_obter:    { r: 'A obter', c: 't-cinza' },
+    a_criar:    { r: 'A criar', c: 't-vermelho' },
+    em_revisao: { r: 'Em revisão', c: 't-laranja' },
+    pronta:     { r: 'Pronta', c: 't-verde' }
+  };
+  // A redação começa quando a ficha chega a "atende" ou "atende juntando documentos"
+  const podeRedigir = c => c.classificacao === 'atende' || c.classificacao === 'juntando';
+  const respostaPct = c => {
+    const r = c.resposta; if (!r) return null;
+    const itens = (r.blocos || []).map(b => b.status === 'validado').concat((r.evidencias || []).map(e => e.status === 'pronta'));
+    return itens.length ? Math.round(100 * itens.filter(Boolean).length / itens.length) : 0;
+  };
+  const destacaPendencias = t => esc(t).replace(/\[PENDENTE:([^\]]*)\]/g, '<mark class="pend-mark">[PENDENTE:$1]</mark>');
   const avisoCheck = t => `<div class="nota" style="margin:0 0 8px">${t}</div>`;
   const AVISO_PLANO = avisoCheck('Uma etapa avança quando o estudo, a análise e a validação correspondentes estão concluídos, não apenas quando algo é entregue.');
   const AVISO_PEDIDOS = avisoCheck('Um documento avança quando é estudado, analisado e validado. Receber o documento não conclui o item.');
@@ -339,7 +369,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
   $('#contexto').innerHTML = P.contexto.map(t => `<li>${esc(t)}</li>`).join('');
 
   // Ordem de trabalho
-  $('#tabela-ordem').innerHTML = `<thead><tr><th>#</th><th>Critério</th><th>Área</th><th>Regra</th><th>Janela</th><th>Andamento</th><th>Classificação</th><th>Plano</th><th>Relatório</th></tr></thead><tbody>` +
+  $('#tabela-ordem').innerHTML = `<thead><tr><th>#</th><th>Critério</th><th>Área</th><th>Regra</th><th>Janela</th><th>Andamento</th><th>Classificação</th><th>Plano</th><th>Resposta</th></tr></thead><tbody>` +
     ordenados.map(c => `<tr class="clicavel" data-alvo="${c.codigo}">
       <td>${c.ordem}</td>
       <td><a href="#${c.codigo}"><strong>${c.codigo}</strong></a> ${esc(c.titulo)} ${c.essencial ? '<span class="tag t-essencial">Essencial</span>' : ''}</td>
@@ -349,7 +379,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       <td>${tag(FICHA[c.ficha])}</td>
       <td>${c.classificacao ? tag(CLASSE[c.classificacao]) : '<span class="tag t-borda">Não avaliado</span>'}</td>
       <td>${c.plano ? `<span class="mini-trilho"><span style="width:${planoPct(c)}%"></span></span> ${planoPct(c)}%` : '—'}</td>
-      <td>${c.relatorio && c.relatorio.url ? `<a href="${esc(c.relatorio.url)}" target="_blank" rel="noopener noreferrer">${c.relatorio.status === 'final' ? 'Final' : 'Rascunho'} ↗</a>` : '<span class="tag t-borda">Não iniciado</span>'}</td>
+      <td>${c.resposta ? `<span class="mini-trilho"><span style="width:${respostaPct(c)}%"></span></span> ${respostaPct(c)}%` : (podeRedigir(c) ? '<span class="tag t-laranja">A iniciar</span>' : '<span class="tag t-borda">Após "atende"</span>')}</td>
     </tr>`).join('') + '</tbody>';
   document.querySelectorAll('tr.clicavel').forEach(tr => tr.addEventListener('click', e => { if (e.target.tagName !== 'A') abrir(tr.dataset.alvo, true); }));
 
@@ -361,6 +391,11 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
   P.criterios.filter(c => c.pedidos && c.pedidos.length).forEach(c => pend.push(`<div class="pend" style="border-left-color:var(--azul)"><h3>Documentos a obter · ${c.codigo}</h3>
     <ul>${c.pedidos.map(p => `<li>${esc(p.texto)} ${tag(PEDIDO[p.status])}</li>`).join('')}</ul>
     <div class="links"><a href="#pedidos-${c.codigo}" style="background:var(--azul-claro)">Ir para o critério</a></div></div>`));
+  P.criterios.filter(c => c.resposta).forEach(c => {
+    const abertos = (c.resposta.blocos || []).flatMap(b => (b.falta || []).map(f => `<li><strong>${esc(b.sub)}:</strong> ${esc(f)}</li>`));
+    if (abertos.length) pend.push(`<div class="pend" style="border-left-color:var(--verde)"><h3>Pontos a fechar na resposta · ${c.codigo}</h3><ul>${abertos.join('')}</ul>
+      <div class="links"><a href="#resposta-${c.codigo}" style="background:var(--verde-claro)">Ver a resposta</a></div></div>`);
+  });
   P.criterios.filter(c => c.plataforma && c.plataforma.alerta).forEach(c => pend.push(`<div class="pend" style="border-left-color:var(--vermelho)"><h3>Atenção na plataforma · ${c.codigo}</h3><div>${esc(c.plataforma.alerta)}</div>
     <div class="links"><a href="#${c.codigo}" style="background:var(--vermelho-claro)">Ir para o critério</a></div></div>`));
   $('#pend-grid').innerHTML = pend.join('') || '<div class="nota">Nenhuma pendência no momento.</div>';
@@ -382,6 +417,31 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
     const pend = r.pendencias ? ` · ${r.pendencias} pendência${r.pendencias > 1 ? 's' : ''}` : '';
     const rotulo = r.status === 'final' ? 'Relatório de aderência' : 'Relatório de aderência (rascunho' + pend + ')';
     return `<div class="relatorio"><a class="botao-rel ${r.status === 'final' ? '' : 'rascunho'}" href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(rotulo)} ↗</a>${r.atualizado ? `<span class="nota">Atualizado em ${fmtData(r.atualizado)}</span>` : ''}</div>`;
+  }
+
+  // Resposta para a plataforma: espelha os campos que a equipe preenche (resposta, texto livre, evidências)
+  function respostaHtml(c) {
+    const r = c.resposta;
+    if (!r) {
+      if (c.ficha === 'nao_iniciada') return '';
+      return `<h3 id="resposta-${c.codigo}">Resposta para a plataforma</h3><div class="vazio-ficha">${podeRedigir(c)
+        ? 'A ficha já permite redigir a resposta. A redação ainda não começou.'
+        : 'A redação começa quando a ficha chegar a "atende" ou "atende juntando documentos". Até lá, o trabalho está no plano de ação acima.'}</div>`;
+    }
+    const blocos = r.blocos || [], evs = r.evidencias || [];
+    const bOk = blocos.filter(b => b.status === 'validado').length, eOk = evs.filter(e => e.status === 'pronta').length;
+    const barraR = (rot, q, t) => `<div><div class="rotulo"><span>${rot}</span><span>${q} de ${t}</span></div><div class="trilho"><span style="width:${t ? 100 * q / t : 0}%;background:var(--verde)"></span></div></div>`;
+    return `<h3 id="resposta-${c.codigo}">Resposta para a plataforma</h3>
+      <div class="resp-topo"><span>Resposta a marcar: <span class="tag ${r.marcar === 'Sim' ? 't-verde' : 't-laranja'}">${esc(r.marcar || 'A definir')}</span></span>
+        ${barraR('Blocos de texto validados', bOk, blocos.length)}${barraR('Evidências prontas', eOk, evs.length)}</div>
+      ${avisoCheck('O texto é dividido por subcritério para a equipe acompanhar o que já está escrito e o que ainda falta. Trechos <mark class="pend-mark">[PENDENTE: …]</mark> são pontos ainda não resolvidos.')}
+      <div class="sub-lista">${blocos.map(b => `<div class="bloco-resp">
+        <div class="bloco-cab"><strong>${esc(b.sub)}</strong>${tag(REDACAO[b.status])}</div>
+        ${b.texto ? `<div class="texto-resp">${destacaPendencias(b.texto)}</div>` : '<div class="nota">Texto ainda não iniciado.</div>'}
+        ${b.falta && b.falta.length ? `<div class="falta-resp"><b>O que falta fechar</b><ul>${b.falta.map(f => `<li>${esc(f)}</li>`).join('')}</ul></div>` : ''}
+        ${b.ideias && b.ideias.length ? `<div class="ideias-resp"><b>Ideias para discutir com a equipe</b><ul>${b.ideias.map(f => `<li>${esc(f)}</li>`).join('')}</ul></div>` : ''}
+      </div>`).join('')}</div>
+      ${evs.length ? `<h3>Evidências a anexar</h3><div class="tabela-wrap"><table><thead><tr><th>Evidência</th><th>Subcritério</th><th>Situação</th></tr></thead><tbody>${evs.map(e => `<tr><td>${e.link ? ext(e.link, e.titulo) + ' ↗' : esc(e.titulo)}</td><td>${esc(e.sub || '')}</td><td>${tag(EVID[e.status])}</td></tr>`).join('')}</tbody></table></div>` : ''}`;
   }
 
   // Cartões dos critérios
@@ -426,6 +486,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
         ${AVISO_PEDIDOS}
         <ul class="checklist">${c.pedidos.map(p => `<li class="${pedidoConcluido(p) ? 'feito' : ''}"><span class="caixa">${pedidoConcluido(p) ? '✓' : ''}</span><span>${esc(p.texto)} ${tag(PEDIDO[p.status])}</span></li>`).join('')}</ul>`;
     }
+    analise += respostaHtml(c);
     if (c.modelos && c.modelos.length) {
       analise += `<h3>Modelos de outras cidades que ajudam</h3><div class="tabela-wrap"><table><thead><tr><th>Modelo</th><th>Ajuda em</th><th>O que aproveitar</th></tr></thead><tbody>${c.modelos.map(m => `<tr><td>${ext(m.u, m.nome)} ↗</td><td>${m.cobre.map(x => `<span class="tag t-azul">${x}</span>`).join(' ')}</td><td>${esc(m.texto)}</td></tr>`).join('')}</tbody></table></div>`;
     }
@@ -465,7 +526,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
   $('#criterios').style.cssText = 'display:flex;flex-direction:column;gap:24px';
 
   // Legenda e histórico
-  const leg = [['Andamento da ficha', FICHA], ['Classificação', CLASSE], ['Situação de SBC no subcritério', SITUACAO], ['Documentos a obter', PEDIDO]];
+  const leg = [['Andamento da ficha', FICHA], ['Classificação', CLASSE], ['Situação de SBC no subcritério', SITUACAO], ['Documentos a obter', PEDIDO], ['Redação da resposta', REDACAO], ['Evidências a anexar', EVID]];
   $('#tabela-legenda').innerHTML = '<tbody>' +
     `<tr><td style="white-space:nowrap"><strong>Ficha</strong></td><td>A análise de um critério: o que ele exige e em que prazo, o que SBC já tem, o que falta, a classificação (atende, dá para criar até o prazo etc.) e o plano de ação. É o que a equipe valida antes de qualquer resposta ser inserida na plataforma. Cada ficha passa por: ${Object.values(FICHA).map(v => tag(v)).join(' → ')}.</td></tr>` +
     leg.map(([n, o]) => `<tr><td style="white-space:nowrap"><strong>${n}</strong></td><td>${Object.values(o).map(v => tag(v)).join(' ')}</td></tr>`).join('') +
