@@ -10,6 +10,7 @@
 //   No texto, marcar o que falta como [PENDENTE: descrição]; o painel destaca.
 
 const LEIS = 'https://leis.org/prefeitura/sp/sao-bernardo-do-campo/lei/';
+const NM2676 = 'https://www.saobernardo.sp.gov.brC:/Users/56809/AppData/Local/Programs/Git/documents/10181/2361282/NM+2676+de+07.08.2026+-+Conteu%CC%81do+Integral.pdf/11eeb475-0287-4c05-e8e2-aea4d61e05fc#page=16';
 
 window.PAINEL = {
   atualizado: '2026-10-21',
@@ -29,6 +30,7 @@ window.PAINEL = {
   ],
 
   historico: [
+    { data: '2026-10-21', texto: 'DM1: os 8 membros do CGPD foram nomeados pela Portaria 10.510/2026 (Notícias do Município nº 2676). O DM1.2 passa de "não tem" para "tem, mas incompleto": faltam as atas das reuniões.' },
     { data: '2026-10-21', texto: 'DM1: localizada a Portaria 10.364/2025, que designa a Encarregada de Proteção de Dados (Notícias do Município nº 2529). Falta a portaria dos representantes das secretarias no CGPD.' },
     { data: '2026-10-21', texto: 'Cada critério ganhou a seção "Resposta para a plataforma": resposta a marcar, texto por subcritério com pendências destacadas, o que falta fechar, ideias para discutir e evidências a anexar. A seção abre quando a ficha chega a "atende" ou "atende juntando documentos".' },
     { data: '2026-10-21', texto: 'Cada critério ganhou o atalho para o seu relatório de aderência. Fica desativado até o relatório existir.' },
@@ -49,8 +51,8 @@ window.PAINEL = {
       subcriterios: [
         { cod: 'DM1.1', texto: 'Aprovação executiva e uma estratégia de dados de toda a prefeitura, estatuto, declaração de objetivos ou conjunto documentado de metas e objetivos.', situacao: 'parcial', classificacao: 'criar',
           nota: 'O Decreto 22.963/2025 tem aprovação do prefeito e objetivos, mas só de proteção de dados. Falta o documento que oriente a governança de dados como um todo (uso, qualidade, abertura).' },
-        { cod: 'DM1.2', texto: 'O grupo encarregado da estratégia e governança de dados se reúne no mínimo a cada trimestre para desenvolver responsabilidades definidas.', situacao: 'nao_tem', classificacao: 'criar_risco',
-          nota: 'Não há grupo com reuniões e atas localizadas. Exige pelo menos duas reuniões com ata antes de 18/12. Pode mudar se a equipe tiver atas do CGPD ou do GT do SBC+i.' },
+        { cod: 'DM1.2', texto: 'O grupo encarregado da estratégia e governança de dados se reúne no mínimo a cada trimestre para desenvolver responsabilidades definidas.', situacao: 'parcial', classificacao: 'criar_risco',
+          nota: 'O CGPD tem atribuições definidas e membros nomeados desde ago/2026 (Portaria 10.510), mas o escopo é a LGPD e as atas das reuniões ainda não foram localizadas. Com atas de duas reuniões até 18/12, passa a "atende juntando documentos".' },
         { cod: 'DM1.3', texto: 'A estratégia e o processo de governança incluem uma estrutura que enfatiza transparência, prestação de contas e uso ético de dados a serviço de todos os residentes.', situacao: 'nao_tem', classificacao: 'criar',
           nota: 'Há peças dispersas (LGPD no Decreto 22.963, princípios da Lei 7.578), mas nenhuma estrutura que reúna os três temas.' }
       ],
@@ -67,8 +69,8 @@ window.PAINEL = {
             links: [{ t: 'Decreto 23.236/2026, art. 5º', u: LEIS + 'decreto/2026/23236/decreto-n-23236-2026-dispoe-sobre-a-criacao-do-grupo-de-trabalho-municipal-de-desburocratizacao-gtmd-do-ambiente-de-negocios-visando-o-cumprimento-dos-requisitos-do-programa-facilita-sp-municipios-e-a-evolucao-da-classificacao-municipal-na-jornada-de-simplificacao-e-da-outras/#:~:text=Art.%205%C2%BA' }] }
         ],
         incompleto: [
-          { titulo: 'Decreto 22.963/2025: Programa de Proteção de Dados e CGPD', texto: 'Aprovado pelo prefeito, cria o Comitê Gestor de Proteção de Dados (Controladoria, Encarregado e representantes das secretarias) com atribuições definidas. A Encarregada foi designada pela Portaria 10.364/2025, publicada no mesmo dia.', falta: 'Escopo além da LGPD; periodicidade de reunião; atas. A portaria de nomeação dos representantes das secretarias não foi localizada.',
-            links: [{ t: 'Decreto 22.963/2025, art. 3º', u: 'https://leis.org/2cax4#:~:text=Art.%203%C2%BA' }, { t: 'Publicação oficial: NM nº 2529, p. 8–10 (decreto e Portaria 10.364)', u: 'https://www.saobernardo.sp.gov.br/documents/10181/2045904/NM%2B2529%2Bde%2B06.06.2025%2B-%2B%2BConteu%CC%81do%2BIntegral.pdf/105bbfa3-9bc7-fe37-c79f-75e1150b4c10#page=8' }] },
+          { titulo: 'Decreto 22.963/2025: Programa de Proteção de Dados e CGPD', texto: 'Aprovado pelo prefeito, cria o Comitê Gestor de Proteção de Dados (CGPD) com atribuições definidas. A Encarregada foi designada pela Portaria 10.364/2025, e os 8 membros do comitê (Controladoria, Secretaria de Administração e Procuradoria) foram nomeados pela Portaria 10.510/2026.', falta: 'Escopo além da LGPD; periodicidade de reunião no ato; atas das reuniões.',
+            links: [{ t: 'Decreto 22.963/2025, art. 3º', u: 'https://leis.org/2cax4#:~:text=Art.%203%C2%BA' }, { t: 'Publicação oficial: NM nº 2529, p. 8–10 (decreto e Portaria 10.364)', u: 'https://www.saobernardo.sp.gov.br/documents/10181/2045904/NM%2B2529%2Bde%2B06.06.2025%2B-%2B%2BConteu%CC%81do%2BIntegral.pdf/105bbfa3-9bc7-fe37-c79f-75e1150b4c10#page=8' }, { t: 'Portaria 10.510/2026: membros do CGPD (NM nº 2676, p. 16)', u: NM2676 }] },
           { titulo: 'GT Cidade Inteligente do SBC+i (Portaria 10.500/2026)', texto: 'O portal do SBC+i cita um GT de 2026 como instância do programa, que integra "dados e governança".', falta: 'A portaria não foi localizada publicada. Não se sabe quem assinou, se o GT trata de dados nem se se reúne.',
             links: [{ t: 'Portal SBC+i', u: 'https://cidadeinteligente.saobernardo.sp.gov.br' }] },
           { titulo: 'Lei 7.578/2026: Política Municipal de Inovação', texto: 'Tem entre seus princípios "transparência e governança colaborativa" e "privacidade e proteção de dados".', falta: 'Não é política de dados. Pode ser citada como apoio ao DM1.3.',
@@ -93,7 +95,7 @@ window.PAINEL = {
           { id: 'A', nome: 'Decreto novo de política de governança de dados', descricao: 'Objetivos, princípios e um comitê com reunião no mínimo trimestral, ancorado no DTI (competência do art. 645, XIII), com a Controladoria e o Encarregado como membros.',
             pros: 'Escopo certo para o DM1.1 e o DM1.3; competência legal clara; pode abrigar também a política de dados abertos (OD1).', contras: 'Trâmite completo de ato novo; precisa escrever a divisão de papéis com o CGPD para não haver sobreposição.' },
           { id: 'B', nome: 'Ampliar o Decreto 22.963/2025', descricao: 'Transformar o CGPD em comitê de proteção e governança de dados, acrescentando estratégia, princípios e periodicidade.',
-            pros: 'Aproveita um colegiado que já existe e pode já ter membros nomeados.', contras: 'A coordenação é da Controladoria, enquanto a lei dá a estratégia de dados ao DTI; mistura conformidade com uso de dados.' },
+            pros: 'Aproveita um colegiado que já existe, com membros nomeados (Portaria 10.510/2026) e o DTI representado.', contras: 'A coordenação é da Controladoria, enquanto a lei dá a estratégia de dados ao DTI; mistura conformidade com uso de dados.' },
           { id: 'C', nome: 'Usar o GT Cidade Inteligente (SBC+i)', descricao: 'O GT seria o grupo do DM1.2, com a estratégia aprovada pelo prefeito em documento à parte.',
             pros: 'Aproveita o programa SBC+i.', contras: 'A portaria não foi localizada; não se sabe se trata de dados; GT costuma ser temporário.' }
         ],
@@ -121,7 +123,7 @@ window.PAINEL = {
         { texto: 'Equipe insere resposta e arquivos na plataforma', feito: false }
       ],
       pedidos: [
-        { texto: 'Portaria de nomeação dos representantes das secretarias no CGPD e atas ou pautas de reuniões desde jun/2025 (a da Encarregada já foi localizada: Portaria 10.364/2025)', status: 'a_pedir' },
+        { texto: 'Atas ou pautas das reuniões do CGPD desde ago/2026 (as portarias da Encarregada e dos membros já foram localizadas: 10.364/2025 e 10.510/2026)', status: 'a_pedir' },
         { texto: 'Portaria 10.500/2026, composição do GT Cidade Inteligente e atas ou pautas', status: 'a_pedir' },
         { texto: 'Documento do DTI produzido com base no art. 645, XIII (estratégia, padrões ou políticas de dados)', status: 'a_pedir' },
         { texto: 'Se o termo de referência do PDTIC 2026–2029 inclui estratégia de dados', status: 'a_pedir' },
