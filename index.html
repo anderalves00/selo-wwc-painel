@@ -468,7 +468,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       analise += `<h3 id="decisao-${c.codigo}">Decisão em aberto: ${esc(d.titulo)}</h3><div class="opcoes">${d.opcoes.map(o => `<div class="opcao ${o.id === d.recomendada ? 'rec' : ''}">
         <h4>${o.id} · ${esc(o.nome)} ${o.id === d.recomendada ? '<span class="tag t-verde">Recomendada</span>' : ''}</h4>
         <p>${esc(o.descricao)}</p><p class="pro"><b>A favor:</b> ${esc(o.pros)}</p><p class="contra"><b>Contra:</b> ${esc(o.contras)}</p></div>`).join('')}</div>
-        ${d.nota ? `<div class="nota">${esc(d.nota)}</div>` : ''}`;
+        ${d.nota ? `<div class="nota">${esc(d.nota)}</div>` : ''}${linksHtml(d.links)}`;
     }
     if (c.plano && c.plano.length) {
       const feitos = c.plano.filter(p => p.feito).length;

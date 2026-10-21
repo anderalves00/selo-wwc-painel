@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Proposta decreto SBC+i</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f71b3'/%3E%3Crect y='26' width='32' height='6' fill='%23ff8200'/%3E%3Cpath d='M8 20l5-6 4 4 7-9' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
+  --laranja: #ff8200; --laranja-esc: #b35b00; --laranja-claro: #fff1e3;
+  --verde: #288827; --verde-claro: #e6f4e6;
+  --texto: #2b2b2b; --texto-suave: #5f6368; --borda: #dde3e8;
+  --fundo: #f3f6f9; --cartao: #ffffff;
+  --raio: 10px; --sombra: 0 1px 3px rgba(15, 40, 70, .08);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 "Open Sans", Arial, sans-serif; }
+a { color: var(--azul); }
+h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
+
+.topo { background: linear-gradient(90deg, var(--azul-esc), var(--azul)); color: #fff; border-bottom: 5px solid var(--laranja); }
+.topo-int { padding: 20px 32px 18px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
+.topo .sobre { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; opacity: .85; font-weight: 600; }
+.topo h1 { font-size: 26px; font-weight: 800; margin-top: 4px; }
+.topo .subtitulo { font-size: 14px; opacity: .9; margin-top: 4px; }
+.topo .voltar { color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; background: rgba(255,255,255,.16); padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
+.topo .voltar:hover { background: rgba(255,255,255,.28); }
+
+.barra { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
+.barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.barra .rot { font-size: 13px; font-weight: 700; color: var(--texto-suave); }
+.grupo { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { border: 1px solid var(--borda); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
+.chip[aria-pressed=true] { background: var(--azul); border-color: var(--azul); color: #fff; }
+.contagem { font-size: 13px; color: var(--texto-suave); margin-left: auto; }
+
+main { padding: 24px 32px 48px; display: grid; gap: 22px; }
+.cartao { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); padding: 20px 22px; }
+.cartao > h2 { font-size: 19px; color: var(--azul-esc); margin-bottom: 10px; }
+.cartao p { margin: 0 0 10px; }
+.cartao p:last-child { margin-bottom: 0; }
+
+.legenda { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 12px; font-size: 14px; }
+.legenda span { display: inline-flex; align-items: center; gap: 8px; }
+.tag { display: inline-block; font: 800 11px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 5px; }
+.tag.novo { background: var(--laranja); color: #fff; }
+.tag.alterado { background: var(--azul); color: #fff; }
+.tag.igual { background: #eef1f4; color: var(--texto-suave); }
+.tag.sub { background: var(--verde-claro); color: var(--verde); }
+
+.subs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 6px; }
+.sub-card { border: 1px solid var(--borda); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.sub-card h3 { font-size: 16px; color: var(--azul-esc); }
+.sub-card .pede { font-size: 14px; }
+.sub-card .linha { font-size: 13.5px; border-radius: 6px; padding: 7px 10px; }
+.sub-card .hoje { background: #f7f9fb; }
+.sub-card .depois { background: var(--laranja-claro); }
+.sub-card .arts { display: flex; flex-wrap: wrap; gap: 6px; }
+.sub-card .arts a { font-size: 13px; font-weight: 700; text-decoration: none; background: var(--azul-claro); padding: 2px 9px; border-radius: 6px; }
+
+.decreto { padding: 0; overflow: hidden; }
+.decreto-cab { padding: 18px 22px; border-bottom: 1px solid var(--borda); background: #fafbfc; }
+.decreto-cab h2 { font-size: 19px; color: var(--azul-esc); }
+.decreto-cab .nota { font-size: 13.5px; color: var(--texto-suave); margin-top: 4px; }
+.ementa { padding: 18px 22px 6px; font-size: 14.5px; }
+.ementa .num { font-weight: 800; }
+.ementa .em { margin: 8px 0 12px auto; max-width: 520px; font-style: italic; }
+.ementa p { margin: 0 0 8px; }
+.capitulo { padding: 14px 22px 6px; font-weight: 800; color: var(--azul-esc); letter-spacing: .03em; text-transform: uppercase; font-size: 13.5px; border-top: 1px solid var(--borda); background: #fafbfc; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+.art { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); border-top: 1px solid var(--borda); }
+.art .texto { padding: 14px 22px; font-size: 14.5px; }
+.art .texto p { margin: 0 0 7px; }
+.art .texto p:last-child { margin-bottom: 0; }
+.art.igual { grid-template-columns: 1fr; }
+.art.igual .texto { color: #555b61; }
+.art .cab { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+.art .cab .id { font-weight: 800; font-size: 13px; color: var(--texto-suave); }
+.art .cab .antigo { font-size: 12.5px; color: var(--texto-suave); }
+.art.novo .texto { background: var(--laranja-claro); border-left: 5px solid var(--laranja); }
+.art.alterado .texto { background: var(--azul-claro); border-left: 5px solid var(--azul); }
+mark.novo { background: #ffd8ad; color: inherit; padding: 1px 3px; border-radius: 3px; }
+.inc { padding-left: 18px; }
+
+.expl { padding: 14px 20px; background: #fff; border-left: 1px solid var(--borda); display: grid; gap: 10px; align-content: start; font-size: 14px; }
+.expl h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); margin-bottom: 2px; }
+.expl .wwc { background: var(--verde-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .wwc h4 { color: var(--verde); }
+.expl p { margin: 0; }
+
+.assinatura { padding: 14px 22px 20px; border-top: 1px solid var(--borda); font-size: 14.5px; }
+.vazio { padding: 20px 22px; color: var(--texto-suave); display: none; border-top: 1px solid var(--borda); }
+
+.obs ol { margin: 0; padding-left: 20px; display: grid; gap: 10px; }
+.destaque { background: var(--verde-claro); border-left: 5px solid var(--verde); border-radius: 6px; padding: 10px 14px; }
+.fontes ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14px; }
+.rodape { font-size: 13px; color: var(--texto-suave); text-align: center; padding: 0 32px 28px; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 1000px) { .subs { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .topo-int, .barra-int, main { padding-left: 16px; padding-right: 16px; }
+  .barra { position: static; }
+  .art { grid-template-columns: 1fr; }
+  .expl { border-left: 0; border-top: 1px dashed var(--borda); }
+  .art .texto, .expl, .capitulo, .ementa, .assinatura, .decreto-cab { padding-left: 16px; padding-right: 16px; }
+  .contagem { margin-left: 0; width: 100%; }
+}
+@media print {
+  .barra, .topo .voltar { display: none; }
+  body { background: #fff; }
+  .art { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-int">
+    <div>
+      <div class="sobre">Painel WWC · SBC · Critério DM1</div>
+      <h1>Proposta de ajustes ao decreto do Programa SBC+i</h1>
+      <div class="subtitulo">Processo SB 100.144/2026 · Base: minuta da Procuradoria (MINUTA PGM-4/219/2026) · Proposta de 21/10/2026, para apreciação da Secretaria de Administração</div>
+    </div>
+    <a class="voltar" href="index.html#DM1">← Voltar ao painel (DM1)</a>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-int">
+    <span class="rot">Mostrar:</span>
+    <div class="grupo" data-filtro="modo">
+      <button class="chip" type="button" data-v="tudo" aria-pressed="true">Texto completo</button>
+      <button class="chip" type="button" data-v="mudancas" aria-pressed="false">Só o que foi criado ou alterado</button>
+    </div>
+    <span class="rot">Subcritério WWC:</span>
+    <div class="grupo" data-filtro="sub">
+      <button class="chip" type="button" data-v="todos" aria-pressed="true">Todos</button>
+      <button class="chip" type="button" data-v="DM1.1" aria-pressed="false">DM1.1</button>
+      <button class="chip" type="button" data-v="DM1.2" aria-pressed="false">DM1.2</button>
+      <button class="chip" type="button" data-v="DM1.3" aria-pressed="false">DM1.3</button>
+    </div>
+    <span class="contagem" id="contagem"></span>
+  </div>
+</div>
+
+<main>
+
+<section class="cartao">
+  <h2>Para que serve esta proposta</h2>
+  <p>A minuta do decreto que regulamenta o Programa SBC+i ainda vai ser reescrita: em 20/10/2026 a Procuradoria (PGM-4) recomendou refazer o art. 5º, que cita a Portaria 10.500/2026. Esta proposta aproveita essa reescrita para que o decreto também atenda ao critério <b>DM1 – Estratégia e governança de dados</b> da certificação What Works Cities.</p>
+  <p>O DM1 é um <b>critério essencial</b>: sem ele, o Município não é certificado em nível nenhum. Para atender, bastam <b>2 dos 3 subcritérios</b> abaixo, mas o critério é revalidado, por isso a proposta cobre os três.</p>
+  <p>Todo o conteúdo da minuta da Procuradoria foi mantido. Os trechos criados ou alterados estão destacados, e cada um traz ao lado <b>por que</b> foi incluído, <b>qual a intenção</b> da redação e <b>qual a relação com a WWC</b>.</p>
+  <div class="legenda">
+    <span><span class="tag novo">Novo</span> texto criado pela proposta</span>
+    <span><span class="tag alterado">Alterado</span> texto da minuta reescrito</span>
+    <span><span class="tag igual">Sem alteração</span> texto da minuta da Procuradoria</span>
+    <span><span class="tag sub">DM1.x</span> subcritério da WWC atendido</span>
+  </div>
+</section>
+
+<section class="cartao">
+  <h2>O que a WWC pede e onde a proposta responde</h2>
+  <div class="subs">
+    <div class="sub-card">
+      <h3>DM1.1 · Estratégia aprovada</h3>
+      <div class="pede">Aprovação do Executivo e uma estratégia, estatuto ou conjunto documentado de objetivos e metas de dados.</div>
+      <div class="linha hoje"><b>Minuta atual:</b> o projeto de lei cita "governança e utilização estratégica de dados", mas o decreto não diz quais são os objetivos.</div>
+      <div class="linha depois"><b>Com a proposta:</b> objetivos de governança de dados no decreto, assinado pelo Prefeito, e um plano com metas.</div>
+      <div class="arts"><a href="#art10">Art. 10</a><a href="#art11">Art. 11</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM1.2 · Grupo que se reúne</h3>
+      <div class="pede">Um grupo com responsabilidades definidas sobre dados que se reúne no mínimo a cada trimestre. Evidência: atas ou pautas das duas reuniões mais recentes.</div>
+      <div class="linha hoje"><b>Minuta atual:</b> o GT tem competências, nenhuma sobre dados, e não há reunião periódica nem ata.</div>
+      <div class="linha depois"><b>Com a proposta:</b> competências de dados, reunião no mínimo trimestral e ata em processo próprio.</div>
+      <div class="arts"><a href="#art5">Art. 5º</a><a href="#art6">Art. 6º</a><a href="#art7">Art. 7º</a><a href="#art8">Art. 8º</a><a href="#art9">Art. 9º</a><a href="#art26">Art. 26</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM1.3 · Uso ético e transparente</h3>
+      <div class="pede">Uma estrutura que enfatize transparência, prestação de contas e uso ético dos dados a serviço de todos os residentes.</div>
+      <div class="linha hoje"><b>Minuta atual:</b> só a divulgação no Portal SBC+i.</div>
+      <div class="linha depois"><b>Com a proposta:</b> sete princípios de uso de dados (inclusive IA), atas públicas e relatório anual.</div>
+      <div class="arts"><a href="#art12">Art. 12</a><a href="#art8">Art. 8º, § 2º</a><a href="#art20">Art. 20</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="cartao decreto" id="decreto">
+  <div class="decreto-cab">
+    <h2>Texto consolidado proposto</h2>
+    <div class="nota">Os artigos sem alteração reproduzem a minuta da Procuradoria, só renumerados; a numeração antiga aparece ao lado. Clique nos filtros acima para ver só as mudanças ou só o que atende a um subcritério.</div>
+  </div>
+
+  <div class="ementa" data-bloco="preambulo">
+    <p class="num">DECRETO Nº ……………</p>
+    <p class="em">Regulamenta a Lei Municipal nº ……, de …… de 2026, que institui o Programa SBC+i - São Bernardo Inteligente, Inovadora e Integrada, dispõe sobre sua governança e articulação institucional, e dá outras providências.</p>
+    <p>O PREFEITO DO MUNICÍPIO DE SÃO BERNARDO DO CAMPO, no uso das atribuições que lhe são conferidas por lei, considerando o que consta do processo administrativo nº SB 100.144/2026-77, deste Município;</p>
+    <p>Considerando o disposto na Lei Municipal nº ……, de …… de 2026, que institui o Programa SBC+i;</p>
+    <p>Considerando as competências e a estrutura administrativa estabelecidas pela Lei Municipal nº 7.367, de 15 de janeiro de 2025, e suas alterações posteriores; e</p>
+    <p>Considerando a necessidade de regulamentar a governança e a articulação institucional do Programa, sem prejuízo das competências legais dos órgãos e entidades da Administração Pública Municipal,</p>
+    <p>DECRETA:</p>
+  </div>
+
+  <div class="capitulo">Capítulo I – Das disposições gerais</div>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 1º</span><span class="tag igual">Sem alteração</span></div>
+      <p>Art. 1º Este Decreto regulamenta a Lei Municipal nº ……, de …… de 2026, que institui o Programa SBC+i - São Bernardo Inteligente, Inovadora e Integrada, estabelecendo competências e mecanismos de articulação institucional.</p></div>
+  </article>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 2º</span><span class="tag igual">Sem alteração</span></div>
+      <p>Art. 2º A governança do Programa observará seu caráter estratégico, transversal e intersetorial, respeitadas as competências legais dos órgãos e entidades da Administração Municipal.</p></div>
+  </article>
+
+  <div class="capitulo">Capítulo II – Da governança e da coordenação institucional</div>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 3º</span><span class="tag igual">Sem alteração</span></div>
+      <p>Art. 3º A Secretaria de Administração exercerá a governança e a coordenação institucional do Programa SBC+i, nos termos da Lei Municipal nº ……, de …… de 2026, competindo-lhe promover sua articulação e integração institucional.</p></div>
+  </article>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 4º</span><span class="tag igual">Sem alteração</span></div>
+      <p>Art. 4º Compete à Secretaria de Administração, no exercício da governança e coordenação institucional do Programa SBC+i:</p>
+      <p class="inc">I - promover a articulação entre as Secretarias Municipais e os demais órgãos e entidades participantes;</p>
+      <p class="inc">II - promover a integração das iniciativas relacionadas aos objetivos do Programa;</p>
+      <p class="inc">III - articular a definição de diretrizes e prioridades estratégicas;</p>
+      <p class="inc">IV - acompanhar o desenvolvimento das iniciativas integrantes do Programa, sem prejuízo das competências dos respectivos órgãos e entidades responsáveis;</p>
+      <p class="inc">V - promover a articulação necessária à superação de questões de caráter intersetorial;</p>
+      <p class="inc">VI - consolidar informações estratégicas relativas ao Programa;</p>
+      <p class="inc">VII - promover a articulação institucional com outras esferas de governo, instituições públicas e privadas, organismos, universidades e demais atores relacionados aos objetivos do Programa;</p>
+      <p class="inc">VIII - articular oportunidades de cooperação, financiamento, fomento e captação de recursos, em conjunto com as Secretarias Municipais e os demais órgãos competentes;</p>
+      <p class="inc">IX - promover, em conjunto com a Secretaria de Comunicação e os demais órgãos envolvidos, o posicionamento institucional do Programa; e</p>
+      <p class="inc">X - exercer outras atribuições necessárias à governança institucional do SBC+i, observadas as competências legais das demais Secretarias Municipais e dos órgãos municipais competentes.</p></div>
+  </article>
+
+  <div class="capitulo">Capítulo III – Do Grupo de Trabalho Intersecretarial</div>
+  <article class="art alterado" id="art5" data-tipo="alterado" data-sub="DM1.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 5º</span><span class="tag alterado">Alterado</span><span class="tag sub">DM1.2</span></div>
+      <p>Art. 5º Fica instituído o Grupo de Trabalho Intersecretarial do Programa SBC+i, responsável pela articulação estratégica intersecretarial do Programa, coordenado pela Secretaria de Administração.</p>
+      <p>§ 1º A composição do Grupo de Trabalho será definida por portaria do Prefeito, que designará os membros titulares e respectivos suplentes, indicados pelos titulares das Pastas.</p>
+      <p>§ 2º O coordenador do Grupo de Trabalho designará servidor para secretariar as reuniões e prestar apoio administrativo aos trabalhos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A Procuradoria apontou que citar a Portaria 10.500 no decreto "cria uma inversão imprópria": o decreto é superior à portaria e ficaria preso a ela se a portaria fosse revogada ou renumerada.</p></div>
+      <div><h4>Intenção</h4><p>Usar a primeira saída sugerida pela Procuradoria: o decreto institui o grupo e deixa a composição para portaria. O § 2º garante alguém responsável por secretariar as reuniões, ou seja, por fazer as atas. É o mesmo arranjo do Decreto 23.236/2026 (GT de Desburocratização), art. 7º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM1.2</h4><p>A WWC pede um grupo encarregado da governança de dados. Instituído em decreto, e não só em portaria, o grupo fica estável, o que importa porque o DM1 é revalidado.</p></div>
+    </aside>
+  </article>
+  <article class="art alterado" id="art6" data-tipo="alterado" data-sub="DM1.2 DM1.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 6º</span><span class="tag alterado">Alterado</span><span class="tag sub">DM1.2</span><span class="tag sub">DM1.1</span><span class="antigo">incisos VI e VII acrescidos</span></div>
+      <p>Art. 6º No âmbito do Programa SBC+i, compete ao Grupo de Trabalho Intersecretarial:</p>
+      <p class="inc">I - contribuir para a definição das diretrizes e prioridades estratégicas do Programa;</p>
+      <p class="inc">II - promover a articulação institucional entre as áreas representadas;</p>
+      <p class="inc">III - apreciar questões estratégicas e de caráter intersetorial relacionadas ao Programa;</p>
+      <p class="inc">IV - contribuir para a identificação e priorização de iniciativas estratégicas;</p>
+      <p class="inc">V - propor medidas destinadas ao desenvolvimento e à consolidação do Programa SBC+i;</p>
+      <p class="inc"><mark class="novo">VI - definir as diretrizes de governança e de uso estratégico de dados do Programa e acompanhar sua implementação, observado o Capítulo IV deste Decreto; e</mark></p>
+      <p class="inc"><mark class="novo">VII - aprovar o Plano de Governança de Dados de que trata o art. 11 deste Decreto, acompanhar sua execução e deliberar sobre sua revisão.</mark></p>
+      <p>Parágrafo único. Outras Secretarias Municipais, órgãos e entidades da Administração Pública Municipal poderão ser chamados a contribuir com o Grupo de Trabalho quando a matéria em análise estiver relacionada às respectivas competências.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>As cinco competências da minuta são genéricas. Nenhuma fala de dados, embora o projeto de lei tenha um eixo inteiro de "governança, planejamento, dados e inteligência de gestão".</p></div>
+      <div><h4>Intenção</h4><p>Tornar o GT que já existe o responsável pela governança de dados do Programa, em vez de criar mais um colegiado. Os incisos destacados são os únicos acréscimos.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM1.2 e DM1.1</h4><p>O DM1.2 pede um grupo com "responsabilidades definidas" sobre dados, e a WWC aceita como evidência o documento com os papéis do grupo: é este artigo. A aprovação do plano (inciso VII) liga o grupo ao DM1.1.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art7" data-tipo="novo" data-sub="DM1.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 7º</span><span class="tag novo">Novo</span><span class="tag sub">DM1.2</span></div>
+      <p>Art. 7º O Grupo de Trabalho reunir-se-á ordinariamente, no mínimo, uma vez a cada trimestre, em datas fixadas em calendário anual aprovado na primeira reunião de cada exercício.</p>
+      <p>Parágrafo único. Poderão ser convocadas reuniões extraordinárias a qualquer tempo, pelo coordenador, mediante comunicação prévia aos membros com antecedência mínima de 5 (cinco) dias úteis, acompanhada de pauta.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A minuta não diz quando o grupo se reúne. Sem isso, não há como demonstrar regularidade.</p></div>
+      <div><h4>Intenção</h4><p>Fixar o mínimo de uma reunião por trimestre, com calendário anual para que as datas não dependam de convocação avulsa. A redação segue o Decreto 23.236/2026, art. 5º. Se a Secretaria preferir mais frequência, basta trocar "trimestre" por "bimestre" ou "mês".</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM1.2</h4><p>É a exigência central do subcritério: o grupo "se reúne no mínimo a cada trimestre". A janela de avaliação do DM1 é trimestral.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art8" data-tipo="novo" data-sub="DM1.2 DM1.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 8º</span><span class="tag novo">Novo</span><span class="tag sub">DM1.2</span><span class="tag sub">DM1.3</span></div>
+      <p>Art. 8º Cada reunião do Grupo de Trabalho será registrada em ata, da qual constarão, no mínimo, a data, os participantes, a pauta, as deliberações, os encaminhamentos e os respectivos responsáveis e prazos.</p>
+      <p>§ 1º As atas e os documentos apreciados serão juntados a processo administrativo próprio, para registro e acompanhamento dos trabalhos.</p>
+      <p>§ 2º As atas serão disponibilizadas no Portal SBC+i, observadas as restrições de acesso previstas na legislação de acesso à informação e de proteção de dados pessoais.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Sem ata, a reunião não deixa prova. O processo do GT Cidade Inteligente (SB 65650/2026) foi arquivado sem nenhuma ata.</p></div>
+      <div><h4>Intenção</h4><p>Definir o que a ata precisa conter e onde fica guardada (processo próprio, como no Decreto 23.236/2026, art. 6º). Publicar as atas no Portal deixa o trabalho do grupo visível à população.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM1.2 e DM1.3</h4><p>A evidência que a WWC pede para o DM1.2 são as "atas ou pautas das duas reuniões mais recentes". A publicação (§ 2º) reforça a transparência e a prestação de contas do DM1.3.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art9" data-tipo="novo" data-sub="DM1.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 9º</span><span class="tag novo">Novo</span><span class="tag sub">DM1.2</span></div>
+      <p>Art. 9º Participarão das reuniões do Grupo de Trabalho cuja pauta envolva governança, uso ou proteção de dados, sem prejuízo da composição definida na portaria de que trata o § 1º do art. 5º:</p>
+      <p class="inc">I - o Diretor do Departamento de Tecnologia da Informação (SA-3), em razão da competência prevista no inciso XIII do art. 645 da Lei Municipal nº 7.367, de 2025; e</p>
+      <p class="inc">II - o Encarregado de Proteção de Dados Pessoais da Administração Direta.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O GT é formado por secretários. Quem tem a competência legal de "definir a estratégia de dados do Município" é o DTI (Lei 7.367/2025, art. 645, XIII), e quem faz a ponte com a proteção de dados é o Encarregado.</p></div>
+      <div><h4>Intenção</h4><p>Levar essas duas funções às reuniões sobre dados sem mexer na composição de secretários definida pelo Prefeito.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM1.2</h4><p>Garante que o grupo responsável pela governança de dados reúna quem decide (secretários) e quem executa (DTI e Encarregado).</p></div>
+    </aside>
+  </article>
+
+  <div class="capitulo">Capítulo IV – Da governança de dados do Programa <span class="tag novo">Capítulo novo</span></div>
+  <article class="art novo" id="art10" data-tipo="novo" data-sub="DM1.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 10</span><span class="tag novo">Novo</span><span class="tag sub">DM1.1</span></div>
+      <p>Art. 10. Para os fins do inciso IV do art. 2º e do inciso IV do art. 3º da Lei Municipal nº ……, de …… de 2026, a governança de dados do Programa SBC+i terá os seguintes objetivos:</p>
+      <p class="inc">I - definir papéis e responsabilidades sobre os dados produzidos, coletados e mantidos pela Administração Municipal;</p>
+      <p class="inc">II - promover a qualidade, a padronização, a integração e a interoperabilidade dos dados entre os órgãos municipais;</p>
+      <p class="inc">III - fortalecer a capacidade dos servidores para utilizar dados no planejamento, na gestão e na tomada de decisões;</p>
+      <p class="inc">IV - ampliar a transparência e o acesso público aos dados, observada a legislação aplicável; e</p>
+      <p class="inc">V - utilizar dados e evidências na formulação, no monitoramento e na avaliação das políticas públicas.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O projeto de lei tem como princípio a "governança e utilização estratégica de dados" e como objetivo o "uso estratégico de dados", mas não diz o que isso significa na prática.</p></div>
+      <div><h4>Intenção</h4><p>Traduzir o princípio em cinco objetivos: governança, qualidade, capacidade, transparência e uso. Eles seguem o modelo de estratégia de dados (GovEx) indicado nos materiais da própria WWC.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM1.1</h4><p>O DM1.1 pede "aprovação executiva" e um "conjunto documentado de metas e objetivos". Com o decreto assinado pelo Prefeito, as duas condições ficam atendidas no mesmo ato.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art11" data-tipo="novo" data-sub="DM1.1 DM1.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 11</span><span class="tag novo">Novo</span><span class="tag sub">DM1.1</span><span class="tag sub">DM1.2</span></div>
+      <p>Art. 11. O Departamento de Tecnologia da Informação (SA-3), no exercício da competência prevista no inciso XIII do art. 645 da Lei Municipal nº 7.367, de 2025, elaborará o Plano de Governança de Dados do Programa SBC+i, a ser aprovado pelo Grupo de Trabalho Intersecretarial.</p>
+      <p>§ 1º O Plano de Governança de Dados conterá, para cada um dos objetivos do art. 10, as metas, as ações, os órgãos responsáveis, os prazos e os indicadores de acompanhamento.</p>
+      <p>§ 2º O Plano será revisado, no mínimo, anualmente e publicado no Portal SBC+i.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Objetivos sem metas não podem ser acompanhados. E o DTI tem, desde 2025, a competência legal de definir a estratégia de dados, mas não há documento que a tenha exercido.</p></div>
+      <div><h4>Intenção</h4><p>Transformar os objetivos em um plano com metas, responsáveis e prazos: o DTI elabora, o GT aprova, a revisão é anual e o resultado é público. O plano também vira a pauta natural das reuniões trimestrais.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM1.1 e DM1.2</h4><p>É a "estratégia de dados" que o DM1.1 cita e o que sustenta o critério na revalidação. Acompanhar o plano dá conteúdo às reuniões exigidas no DM1.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art12" data-tipo="novo" data-sub="DM1.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 12</span><span class="tag novo">Novo</span><span class="tag sub">DM1.3</span></div>
+      <p>Art. 12. O tratamento e o uso de dados no âmbito do Programa SBC+i, inclusive por meio de soluções de inteligência artificial e de decisões automatizadas, observarão os seguintes princípios, sem prejuízo da legislação de proteção de dados pessoais e de segurança da informação:</p>
+      <p class="inc">I - transparência: informação clara à população sobre quais dados são utilizados, para quais finalidades e com quais resultados;</p>
+      <p class="inc">II - prestação de contas: identificação dos responsáveis pelas decisões baseadas em dados e registro dessas decisões;</p>
+      <p class="inc">III - uso ético e não discriminação: vedação ao uso de dados para fins discriminatórios ilícitos ou abusivos e avaliação dos efeitos das iniciativas sobre os diferentes grupos da população;</p>
+      <p class="inc">IV - equidade: uso de dados para identificar desigualdades e orientar a oferta de serviços públicos a quem mais precisa;</p>
+      <p class="inc">V - supervisão humana: decisões automatizadas que afetem direitos dos cidadãos serão passíveis de revisão por agente público;</p>
+      <p class="inc">VI - privacidade e minimização: coleta e tratamento limitados ao necessário para a finalidade pública; e</p>
+      <p class="inc">VII - soberania sobre os dados: os contratos, convênios e parcerias firmados no âmbito do Programa assegurarão ao Município a titularidade e o acesso aos dados gerados.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Nenhum ato do Município reúne transparência, prestação de contas e uso ético de dados. Há peças dispersas: a LGPD no Decreto 22.963/2025 e princípios na Lei 7.578/2026 (inovação).</p></div>
+      <div><h4>Intenção</h4><p>Reunir sete princípios em um só lugar, seguindo a diretiva de governança de dados de San Antonio (Anexo A), um dos modelos da WWC, adaptada à LGPD. Inteligência artificial e decisões automatizadas estão incluídas porque o Município tem uma política de IA em minuta; o artigo não a antecipa, só fixa princípios gerais que ela pode detalhar.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM1.3</h4><p>É o próprio subcritério: uma estrutura que enfatiza "transparência, prestação de contas e uso ético de dados a serviço de todos os residentes". Equidade e não discriminação respondem ao "todos os residentes".</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art13" data-tipo="novo" data-sub="DM1.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 13</span><span class="tag novo">Novo</span><span class="tag sub">DM1.2</span></div>
+      <p>Art. 13. A governança de dados de que trata este Capítulo será exercida em articulação com o Comitê Gestor de Proteção de Dados (CGPD), preservadas as competências que lhe atribui o Decreto Municipal nº 22.963, de 2025.</p>
+      <p>Parágrafo único. As matérias que envolvam tratamento de dados pessoais serão encaminhadas ao CGPD, quando necessário, para manifestação.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O CGPD, criado pelo Decreto 22.963/2025 e com membros nomeados pela Portaria 10.510/2026, já cuida da conformidade com a LGPD. Sem uma regra escrita, os dois grupos poderiam disputar o mesmo papel.</p></div>
+      <div><h4>Intenção</h4><p>Deixar a divisão clara: o GT cuida da estratégia e do uso dos dados; o CGPD, da proteção de dados pessoais. Nada muda no Decreto 22.963.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM1.2</h4><p>As responsabilidades do grupo de governança de dados ficam definidas também pelo que ele não faz, sem sobreposição com o comitê de LGPD.</p></div>
+    </aside>
+  </article>
+
+  <div class="capitulo">Capítulo V – Da comunicação institucional</div>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 14</span><span class="tag igual">Sem alteração</span><span class="antigo">antigo art. 7º</span></div>
+      <p>Art. 14. A Secretaria de Comunicação participará do Programa SBC+i, no âmbito de suas competências legais, atuando de forma articulada com a Secretaria de Administração e os demais órgãos e entidades municipais envolvidos.</p></div>
+  </article>
+
+  <div class="capitulo">Capítulo VI – Das responsabilidades dos órgãos e entidades</div>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 15</span><span class="tag igual">Sem alteração</span><span class="antigo">antigo art. 8º</span></div>
+      <p>Art. 15. Os órgãos e entidades responsáveis pelas iniciativas integrantes do Programa SBC+i permanecerão responsáveis, no âmbito de suas competências legais, pela respectiva formulação e execução.</p>
+      <p>Parágrafo único. A participação de projeto, ação ou iniciativa no SBC+i não implica transferência à Secretaria de Administração das atribuições técnicas, administrativas, orçamentárias, financeiras, contratuais ou operacionais pertencentes ao órgão ou entidade responsável.</p></div>
+  </article>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 16</span><span class="tag igual">Sem alteração</span><span class="antigo">antigo art. 9º</span></div>
+      <p>Art. 16. Os órgãos e entidades participantes deverão colaborar com a governança do Programa e fornecer as informações necessárias ao seu acompanhamento institucional, observadas suas respectivas competências.</p></div>
+  </article>
+
+  <div class="capitulo">Capítulo VII – Da articulação institucional e da cooperação</div>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 17</span><span class="tag igual">Sem alteração</span><span class="antigo">antigo art. 10</span></div>
+      <p>Art. 17. A Secretaria de Administração poderá promover, em articulação com as Secretarias Municipais e os demais órgãos competentes, iniciativas de cooperação institucional destinadas ao desenvolvimento e ao fortalecimento do Programa SBC+i.</p>
+      <p>Parágrafo único. As iniciativas de cooperação poderão envolver órgãos e entidades de outras esferas de governo, instituições de ensino e pesquisa, organismos nacionais e internacionais, entidades públicas e privadas e demais atores relacionados aos objetivos do Programa, observada a legislação aplicável.</p></div>
+  </article>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 18</span><span class="tag igual">Sem alteração</span><span class="antigo">antigo art. 11</span></div>
+      <p>Art. 18. A identificação e a articulação de oportunidades de financiamento, fomento e captação de recursos para iniciativas integrantes do Programa SBC+i serão realizadas em conjunto com as Secretarias Municipais e os demais órgãos municipais competentes, respeitadas suas atribuições legais.</p></div>
+  </article>
+
+  <div class="capitulo">Capítulo VIII – Da transparência e da divulgação institucional</div>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 19</span><span class="tag igual">Sem alteração</span><span class="antigo">antigo art. 12</span></div>
+      <p>Art. 19. As informações de interesse público relativas ao Programa SBC+i poderão ser divulgadas no Portal SBC+i - Cidade Inteligente e nos demais canais oficiais do Município, observadas as normas aplicáveis de transparência, acesso à informação, segurança da informação e proteção de dados pessoais.</p>
+      <p>Parágrafo único. O Portal SBC+i poderá reunir informações institucionais sobre os eixos estratégicos, iniciativas, projetos, entregas, indicadores, resultados, participação em redes e programas e demais conteúdos relacionados à estratégia municipal de cidade inteligente.</p></div>
+  </article>
+  <article class="art novo" id="art20" data-tipo="novo" data-sub="DM1.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 20</span><span class="tag novo">Novo</span><span class="tag sub">DM1.3</span></div>
+      <p>Art. 20. A Secretaria de Administração publicará no Portal SBC+i, até 31 de março de cada ano, relatório das atividades do exercício anterior, contendo, no mínimo:</p>
+      <p class="inc">I - o andamento das iniciativas integrantes do Programa;</p>
+      <p class="inc">II - a execução do Plano de Governança de Dados, com a situação de cada meta; e</p>
+      <p class="inc">III - as reuniões realizadas pelo Grupo de Trabalho Intersecretarial e suas principais deliberações.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O Programa não prevê prestação de contas periódica: o art. 19 só permite divulgar, não obriga.</p></div>
+      <div><h4>Intenção</h4><p>Fechar o ciclo uma vez por ano: o que foi planejado, o que foi feito e quando o grupo se reuniu. A data de 31 de março dá tempo de consolidar o ano anterior.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM1.3</h4><p>Concretiza a "prestação de contas" do DM1.3. O mesmo relatório pode servir depois ao OD1.3 (relatório anual da política de dados abertos), conforme o critério OD1 for analisado.</p></div>
+    </aside>
+  </article>
+
+  <div class="capitulo">Capítulo IX – Das disposições finais</div>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 21</span><span class="tag igual">Sem alteração</span><span class="antigo">antigo art. 13</span></div>
+      <p>Art. 21. A composição da equipe responsável pelo apoio à gestão e operacionalização do Programa SBC+i, bem como as funções, atribuições e responsabilidades de seus integrantes, serão definidas por portaria da Secretaria de Administração, observadas as competências legais dos órgãos e agentes públicos envolvidos.</p></div>
+  </article>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 22</span><span class="tag igual">Sem alteração</span><span class="antigo">antigo art. 14</span></div>
+      <p>Art. 22. A Secretaria de Administração poderá expedir, no âmbito de suas competências, orientações e atos complementares necessários à governança e à articulação institucional do Programa SBC+i.</p></div>
+  </article>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 23</span><span class="tag igual">Sem alteração</span><span class="antigo">antigo art. 15</span></div>
+      <p>Art. 23. A participação no Programa SBC+i é considerada prestação de serviço público relevante, não remunerada, e ocorrerá sem prejuízo das atribuições ordinárias dos agentes públicos envolvidos.</p></div>
+  </article>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 24</span><span class="tag igual">Sem alteração</span><span class="antigo">antigo art. 16</span></div>
+      <p>Art. 24. As despesas eventualmente decorrentes da execução das iniciativas integrantes do Programa correrão por conta das dotações próprias dos órgãos e entidades responsáveis, observada a legislação aplicável.</p></div>
+  </article>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 25</span><span class="tag igual">Sem alteração</span><span class="antigo">antigo art. 17</span></div>
+      <p>Art. 25. Os casos omissos relacionados à governança e à articulação institucional do Programa serão apreciados pela Secretaria de Administração, observadas as competências dos demais órgãos e instâncias da Administração Municipal.</p></div>
+  </article>
+  <article class="art novo" id="art26" data-tipo="novo" data-sub="DM1.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 26</span><span class="tag novo">Novo</span><span class="tag sub">DM1.2</span></div>
+      <p>Art. 26. Até a edição da portaria de que trata o § 1º do art. 5º, o Grupo de Trabalho Intersecretarial será integrado pelos membros designados pela Portaria nº 10.500, de 7 de julho de 2026, ficando convalidados os atos por eles praticados.</p>
+      <p>Parágrafo único. A primeira reunião ordinária do Grupo de Trabalho será realizada em até 30 (trinta) dias da publicação deste Decreto.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Com o art. 5º reescrito, é preciso dizer o que acontece com o grupo atual. A Procuradoria sugeriu, como segunda saída, "convalidar as designações e manter os trabalhos" do GT em artigo próprio.</p></div>
+      <div><h4>Intenção</h4><p>Manter os membros da Portaria 10.500 até a portaria nova, sem interromper o trabalho, e fixar prazo curto para a primeira reunião depois do decreto.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM1.2</h4><p>Quanto antes as reuniões começarem, antes o Município acumula as atas que a WWC pede como evidência.</p></div>
+    </aside>
+  </article>
+  <article class="art igual" data-tipo="igual" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 27</span><span class="tag igual">Sem alteração</span><span class="antigo">antigo art. 18</span></div>
+      <p>Art. 27. Este Decreto entra em vigor na data de sua publicação.</p></div>
+  </article>
+
+  <div class="assinatura" data-bloco="assinatura">São Bernardo do Campo, ………..<br><b>Prefeito</b></div>
+  <div class="vazio" id="vazio">Nenhum artigo corresponde ao filtro escolhido.</div>
+</section>
+
+<section class="cartao obs">
+  <h2>Observações para a decisão</h2>
+  <ol>
+    <li><b>Prazo da certificação (18/12/2026).</b> O decreto só pode ser publicado depois da lei, que depende da Câmara. Não é possível estimar aqui se isso acontece antes de 18/12.</li>
+    <li class="destaque"><b>O GT pode começar a se reunir antes do decreto.</b> Ele já foi constituído pela Portaria 10.500/2026. Se o grupo fizer desde já reuniões com pauta de governança de dados, registradas em ata, essas atas servem de evidência para o DM1.2, qualquer que seja a data do decreto. As atas devem registrar reuniões que de fato aconteceram, nas datas em que aconteceram.</li>
+    <li><b>O que a proposta não trata, de propósito:</b> a política de dados abertos (critério OD1), que pode entrar neste decreto ou em ato próprio e ainda está em análise; a política de IA, que está em minuta; e qualquer mudança no Decreto 22.963/2025.</li>
+    <li><b>Ato guarda-chuva.</b> Se o Município optar pelo ato de governança que reúne SBC+i, IA, interoperabilidade, sandbox, LGPD e segurança da informação, o Capítulo IV desta proposta pode passar para ele sem perda.</li>
+  </ol>
+</section>
+
+<section class="cartao fontes">
+  <h2>Fontes</h2>
+  <ul>
+    <li>Processo SB 100.144/2026-77: projeto de lei (MINUTA PGM-4/116/2026), minuta de decreto (MINUTA PGM-4/219/2026) e manifestação da PGM-4 de 20/10/2026.</li>
+    <li>Lei Municipal nº 7.367/2025, art. 645, XIII (competência do DTI).</li>
+    <li>Decreto Municipal nº 22.963/2025 (Programa de Proteção de Dados e CGPD), arts. 3º e 4º; Portaria nº 10.510/2026.</li>
+    <li>Decreto Municipal nº 23.236/2026 (Grupo de Trabalho Municipal de Desburocratização), arts. 5º a 7º.</li>
+    <li>Portaria nº 10.500/2026 e processo SB 65650/2026 (GT Cidade Inteligente).</li>
+    <li>What Works Cities, critério DM1: definição, subcritérios e evidências sugeridas.</li>
+    <li>Modelos indicados pela WWC: estratégia de dados GovEx; diretiva de governança de dados de San Antonio (Anexo A); política de dados abertos de Baton Rouge (Partes 3 e 5).</li>
+  </ul>
+</section>
+
+</main>
+<div class="rodape">Proposta preparada para o Painel WWC · SBC. Não substitui a análise da Procuradoria.</div>
+
+<script>
+(function () {
+  var estado = { modo: 'tudo', sub: 'todos' };
+  var arts = Array.prototype.slice.call(document.querySelectorAll('.art'));
+  var caps = Array.prototype.slice.call(document.querySelectorAll('.capitulo'));
+  var blocos = Array.prototype.slice.call(document.querySelectorAll('[data-bloco]'));
+
+  function aplicar() {
+    var visiveis = 0;
+    arts.forEach(function (a) {
+      var tipo = a.getAttribute('data-tipo');
+      var subs = (a.getAttribute('data-sub') || '').split(' ');
+      var ok = (estado.modo === 'tudo' || tipo !== 'igual') && (estado.sub === 'todos' || subs.indexOf(estado.sub) >= 0);
+      a.hidden = !ok;
+      if (ok) visiveis++;
+    });
+    caps.forEach(function (c) {
+      var el = c.nextElementSibling, algum = false;
+      while (el && el.classList.contains('art')) { if (!el.hidden) algum = true; el = el.nextElementSibling; }
+      c.hidden = !algum;
+    });
+    var completo = estado.modo === 'tudo' && estado.sub === 'todos';
+    blocos.forEach(function (b) { b.hidden = !completo; });
+    document.getElementById('vazio').style.display = visiveis ? 'none' : 'block';
+    var novos = arts.filter(function (a) { return !a.hidden && a.getAttribute('data-tipo') === 'novo'; }).length;
+    var alt = arts.filter(function (a) { return !a.hidden && a.getAttribute('data-tipo') === 'alterado'; }).length;
+    document.getElementById('contagem').textContent = visiveis + ' de ' + arts.length + ' artigos · ' + novos + ' novos · ' + alt + ' alterados';
+  }
+
+  document.querySelectorAll('[data-filtro]').forEach(function (g) {
+    g.addEventListener('click', function (e) {
+      var b = e.target.closest('button');
+      if (!b) return;
+      estado[g.getAttribute('data-filtro')] = b.getAttribute('data-v');
+      g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      aplicar();
+    });
+  });
+
+  document.querySelectorAll('.sub-card .arts a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var alvo = document.querySelector(a.getAttribute('href'));
+      if (alvo && alvo.hidden) {
+        estado.modo = 'tudo'; estado.sub = 'todos';
+        document.querySelectorAll('[data-filtro] button').forEach(function (x) { x.setAttribute('aria-pressed', (x.getAttribute('data-v') === 'tudo' || x.getAttribute('data-v') === 'todos') ? 'true' : 'false'); });
+        aplicar();
+      }
+    });
+  });
+
+  aplicar();
+})();
+</script>
+</body>
+</html>
