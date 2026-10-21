@@ -283,11 +283,14 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
   const PEDIDO = {
     a_pedir:    { r: 'A pedir', c: 't-cinza' },
     pedido:     { r: 'Pedido', c: 't-azul' },
-    recebido:   { r: 'Recebido', c: 't-verde' },
+    recebido:   { r: 'Recebido, em análise', c: 't-laranja' },
+    validado:   { r: 'Validado', c: 't-verde' },
     nao_existe: { r: 'Não existe', c: 't-vermelho' }
   };
-  const TITULO_CHECK = 'Atualizado pelo projeto a cada avanço; não é clicável';
-  const AVISO_CHECK = `<div class="nota" style="margin:0 0 8px">Marcado pelo projeto a cada avanço (documento recebido, estudado ou etapa concluída). Não é clicável. Para atualizar um item, avise quem mantém o painel.</div>`;
+  const pedidoConcluido = p => p.status === 'validado' || p.status === 'nao_existe';
+  const avisoCheck = t => `<div class="nota" style="margin:0 0 8px">${t}</div>`;
+  const AVISO_PLANO = avisoCheck('Uma etapa avança quando o estudo, a análise e a validação correspondentes estão concluídos, não apenas quando algo é entregue.');
+  const AVISO_PEDIDOS = avisoCheck('Um documento avança quando é estudado, analisado e validado. Receber o documento não conclui o item.');
   const tag = (o, extra) => o ? `<span class="tag ${o.c}">${esc(o.r)}${extra || ''}</span>` : '';
   const fmtData = iso => { const [a, m, d] = iso.split('-'); return `${d}/${m}/${a}`; };
   const areaNome = id => (P.areas.find(a => a.id === id) || {}).nome || id;
@@ -304,7 +307,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
   const porFicha = k => P.criterios.filter(c => c.ficha === k).length;
   const comFicha = P.criterios.filter(c => c.ficha !== 'nao_iniciada').length;
   const decisoes = P.criterios.filter(c => c.decisao).length;
-  const pedidosAbertos = P.criterios.flatMap(c => c.pedidos || []).filter(p => p.status !== 'recebido' && p.status !== 'nao_existe').length;
+  const pedidosAbertos = P.criterios.flatMap(c => c.pedidos || []).filter(p => !pedidoConcluido(p)).length;
   const subs = P.criterios.flatMap(c => c.subcriterios || []);
   const subsAvaliados = subs.filter(s => s.situacao).length;
 
@@ -395,16 +398,16 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       analise += `<h3>Plano de ação</h3>
         <div class="progresso" style="margin:0 0 10px"><div class="rotulo"><span>Etapas concluídas</span><span>${feitos} de ${c.plano.length}</span></div>
         <div class="trilho"><span style="width:${planoPct(c)}%;background:var(--verde)"></span></div></div>
-        ${AVISO_CHECK}
-        <ul class="checklist">${c.plano.map(p => `<li class="${p.feito ? 'feito' : ''}" title="${TITULO_CHECK}"><span class="caixa">${p.feito ? '✓' : ''}</span><span>${esc(p.texto)}${p.ancora ? ` · <a href="#${p.ancora}">ver</a>` : ''}</span></li>`).join('')}</ul>`;
+        ${AVISO_PLANO}
+        <ul class="checklist">${c.plano.map(p => `<li class="${p.feito ? 'feito' : ''}"><span class="caixa">${p.feito ? '✓' : ''}</span><span>${esc(p.texto)}${p.ancora ? ` · <a href="#${p.ancora}">ver</a>` : ''}</span></li>`).join('')}</ul>`;
     }
     if (c.pedidos && c.pedidos.length) {
-      const resolvidos = c.pedidos.filter(p => p.status === 'recebido' || p.status === 'nao_existe').length;
+      const resolvidos = c.pedidos.filter(pedidoConcluido).length;
       analise += `<h3 id="pedidos-${c.codigo}">Documentos a obter com a equipe</h3>
-        <div class="progresso" style="margin:0 0 10px"><div class="rotulo"><span>Respondidos (recebido ou não existe)</span><span>${resolvidos} de ${c.pedidos.length}</span></div>
+        <div class="progresso" style="margin:0 0 10px"><div class="rotulo"><span>Concluídos (validados ou inexistentes)</span><span>${resolvidos} de ${c.pedidos.length}</span></div>
         <div class="trilho"><span style="width:${100 * resolvidos / c.pedidos.length}%;background:var(--verde)"></span></div></div>
-        ${AVISO_CHECK}
-        <ul class="checklist">${c.pedidos.map(p => `<li class="${p.status === 'recebido' || p.status === 'nao_existe' ? 'feito' : ''}" title="${TITULO_CHECK}"><span class="caixa">${p.status === 'recebido' || p.status === 'nao_existe' ? '✓' : ''}</span><span>${esc(p.texto)} ${tag(PEDIDO[p.status])}</span></li>`).join('')}</ul>`;
+        ${AVISO_PEDIDOS}
+        <ul class="checklist">${c.pedidos.map(p => `<li class="${pedidoConcluido(p) ? 'feito' : ''}"><span class="caixa">${pedidoConcluido(p) ? '✓' : ''}</span><span>${esc(p.texto)} ${tag(PEDIDO[p.status])}</span></li>`).join('')}</ul>`;
     }
     if (c.modelos && c.modelos.length) {
       analise += `<h3>Modelos de outras cidades que ajudam</h3><div class="tabela-wrap"><table><thead><tr><th>Modelo</th><th>Ajuda em</th><th>O que aproveitar</th></tr></thead><tbody>${c.modelos.map(m => `<tr><td>${ext(m.u, m.nome)} ↗</td><td>${m.cobre.map(x => `<span class="tag t-azul">${x}</span>`).join(' ')}</td><td>${esc(m.texto)}</td></tr>`).join('')}</tbody></table></div>`;
