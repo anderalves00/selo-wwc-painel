@@ -30,6 +30,7 @@ window.PAINEL = {
   ],
 
   historico: [
+    { data: '2026-10-21', texto: 'DM1: lidos o termo de referência do PDTIC 2026–2029 (sem estratégia de dados), o processo do GT Cidade Inteligente (sem atas), a Lei 6.243/2012, o Decreto 21.620/2021 e os decretos de LGPD de São Paulo, Santo André, São José dos Campos, Porto Alegre e Campinas. Nenhum desses decretos fixa periodicidade de reunião: o DM1.2 terá de vir do ato de São Bernardo.' },
     { data: '2026-10-21', texto: 'Varredura das 206 edições do Notícias do Município de 2025 e 2026. DM1: localizada a Portaria 10.500/2026 (GT Cidade Inteligente, só com a composição) e o contrato do PDTIC 2026–2029.' },
     { data: '2026-10-21', texto: 'DM1: os 8 membros do CGPD foram nomeados pela Portaria 10.510/2026 (Notícias do Município nº 2676). O DM1.2 passa de "não tem" para "tem, mas incompleto": faltam as atas das reuniões.' },
     { data: '2026-10-21', texto: 'DM1: localizada a Portaria 10.364/2025, que designa a Encarregada de Proteção de Dados (Notícias do Município nº 2529). Falta a portaria dos representantes das secretarias no CGPD.' },
@@ -84,7 +85,7 @@ window.PAINEL = {
           { titulo: 'Relatório público periódico de progresso', texto: 'Reforça a prestação de contas e prepara o OD1.3 (relatório anual da política de dados abertos).' }
         ],
         naoServe: [
-          { titulo: 'PDTIC 2022–2025 e relatórios de acompanhamento', texto: 'Plano de TI (Decreto 21.944/2022), vencido. As reuniões do grupo eram só sugeridas, e os 4 relatórios (dez/2022 a jun/2024) não registram reuniões. O PDTIC 2026–2029 foi contratado em jul/2026 (FUNDUNESP, 12 meses): pode incluir estratégia de dados, a confirmar.', links: [{ t: 'Página do PDTIC', u: 'https://www.saobernardo.sp.gov.br/web/sbc/pd-tic' }, { t: 'Contrato do PDTIC 2026–2029 (NM nº 2674, p. 31)', u: 'https://www.saobernardo.sp.gov.br/documents/10181/2361282/NM+2674+de+31.07.2026+-+Conteu%CC%81do+Integral.pdf/e797dcab-b4a9-8f2f-a599-7ff7ae58bc45#page=31' }] },
+          { titulo: 'PDTIC 2022–2025, PDTIC 2026–2029 e o grupo do Decreto 21.620/2021', texto: 'Plano de TI (Decreto 21.944/2022), vencido. O grupo do Decreto 21.620/2021 só acompanhou a elaboração do plano, sem periodicidade de reunião, e os 4 relatórios (dez/2022 a jun/2024) não registram reuniões. O PDTIC 2026–2029 (FUNDUNESP, contratado em jul/2026, 12 meses) foi conferido no termo de referência: o escopo é governança de TIC, e governança de dados aparece como diretriz, não como entrega. Não fica pronto antes de 18/12.', links: [{ t: 'Página do PDTIC', u: 'https://www.saobernardo.sp.gov.br/web/sbc/pd-tic' }, { t: 'Contrato do PDTIC 2026–2029 (NM nº 2674, p. 31)', u: 'https://www.saobernardo.sp.gov.br/documents/10181/2361282/NM+2674+de+31.07.2026+-+Conteu%CC%81do+Integral.pdf/e797dcab-b4a9-8f2f-a599-7ff7ae58bc45#page=31' }] },
           { titulo: 'Decreto 22.453/2023: Política de Segurança da Informação', texto: 'Serve ao DM6 (segurança), não ao DM1.', links: [{ t: 'Decreto 22.453/2023', u: 'https://leis.org/0wdhm' }] },
           { titulo: 'Gesgov', texto: 'Plataforma de acompanhamento de metas anunciada em ago/2026, sem ato, contrato nem página oficial localizados. Não é evidência de governança de dados.' }
         ]
@@ -125,9 +126,9 @@ window.PAINEL = {
       ],
       pedidos: [
         { texto: 'Atas ou pautas das reuniões do CGPD desde ago/2026 (as portarias da Encarregada e dos membros já foram localizadas: 10.364/2025 e 10.510/2026)', status: 'a_pedir' },
-        { texto: 'Atas ou pautas do GT Cidade Inteligente (a Portaria 10.500/2026, com a composição, já foi localizada)', status: 'a_pedir' },
+        { texto: 'Atas ou pautas do GT Cidade Inteligente (o processo da Portaria 10.500/2026 foi lido e não tem atas; falta saber se o grupo se reuniu e onde estão os registros)', status: 'a_pedir' },
         { texto: 'Documento do DTI produzido com base no art. 645, XIII (estratégia, padrões ou políticas de dados)', status: 'a_pedir' },
-        { texto: 'Se o termo de referência do PDTIC 2026–2029 (contratado em jul/2026) inclui estratégia de dados', status: 'a_pedir' },
+        { texto: 'Se o termo de referência do PDTIC 2026–2029 inclui estratégia de dados (lido: não inclui; o escopo é governança de TIC)', status: 'validado' },
         { texto: 'Registros de reuniões de coordenação do SBC+i ou do Gesgov que tratem de dados', status: 'a_pedir' }
       ]
     },
