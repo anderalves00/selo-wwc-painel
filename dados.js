@@ -30,6 +30,7 @@ window.PAINEL = {
   ],
 
   historico: [
+    { data: '2026-10-21', texto: 'Varredura das 206 edições do Notícias do Município de 2025 e 2026. DM1: localizada a Portaria 10.500/2026 (GT Cidade Inteligente, só com a composição) e o contrato do PDTIC 2026–2029.' },
     { data: '2026-10-21', texto: 'DM1: os 8 membros do CGPD foram nomeados pela Portaria 10.510/2026 (Notícias do Município nº 2676). O DM1.2 passa de "não tem" para "tem, mas incompleto": faltam as atas das reuniões.' },
     { data: '2026-10-21', texto: 'DM1: localizada a Portaria 10.364/2025, que designa a Encarregada de Proteção de Dados (Notícias do Município nº 2529). Falta a portaria dos representantes das secretarias no CGPD.' },
     { data: '2026-10-21', texto: 'Cada critério ganhou a seção "Resposta para a plataforma": resposta a marcar, texto por subcritério com pendências destacadas, o que falta fechar, ideias para discutir e evidências a anexar. A seção abre quando a ficha chega a "atende" ou "atende juntando documentos".' },
@@ -71,8 +72,8 @@ window.PAINEL = {
         incompleto: [
           { titulo: 'Decreto 22.963/2025: Programa de Proteção de Dados e CGPD', texto: 'Aprovado pelo prefeito, cria o Comitê Gestor de Proteção de Dados (CGPD) com atribuições definidas. A Encarregada foi designada pela Portaria 10.364/2025, e os 8 membros do comitê (Controladoria, Secretaria de Administração e Procuradoria) foram nomeados pela Portaria 10.510/2026.', falta: 'Escopo além da LGPD; periodicidade de reunião no ato; atas das reuniões.',
             links: [{ t: 'Decreto 22.963/2025, art. 3º', u: 'https://leis.org/2cax4#:~:text=Art.%203%C2%BA' }, { t: 'Publicação oficial: NM nº 2529, p. 8–10 (decreto e Portaria 10.364)', u: 'https://www.saobernardo.sp.gov.br/documents/10181/2045904/NM%2B2529%2Bde%2B06.06.2025%2B-%2B%2BConteu%CC%81do%2BIntegral.pdf/105bbfa3-9bc7-fe37-c79f-75e1150b4c10#page=8' }, { t: 'Portaria 10.510/2026: membros do CGPD (NM nº 2676, p. 16)', u: NM2676 }] },
-          { titulo: 'GT Cidade Inteligente do SBC+i (Portaria 10.500/2026)', texto: 'O portal do SBC+i cita um GT de 2026 como instância do programa, que integra "dados e governança".', falta: 'A portaria não foi localizada publicada. Não se sabe quem assinou, se o GT trata de dados nem se se reúne.',
-            links: [{ t: 'Portal SBC+i', u: 'https://cidadeinteligente.saobernardo.sp.gov.br' }] },
+          { titulo: 'GT Cidade Inteligente do SBC+i (Portaria 10.500/2026)', texto: 'A Portaria 10.500, de 07/07/2026, designa 5 secretários (Administração, que coordena; Segurança; Transporte; Fazenda; Planejamento Urbano) para o grupo de trabalho do programa de cidade inteligente.', falta: 'A portaria não define atribuições, periodicidade de reunião nem atas, e não cita dados.',
+            links: [{ t: 'Portaria 10.500/2026 (NM nº 2661, p. 2)', u: 'https://www.saobernardo.sp.gov.br/documents/10181/2361282/NM+2661+de+08.07.2026+-+Conteu%CC%81do+Integral.pdf/505b66ea-e307-5c8c-5bf4-1ce932e5ede3#page=2' }, { t: 'Portal SBC+i', u: 'https://cidadeinteligente.saobernardo.sp.gov.br' }] },
           { titulo: 'Lei 7.578/2026: Política Municipal de Inovação', texto: 'Tem entre seus princípios "transparência e governança colaborativa" e "privacidade e proteção de dados".', falta: 'Não é política de dados. Pode ser citada como apoio ao DM1.3.',
             links: [{ t: 'Lei 7.578/2026, art. 2º', u: LEIS + 'lei-ordinaria/2026/7578/lei-ordinaria-n-7578-2026-institui-a-politica-municipal-de-inovacao-dispoe-sobre-instrumentos-de-fomento-a-pesquisa-cientifica-ao-desenvolvimento-tecnologico-e-a-inovacao-no-municipio-de-sao-bernardo-do-campo-e-da-outras/#:~:text=Art.%202%C2%BA' }] }
         ],
@@ -83,7 +84,7 @@ window.PAINEL = {
           { titulo: 'Relatório público periódico de progresso', texto: 'Reforça a prestação de contas e prepara o OD1.3 (relatório anual da política de dados abertos).' }
         ],
         naoServe: [
-          { titulo: 'PDTIC 2022–2025 e relatórios de acompanhamento', texto: 'Plano de TI, vencido. As reuniões do grupo eram só sugeridas, e os 4 relatórios (dez/2022 a jun/2024) não registram reuniões.', links: [{ t: 'Página do PDTIC', u: 'https://www.saobernardo.sp.gov.br/web/sbc/pd-tic' }] },
+          { titulo: 'PDTIC 2022–2025 e relatórios de acompanhamento', texto: 'Plano de TI (Decreto 21.944/2022), vencido. As reuniões do grupo eram só sugeridas, e os 4 relatórios (dez/2022 a jun/2024) não registram reuniões. O PDTIC 2026–2029 foi contratado em jul/2026 (FUNDUNESP, 12 meses): pode incluir estratégia de dados, a confirmar.', links: [{ t: 'Página do PDTIC', u: 'https://www.saobernardo.sp.gov.br/web/sbc/pd-tic' }, { t: 'Contrato do PDTIC 2026–2029 (NM nº 2674, p. 31)', u: 'https://www.saobernardo.sp.gov.br/documents/10181/2361282/NM+2674+de+31.07.2026+-+Conteu%CC%81do+Integral.pdf/e797dcab-b4a9-8f2f-a599-7ff7ae58bc45#page=31' }] },
           { titulo: 'Decreto 22.453/2023: Política de Segurança da Informação', texto: 'Serve ao DM6 (segurança), não ao DM1.', links: [{ t: 'Decreto 22.453/2023', u: 'https://leis.org/0wdhm' }] },
           { titulo: 'Gesgov', texto: 'Plataforma de acompanhamento de metas anunciada em ago/2026, sem ato, contrato nem página oficial localizados. Não é evidência de governança de dados.' }
         ]
@@ -97,7 +98,7 @@ window.PAINEL = {
           { id: 'B', nome: 'Ampliar o Decreto 22.963/2025', descricao: 'Transformar o CGPD em comitê de proteção e governança de dados, acrescentando estratégia, princípios e periodicidade.',
             pros: 'Aproveita um colegiado que já existe, com membros nomeados (Portaria 10.510/2026) e o DTI representado.', contras: 'A coordenação é da Controladoria, enquanto a lei dá a estratégia de dados ao DTI; mistura conformidade com uso de dados.' },
           { id: 'C', nome: 'Usar o GT Cidade Inteligente (SBC+i)', descricao: 'O GT seria o grupo do DM1.2, com a estratégia aprovada pelo prefeito em documento à parte.',
-            pros: 'Aproveita o programa SBC+i.', contras: 'A portaria não foi localizada; não se sabe se trata de dados; GT costuma ser temporário.' }
+            pros: 'Aproveita o programa SBC+i.', contras: 'A Portaria 10.500/2026 só nomeia os membros: não define atribuições sobre dados nem reuniões; GT costuma ser temporário.' }
         ],
         nota: 'Se a equipe tiver atas do CGPD ou do GT (pedidos abaixo), as opções B ou C ganham força para o DM1.2.'
       },
@@ -124,9 +125,9 @@ window.PAINEL = {
       ],
       pedidos: [
         { texto: 'Atas ou pautas das reuniões do CGPD desde ago/2026 (as portarias da Encarregada e dos membros já foram localizadas: 10.364/2025 e 10.510/2026)', status: 'a_pedir' },
-        { texto: 'Portaria 10.500/2026, composição do GT Cidade Inteligente e atas ou pautas', status: 'a_pedir' },
+        { texto: 'Atas ou pautas do GT Cidade Inteligente (a Portaria 10.500/2026, com a composição, já foi localizada)', status: 'a_pedir' },
         { texto: 'Documento do DTI produzido com base no art. 645, XIII (estratégia, padrões ou políticas de dados)', status: 'a_pedir' },
-        { texto: 'Se o termo de referência do PDTIC 2026–2029 inclui estratégia de dados', status: 'a_pedir' },
+        { texto: 'Se o termo de referência do PDTIC 2026–2029 (contratado em jul/2026) inclui estratégia de dados', status: 'a_pedir' },
         { texto: 'Registros de reuniões de coordenação do SBC+i ou do Gesgov que tratem de dados', status: 'a_pedir' }
       ]
     },
