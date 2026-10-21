@@ -1,6 +1,8 @@
 // Conteúdo do painel. É o único arquivo que muda a cada avanço do trabalho.
 // Fonte da verdade: as fichas em .claude/docs/fichas/ do repositório privado Selo_WWC.
 // Nada de nomes de servidores, e-mails ou telefones aqui: o painel é público (publicar.ps1 verifica).
+// Relatório de aderência, por critério (opcional): relatorio: { status: 'rascunho' | 'final', url, pendencias, atualizado: 'AAAA-MM-DD' }.
+// Sem url, o botão aparece desativado. O documento em si nunca entra neste repositório: só o link.
 
 const LEIS = 'https://leis.org/prefeitura/sp/sao-bernardo-do-campo/lei/';
 
@@ -22,6 +24,7 @@ window.PAINEL = {
   ],
 
   historico: [
+    { data: '2026-10-21', texto: 'Cada critério ganhou o atalho para o seu relatório de aderência. Fica desativado até o relatório existir.' },
     { data: '2026-10-21', texto: 'Documentos e etapas do plano só são marcados como concluídos depois de estudados, analisados e validados. Receber um documento passa a ser um estágio intermediário ("Recebido, em análise").' },
     { data: '2026-10-21', texto: 'Barras de andamento passam a encher da esquerda para a direita. Os três níveis de certificação foram explicados. Os documentos a obter ganharam barra de progresso. A legenda passou a explicar o que é uma ficha.' },
     { data: '2026-10-20', texto: 'Painel criado. Ficha do DM1 em rascunho: análise completa, decisão sobre o instrumento em aberto e 5 pedidos de documentos à equipe.' }

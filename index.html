@@ -44,6 +44,13 @@ h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
 .barra-int select { padding: 7px 10px; border: 1px solid var(--borda); border-radius: 8px; font: inherit; background: #fff; }
 .botao { border: 1px solid var(--azul); background: #fff; color: var(--azul); padding: 6px 12px; border-radius: 8px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
 .botao:hover { background: var(--azul-claro); }
+.relatorio { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 14px; }
+.botao-rel { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 8px; font: 700 14px "Open Sans", sans-serif; text-decoration: none; border: 1px solid var(--azul); background: var(--azul); color: #fff; }
+.botao-rel:hover { background: var(--azul-esc); color: #fff; }
+.botao-rel.rascunho { background: var(--laranja-claro); border-color: var(--laranja); color: var(--laranja-esc); }
+.botao-rel.rascunho:hover { background: #ffe2c2; color: var(--laranja-esc); }
+.botao-rel.desativado { background: #eef1f4; border-color: var(--borda); color: #98a2ab; cursor: not-allowed; }
+.relatorio .nota { margin: 0; }
 
 /* Estrutura */
 .layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 24px; padding: 24px 32px 48px; }
@@ -332,7 +339,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
   $('#contexto').innerHTML = P.contexto.map(t => `<li>${esc(t)}</li>`).join('');
 
   // Ordem de trabalho
-  $('#tabela-ordem').innerHTML = `<thead><tr><th>#</th><th>Critério</th><th>Área</th><th>Regra</th><th>Janela</th><th>Andamento</th><th>Classificação</th><th>Plano</th></tr></thead><tbody>` +
+  $('#tabela-ordem').innerHTML = `<thead><tr><th>#</th><th>Critério</th><th>Área</th><th>Regra</th><th>Janela</th><th>Andamento</th><th>Classificação</th><th>Plano</th><th>Relatório</th></tr></thead><tbody>` +
     ordenados.map(c => `<tr class="clicavel" data-alvo="${c.codigo}">
       <td>${c.ordem}</td>
       <td><a href="#${c.codigo}"><strong>${c.codigo}</strong></a> ${esc(c.titulo)} ${c.essencial ? '<span class="tag t-essencial">Essencial</span>' : ''}</td>
@@ -342,6 +349,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       <td>${tag(FICHA[c.ficha])}</td>
       <td>${c.classificacao ? tag(CLASSE[c.classificacao]) : '<span class="tag t-borda">Não avaliado</span>'}</td>
       <td>${c.plano ? `<span class="mini-trilho"><span style="width:${planoPct(c)}%"></span></span> ${planoPct(c)}%` : '—'}</td>
+      <td>${c.relatorio && c.relatorio.url ? `<a href="${esc(c.relatorio.url)}" target="_blank" rel="noopener noreferrer">${c.relatorio.status === 'final' ? 'Final' : 'Rascunho'} ↗</a>` : '<span class="tag t-borda">Não iniciado</span>'}</td>
     </tr>`).join('') + '</tbody>';
   document.querySelectorAll('tr.clicavel').forEach(tr => tr.addEventListener('click', e => { if (e.target.tagName !== 'A') abrir(tr.dataset.alvo, true); }));
 
@@ -366,6 +374,15 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
     P.areas.map(a => `<h2>${a.id} · ${esc(a.nome)}</h2>` + daArea(a.id)
       .map(c => `<a href="#${c.codigo}" data-nav="${c.codigo}"><span class="ponto" style="background:${FICHA[c.ficha].cor}" title="${esc(FICHA[c.ficha].r)}"></span><span class="cod">${c.codigo}</span><span class="tit">${esc(c.titulo)}</span></a>`).join('')).join('') +
     `<h2>Referência</h2><a href="#legenda"><span class="tit" style="color:inherit">Como ler</span></a><a href="#historico"><span class="tit" style="color:inherit">Histórico</span></a>`;
+
+  // Relatório de aderência: o documento de entrega fica fora do painel (é confidencial); aqui só o atalho
+  function relatorioHtml(c) {
+    const r = c.relatorio || {};
+    if (!r.url) return `<div class="relatorio"><span class="botao-rel desativado" aria-disabled="true">Relatório de aderência</span><span class="nota">Ainda não iniciado.</span></div>`;
+    const pend = r.pendencias ? ` · ${r.pendencias} pendência${r.pendencias > 1 ? 's' : ''}` : '';
+    const rotulo = r.status === 'final' ? 'Relatório de aderência' : 'Relatório de aderência (rascunho' + pend + ')';
+    return `<div class="relatorio"><a class="botao-rel ${r.status === 'final' ? '' : 'rascunho'}" href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(rotulo)} ↗</a>${r.atualizado ? `<span class="nota">Atualizado em ${fmtData(r.atualizado)}</span>` : ''}</div>`;
+  }
 
   // Cartões dos critérios
   const linksHtml = ls => ls && ls.length ? `<div class="links">${ls.map(l => ext(l.u, l.t)).join('')}</div>` : '';
@@ -430,6 +447,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
         <div class="seta" aria-hidden="true">›</div>
       </summary>
       <div class="corpo">
+        ${relatorioHtml(c)}
         <div class="definicao"><b>O critério:</b> ${esc(c.definicao)}</div>
         ${c.resumo ? `<div class="resumo"><b>Situação de SBC:</b> ${esc(c.resumo)}</div>` : ''}
         ${pf.alerta ? `<div class="alerta"><b>Atenção:</b> ${esc(pf.alerta)}</div>` : ''}
