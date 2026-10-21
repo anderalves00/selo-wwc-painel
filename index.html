@@ -286,6 +286,8 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
     recebido:   { r: 'Recebido', c: 't-verde' },
     nao_existe: { r: 'Não existe', c: 't-vermelho' }
   };
+  const TITULO_CHECK = 'Atualizado pelo projeto a cada avanço; não é clicável';
+  const AVISO_CHECK = `<div class="nota" style="margin:0 0 8px">Marcado pelo projeto a cada avanço (documento recebido, estudado ou etapa concluída). Não é clicável. Para atualizar um item, avise quem mantém o painel.</div>`;
   const tag = (o, extra) => o ? `<span class="tag ${o.c}">${esc(o.r)}${extra || ''}</span>` : '';
   const fmtData = iso => { const [a, m, d] = iso.split('-'); return `${d}/${m}/${a}`; };
   const areaNome = id => (P.areas.find(a => a.id === id) || {}).nome || id;
@@ -316,7 +318,8 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
 
   const barra = (lista, rotulo) => {
     const n = lista.length || 1;
-    const partes = Object.keys(FICHA).map(k => ({ k, q: lista.filter(c => c.ficha === k).length })).filter(p => p.q);
+    // Da esquerda para a direita: o mais avançado primeiro; "não iniciada" fica como o restante do trilho
+    const partes = ['pronta', 'validada', 'rascunho', 'em_analise', 'nao_iniciada'].map(k => ({ k, q: lista.filter(c => c.ficha === k).length })).filter(p => p.q);
     return `<div class="rotulo"><span>${esc(rotulo)}</span><span>${lista.filter(c => c.ficha !== 'nao_iniciada').length} de ${lista.length} com ficha</span></div>
       <div class="trilho" role="img" aria-label="${esc(rotulo)}">${partes.map(p => `<span style="width:${100 * p.q / n}%;background:${FICHA[p.k].cor}" title="${esc(FICHA[p.k].r)}: ${p.q}"></span>`).join('')}</div>`;
   };
@@ -392,10 +395,16 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       analise += `<h3>Plano de ação</h3>
         <div class="progresso" style="margin:0 0 10px"><div class="rotulo"><span>Etapas concluídas</span><span>${feitos} de ${c.plano.length}</span></div>
         <div class="trilho"><span style="width:${planoPct(c)}%;background:var(--verde)"></span></div></div>
-        <ul class="checklist">${c.plano.map(p => `<li class="${p.feito ? 'feito' : ''}"><span class="caixa">${p.feito ? '✓' : ''}</span><span>${esc(p.texto)}${p.ancora ? ` · <a href="#${p.ancora}">ver</a>` : ''}</span></li>`).join('')}</ul>`;
+        ${AVISO_CHECK}
+        <ul class="checklist">${c.plano.map(p => `<li class="${p.feito ? 'feito' : ''}" title="${TITULO_CHECK}"><span class="caixa">${p.feito ? '✓' : ''}</span><span>${esc(p.texto)}${p.ancora ? ` · <a href="#${p.ancora}">ver</a>` : ''}</span></li>`).join('')}</ul>`;
     }
     if (c.pedidos && c.pedidos.length) {
-      analise += `<h3 id="pedidos-${c.codigo}">Documentos a obter com a equipe</h3><ul class="checklist">${c.pedidos.map(p => `<li class="${p.status === 'recebido' ? 'feito' : ''}"><span class="caixa">${p.status === 'recebido' ? '✓' : ''}</span><span>${esc(p.texto)} ${tag(PEDIDO[p.status])}</span></li>`).join('')}</ul>`;
+      const resolvidos = c.pedidos.filter(p => p.status === 'recebido' || p.status === 'nao_existe').length;
+      analise += `<h3 id="pedidos-${c.codigo}">Documentos a obter com a equipe</h3>
+        <div class="progresso" style="margin:0 0 10px"><div class="rotulo"><span>Respondidos (recebido ou não existe)</span><span>${resolvidos} de ${c.pedidos.length}</span></div>
+        <div class="trilho"><span style="width:${100 * resolvidos / c.pedidos.length}%;background:var(--verde)"></span></div></div>
+        ${AVISO_CHECK}
+        <ul class="checklist">${c.pedidos.map(p => `<li class="${p.status === 'recebido' || p.status === 'nao_existe' ? 'feito' : ''}" title="${TITULO_CHECK}"><span class="caixa">${p.status === 'recebido' || p.status === 'nao_existe' ? '✓' : ''}</span><span>${esc(p.texto)} ${tag(PEDIDO[p.status])}</span></li>`).join('')}</ul>`;
     }
     if (c.modelos && c.modelos.length) {
       analise += `<h3>Modelos de outras cidades que ajudam</h3><div class="tabela-wrap"><table><thead><tr><th>Modelo</th><th>Ajuda em</th><th>O que aproveitar</th></tr></thead><tbody>${c.modelos.map(m => `<tr><td>${ext(m.u, m.nome)} ↗</td><td>${m.cobre.map(x => `<span class="tag t-azul">${x}</span>`).join(' ')}</td><td>${esc(m.texto)}</td></tr>`).join('')}</tbody></table></div>`;
@@ -436,7 +445,9 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
 
   // Legenda e histórico
   const leg = [['Andamento da ficha', FICHA], ['Classificação', CLASSE], ['Situação de SBC no subcritério', SITUACAO], ['Documentos a obter', PEDIDO]];
-  $('#tabela-legenda').innerHTML = '<tbody>' + leg.map(([n, o]) => `<tr><td style="white-space:nowrap"><strong>${n}</strong></td><td>${Object.values(o).map(v => tag(v)).join(' ')}</td></tr>`).join('') +
+  $('#tabela-legenda').innerHTML = '<tbody>' +
+    `<tr><td style="white-space:nowrap"><strong>Ficha</strong></td><td>A análise de um critério: o que ele exige e em que prazo, o que SBC já tem, o que falta, a classificação (atende, dá para criar até o prazo etc.) e o plano de ação. É o que a equipe valida antes de qualquer resposta ser inserida na plataforma. Cada ficha passa por: ${Object.values(FICHA).map(v => tag(v)).join(' → ')}.</td></tr>` +
+    leg.map(([n, o]) => `<tr><td style="white-space:nowrap"><strong>${n}</strong></td><td>${Object.values(o).map(v => tag(v)).join(' ')}</td></tr>`).join('') +
     `<tr><td><strong>Regra</strong></td><td>"Atender 2 de 3" quer dizer que basta cumprir dois dos três subcritérios.</td></tr>
      <tr><td><strong>Janela</strong></td><td>Período em que a evidência precisa ter acontecido (por exemplo, trimestral ou nos últimos 24 meses).</td></tr>
      <tr><td><strong>Essencial</strong></td><td>Sem ele não há certificação em nível nenhum.</td></tr></tbody>`;

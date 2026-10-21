@@ -5,7 +5,7 @@
 const LEIS = 'https://leis.org/prefeitura/sp/sao-bernardo-do-campo/lei/';
 
 window.PAINEL = {
-  atualizado: '2026-10-20',
+  atualizado: '2026-10-21',
   prazos: { envio: '2026-12-18', interno: '1ª semana de dezembro de 2026' },
 
   areas: [
@@ -15,12 +15,14 @@ window.PAINEL = {
   ],
 
   contexto: [
-    'Para certificar no nível Prata, SBC precisa atender pelo menos 22 dos 43 critérios e, obrigatoriamente, os três essenciais: DM1, LC1 e PA1.',
+    'A certificação tem três níveis, pela parte dos 43 critérios atendida: Prata, o nível mínimo, a partir de 51% (22 critérios); Ouro, a partir de 68% (30); Platina, a partir de 85% (37).',
+    'Em qualquer nível, os três critérios essenciais são obrigatórios: DM1, LC1 e PA1. Na Platina, o DM8 também. Além disso, a cidade apresenta o Modelo de Resultados para Moradores: escolhe uma prioridade e mostra como os dados identificaram o problema e a solução e acompanham o progresso. A exigência cresce no Ouro e na Platina.',
     'Este painel cobre os 16 critérios de Gestão de dados (DM), Dados abertos (OD) e Impacto na comunidade (CI). Os outros 27 estão com outros membros da equipe.',
     'Nada é inserido na plataforma antes da validação da equipe. A inserção é feita pela equipe.'
   ],
 
   historico: [
+    { data: '2026-10-21', texto: 'Barras de andamento passam a encher da esquerda para a direita. Os três níveis de certificação foram explicados. Os documentos a obter ganharam barra de progresso. A legenda passou a explicar o que é uma ficha e a dizer que os checklists não são clicáveis.' },
     { data: '2026-10-20', texto: 'Painel criado. Ficha do DM1 em rascunho: análise completa, decisão sobre o instrumento em aberto e 5 pedidos de documentos à equipe.' }
   ],
 
