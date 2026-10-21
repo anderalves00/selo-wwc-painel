@@ -30,6 +30,7 @@ window.PAINEL = {
   ],
 
   historico: [
+    { data: '2026-10-21', texto: 'DM1: redigida a proposta de ajustes à minuta do decreto do SBC+i. Ela inclui competências de governança de dados para o GT, reunião no mínimo trimestral com ata em processo próprio, objetivos e plano de governança de dados, princípios de uso ético (inclusive IA) e relatório anual público. Também lembra que o GT já existe e pode começar a se reunir com ata antes do decreto.' },
     { data: '2026-10-21', texto: 'DM1: o painel passa a mostrar o projeto de lei e a minuta de decreto do Programa SBC+i (processo SB 100144/2026). A reescrita do art. 5º do decreto, pedida pela Procuradoria, é a chance de incluir reunião trimestral com ata e princípios de uso ético de dados.' },
     { data: '2026-10-21', texto: 'DM1: lidos o termo de referência do PDTIC 2026–2029 (sem estratégia de dados), o processo do GT Cidade Inteligente (sem atas), a Lei 6.243/2012, o Decreto 21.620/2021 e os decretos de LGPD de São Paulo, Santo André, São José dos Campos, Porto Alegre e Campinas. Nenhum desses decretos fixa periodicidade de reunião: o DM1.2 terá de vir do ato de São Bernardo.' },
     { data: '2026-10-21', texto: 'Varredura das 206 edições do Notícias do Município de 2025 e 2026. DM1: localizada a Portaria 10.500/2026 (GT Cidade Inteligente, só com a composição) e o contrato do PDTIC 2026–2029.' },
@@ -103,7 +104,7 @@ window.PAINEL = {
           { id: 'C', nome: 'Usar o GT Cidade Inteligente (SBC+i)', descricao: 'O GT seria o grupo do DM1.2, com atribuições e reuniões definidas no decreto do SBC+i, que está em trâmite (processo SB 100144/2026).',
             pros: 'O projeto de lei e a minuta de decreto já existem e já tratam de dados; a reescrita do art. 5º pedida pela Procuradoria abre espaço para incluir reunião trimestral com ata e princípios de uso ético.', contras: 'A lei precisa passar pela Câmara antes do decreto, e não há como saber se tudo sai antes de 18/12; o escopo é cidade inteligente, não estratégia de dados.' }
         ],
-        nota: 'Recomendação em duas frentes: para 18/12, o CGPD com atas (opção B), se já houver reuniões; em paralelo, propor os ajustes na minuta do decreto do SBC+i (opção C), que servem à revalidação e ao ato guarda-chuva.'
+        nota: 'Já existe a proposta de redação para a opção C: texto consolidado do decreto do SBC+i, com cada mudança justificada, a levar à Secretaria de Administração. Recomendação em duas frentes: para 18/12, o CGPD com atas (opção B), se já houver reuniões; em paralelo, propor os ajustes na minuta do decreto do SBC+i (opção C), que servem à revalidação e ao ato guarda-chuva.'
       },
       modelos: [
         { nome: 'Estratégia de dados (GovEx, em português)', cobre: ['DM1.1'], texto: 'Plano de 3 anos com 5 objetivos (governança, qualidade, capacidade, transparência, uso) e plano de ação com responsável e prazo.', u: 'https://drive.google.com/file/d/1ATeJfFuS02VdbwINvf-eFNnWtWK7_VEe/view' },
