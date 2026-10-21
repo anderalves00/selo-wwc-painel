@@ -87,6 +87,11 @@ main { padding: 24px 32px 48px; display: grid; gap: 22px; }
 .art.novo .texto { background: var(--laranja-claro); border-left: 5px solid var(--laranja); }
 .art.alterado .texto { background: var(--azul-claro); border-left: 5px solid var(--azul); }
 mark.novo { background: #ffd8ad; color: inherit; padding: 1px 3px; border-radius: 3px; }
+del.sup { text-decoration: line-through; text-decoration-thickness: 1.5px; color: #8a2a22; background: #fbe9e7; padding: 1px 3px; border-radius: 3px; }
+.rotulo-red { font: 800 11.5px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; margin: 10px 0 4px; }
+.rotulo-red.sup { color: #8a2a22; margin-top: 0; }
+.rotulo-red.nova { color: var(--laranja-esc); }
+.obs-red { font-size: 13.5px; color: var(--texto-suave); border-top: 1px dashed var(--borda); padding-top: 8px; margin-top: 10px !important; }
 .inc { padding-left: 18px; }
 
 .expl { padding: 14px 20px; background: #fff; border-left: 1px solid var(--borda); display: grid; gap: 10px; align-content: start; font-size: 14px; }
@@ -161,7 +166,9 @@ mark.novo { background: #ffd8ad; color: inherit; padding: 1px 3px; border-radius
   <p>Todo o conteúdo da minuta da Procuradoria foi mantido. Os trechos criados ou alterados estão destacados, e cada um traz ao lado <b>por que</b> foi incluído, <b>qual a intenção</b> da redação e <b>qual a relação com a WWC</b>.</p>
   <div class="legenda">
     <span><span class="tag novo">Novo</span> texto criado pela proposta</span>
-    <span><span class="tag alterado">Alterado</span> texto da minuta reescrito</span>
+    <span><span class="tag alterado">Alterado</span> artigo da minuta modificado</span>
+    <span><del class="sup">tachado</del> texto da minuta que sai</span>
+    <span><mark class="novo">destacado</mark> texto que entra</span>
     <span><span class="tag igual">Sem alteração</span> texto da minuta da Procuradoria</span>
     <span><span class="tag sub">DM1.x</span> subcritério da WWC atendido</span>
   </div>
@@ -243,9 +250,13 @@ mark.novo { background: #ffd8ad; color: inherit; padding: 1px 3px; border-radius
   <div class="capitulo">Capítulo III – Do Grupo de Trabalho Intersecretarial</div>
   <article class="art alterado" id="art5" data-tipo="alterado" data-sub="DM1.2">
     <div class="texto"><div class="cab"><span class="id">Art. 5º</span><span class="tag alterado">Alterado</span><span class="tag sub">DM1.2</span></div>
-      <p>Art. 5º Fica instituído o Grupo de Trabalho Intersecretarial do Programa SBC+i, responsável pela articulação estratégica intersecretarial do Programa, coordenado pela Secretaria de Administração.</p>
-      <p>§ 1º A composição do Grupo de Trabalho será definida por portaria do Prefeito, que designará os membros titulares e respectivos suplentes, indicados pelos titulares das Pastas.</p>
-      <p>§ 2º O coordenador do Grupo de Trabalho designará servidor para secretariar as reuniões e prestar apoio administrativo aos trabalhos.</p></div>
+      <div class="rotulo-red sup">Texto da minuta da Procuradoria (suprimido)</div>
+      <p><del class="sup">Art. 5º A articulação estratégica intersecretarial do Programa SBC+i contará com o Grupo de Trabalho já instituído pela Portaria nº 10.500, de 7 de julho de 2026, preservadas sua composição e sua coordenação pela Secretaria de Administração.</del></p>
+      <div class="rotulo-red nova">Nova redação proposta</div>
+      <p><mark class="novo">Art. 5º Fica instituído o Grupo de Trabalho Intersecretarial do Programa SBC+i, responsável pela articulação estratégica intersecretarial do Programa, coordenado pela Secretaria de Administração.</mark></p>
+      <p><mark class="novo">§ 1º A composição do Grupo de Trabalho será definida por portaria do Prefeito, que designará os membros titulares e respectivos suplentes, indicados pelos titulares das Pastas.</mark></p>
+      <p><mark class="novo">§ 2º O coordenador do Grupo de Trabalho designará servidor para secretariar as reuniões e prestar apoio administrativo aos trabalhos.</mark></p>
+      <p class="obs-red">O que muda: sai a referência à Portaria 10.500 (a manutenção dos membros atuais passa para o art. 26); entram a instituição do grupo pelo próprio decreto, a composição por portaria (§ 1º) e o secretário das reuniões (§ 2º). A coordenação pela Secretaria de Administração é mantida.</p></div>
     <aside class="expl">
       <div><h4>Por quê</h4><p>A Procuradoria apontou que citar a Portaria 10.500 no decreto "cria uma inversão imprópria": o decreto é superior à portaria e ficaria preso a ela se a portaria fosse revogada ou renumerada.</p></div>
       <div><h4>Intenção</h4><p>Usar a primeira saída sugerida pela Procuradoria: o decreto institui o grupo e deixa a composição para portaria. O § 2º garante alguém responsável por secretariar as reuniões, ou seja, por fazer as atas. É o mesmo arranjo do Decreto 23.236/2026 (GT de Desburocratização), art. 7º.</p></div>
@@ -253,19 +264,19 @@ mark.novo { background: #ffd8ad; color: inherit; padding: 1px 3px; border-radius
     </aside>
   </article>
   <article class="art alterado" id="art6" data-tipo="alterado" data-sub="DM1.2 DM1.1">
-    <div class="texto"><div class="cab"><span class="id">Art. 6º</span><span class="tag alterado">Alterado</span><span class="tag sub">DM1.2</span><span class="tag sub">DM1.1</span><span class="antigo">incisos VI e VII acrescidos</span></div>
+    <div class="texto"><div class="cab"><span class="id">Art. 6º</span><span class="tag alterado">Alterado</span><span class="tag sub">DM1.2</span><span class="tag sub">DM1.1</span><span class="antigo">incisos VI e VII acrescidos; ajuste de pontuação nos incisos IV e V</span></div>
       <p>Art. 6º No âmbito do Programa SBC+i, compete ao Grupo de Trabalho Intersecretarial:</p>
       <p class="inc">I - contribuir para a definição das diretrizes e prioridades estratégicas do Programa;</p>
       <p class="inc">II - promover a articulação institucional entre as áreas representadas;</p>
       <p class="inc">III - apreciar questões estratégicas e de caráter intersetorial relacionadas ao Programa;</p>
-      <p class="inc">IV - contribuir para a identificação e priorização de iniciativas estratégicas;</p>
-      <p class="inc">V - propor medidas destinadas ao desenvolvimento e à consolidação do Programa SBC+i;</p>
+      <p class="inc">IV - contribuir para a identificação e priorização de iniciativas estratégicas; <del class="sup">e</del></p>
+      <p class="inc">V - propor medidas destinadas ao desenvolvimento e à consolidação do Programa SBC+i<del class="sup">.</del><mark class="novo">;</mark></p>
       <p class="inc"><mark class="novo">VI - definir as diretrizes de governança e de uso estratégico de dados do Programa e acompanhar sua implementação, observado o Capítulo IV deste Decreto; e</mark></p>
       <p class="inc"><mark class="novo">VII - aprovar o Plano de Governança de Dados de que trata o art. 11 deste Decreto, acompanhar sua execução e deliberar sobre sua revisão.</mark></p>
       <p>Parágrafo único. Outras Secretarias Municipais, órgãos e entidades da Administração Pública Municipal poderão ser chamados a contribuir com o Grupo de Trabalho quando a matéria em análise estiver relacionada às respectivas competências.</p></div>
     <aside class="expl">
       <div><h4>Por quê</h4><p>As cinco competências da minuta são genéricas. Nenhuma fala de dados, embora o projeto de lei tenha um eixo inteiro de "governança, planejamento, dados e inteligência de gestão".</p></div>
-      <div><h4>Intenção</h4><p>Tornar o GT que já existe o responsável pela governança de dados do Programa, em vez de criar mais um colegiado. Os incisos destacados são os únicos acréscimos.</p></div>
+      <div><h4>Intenção</h4><p>Tornar o GT que já existe o responsável pela governança de dados do Programa, em vez de criar mais um colegiado. Os incisos destacados são os acréscimos; nos incisos IV e V muda só a pontuação (o "e" passa para o inciso VI), para encaixar os novos itens.</p></div>
       <div class="wwc"><h4>Relação com a WWC · DM1.2 e DM1.1</h4><p>O DM1.2 pede um grupo com "responsabilidades definidas" sobre dados, e a WWC aceita como evidência o documento com os papéis do grupo: é este artigo. A aprovação do plano (inciso VII) liga o grupo ao DM1.1.</p></div>
     </aside>
   </article>
