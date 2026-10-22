@@ -30,6 +30,7 @@ window.PAINEL = {
   ],
 
   historico: [
+    { data: '2026-10-22', texto: 'OD1: a ficha ganhou a seção "Por que é preciso um ato normativo", com o que SBC já tem em cada subcritério e por que não basta. Incluída a opção D na decisão do instrumento (capítulo novo no decreto da LAI); a recomendação continua sendo um decreto próprio.' },
     { data: '2026-10-22', texto: 'OD3: ficha em rascunho. O portal tem bases abertas de verdade (contratos e obras em CSV, finanças em XLS, emendas em XLSX e 13 camadas de mapa no GeoPortal com dicionário de dados). Faltam dados por bairro e por grupo da população em formato aberto (o Perfil Socioeconômico por Bairro existe, mas só em PDF), contato, licença e links da página de Dados Abertos para os outros sites. O "Sim" pré-preenchido na plataforma precisa virar "Em andamento".' },
     { data: '2026-10-22', texto: 'OD1: ficha em rascunho. SBC não tem política de dados abertos; o decreto da Lei de Acesso à Informação (18.882/2014) ajuda só em parte. Recomendação: um decreto curto da Política Municipal de Dados Abertos, que também adote o capítulo de abertura de dados da Lei 14.129/2021. Decisão sobre o instrumento em aberto e 4 pedidos à equipe.' },
     { data: '2026-10-22', texto: 'Corrigido o link da publicação oficial da Portaria 10.510/2026 (Notícias do Município nº 2676), que estava quebrado.' },
@@ -186,6 +187,20 @@ window.PAINEL = {
           { titulo: 'Decreto do SBC+i e a proposta de ajustes', texto: 'A proposta de ajustes ao decreto do SBC+i deixou dados abertos de fora de propósito: o decreto só sai depois da lei, e o escopo é cidade inteligente.', links: [{ t: 'Proposta de ajustes ao decreto do SBC+i', u: 'proposta-sbc-mais-i.html' }] }
         ]
       },
+      justificativa: {
+        titulo: 'Por que é preciso um ato normativo',
+        intro: [
+          'O OD1 não avalia se a prefeitura pratica transparência, e sim se existe uma política escrita com quatro elementos. A definição pede política "formalizada e disponível ao público"; no original em inglês, "codified", o que indica um ato normativo, não uma página ou uma prática.',
+          'Cada subcritério começa com "a política...": a política cria a governança (1.1), prevê a escuta pública (1.2), exige o relatório anual (1.3) e se compromete a explicar as decisões (1.4). Mesmo o que SBC já faz na prática precisa estar escrito no texto da política. Foi o que a revisão do Raio-X apontou: falta "uma política e uma estratégia formal de Dados Abertos".'
+        ],
+        linhas: [
+          { sub: 'OD1.1', existe: 'Decreto 18.882/2014 (LAI): diretriz de divulgação "independentemente de solicitações" (art. 3º, II) e representantes por órgão (art. 7º). Lei 7.367/2025: competências da Controladoria (portal) e do DTI (estratégia de dados).', falta: 'A estrutura da LAI serve para responder pedidos, não para publicar bases de forma proativa. As competências dizem quem pode fazer, mas não criam o processo.' },
+          { sub: 'OD1.2', existe: 'Pesquisa de satisfação do Portal da Transparência (Decreto 23.215/2026, art. 6º, X).', falta: 'É usada para melhorar o atendimento, não para saber que dados a população quer.' },
+          { sub: 'OD1.3', existe: 'Relatório anual da LAI, publicado desde 2012 (Decreto 18.882, art. 31).', falta: 'É estatística de pedidos, e não revisão do texto da política nem da implementação.' },
+          { sub: 'OD1.4', existe: 'LAI: negativa fundamentada (art. 17), termo de classificação com as razões do sigilo (art. 29) e rol anual de documentos sigilosos (art. 31).', falta: 'Cobre em parte: explica o que não se libera, mas só para pedidos e sigilo. Não trata de como se decide abrir e priorizar bases.' }
+        ],
+        conclusao: 'Resultado: o OD1.4 está meio coberto; o OD1.1, o OD1.2 e o OD1.3 não estão. Como o critério pede 3 de 4, é preciso um ato que, no mínimo, crie a governança, a escuta e o compromisso de explicar as decisões. A página de Dados Abertos não tem força normativa. A Lei 14.129/2021 cobriria boa parte do 1.4, mas só vale para o município se for adotada por ato próprio.'
+      },
       decisao: {
         titulo: 'Onde pôr a política de dados abertos',
         recomendada: 'A',
@@ -195,9 +210,11 @@ window.PAINEL = {
           { id: 'B', nome: 'Dentro do ato de governança de dados do DM1', descricao: 'A política de dados abertos seria um capítulo do decreto de governança de dados ou do ato guarda-chuva.',
             pros: 'Um só instrumento para o DM1 e o OD1.', contras: 'Esse ato ainda não tem minuta nem prazo, e o OD1 ficaria preso a ele.' },
           { id: 'C', nome: 'Dentro do decreto do SBC+i', descricao: 'Acrescentar a política à minuta de decreto do Programa SBC+i, que está em trâmite.',
-            pros: 'O texto já está em trâmite.', contras: 'O decreto só sai depois da lei, que vai à Câmara; o escopo é cidade inteligente.' }
+            pros: 'O texto já está em trâmite.', contras: 'O decreto só sai depois da lei, que vai à Câmara; o escopo é cidade inteligente.' },
+          { id: 'D', nome: 'Capítulo novo no Decreto 18.882/2014 (LAI)', descricao: 'Acrescentar ao decreto da Lei de Acesso à Informação um capítulo "Da Política Municipal de Dados Abertos", atualizando também a competência, que em 2014 era de uma secretaria que já não existe com esse nome.',
+            pros: 'Aproveita o que a LAI já tem: a diretriz de divulgação proativa, os representantes por órgão (viram os coordenadores do 1.1), a rotina anual (vira o relatório do 1.3) e as regras de sigilo (base do 1.4).', contras: 'Reforça o enquadramento que o revisor do Raio-X criticou (dados abertos como obrigação legal de transparência, e não como reuso e demanda da comunidade); reabrir um decreto de 2014 pode levar a revisar outros artigos e alongar o trâmite.' }
         ],
-        nota: 'Se já houver minuta de regulamentação da Lei 14.129 (pedido 1), ela é o veículo natural da opção A.'
+        nota: 'Recomendação mantida na opção A: um decreto próprio pode citar as estruturas da LAI ("os representantes de que trata o art. 7º do Decreto 18.882 acumulam a função de coordenador de dados abertos"), sem herdar o enquadramento de obrigação legal. A opção D fica como alternativa, se a Procuradoria preferir não criar ato novo. Se já houver minuta de regulamentação da Lei 14.129 (pedido 1), ela é o veículo natural da opção A.'
       },
       modelos: [
         { nome: 'Política de dados abertos de Baton Rouge (Resolução 53275)', cobre: ['OD1.1', 'OD1.2', 'OD1.3', 'OD1.4'], texto: 'Parte 3: governança, com coordenador por órgão, inventário, priorização pela demanda do público e triagem de dados sensíveis. Seção 4: participação do público. Parte 5: relatório anual até 31 de janeiro, com sugestões de melhoria.', u: 'https://www.brla.gov/DocumentCenter/View/6350/Resolution-53275-Open-Data-Policy' },
@@ -208,7 +225,7 @@ window.PAINEL = {
         { texto: 'Levantar o que SBC já tem', feito: true },
         { texto: 'Ler os modelos de referência', feito: true },
         { texto: 'Validar a análise internamente', feito: false },
-        { texto: 'Decidir o instrumento (opções A, B ou C)', feito: false, ancora: 'decisao-OD1' },
+        { texto: 'Decidir o instrumento (opções A, B, C ou D)', feito: false, ancora: 'decisao-OD1' },
         { texto: 'Receber da equipe os documentos pedidos', feito: false, ancora: 'pedidos-OD1' },
         { texto: 'Ler ao menos um decreto municipal brasileiro de dados abertos', feito: false },
         { texto: 'Redigir a minuta: governança, escuta, relatório anual e transparência das decisões', feito: false },

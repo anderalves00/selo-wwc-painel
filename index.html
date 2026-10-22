@@ -463,6 +463,13 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       </div>`;
       if (c.sbc.naoServe && c.sbc.naoServe.length) analise += `<details class="nao-serve"><summary>Já verificado e não serve a este critério (${c.sbc.naoServe.length})</summary>${c.sbc.naoServe.map(itemHtml).join('')}</details>`;
     }
+    if (c.justificativa) {
+      const j = c.justificativa;
+      analise += `<h3 id="justificativa-${c.codigo}">${esc(j.titulo)}</h3>
+        ${(j.intro || []).map(p => `<p>${esc(p)}</p>`).join('')}
+        <div class="tabela-wrap"><table><thead><tr><th>Sub</th><th>O que SBC já tem</th><th>Por que não fecha</th></tr></thead><tbody>${j.linhas.map(l => `<tr><td><strong>${esc(l.sub)}</strong></td><td>${esc(l.existe)}</td><td>${esc(l.falta)}</td></tr>`).join('')}</tbody></table></div>
+        ${j.conclusao ? `<div class="resumo">${esc(j.conclusao)}</div>` : ''}`;
+    }
     if (c.decisao) {
       const d = c.decisao;
       analise += `<h3 id="decisao-${c.codigo}">Decisão em aberto: ${esc(d.titulo)}</h3><div class="opcoes">${d.opcoes.map(o => `<div class="opcao ${o.id === d.recomendada ? 'rec' : ''}">
