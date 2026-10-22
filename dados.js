@@ -30,6 +30,7 @@ window.PAINEL = {
   ],
 
   historico: [
+    { data: '2026-10-22', texto: 'OD3: ficha aprofundada. O inventário do menu do Portal da Transparência achou dados em formato aberto em pelo menos 13 lugares (entre eles renúncia de receita, multas de trânsito, doações, obras de anos anteriores e recursos recebidos), e a página de Dados Abertos não aponta para nenhum deles. O plano passa a ter um catálogo com uma linha e um link por base. Os 26 capítulos do Perfil por Bairro seguem o mesmo modelo de 17 tabelas; a renda está num gráfico, com dados de 2010. O texto pré-preenchido na plataforma diz que o patrimônio é legível por máquina, mas ele só está em PDF. Dois pedidos novos à equipe.' },
     { data: '2026-10-22', texto: 'OD1: lida a resposta do Executivo à Indicação nº 14.825/2025 da Câmara (Ofício nº 4027/2025-SG-011): as sugestões foram só encaminhadas à secretaria competente, sem compromisso. Com isso, não há mais leitura pendente no OD1.' },
     { data: '2026-10-22', texto: 'OD1: lidos o glossário da plataforma e o Fórum da WWC. O glossário define "codificar" como "sistematizar políticas": a WWC exige política escrita, não necessariamente lei ou decreto (corrigida a justificativa). Um texto da WWC de jan/2026 recomenda que o mesmo órgão de governança cuide do DM1 e do OD1: na minuta, a pauta de dados abertos do CGPD passa a ser trimestral.' },
     { data: '2026-10-22', texto: 'OD1: todas as leituras pendentes concluídas e aplicadas à minuta, que passa a 23 artigos. Citações legais conferidas no texto das leis; achada a Indicação nº 14.825/2025 da Câmara, que já pediu a política; a rede de representantes da Controladoria entra como opção para os coordenadores; entram uma cláusula de dados abertos nos contratos novos, download em lote e API, convite à sociedade civil nas reuniões e o cuidado com o cruzamento de bases. Modelos novos: Teresópolis e Osasco, que mostram precedentes brasileiros de escuta pública e relatório anual.' },
@@ -268,16 +269,16 @@ window.PAINEL = {
       titulo: 'Portal de dados abertos',
       definicao: 'A prefeitura publica dados abertos em um local central e público on-line.',
       regra: { min: 3, total: 3 }, janela: 'Sem janela',
-      plataforma: { resposta: 'Sim (pré-preenchido)', alerta: 'A resposta veio pré-preenchida com "Sim", mas a revisão do Raio-X rebaixou Dados Abertos para "Em andamento". Hoje o "Sim" não se sustenta: marcar "Em andamento" até as ações do plano estarem publicadas.' },
+      plataforma: { resposta: 'Sim (pré-preenchido)', alerta: 'A resposta veio pré-preenchida com "Sim", mas a revisão do Raio-X rebaixou Dados Abertos para "Em andamento". Hoje o "Sim" não se sustenta: marcar "Em andamento" até as ações do plano estarem publicadas. O texto pré-preenchido também precisa ser reescrito: diz que o patrimônio público está em formato legível por máquina, mas ele só está em PDF, e cita um painel Power BI, que não é dado aberto.' },
       ficha: 'rascunho', classificacao: 'criar',
-      resumo: 'Há bases abertas de verdade (contratos e obras em CSV, finanças em XLS, emendas em XLSX e 13 camadas de mapa no GeoPortal, com dicionário de dados), gratuitas e sem cadastro. Faltam dados desagregados por bairro e por grupo da população em formato aberto, e a página de Dados Abertos não aponta para os outros sites nem traz contato e licença. Tudo isso é edição de página e publicação de planilhas que já existem.',
+      resumo: 'Há bases abertas de verdade em pelo menos 13 lugares (contratos e obras em CSV, finanças em XLS, emendas, renúncia de receita, multas e doações em XLSX e 13 camadas de mapa no GeoPortal, com dicionário de dados), gratuitas e sem cadastro. Mas estão espalhadas: a página de Dados Abertos anuncia um catálogo que não existe e não aponta para nenhuma delas, nem traz contato e licença. Faltam também dados desagregados por bairro e por grupo da população em formato aberto. Tudo isso é edição de página e publicação de planilhas que já existem.',
       subcriterios: [
         { cod: 'OD3.1', texto: 'Os dados abertos são legíveis por máquina, podem ser baixados e são gratuitos.', situacao: 'tem', classificacao: 'atende',
-          nota: 'Contratos e obras em andamento em CSV (atualizados em 22/10/2026), relatórios fiscais de 2026 em XLS, emendas em XLSX e camadas do GeoPortal em shapefile, todos sem login. Para reduzir o risco na revisão: pôr uma licença aberta explícita e atualizar os relatórios mensais da página principal, que param em 2023.' },
+          nota: 'Contratos e obras em andamento em CSV (atualizados em 22/10/2026), relatórios fiscais de 2026 em XLS, emendas, renúncia de receita, multas de trânsito, doações e obras de anos anteriores em XLSX, e camadas do GeoPortal em shapefile, todos sem login. Para reduzir o risco na revisão: pôr uma licença aberta explícita, atualizar os relatórios mensais da página principal, que param em 2023, e corrigir o texto pré-preenchido sobre o patrimônio.' },
         { cod: 'OD3.2', texto: 'Quando possível, preservando a privacidade, os dados são publicados desagregados por subgrupos geográficos e demográficos.', situacao: 'parcial', classificacao: 'criar',
-          nota: 'As bases do portal não são desagregadas. O Perfil Socioeconômico por Bairro 2026 tem exatamente o que o critério pede (bairro × idade, sexo, cor ou raça, vulnerabilidade, renda), mas só em PDF. Publicar essas tabelas em planilha resolve.' },
+          nota: 'As bases do portal não são desagregadas. O Perfil Socioeconômico por Bairro 2026 tem o que o critério pede nos 26 capítulos (bairro × idade, sexo, cor ou raça, vulnerabilidade), mas só em PDF. Publicar essas tabelas em planilha, com o nome do bairro igual ao da camada de bairros do GeoPortal, resolve. A renda está num gráfico, com dados do Censo 2010.' },
         { cod: 'OD3.3', texto: 'Os dados são contextualizados com linguagem clara, contatos, políticas e documentos; outros sites de dados ficam vinculados ao portal principal.', situacao: 'parcial', classificacao: 'criar',
-          nota: 'A página explica em linguagem clara o que são dados abertos e cita a base legal. Faltam contato da unidade responsável, licença, uma descrição por base e links para o GeoPortal, o Perfil por Bairro, o Painel Estatístico e o Portal da Saúde.' }
+          nota: 'A página explica em linguagem clara o que são dados abertos e cita a base legal. É a maior lacuna do critério: os dados estão em 17 páginas e sistemas que a página não cita, e ela diz ter um catálogo que não existe. Faltam também contato da unidade responsável, licença e uma descrição por base.' }
       ],
       evidencias: ['Link para o portal de dados abertos. Se houver vários sites, um deles deve apontar para os outros.'],
       sbc: {
@@ -285,17 +286,19 @@ window.PAINEL = {
           { titulo: 'Bases legíveis por máquina, gratuitas e sem cadastro', texto: 'Contratos (CSV, Excel e PDF) e obras em andamento (CSV, Excel e PDF), ambos atualizados em 22/10/2026; relatórios de receitas e despesas de 2026 em XLS no sistema de transparência fiscal; planilha de emendas parlamentares em XLSX.',
             links: [{ t: 'Contratos', u: 'https://transparencia.saobernardo.sp.gov.br/contratos' }, { t: 'Obras em andamento', u: 'https://obras.saobernardo.sp.gov.br/transparencia/obras-em-andamento' }, { t: 'Transparência fiscal', u: 'https://transparencia-fiscal.saobernardo.sp.gov.br/transparencia-fiscal/municipio-sbc/inicio' }] },
           { titulo: 'GeoPortal: 13 camadas de mapa para download, com dicionário de dados', texto: 'Limite municipal, perímetro urbano, bairros, zoneamento, lotes, arruamentos, logradouros, hierarquia viária, próprios municipais, equipamentos e serviços públicos, praças, represa e endereços, em shapefile. A planilha de descrição (abr/2026) traz, para cada camada, título, descrição, data, escala, projeção, fonte e atributos.',
-            links: [{ t: 'GeoPortal (aba Downloads)', u: 'https://geo.saobernardo.sp.gov.br/' }] }
+            links: [{ t: 'GeoPortal (aba Downloads)', u: 'https://geo.saobernardo.sp.gov.br/' }] },
+          { titulo: 'Planilhas abertas espalhadas pelo Portal da Transparência', texto: 'Renúncia de receita (XLSX e TXT, 2021 a 2025), multas de trânsito (XLSX, 2019 a 2024), doações (XLSX), obras de anos anteriores (XLSX e TXT, até mar/2026), recursos estaduais e federais recebidos (XLSX, página da Controladoria) e o relatório do Prodigi 2023 (XLSX). Nenhuma é citada na página de Dados Abertos.',
+            links: [{ t: 'Renúncia de receita', u: 'https://www.saobernardo.sp.gov.br/web/transparencia/renuncia-de-receita1' }, { t: 'Obras de anos anteriores', u: 'https://www.saobernardo.sp.gov.br/web/transparencia/planilha-de-obras-de-exercicios-anteriores' }, { t: 'Multas de trânsito', u: 'https://www.saobernardo.sp.gov.br/web/transparencia/receitas-e-destinacao-de-multas-de-transito' }] }
         ],
         incompleto: [
-          { titulo: 'Página de Dados Abertos do Portal da Transparência', texto: 'Explica em linguagem clara o que são dados abertos, cita a Lei 14.129/2021 e o Decreto 21.086/2020 e aponta para receitas, despesas, contratos, obras e emendas.', falta: 'Contato da unidade responsável; licença aberta explícita (hoje há só termos informais e uma nota de isenção); descrição por base; links para o GeoPortal, o Perfil por Bairro, o Painel Estatístico e o Portal da Saúde. O link "Patrimônio Público" aponta para a página de receitas e despesas.',
+          { titulo: 'Página de Dados Abertos do Portal da Transparência', texto: 'Explica em linguagem clara o que são dados abertos, cita a Lei 14.129/2021 e o Decreto 21.086/2020 e anuncia dados de receitas, despesas, patrimônio, contratos, obras e emendas.', falta: 'Um catálogo de verdade, com uma linha e um link por base (a página diz que os dados estão "catalogados", mas não há lista); contato da unidade responsável; licença aberta explícita (hoje há só termos informais e uma nota de isenção); descrição por base. O link "Patrimônio Público" aponta para a página de receitas e despesas.',
             links: [{ t: 'Página de Dados Abertos', u: 'https://www.saobernardo.sp.gov.br/web/transparencia/dados-abertos' }] },
-          { titulo: 'Perfil Socioeconômico por Bairro 2026 (Planejamento Urbano)', texto: 'Um capítulo por bairro, com população 2000–2025, faixa etária, sexo, cor ou raça, alfabetização, domicílios, serviços básicos, índice de vulnerabilidade (IPVS), renda, matrículas, equipamentos e atividades econômicas. Ano-base 2025, publicado em jun/2026.', falta: 'Só em PDF, que não é formato aberto. Publicar as tabelas em CSV ou XLSX resolve o OD3.2.',
+          { titulo: 'Perfil Socioeconômico por Bairro 2026 (Planejamento Urbano)', texto: '26 capítulos, um por bairro ou região, todos com o mesmo modelo de 17 tabelas: população 2000–2025, faixa etária, sexo, cor ou raça, alfabetização, domicílios, serviços básicos, índice de vulnerabilidade (IPVS), matrículas, equipamentos e atividades econômicas. A renda vem num gráfico, com dados de 2010. Ano-base 2025, publicado em jun/2026.', falta: 'Só em PDF, que não é formato aberto. Publicar as tabelas em CSV ou XLSX resolve o OD3.2.',
             links: [{ t: 'Perfil Socioeconômico por Bairro', u: 'https://www.saobernardo.sp.gov.br/web/sbc/perfilsocioeconomicobairros' }] }
         ],
         naoTem: [
           { titulo: 'Dados desagregados por bairro e por grupo da população em formato aberto', texto: 'Hoje só em PDF (OD3.2).' },
-          { titulo: 'Um ponto central que aponte para todos os sites de dados', texto: 'GeoPortal, estatísticas e saúde estão fora da página de Dados Abertos (OD3.3).' }
+          { titulo: 'Um ponto central que aponte para todos os sites de dados', texto: 'GeoPortal, Perfil por Bairro, planilhas do Portal, licitações, servidores, saúde e educação estão fora da página de Dados Abertos (OD3.3).' }
         ],
         naoServe: [
           { titulo: 'Patrimônio, Painel Estatístico e lista de espera da Saúde em PDF', texto: 'Úteis como contexto, mas PDF não é dado legível por máquina (OD3.1).', links: [{ t: 'Painel Estatístico', u: 'https://www.saobernardo.sp.gov.br/web/sbc/painel-estatistico' }] }
@@ -310,7 +313,7 @@ window.PAINEL = {
         { texto: 'Levantar o que SBC já tem', feito: true },
         { texto: 'Validar a análise internamente', feito: false },
         { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-OD3' },
-        { texto: 'Página de Dados Abertos: links para GeoPortal, Perfil por Bairro, Painel Estatístico e Saúde; corrigir o link de patrimônio', feito: false },
+        { texto: 'Página de Dados Abertos: catálogo com link para cada base (inventário da ficha como ponto de partida); corrigir o link de patrimônio', feito: false },
         { texto: 'Página de Dados Abertos: contato, licença aberta e uma descrição por base', feito: false },
         { texto: 'Publicar as tabelas do Perfil por Bairro em CSV ou XLSX', feito: false },
         { texto: 'Atualizar ou retirar os relatórios mensais de 2021–2023 de receitas e despesas', feito: false },
@@ -321,7 +324,9 @@ window.PAINEL = {
         { texto: 'Qual unidade mantém a página de Dados Abertos e quem pode editá-la', status: 'a_pedir' },
         { texto: 'O que é o portal de dados abertos "em desenvolvimento" citado no PPA 2026–2029 e quando fica pronto', status: 'a_pedir' },
         { texto: 'Se o Planejamento Urbano pode publicar as tabelas do Perfil por Bairro e do Painel Estatístico em CSV ou XLSX', status: 'a_pedir' },
-        { texto: 'Se o GeoPortal pode ser apresentado como parte do portal de dados abertos, e quem responde pelas camadas', status: 'a_pedir' }
+        { texto: 'Se o GeoPortal pode ser apresentado como parte do portal de dados abertos, e quem responde pelas camadas', status: 'a_pedir' },
+        { texto: 'Revisar, com quem publicou, as planilhas da consulta pública do PPA 2026–2029 antes de incluí-las no catálogo', status: 'a_pedir' },
+        { texto: 'Se o sistema de gastos com pessoal está funcionando e em que formato exporta; e se todos os contratos de 2025 estão no sistema de contratos', status: 'a_pedir' }
       ]
     },
     {
