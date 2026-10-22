@@ -184,7 +184,7 @@ window.PAINEL = {
         ],
         naoServe: [
           { titulo: 'A página de Dados Abertos do Portal da Transparência', texto: 'É um texto de apresentação, com base legal e termos de uso informais. Não tem governança, escuta, relatório nem regra de decisão. Conta para o OD3 (portal), não para o OD1.', links: [{ t: 'Página de Dados Abertos', u: 'https://www.saobernardo.sp.gov.br/web/transparencia/dados-abertos' }] },
-          { titulo: 'Decreto do SBC+i e a proposta de ajustes', texto: 'A proposta de ajustes ao decreto do SBC+i deixou dados abertos de fora de propósito: o decreto só sai depois da lei, e o escopo é cidade inteligente.', links: [{ t: 'Proposta de ajustes ao decreto do SBC+i', u: 'proposta-sbc-mais-i.html' }] }
+          { titulo: 'A proposta de ajustes ao decreto do SBC+i (feita para o DM1)', texto: 'A proposta de ajustes ao decreto do SBC+i foi feita para o DM1 (governança interna de dados) e deixou os dados abertos de fora de propósito: o decreto só sai depois da lei, e o escopo é cidade inteligente. A proposta de texto do OD1 ainda não foi redigida: o caminho recomendado é um decreto próprio (decisão acima).', links: [{ t: 'Ver a proposta do DM1 (não trata de dados abertos)', u: 'proposta-sbc-mais-i.html' }] }
         ]
       },
       justificativa: {
