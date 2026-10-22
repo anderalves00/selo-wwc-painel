@@ -10,10 +10,10 @@
 //   No texto, marcar o que falta como [PENDENTE: descrição]; o painel destaca.
 
 const LEIS = 'https://leis.org/prefeitura/sp/sao-bernardo-do-campo/lei/';
-const NM2676 = 'https://www.saobernardo.sp.gov.brC:/Users/56809/AppData/Local/Programs/Git/documents/10181/2361282/NM+2676+de+07.08.2026+-+Conteu%CC%81do+Integral.pdf/11eeb475-0287-4c05-e8e2-aea4d61e05fc#page=16';
+const NM2676 = 'https://www.saobernardo.sp.gov.br/documents/10181/2361282/NM+2676+de+07.08.2026+-+Conteu%CC%81do+Integral.pdf/11eeb475-0287-4c05-e8e2-aea4d61e05fc#page=16';
 
 window.PAINEL = {
-  atualizado: '2026-10-21',
+  atualizado: '2026-10-22',
   prazos: { envio: '2026-12-18', interno: '1ª semana de dezembro de 2026' },
 
   areas: [
@@ -30,6 +30,9 @@ window.PAINEL = {
   ],
 
   historico: [
+    { data: '2026-10-22', texto: 'OD3: ficha em rascunho. O portal tem bases abertas de verdade (contratos e obras em CSV, finanças em XLS, emendas em XLSX e 13 camadas de mapa no GeoPortal com dicionário de dados). Faltam dados por bairro e por grupo da população em formato aberto (o Perfil Socioeconômico por Bairro existe, mas só em PDF), contato, licença e links da página de Dados Abertos para os outros sites. O "Sim" pré-preenchido na plataforma precisa virar "Em andamento".' },
+    { data: '2026-10-22', texto: 'OD1: ficha em rascunho. SBC não tem política de dados abertos; o decreto da Lei de Acesso à Informação (18.882/2014) ajuda só em parte. Recomendação: um decreto curto da Política Municipal de Dados Abertos, que também adote o capítulo de abertura de dados da Lei 14.129/2021. Decisão sobre o instrumento em aberto e 4 pedidos à equipe.' },
+    { data: '2026-10-22', texto: 'Corrigido o link da publicação oficial da Portaria 10.510/2026 (Notícias do Município nº 2676), que estava quebrado.' },
     { data: '2026-10-21', texto: 'DM1: a proposta de ajustes ao decreto do SBC+i ganhou página própria no painel. Os trechos criados e alterados estão destacados, cada um com o porquê, a intenção e a relação com a WWC, e há filtros para ver só as mudanças ou só um subcritério. Links no item do Programa SBC+i e na decisão do DM1.' },
     { data: '2026-10-21', texto: 'DM1: redigida a proposta de ajustes à minuta do decreto do SBC+i. Ela inclui competências de governança de dados para o GT, reunião no mínimo trimestral com ata em processo próprio, objetivos e plano de governança de dados, princípios de uso ético (inclusive IA) e relatório anual público. Também lembra que o GT já existe e pode começar a se reunir com ata antes do decreto.' },
     { data: '2026-10-21', texto: 'DM1: o painel passa a mostrar o projeto de lei e a minuta de decreto do Programa SBC+i (processo SB 100144/2026). A reescrita do art. 5º do decreto, pedida pela Procuradoria, é a chance de incluir reunião trimestral com ata e princípios de uso ético de dados.' },
@@ -145,29 +148,141 @@ window.PAINEL = {
       definicao: 'A prefeitura possui uma política de dados abertos formalizada e disponível ao público, com compromisso de transparência e divulgação proativa de dados.',
       regra: { min: 3, total: 4 }, janela: 'Sem janela',
       plataforma: { resposta: 'Vazio', nota: 'Na revisão do Raio-X, Dados Abertos foi rebaixado para "Em andamento": o portal atende à obrigação legal de transparência, mas falta uma política formal de dados abertos voltada a reuso e às demandas da comunidade.' },
-      ficha: 'nao_iniciada',
+      ficha: 'rascunho', classificacao: 'criar',
+      resumo: 'SBC não tem política de dados abertos. O que existe é a regulamentação da Lei de Acesso à Informação (Decreto 18.882/2014), que ajuda só em parte o OD1.4. Recomendação: um decreto curto da Política Municipal de Dados Abertos, que também adote o capítulo de abertura de dados da Lei 14.129/2021. Como o OD1 não tem janela nem exige reuniões, basta o decreto estar publicado antes de 18/12.',
       subcriterios: [
-        { cod: 'OD1.1', texto: 'A política cria uma estrutura de governança para a liberação proativa de informações públicas.' },
-        { cod: 'OD1.2', texto: 'A política inclui planos para coletar feedback público regular sobre o programa de dados abertos.' },
-        { cod: 'OD1.3', texto: 'A política garante, com relatórios no mínimo anuais, a revisão periódica do texto e da implementação.' },
-        { cod: 'OD1.4', texto: 'A política se compromete a divulgar as decisões sobre coleta, priorização, armazenamento, uso e publicação de dados, explicando o que não pode ser liberado.' }
+        { cod: 'OD1.1', texto: 'A política cria uma estrutura de governança para a liberação proativa de informações públicas.', situacao: 'nao_tem', classificacao: 'criar',
+          nota: 'Há competências (Seção de Transparência da Controladoria, para o portal e a capacitação em dados abertos; DTI, para a estratégia de dados) e uma rede de representantes por órgão prevista no decreto da LAI, mas nenhuma estrutura para a publicação proativa.' },
+        { cod: 'OD1.2', texto: 'A política inclui planos para coletar feedback público regular sobre o programa de dados abertos.', situacao: 'nao_tem', classificacao: 'criar',
+          nota: 'Não há escuta sobre dados abertos. A pesquisa de satisfação do Portal da Transparência (Decreto 23.215/2026, art. 6º, X) é usada para melhorar os serviços, não para saber que dados a população quer.' },
+        { cod: 'OD1.3', texto: 'A política garante, com relatórios no mínimo anuais, a revisão periódica do texto e da implementação.', situacao: 'nao_tem', classificacao: 'criar_risco',
+          nota: 'A prefeitura já publica todo ano o relatório da LAI (2012 a 2025), o que mostra que a rotina existe. Mas uma política nova não terá relatório publicado antes de 18/12, e não se sabe se o revisor aceita a política sem o primeiro relatório. O OD1 pede 3 de 4, então não depende deste.' },
+        { cod: 'OD1.4', texto: 'A política se compromete a divulgar as decisões sobre coleta, priorização, armazenamento, uso e publicação de dados, explicando o que não pode ser liberado.', situacao: 'parcial', classificacao: 'criar',
+          nota: 'O decreto da LAI já obriga a fundamentar negativas e a publicar todo ano o rol de documentos sigilosos (2023–2025: nenhum). Isso vale só para pedidos e sigilo. Falta o compromisso de explicar como se decide o que se abre e em que ordem.' }
       ],
       evidencias: ['Link para a política de dados abertos publicada.', 'Cópia do relatório anual mais recente, se a política o exigir.'],
-      nota: 'Pode entrar no mesmo decreto do DM1 (opção A). A decisão fica para esta ficha.'
+      sbc: {
+        tem: [
+          { titulo: 'Competências legais sobre dados abertos', texto: 'A Lei 7.367/2025 dá à Seção de Transparência da Controladoria (art. 35) a coordenação do Portal da Transparência e da capacitação em "dados abertos", e ao DTI (art. 645, XIII) a estratégia de dados do Município. São a base para dizer, no decreto, quem coordena.',
+            links: [{ t: 'Lei 7.367/2025, art. 35', u: LEIS + 'lei-ordinaria/2025/7367/lei-ordinaria-n-7367-2025-dispoe-sobre-a-estrutura-administrativa-do-municipio-de-sao-bernardo-do-campo-alteracao-das-leis-municipais-n-s-2240-de-13-de-agosto-de-1976-e-6745-de-7-de-fevereiro-de-2019-e-da-outras/#:~:text=Art.%2035.' }] },
+          { titulo: 'Relatórios anuais da Lei de Acesso à Informação', texto: 'Publicados todo ano desde 2012, com o rol anual de documentos classificados e desclassificados. Mostram que a prefeitura já mantém uma rotina de relatório anual, que pode ser estendida aos dados abertos (OD1.3).',
+            links: [{ t: 'Relatórios da LAI', u: 'https://www.saobernardo.sp.gov.br/web/transparencia/relatorios-da-lei-de-acesso-a-informacao' }] }
+        ],
+        incompleto: [
+          { titulo: 'Decreto 18.882/2014: regulamentação da Lei de Acesso à Informação', texto: 'Tem como diretrizes "a publicidade como preceito geral e o sigilo como exceção" e a "divulgação de informações de interesse público, independentemente de solicitações" (art. 3º). Prevê representantes por órgão para a gestão da informação (art. 7º), negativa sempre fundamentada (art. 17) e publicação anual do rol de informações sigilosas (art. 31).', falta: 'Não é política de dados abertos: trata de pedidos e de sigilo, não de publicação proativa de bases, escuta pública nem relatório de revisão. Serve de apoio ao OD1.4, e os representantes por órgão podem virar os coordenadores de dados abertos.',
+            links: [{ t: 'Decreto 18.882/2014', u: LEIS + 'decreto/2014/18882/decreto-n-18882-2014-regulamenta-o-procedimento-de-acesso-a-informacoes-publicas-garantido-no-inciso-xxxiii-do-art-5-no-inciso-ii-do-art-37-e-no-2-do-art-216-da-constituicao-federal-regulamentados-pela-lei-federal-n-12527-de-18-de-novembro-de-2011-e-da-outras/' }] },
+          { titulo: 'Lei Federal 14.129/2021 (Governo Digital): ainda não adotada por SBC', texto: 'O capítulo de abertura de dados (arts. 29 a 37) traz quase tudo o que o OD1.4 pede: bases não pessoais públicas como regra, pedido de abertura por qualquer pessoa, pedidos e respostas publicados como base aberta e direito ao inteiro teor da negativa.', falta: 'Para municípios, a lei só vale se for adotada por ato próprio (art. 2º, III). A página de Dados Abertos diz que a regulamentação local está "em estudo". O decreto do OD1 pode ser essa regulamentação.',
+            links: [{ t: 'Lei 14.129/2021, art. 29', u: 'https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14129.htm#art29' }, { t: 'Página de Dados Abertos', u: 'https://www.saobernardo.sp.gov.br/web/transparencia/dados-abertos' }] },
+          { titulo: 'Portal de dados abertos "em desenvolvimento" (PPA 2026–2029)', texto: 'Na resposta às sugestões do PPA (Anexo V), a prefeitura diz que já existe "iniciativa semelhante em desenvolvimento no âmbito da modernização digital".', falta: 'Não foi localizado ato, contrato nem prazo; o Plano de Contratações 2026 não tem item de portal de dados abertos. Pedir à equipe.' }
+        ],
+        naoTem: [
+          { titulo: 'Política de dados abertos publicada em ato normativo', texto: 'Com princípios, definições e licença aberta.' },
+          { titulo: 'Governança da publicação proativa', texto: 'Coordenação, um coordenador por secretaria, inventário, processo de publicação e cronograma público (OD1.1).' },
+          { titulo: 'Escuta pública sobre dados abertos', texto: 'Canal permanente para pedir abertura de bases e consulta periódica sobre prioridades (OD1.2).' },
+          { titulo: 'Relatório anual de dados abertos', texto: 'Com o progresso, as bases abertas no ano, os pedidos de abertura e a proposta de revisão da política (OD1.3).' }
+        ],
+        naoServe: [
+          { titulo: 'A página de Dados Abertos do Portal da Transparência', texto: 'É um texto de apresentação, com base legal e termos de uso informais. Não tem governança, escuta, relatório nem regra de decisão. Conta para o OD3 (portal), não para o OD1.', links: [{ t: 'Página de Dados Abertos', u: 'https://www.saobernardo.sp.gov.br/web/transparencia/dados-abertos' }] },
+          { titulo: 'Decreto do SBC+i e a proposta de ajustes', texto: 'A proposta de ajustes ao decreto do SBC+i deixou dados abertos de fora de propósito: o decreto só sai depois da lei, e o escopo é cidade inteligente.', links: [{ t: 'Proposta de ajustes ao decreto do SBC+i', u: 'proposta-sbc-mais-i.html' }] }
+        ]
+      },
+      decisao: {
+        titulo: 'Onde pôr a política de dados abertos',
+        recomendada: 'A',
+        opcoes: [
+          { id: 'A', nome: 'Decreto próprio da Política Municipal de Dados Abertos', descricao: 'Decreto curto, que também adota o capítulo de abertura de dados da Lei 14.129/2021 e prevê a ligação com o comitê de governança do DM1.',
+            pros: 'Não depende da Câmara nem do ato guarda-chuva; é a regulamentação que a prefeitura já diz estudar; o OD1 só precisa do ato publicado.', contras: 'Mais um ato; precisa deixar escrita a ligação com o comitê do DM1, para não haver duas governanças.' },
+          { id: 'B', nome: 'Dentro do ato de governança de dados do DM1', descricao: 'A política de dados abertos seria um capítulo do decreto de governança de dados ou do ato guarda-chuva.',
+            pros: 'Um só instrumento para o DM1 e o OD1.', contras: 'Esse ato ainda não tem minuta nem prazo, e o OD1 ficaria preso a ele.' },
+          { id: 'C', nome: 'Dentro do decreto do SBC+i', descricao: 'Acrescentar a política à minuta de decreto do Programa SBC+i, que está em trâmite.',
+            pros: 'O texto já está em trâmite.', contras: 'O decreto só sai depois da lei, que vai à Câmara; o escopo é cidade inteligente.' }
+        ],
+        nota: 'Se já houver minuta de regulamentação da Lei 14.129 (pedido 1), ela é o veículo natural da opção A.'
+      },
+      modelos: [
+        { nome: 'Política de dados abertos de Baton Rouge (Resolução 53275)', cobre: ['OD1.1', 'OD1.2', 'OD1.3', 'OD1.4'], texto: 'Parte 3: governança, com coordenador por órgão, inventário, priorização pela demanda do público e triagem de dados sensíveis. Seção 4: participação do público. Parte 5: relatório anual até 31 de janeiro, com sugestões de melhoria.', u: 'https://www.brla.gov/DocumentCenter/View/6350/Resolution-53275-Open-Data-Policy' },
+        { nome: 'Manual administrativo de Baton Rouge', cobre: ['OD1.1', 'OD1.4'], texto: 'Processo de publicação, metadados, revisão de qualidade e prevenção da liberação de dados protegidos.', u: 'https://www.brla.gov/DocumentCenter/View/6346/Open-Data-Administrative-Handbook' },
+        { nome: 'Relatório anual de dados abertos de Baton Rouge (2022)', cobre: ['OD1.3'], texto: 'Exemplo do relatório que o OD1.3 pede: resultados do ano, bases publicadas e planos. Os relatórios ficam na página da política.', u: 'https://www.brla.gov/1343/Open-Data-Policy' }
+      ],
+      plano: [
+        { texto: 'Levantar o que SBC já tem', feito: true },
+        { texto: 'Ler os modelos de referência', feito: true },
+        { texto: 'Validar a análise internamente', feito: false },
+        { texto: 'Decidir o instrumento (opções A, B ou C)', feito: false, ancora: 'decisao-OD1' },
+        { texto: 'Receber da equipe os documentos pedidos', feito: false, ancora: 'pedidos-OD1' },
+        { texto: 'Ler ao menos um decreto municipal brasileiro de dados abertos', feito: false },
+        { texto: 'Redigir a minuta: governança, escuta, relatório anual e transparência das decisões', feito: false },
+        { texto: 'Trâmite: Procuradoria, assinatura e publicação (antes de 18/12)', feito: false },
+        { texto: 'Reunir as evidências e preparar a resposta', feito: false },
+        { texto: 'Equipe insere resposta e arquivos na plataforma', feito: false }
+      ],
+      pedidos: [
+        { texto: 'Se existe minuta, estudo ou processo de regulamentação local da Lei 14.129/2021 (a página de Dados Abertos diz que "o município estuda")', status: 'a_pedir' },
+        { texto: 'Se foram nomeados os representantes por órgão do art. 7º do Decreto 18.882/2014 e se a Comissão Mista de Reavaliação (art. 21) foi constituída', status: 'a_pedir' },
+        { texto: 'Qual unidade mantém hoje a página de Dados Abertos (Controladoria ou DTI)', status: 'a_pedir' },
+        { texto: 'O que é o portal de dados abertos "em desenvolvimento" citado no PPA 2026–2029: ferramenta, responsável e prazo', status: 'a_pedir' }
+      ]
     },
     {
       codigo: 'OD3', area: 'OD', ordem: 3,
       titulo: 'Portal de dados abertos',
       definicao: 'A prefeitura publica dados abertos em um local central e público on-line.',
       regra: { min: 3, total: 3 }, janela: 'Sem janela',
-      plataforma: { resposta: 'Sim (pré-preenchido)', alerta: 'A resposta veio pré-preenchida com "Sim", mas a revisão do Raio-X rebaixou Dados Abertos para "Em andamento". Corrigir ao inserir.' },
-      ficha: 'nao_iniciada',
+      plataforma: { resposta: 'Sim (pré-preenchido)', alerta: 'A resposta veio pré-preenchida com "Sim", mas a revisão do Raio-X rebaixou Dados Abertos para "Em andamento". Hoje o "Sim" não se sustenta: marcar "Em andamento" até as ações do plano estarem publicadas.' },
+      ficha: 'rascunho', classificacao: 'criar',
+      resumo: 'Há bases abertas de verdade (contratos e obras em CSV, finanças em XLS, emendas em XLSX e 13 camadas de mapa no GeoPortal, com dicionário de dados), gratuitas e sem cadastro. Faltam dados desagregados por bairro e por grupo da população em formato aberto, e a página de Dados Abertos não aponta para os outros sites nem traz contato e licença. Tudo isso é edição de página e publicação de planilhas que já existem.',
       subcriterios: [
-        { cod: 'OD3.1', texto: 'Os dados abertos são legíveis por máquina, podem ser baixados e são gratuitos.' },
-        { cod: 'OD3.2', texto: 'Quando possível, preservando a privacidade, os dados são publicados desagregados por subgrupos geográficos e demográficos.' },
-        { cod: 'OD3.3', texto: 'Os dados são contextualizados com linguagem clara, contatos, políticas e documentos; outros sites de dados ficam vinculados ao portal principal.' }
+        { cod: 'OD3.1', texto: 'Os dados abertos são legíveis por máquina, podem ser baixados e são gratuitos.', situacao: 'tem', classificacao: 'atende',
+          nota: 'Contratos e obras em andamento em CSV (atualizados em 22/10/2026), relatórios fiscais de 2026 em XLS, emendas em XLSX e camadas do GeoPortal em shapefile, todos sem login. Para reduzir o risco na revisão: pôr uma licença aberta explícita e atualizar os relatórios mensais da página principal, que param em 2023.' },
+        { cod: 'OD3.2', texto: 'Quando possível, preservando a privacidade, os dados são publicados desagregados por subgrupos geográficos e demográficos.', situacao: 'parcial', classificacao: 'criar',
+          nota: 'As bases do portal não são desagregadas. O Perfil Socioeconômico por Bairro 2026 tem exatamente o que o critério pede (bairro × idade, sexo, cor ou raça, vulnerabilidade, renda), mas só em PDF. Publicar essas tabelas em planilha resolve.' },
+        { cod: 'OD3.3', texto: 'Os dados são contextualizados com linguagem clara, contatos, políticas e documentos; outros sites de dados ficam vinculados ao portal principal.', situacao: 'parcial', classificacao: 'criar',
+          nota: 'A página explica em linguagem clara o que são dados abertos e cita a base legal. Faltam contato da unidade responsável, licença, uma descrição por base e links para o GeoPortal, o Perfil por Bairro, o Painel Estatístico e o Portal da Saúde.' }
       ],
-      evidencias: ['Link para o portal de dados abertos. Se houver vários sites, um deles deve apontar para os outros.']
+      evidencias: ['Link para o portal de dados abertos. Se houver vários sites, um deles deve apontar para os outros.'],
+      sbc: {
+        tem: [
+          { titulo: 'Bases legíveis por máquina, gratuitas e sem cadastro', texto: 'Contratos (CSV, Excel e PDF) e obras em andamento (CSV, Excel e PDF), ambos atualizados em 22/10/2026; relatórios de receitas e despesas de 2026 em XLS no sistema de transparência fiscal; planilha de emendas parlamentares em XLSX.',
+            links: [{ t: 'Contratos', u: 'https://transparencia.saobernardo.sp.gov.br/contratos' }, { t: 'Obras em andamento', u: 'https://obras.saobernardo.sp.gov.br/transparencia/obras-em-andamento' }, { t: 'Transparência fiscal', u: 'https://transparencia-fiscal.saobernardo.sp.gov.br/transparencia-fiscal/municipio-sbc/inicio' }] },
+          { titulo: 'GeoPortal: 13 camadas de mapa para download, com dicionário de dados', texto: 'Limite municipal, perímetro urbano, bairros, zoneamento, lotes, arruamentos, logradouros, hierarquia viária, próprios municipais, equipamentos e serviços públicos, praças, represa e endereços, em shapefile. A planilha de descrição (abr/2026) traz, para cada camada, título, descrição, data, escala, projeção, fonte e atributos.',
+            links: [{ t: 'GeoPortal (aba Downloads)', u: 'https://geo.saobernardo.sp.gov.br/' }] }
+        ],
+        incompleto: [
+          { titulo: 'Página de Dados Abertos do Portal da Transparência', texto: 'Explica em linguagem clara o que são dados abertos, cita a Lei 14.129/2021 e o Decreto 21.086/2020 e aponta para receitas, despesas, contratos, obras e emendas.', falta: 'Contato da unidade responsável; licença aberta explícita (hoje há só termos informais e uma nota de isenção); descrição por base; links para o GeoPortal, o Perfil por Bairro, o Painel Estatístico e o Portal da Saúde. O link "Patrimônio Público" aponta para a página de receitas e despesas.',
+            links: [{ t: 'Página de Dados Abertos', u: 'https://www.saobernardo.sp.gov.br/web/transparencia/dados-abertos' }] },
+          { titulo: 'Perfil Socioeconômico por Bairro 2026 (Planejamento Urbano)', texto: 'Um capítulo por bairro, com população 2000–2025, faixa etária, sexo, cor ou raça, alfabetização, domicílios, serviços básicos, índice de vulnerabilidade (IPVS), renda, matrículas, equipamentos e atividades econômicas. Ano-base 2025, publicado em jun/2026.', falta: 'Só em PDF, que não é formato aberto. Publicar as tabelas em CSV ou XLSX resolve o OD3.2.',
+            links: [{ t: 'Perfil Socioeconômico por Bairro', u: 'https://www.saobernardo.sp.gov.br/web/sbc/perfilsocioeconomicobairros' }] }
+        ],
+        naoTem: [
+          { titulo: 'Dados desagregados por bairro e por grupo da população em formato aberto', texto: 'Hoje só em PDF (OD3.2).' },
+          { titulo: 'Um ponto central que aponte para todos os sites de dados', texto: 'GeoPortal, estatísticas e saúde estão fora da página de Dados Abertos (OD3.3).' }
+        ],
+        naoServe: [
+          { titulo: 'Patrimônio, Painel Estatístico e lista de espera da Saúde em PDF', texto: 'Úteis como contexto, mas PDF não é dado legível por máquina (OD3.1).', links: [{ t: 'Painel Estatístico', u: 'https://www.saobernardo.sp.gov.br/web/sbc/painel-estatistico' }] }
+        ]
+      },
+      modelos: [
+        { nome: 'Portal de dados abertos de Corrientes (Argentina)', cobre: ['OD3.2', 'OD3.3'], texto: 'Exemplo do pacote do Fórum: dados de saúde por faixa etária e sexo; cada base com conteúdo, área responsável, frequência de carga e última atualização; contato e links para outros sites.', u: 'https://datos.ciudaddecorrientes.gov.ar/' },
+        { nome: 'Portal de dados abertos de Porto Alegre', cobre: ['OD3.1', 'OD3.3'], texto: 'Cidade brasileira citada como exemplo na página do critério.', u: 'https://dadosabertos.poa.br/' },
+        { nome: 'Requisitos de portal de dados abertos (GovEx)', cobre: ['OD3.1', 'OD3.3'], texto: 'Lista de requisitos para avaliar ou montar um portal.', u: 'http://labs.centerforgov.org/open-data/portal-requirements/' }
+      ],
+      plano: [
+        { texto: 'Levantar o que SBC já tem', feito: true },
+        { texto: 'Validar a análise internamente', feito: false },
+        { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-OD3' },
+        { texto: 'Página de Dados Abertos: links para GeoPortal, Perfil por Bairro, Painel Estatístico e Saúde; corrigir o link de patrimônio', feito: false },
+        { texto: 'Página de Dados Abertos: contato, licença aberta e uma descrição por base', feito: false },
+        { texto: 'Publicar as tabelas do Perfil por Bairro em CSV ou XLSX', feito: false },
+        { texto: 'Atualizar ou retirar os relatórios mensais de 2021–2023 de receitas e despesas', feito: false },
+        { texto: 'Reunir as evidências e preparar a resposta', feito: false },
+        { texto: 'Equipe corrige o "Sim" pré-preenchido e insere a resposta', feito: false }
+      ],
+      pedidos: [
+        { texto: 'Qual unidade mantém a página de Dados Abertos e quem pode editá-la', status: 'a_pedir' },
+        { texto: 'O que é o portal de dados abertos "em desenvolvimento" citado no PPA 2026–2029 e quando fica pronto', status: 'a_pedir' },
+        { texto: 'Se o Planejamento Urbano pode publicar as tabelas do Perfil por Bairro e do Painel Estatístico em CSV ou XLSX', status: 'a_pedir' },
+        { texto: 'Se o GeoPortal pode ser apresentado como parte do portal de dados abertos, e quem responde pelas camadas', status: 'a_pedir' }
+      ]
     },
     {
       codigo: 'DM2', area: 'DM', ordem: 4,
