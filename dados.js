@@ -30,6 +30,7 @@ window.PAINEL = {
   ],
 
   historico: [
+    { data: '2026-10-22', texto: 'OD1: lidos o glossário da plataforma e o Fórum da WWC. O glossário define "codificar" como "sistematizar políticas": a WWC exige política escrita, não necessariamente lei ou decreto (corrigida a justificativa). Um texto da WWC de jan/2026 recomenda que o mesmo órgão de governança cuide do DM1 e do OD1: na minuta, a pauta de dados abertos do CGPD passa a ser trimestral.' },
     { data: '2026-10-22', texto: 'OD1: todas as leituras pendentes concluídas e aplicadas à minuta, que passa a 23 artigos. Citações legais conferidas no texto das leis; achada a Indicação nº 14.825/2025 da Câmara, que já pediu a política; a rede de representantes da Controladoria entra como opção para os coordenadores; entram uma cláusula de dados abertos nos contratos novos, download em lote e API, convite à sociedade civil nas reuniões e o cuidado com o cruzamento de bases. Modelos novos: Teresópolis e Osasco, que mostram precedentes brasileiros de escuta pública e relatório anual.' },
     { data: '2026-10-22', texto: 'DM1 e OD1: as recomendações sobre instrumento, colegiado e coordenação passam a ser indicações técnicas, porque a decisão cabe ao município (DTI e Procuradoria). Os cartões do DM1 e do OD1 ganharam um botão no topo para abrir a proposta de texto de cada um.' },
     { data: '2026-10-22', texto: 'OD1: publicada a minuta de decreto da Política Municipal de Dados Abertos, em rascunho, como indicação técnica (a decisão é do município). São 22 artigos e um anexo, cada um com por quê, intenção, de qual modelo veio e qual subcritério atende; os quatro subcritérios estão cobertos. Os pontos de escolha (colegiado, coordenação e data do relatório) estão marcados. Novo pedido à equipe: os temas dos documentos que o DTI vai encaminhar à Procuradoria, para cotejo.' },
@@ -200,7 +201,7 @@ window.PAINEL = {
       justificativa: {
         titulo: 'Por que é preciso um ato normativo',
         intro: [
-          'O OD1 não avalia se a prefeitura pratica transparência, e sim se existe uma política escrita com quatro elementos. A definição pede política "formalizada e disponível ao público"; no original em inglês, "codified", o que indica um ato normativo, não uma página ou uma prática.',
+          'O OD1 não avalia se a prefeitura pratica transparência, e sim se existe uma política escrita com quatro elementos. A definição pede política "formalizada e disponível ao público"; no original em inglês, "codified", que o glossário da própria WWC traduz como "sistematizar políticas". Ou seja, uma página ou uma prática não bastam, mas a WWC não exige que seja lei. Um decreto é o caminho recomendado porque obriga todas as secretarias e responde à crítica do Raio-X.',
           'Cada subcritério começa com "a política...": a política cria a governança (1.1), prevê a escuta pública (1.2), exige o relatório anual (1.3) e se compromete a explicar as decisões (1.4). Mesmo o que SBC já faz na prática precisa estar escrito no texto da política. Foi o que a revisão do Raio-X apontou: falta "uma política e uma estratégia formal de Dados Abertos".'
         ],
         linhas: [
