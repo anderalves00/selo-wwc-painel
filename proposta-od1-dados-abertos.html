@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Minuta dados abertos</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f71b3'/%3E%3Crect y='26' width='32' height='6' fill='%23ff8200'/%3E%3Cpath d='M8 20l5-6 4 4 7-9' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
+  --laranja: #ff8200; --laranja-esc: #b35b00; --laranja-claro: #fff1e3;
+  --verde: #288827; --verde-claro: #e6f4e6;
+  --texto: #2b2b2b; --texto-suave: #5f6368; --borda: #dde3e8;
+  --fundo: #f3f6f9; --cartao: #ffffff;
+  --raio: 10px; --sombra: 0 1px 3px rgba(15, 40, 70, .08);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 "Open Sans", Arial, sans-serif; }
+a { color: var(--azul); }
+h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
+
+.topo { background: linear-gradient(90deg, var(--azul-esc), var(--azul)); color: #fff; border-bottom: 5px solid var(--laranja); }
+.topo-int { padding: 20px 32px 18px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
+.topo .sobre { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; opacity: .85; font-weight: 600; }
+.topo h1 { font-size: 26px; font-weight: 800; margin-top: 4px; }
+.topo .subtitulo { font-size: 14px; opacity: .9; margin-top: 4px; }
+.topo .voltar { color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; background: rgba(255,255,255,.16); padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
+.topo .voltar:hover { background: rgba(255,255,255,.28); }
+
+.barra { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
+.barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.barra .rot { font-size: 13px; font-weight: 700; color: var(--texto-suave); }
+.grupo { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { border: 1px solid var(--borda); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
+.chip[aria-pressed=true] { background: var(--azul); border-color: var(--azul); color: #fff; }
+.contagem { font-size: 13px; color: var(--texto-suave); margin-left: auto; }
+
+main { padding: 24px 32px 48px; display: grid; gap: 22px; }
+.cartao { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); padding: 20px 22px; }
+.cartao > h2 { font-size: 19px; color: var(--azul-esc); margin-bottom: 10px; }
+.cartao p { margin: 0 0 10px; }
+.cartao p:last-child { margin-bottom: 0; }
+
+.legenda { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 12px; font-size: 14px; }
+.legenda span { display: inline-flex; align-items: center; gap: 8px; }
+.tag { display: inline-block; font: 800 11px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 5px; }
+.tag.novo { background: var(--laranja); color: #fff; }
+.tag.alterado { background: var(--azul); color: #fff; }
+.tag.igual { background: #eef1f4; color: var(--texto-suave); }
+.tag.sub { background: var(--verde-claro); color: var(--verde); }
+
+.subs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 6px; }
+.sub-card { border: 1px solid var(--borda); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.sub-card h3 { font-size: 16px; color: var(--azul-esc); }
+.sub-card .pede { font-size: 14px; }
+.sub-card .linha { font-size: 13.5px; border-radius: 6px; padding: 7px 10px; }
+.sub-card .hoje { background: #f7f9fb; }
+.sub-card .depois { background: var(--laranja-claro); }
+.sub-card .arts { display: flex; flex-wrap: wrap; gap: 6px; }
+.sub-card .arts a { font-size: 13px; font-weight: 700; text-decoration: none; background: var(--azul-claro); padding: 2px 9px; border-radius: 6px; }
+
+.decreto { padding: 0; overflow: hidden; }
+.decreto-cab { padding: 18px 22px; border-bottom: 1px solid var(--borda); background: #fafbfc; }
+.decreto-cab h2 { font-size: 19px; color: var(--azul-esc); }
+.decreto-cab .nota { font-size: 13.5px; color: var(--texto-suave); margin-top: 4px; }
+.ementa { padding: 18px 22px 6px; font-size: 14.5px; }
+.ementa .num { font-weight: 800; }
+.ementa .em { margin: 8px 0 12px auto; max-width: 520px; font-style: italic; }
+.ementa p { margin: 0 0 8px; }
+.capitulo { padding: 14px 22px 6px; font-weight: 800; color: var(--azul-esc); letter-spacing: .03em; text-transform: uppercase; font-size: 13.5px; border-top: 1px solid var(--borda); background: #fafbfc; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+.art { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); border-top: 1px solid var(--borda); }
+.art .texto { padding: 14px 22px; font-size: 14.5px; }
+.art .texto p { margin: 0 0 7px; }
+.art .texto p:last-child { margin-bottom: 0; }
+.art.igual { grid-template-columns: 1fr; }
+.art.igual .texto { color: #555b61; }
+.art .cab { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+.art .cab .id { font-weight: 800; font-size: 13px; color: var(--texto-suave); }
+.art .cab .antigo { font-size: 12.5px; color: var(--texto-suave); }
+.art.novo .texto { background: var(--laranja-claro); border-left: 5px solid var(--laranja); }
+.art.alterado .texto { background: var(--azul-claro); border-left: 5px solid var(--azul); }
+mark.novo { background: #ffd8ad; color: inherit; padding: 1px 3px; border-radius: 3px; }
+del.sup { text-decoration: line-through; text-decoration-thickness: 1.5px; color: #8a2a22; background: #fbe9e7; padding: 1px 3px; border-radius: 3px; }
+.rotulo-red { font: 800 11.5px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; margin: 10px 0 4px; }
+.rotulo-red.sup { color: #8a2a22; margin-top: 0; }
+.rotulo-red.nova { color: var(--laranja-esc); }
+.obs-red { font-size: 13.5px; color: var(--texto-suave); border-top: 1px dashed var(--borda); padding-top: 8px; margin-top: 10px !important; }
+.inc { padding-left: 18px; }
+
+.expl { padding: 14px 20px; background: #fff; border-left: 1px solid var(--borda); display: grid; gap: 10px; align-content: start; font-size: 14px; }
+.expl h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); margin-bottom: 2px; }
+.expl .wwc { background: var(--verde-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .wwc h4 { color: var(--verde); }
+.expl p { margin: 0; }
+
+.assinatura { padding: 14px 22px 20px; border-top: 1px solid var(--borda); font-size: 14.5px; }
+.vazio { padding: 20px 22px; color: var(--texto-suave); display: none; border-top: 1px solid var(--borda); }
+
+.obs ol { margin: 0; padding-left: 20px; display: grid; gap: 10px; }
+.destaque { background: var(--verde-claro); border-left: 5px solid var(--verde); border-radius: 6px; padding: 10px 14px; }
+.fontes ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14px; }
+.rodape { font-size: 13px; color: var(--texto-suave); text-align: center; padding: 0 32px 28px; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 1000px) { .subs { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .topo-int, .barra-int, main { padding-left: 16px; padding-right: 16px; }
+  .barra { position: static; }
+  .art { grid-template-columns: 1fr; }
+  .expl { border-left: 0; border-top: 1px dashed var(--borda); }
+  .art .texto, .expl, .capitulo, .ementa, .assinatura, .decreto-cab { padding-left: 16px; padding-right: 16px; }
+  .contagem { margin-left: 0; width: 100%; }
+}
+@media print {
+  .barra, .topo .voltar { display: none; }
+  body { background: #fff; }
+  .art { break-inside: avoid; }
+}
+.tag.escolha { background: #fde7c4; color: #8a4b00; }
+.aviso { background: var(--laranja-claro); border-left: 5px solid var(--laranja); border-radius: 6px; padding: 12px 16px; }
+.expl .origem { background: var(--azul-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .origem h4 { color: var(--azul-esc); }
+table.anexo { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.anexo td, table.anexo th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-int">
+    <div>
+      <div class="sobre">Painel WWC · SBC · Critério OD1</div>
+      <h1>Minuta de decreto: Política Municipal de Dados Abertos</h1>
+      <div class="subtitulo">Rascunho de indicação técnica · 22/10/2026 · Para cotejo com os documentos em preparação no DTI e análise da Procuradoria</div>
+    </div>
+    <a class="voltar" href="index.html#OD1">← Voltar ao painel (OD1)</a>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-int">
+    <span class="rot">Subcritério WWC:</span>
+    <div class="grupo" data-filtro="sub">
+      <button class="chip" type="button" data-v="todos" aria-pressed="true">Todos</button>
+      <button class="chip" type="button" data-v="OD1.1" aria-pressed="false">OD1.1</button>
+      <button class="chip" type="button" data-v="OD1.2" aria-pressed="false">OD1.2</button>
+      <button class="chip" type="button" data-v="OD1.3" aria-pressed="false">OD1.3</button>
+      <button class="chip" type="button" data-v="OD1.4" aria-pressed="false">OD1.4</button>
+      <button class="chip" type="button" data-v="escolha" aria-pressed="false">Só pontos de escolha</button>
+    </div>
+    <span class="contagem" id="contagem"></span>
+  </div>
+</div>
+
+<main>
+
+<section class="cartao">
+  <h2>O que é esta página</h2>
+  <div class="aviso"><p><b>Rascunho de indicação técnica, não decisão.</b> Esta minuta reúne o que os modelos de outras cidades fazem para atender ao critério OD1 da certificação What Works Cities. As escolhas de forma, colegiado, coordenação e prazos cabem ao município (DTI e Procuradoria).</p><p><b>Documentos em preparação.</b> A direção do DTI tem documentos a encaminhar à Procuradoria que não foram vistos aqui. Esta minuta deve ser cotejada com eles antes de qualquer uso.</p></div>
+  <p style="margin-top:12px">SBC não tem política de dados abertos. O que existe é a regulamentação da Lei de Acesso à Informação (Decreto 18.882/2014), que cobre só parte do que o critério pede. O OD1 pede <b>3 de 4 subcritérios</b> e não tem janela temporal: basta o ato publicado antes do envio (18/12/2026).</p>
+  <p>O decreto é todo novo. Cada artigo traz ao lado <b>por que</b> foi incluído, <b>qual a intenção</b> da redação, <b>de qual modelo veio</b> e <b>qual a relação com a WWC</b>.</p>
+  <div class="legenda">
+    <span><span class="tag novo">Novo</span> artigo da minuta</span>
+    <span><span class="tag escolha">Ponto de escolha do município</span> recomendação que o município pode trocar</span>
+    <span><span class="tag sub">OD1.x</span> subcritério da WWC atendido</span>
+  </div>
+</section>
+
+<section class="cartao">
+  <h2>O que a WWC pede e onde a minuta responde</h2>
+  <div class="subs">
+    <div class="sub-card">
+      <h3>OD1.1 · Estrutura de governança</h3>
+      <div class="pede">A política cria uma estrutura de governança para a liberação proativa de informações públicas.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Competências soltas: Seção de Transparência (portal) e DTI (estratégia de dados), sem processo de publicação proativa.</div>
+      <div class="linha depois"><b>Na minuta:</b> Coordenação Controladoria + DTI, o CGPD aprovando plano e relatório, um coordenador de dados abertos por secretaria e o Plano de Dados Abertos.</div>
+      <div class="arts"><a href="#art5">Art. 5º</a><a href="#art6">Art. 6º</a><a href="#art7">Art. 7º</a><a href="#art9">Art. 9º</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>OD1.2 · Escuta pública regular</h3>
+      <div class="pede">A política inclui planos para coletar feedback público regular sobre o programa de dados abertos.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Não há escuta sobre dados abertos.</div>
+      <div class="linha depois"><b>Na minuta:</b> Canal permanente (pedido de abertura, sugestão, correção), consulta pública anual e uso trimestral dos pedidos da LAI.</div>
+      <div class="arts"><a href="#art12">Art. 12</a><a href="#art13">Art. 13</a><a href="#art14">Art. 14</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>OD1.3 · Relatório anual e revisão</h3>
+      <div class="pede">A política garante, por relatórios no mínimo anuais, a revisão periódica do texto e da implementação.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Só o relatório anual da LAI, que é estatística de pedidos.</div>
+      <div class="linha depois"><b>Na minuta:</b> Relatório até 31/03, com avaliação e propostas de revisão do texto, e reavaliação do decreto a cada dois anos.</div>
+      <div class="arts"><a href="#art6">Art. 6º</a><a href="#art18">Art. 18</a><a href="#art19">Art. 19</a><a href="#art21">Art. 21</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>OD1.4 · Transparência das decisões</h3>
+      <div class="pede">A política se compromete a divulgar as decisões sobre os dados, explicando o que não pode ser liberado.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Só a LAI: negativa fundamentada e rol anual de documentos sigilosos.</div>
+      <div class="linha depois"><b>Na minuta:</b> Critérios de priorização publicados, catálogo com a categoria e o fundamento de cada base, pedidos e respostas abertos, negativas fundamentadas e anexo de hipóteses legais.</div>
+      <div class="arts"><a href="#art2">Art. 2º</a><a href="#art9">Art. 9º</a><a href="#art10">Art. 10</a><a href="#art15">Art. 15</a><a href="#art16">Art. 16</a><a href="#art17">Art. 17</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="cartao decreto" id="decreto">
+  <div class="decreto-cab">
+    <h2>Texto da minuta</h2>
+    <div class="nota">Use os filtros acima para ver só os artigos de um subcritério ou só os pontos de escolha do município.</div>
+  </div>
+
+  <div class="ementa" data-bloco="preambulo">
+    <p class="num">DECRETO Nº ……………</p>
+    <p class="em">Institui a Política Municipal de Dados Abertos, adota no âmbito do Município as disposições sobre abertura de dados da Lei Federal nº 14.129, de 29 de março de 2021, e dá outras providências.</p>
+    <p>O PREFEITO DO MUNICÍPIO DE SÃO BERNARDO DO CAMPO, no uso das atribuições que lhe são conferidas por lei, considerando o que consta do processo administrativo nº ……………;</p>
+    <p>Considerando a Lei Federal nº 12.527, de 18 de novembro de 2011 (Lei de Acesso à Informação), e o Decreto Municipal nº 18.882, de 28 de abril de 2014;</p>
+    <p>Considerando a Lei Federal nº 13.709, de 14 de agosto de 2018 (Lei Geral de Proteção de Dados Pessoais), e o Decreto Municipal nº 22.963, de 2025;</p>
+    <p>Considerando o inciso III do art. 2º da Lei Federal nº 14.129, de 29 de março de 2021, que estende suas disposições aos entes federados que as adotem por ato normativo próprio;</p>
+    <p>Considerando as competências atribuídas à Controladoria-Geral do Município e ao Departamento de Tecnologia da Informação pelos arts. 35 e 645 da Lei Municipal nº 7.367, de 15 de janeiro de 2025; e</p>
+    <p>Considerando que a abertura de dados públicos em formato reutilizável fortalece o controle social, a participação, a pesquisa, a inovação e a melhoria dos serviços públicos,</p>
+    <p>DECRETA:</p>
+  </div>
+
+  <div class="capitulo">Capítulo I – Das disposições gerais</div>
+  <article class="art novo" id="art1" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 1º</span><span class="tag novo">Novo</span></div>
+      <p>Art. 1º Fica instituída a Política Municipal de Dados Abertos, aplicável aos órgãos e entidades da Administração Pública Municipal direta e indireta do Poder Executivo, com os seguintes objetivos:</p><p class="inc">I - promover a divulgação proativa de dados públicos em formato aberto, independentemente de solicitação;</p><p class="inc">II - ampliar a transparência e o controle social sobre a gestão municipal;</p><p class="inc">III - estimular o reuso dos dados públicos pela sociedade, inclusive por pesquisadores, organizações da sociedade civil, imprensa e empreendedores;</p><p class="inc">IV - orientar a abertura de dados pelas demandas e necessidades da população;</p><p class="inc">V - aprimorar a qualidade, a padronização e a interoperabilidade dos dados produzidos ou custodiados pela Administração Municipal;</p><p class="inc">VI - fomentar o uso de dados e evidências na formulação, no monitoramento e na avaliação das políticas públicas; e</p><p class="inc">VII - integrar a abertura de dados às políticas municipais de acesso à informação, proteção de dados pessoais, segurança da informação e governo digital.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A WWC pede uma política "formalizada" (no original, "codified") que estabeleça o compromisso com a divulgação proativa de dados. O revisor do Raio-X disse que o portal de SBC está voltado à obrigação legal e pediu foco em reuso e nas demandas da comunidade.</p></div>
+      <div><h4>Intenção</h4><p>Deixar escrito, logo no primeiro artigo, que o objetivo vai além da obrigação legal: reuso (III) e demanda da população (IV) aparecem como objetivos próprios.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto federal 8.777/2016, art. 1º; Aracruz, Decreto 51.612/2026, art. 4º; crítica do revisor do Raio-X (questão 6).</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>É a "política formalizada e disponível ao público" da definição do OD1. A política só vale como evidência publicada.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art2" data-tipo="novo" data-sub="OD1.4">
+    <div class="texto"><div class="cab"><span class="id">Art. 2º</span><span class="tag novo">Novo</span><span class="tag sub">OD1.4</span></div>
+      <p>Art. 2º Ficam adotadas, no âmbito da Administração Pública Municipal, nos termos do inciso III do art. 2º da Lei Federal nº 14.129, de 29 de março de 2021, as disposições da Seção I do Capítulo IV daquela Lei, que trata da abertura dos dados.</p><p>Parágrafo único. As solicitações de abertura de bases de dados observarão os prazos e procedimentos previstos para os pedidos de acesso à informação na Lei Federal nº 12.527, de 18 de novembro de 2011, e no Decreto Municipal nº 18.882, de 28 de abril de 2014.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A Lei 14.129 só vale para o município que a adota por ato próprio (art. 2º, III). A página de Dados Abertos de SBC diz que essa regulamentação "está em estudo".</p></div>
+      <div><h4>Intenção</h4><p>Adotar só a parte de abertura de dados (arts. 29 a 37), que é a que interessa ao OD1. O resto da lei (serviços digitais, interoperabilidade) pode ser tratado no ato de governo digital que o município venha a editar.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Lei 14.129/2021, arts. 2º, III, e 29 a 37. Caruaru (Decreto 059/2024) regulamentou a lei, mas sem regra de dados abertos: por isso a política precisa estar escrita nos demais artigos, e não só na adoção da lei.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.4</h4><p>Com a adoção, passam a valer em SBC o pedido de abertura por qualquer pessoa (art. 30), a publicação dos pedidos e respostas como base aberta (art. 30, § 5º) e o direito ao inteiro teor da negativa (art. 34). É parte do OD1.4.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art3" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 3º</span><span class="tag novo">Novo</span></div>
+      <p>Art. 3º Para os fins deste Decreto, considera-se:</p><p class="inc">I - dado: sequência de símbolos ou valores, representados em qualquer meio, produzidos como resultado de um processo natural ou artificial;</p><p class="inc">II - dado público: dado produzido, recebido ou custodiado pela Administração Pública Municipal que não esteja submetido a sigilo ou a restrição legal de acesso;</p><p class="inc">III - dado aberto: dado público representado em meio digital, estruturado em formato aberto, legível por máquina, disponível na internet sem custo e sem exigência de cadastro, sob licença aberta que permita sua livre utilização, consumo e cruzamento, limitada a creditar a fonte;</p><p class="inc">IV - formato aberto: formato de arquivo não proprietário, cuja especificação esteja documentada publicamente e seja de livre conhecimento e implementação;</p><p class="inc">V - base de dados: conjunto organizado de dados mantido por órgão ou entidade da Administração Pública Municipal;</p><p class="inc">VI - metadados: informações que descrevem uma base de dados, incluindo, no mínimo, descrição, órgão responsável, contato, fonte, formato, periodicidade de atualização, data da última atualização, licença e restrições aplicáveis;</p><p class="inc">VII - Plano de Dados Abertos: instrumento que define as bases a serem abertas, os critérios de priorização, o cronograma, os responsáveis e as formas de acompanhamento desta Política;</p><p class="inc">VIII - Catálogo Municipal de Bases de Dados: registro das bases de dados identificadas na Administração Pública Municipal, com a situação de cada uma quanto à abertura; e</p><p class="inc">IX - Portal de Dados Abertos: ambiente eletrônico oficial destinado à publicação, consulta e download dos dados abertos municipais.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A política precisa dizer o que conta como dado aberto. Hoje a página de SBC não fala em licença nem em ausência de cadastro.</p></div>
+      <div><h4>Intenção</h4><p>Usar as definições já consagradas no decreto federal, acrescentando metadados com contato (que também serve ao OD3.3) e os instrumentos da política.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto federal 8.777/2016, art. 2º (copiado por Porto Alegre e Fortaleza); Aracruz, art. 5º (metadados, catálogo); glossário da WWC ("legalmente abertos, sem restrições de utilização ou reutilização").</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Alinha a política à definição de dados abertos do glossário da WWC.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art4" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 4º</span><span class="tag novo">Novo</span></div>
+      <p>Art. 4º A Política Municipal de Dados Abertos será regida pelos seguintes princípios e diretrizes:</p><p class="inc">I - publicidade das bases de dados como preceito geral e sigilo como exceção;</p><p class="inc">II - abertura por padrão: toda base de dados que não contenha informação sigilosa, pessoal ou protegida por lei é passível de abertura;</p><p class="inc">III - garantia de acesso irrestrito, gratuito e sem exigência de cadastro aos dados abertos;</p><p class="inc">IV - descrição das bases de dados com informação suficiente para sua compreensão e para a identificação de ressalvas quanto à qualidade e integridade;</p><p class="inc">V - permissão irrestrita de reuso, mediante licença aberta;</p><p class="inc">VI - completude, com publicação dos dados no maior grau de granularidade possível, preservadas a privacidade e a confidencialidade;</p><p class="inc">VII - atualização periódica, com manutenção do histórico;</p><p class="inc">VIII - designação clara de responsável por cada base de dados aberta, inclusive para prestar esclarecimentos sobre seu uso;</p><p class="inc">IX - participação da sociedade na definição das prioridades de abertura; e</p><p class="inc">X - proteção de dados pessoais, nos termos da Lei Federal nº 13.709, de 14 de agosto de 2018, e do Decreto Municipal nº 22.963, de 2025.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Princípios orientam a interpretação de tudo o que vem depois e dão base às decisões de abrir ou não uma base.</p></div>
+      <div><h4>Intenção</h4><p>Partir dos princípios do decreto federal e da Lei 14.129 e acrescentar dois que a WWC valoriza: abertura por padrão (II) e participação da sociedade nas prioridades (IX).</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto federal 8.777/2016, art. 3º, e art. 8º (abertura automática); Lei 14.129/2021, art. 29, § 1º; Baton Rouge, Resolução 53275, Parte 1 ("open by default").</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Sustenta o compromisso de "transparência de dados e divulgação proativa" da definição do OD1.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo II – Da governança</div>
+  <article class="art novo" id="art5" data-tipo="novo" data-sub="OD1.1 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 5º</span><span class="tag novo">Novo</span><span class="tag sub">OD1.1</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 5º A coordenação da Política Municipal de Dados Abertos será exercida conjuntamente pela Controladoria-Geral do Município, por meio da Seção de Transparência, e pelo Departamento de Tecnologia da Informação da Secretaria de Administração, cabendo à Controladoria-Geral a coordenação dos trabalhos.</p><p>§ 1º Compete à coordenação da Política:</p><p class="inc">I - elaborar e propor o Plano de Dados Abertos e suas revisões;</p><p class="inc">II - manter o Catálogo Municipal de Bases de Dados e o Portal de Dados Abertos;</p><p class="inc">III - definir os padrões de formato, metadados, licença e publicação;</p><p class="inc">IV - orientar e apoiar os órgãos e entidades na abertura de suas bases;</p><p class="inc">V - conduzir os mecanismos de participação previstos no Capítulo IV;</p><p class="inc">VI - elaborar o relatório anual previsto no Capítulo VI; e</p><p class="inc">VII - monitorar o cumprimento deste Decreto.</p><p>§ 2º Cabe ao Departamento de Tecnologia da Informação o suporte técnico ao Portal de Dados Abertos e a definição das especificações técnicas, no exercício da competência prevista no inciso XIII do art. 645 da Lei Municipal nº 7.367, de 15 de janeiro de 2025.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O OD1.1 pede uma "estrutura de governança para a liberação proativa". Hoje há competências soltas: a Seção de Transparência coordena o Portal da Transparência e a capacitação em dados abertos (Lei 7.367/2025, art. 35), e o DTI define a estratégia de dados (art. 645, XIII), mas nenhum ato organiza a publicação proativa.</p></div>
+      <div><h4>Intenção</h4><p>Juntar as duas competências que a lei já dá, com a Controladoria na coordenação, porque é ela que mantém o portal. O DTI fica com o suporte técnico.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Fortaleza, Decreto 15.358/2022, art. 7º, § 1º (Controladoria em parceria com o órgão de tecnologia); Aracruz, arts. 11, 12 e 15; Porto Alegre, Decreto 20.315/2019, art. 7º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.1</h4><p>É o núcleo do OD1.1: diz quem responde pela abertura proativa e o que cada um faz.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art6" data-tipo="novo" data-sub="OD1.1 OD1.3 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 6º</span><span class="tag novo">Novo</span><span class="tag sub">OD1.1</span><span class="tag sub">OD1.3</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 6º Compete ao Comitê Gestor de Proteção de Dados (CGPD), instituído pelo Decreto Municipal nº 22.963, de 2025, sem prejuízo das atribuições previstas naquele Decreto:</p><p class="inc">I - aprovar o Plano de Dados Abertos e suas revisões;</p><p class="inc">II - aprovar os critérios de priorização da abertura de bases de dados;</p><p class="inc">III - deliberar sobre a categoria de abertura das bases de dados, nos casos de dúvida submetidos pela coordenação da Política;</p><p class="inc">IV - aprovar o relatório anual previsto no art. 18; e</p><p class="inc">V - propor ao Prefeito a revisão deste Decreto.</p><p>Parágrafo único. As matérias relativas à Política Municipal de Dados Abertos constarão da pauta do CGPD no mínimo uma vez por semestre, com registro em ata.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Uma política precisa de uma instância que aprove o plano, os critérios e o relatório. Criar mais um colegiado aumentaria a fragmentação.</p></div>
+      <div><h4>Intenção</h4><p>Aproveitar o CGPD, que já tem membros nomeados (Portaria 10.510/2026) e reúne Controladoria, Encarregada (que também dirige o DTI) e Procuradoria: é a mesma composição da comissão de dados abertos de Aracruz. O CGPD continua com a LGPD e ganha as decisões de abertura, que dependem justamente da proteção de dados. Alternativas: comissão nova ou o comitê de governança do DM1, quando existir.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Aracruz, art. 9º (comissão com Controladoria, Encarregado e Transformação Digital); Fortaleza, art. 8º, § 1º (reunião semestral); Baton Rouge, Parte 3.A.12 (comitê de governança).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.1 e OD1.3</h4><p>Completa a estrutura de governança do OD1.1 e dá a instância que aprova o relatório anual (OD1.3). Também pode servir ao DM1, se o município optar por ampliar o CGPD.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art7" data-tipo="novo" data-sub="OD1.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 7º</span><span class="tag novo">Novo</span><span class="tag sub">OD1.1</span></div>
+      <p>Art. 7º Os representantes designados nos termos do parágrafo único do art. 7º do Decreto Municipal nº 18.882, de 2014, exercerão também a função de coordenador de dados abertos do respectivo órgão ou entidade, competindo-lhes:</p><p class="inc">I - identificar e manter atualizada a relação das bases de dados do órgão ou entidade no Catálogo Municipal de Bases de Dados;</p><p class="inc">II - indicar, para cada base, a categoria de abertura e o fundamento de eventual restrição;</p><p class="inc">III - promover a publicação e a atualização das bases previstas no Plano de Dados Abertos;</p><p class="inc">IV - garantir os metadados de cada base publicada; e</p><p class="inc">V - atuar como ponto de contato para dúvidas e correções sobre as bases do órgão ou entidade.</p><p>Parágrafo único. O nome da unidade responsável e o canal de contato de cada coordenador serão publicados no Portal de Dados Abertos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A abertura acontece nas secretarias, que são donas dos dados. Sem uma pessoa responsável em cada uma, a coordenação central não tem com quem trabalhar.</p></div>
+      <div><h4>Intenção</h4><p>Não criar uma rede nova: os representantes que o decreto da LAI já prevê em cada órgão para "centralizar a gestão da informação" acumulam a função.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Baton Rouge, Parte 3.A.1 (coordenador por órgão, com contato publicado); Porto Alegre, art. 7º, § 4º; Aracruz, art. 13; Decreto 18.882/2014, art. 7º, parágrafo único.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.1</h4><p>Dá capilaridade à estrutura do OD1.1. O contato publicado (parágrafo único) também atende ao OD3.3.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art8" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 8º</span><span class="tag novo">Novo</span></div>
+      <p>Art. 8º A responsabilidade pelo conteúdo, pela origem, pela qualidade e pela atualização dos dados permanece com o órgão ou entidade que os produz ou custodia.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>É preciso separar quem publica de quem responde pelo dado.</p></div>
+      <div><h4>Intenção</h4><p>Evitar que a coordenação ou o DTI sejam vistos como responsáveis pelo conteúdo das bases das secretarias.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Aracruz, art. 10, § 2º, e art. 13, § 1º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio à governança (OD1.1).</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo III – Dos instrumentos</div>
+  <article class="art novo" id="art9" data-tipo="novo" data-sub="OD1.1 OD1.4">
+    <div class="texto"><div class="cab"><span class="id">Art. 9º</span><span class="tag novo">Novo</span><span class="tag sub">OD1.1</span><span class="tag sub">OD1.4</span></div>
+      <p>Art. 9º O Plano de Dados Abertos será elaborado pela coordenação da Política, aprovado pelo CGPD e publicado no Portal de Dados Abertos, devendo conter, no mínimo:</p><p class="inc">I - o inventário das bases de dados existentes, ainda que preliminar;</p><p class="inc">II - os critérios e a matriz de priorização da abertura;</p><p class="inc">III - a relação das bases a serem abertas, com o resultado da aplicação dos critérios de priorização;</p><p class="inc">IV - o cronograma de abertura e de atualização;</p><p class="inc">V - os órgãos responsáveis por cada base;</p><p class="inc">VI - os padrões mínimos de formato e metadados;</p><p class="inc">VII - as ações de participação da sociedade previstas no Capítulo IV; e</p><p class="inc">VIII - os indicadores de acompanhamento.</p><p>§ 1º O Plano de Dados Abertos terá vigência de dois anos, admitida revisão a qualquer tempo.</p><p>§ 2º O primeiro Plano de Dados Abertos poderá ter caráter inicial, priorizando as bases já publicadas no Portal da Transparência e as de menor complexidade.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A política precisa de um instrumento que diga o que será aberto, em que ordem e quando.</p></div>
+      <div><h4>Intenção</h4><p>Seguir o modelo de plano de todos os decretos lidos, com dois acréscimos: a matriz de priorização e o resultado de sua aplicação são publicados (II e III). O § 2º permite começar pelo que SBC já publica (contratos, obras, finanças).</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto federal 8.777/2016, art. 5º, § 2º; Porto Alegre, art. 7º, § 1º; Aracruz, arts. 18 e 35 e o Plano aprovado pelo Decreto 51.613/2026 (fases e matriz de priorização).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.1 e OD1.4</h4><p>Organiza a liberação proativa (OD1.1). A publicação dos critérios e do resultado da priorização é a forma concreta de "divulgar a tomada de decisão" sobre a priorização (OD1.4).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art10" data-tipo="novo" data-sub="OD1.4">
+    <div class="texto"><div class="cab"><span class="id">Art. 10</span><span class="tag novo">Novo</span><span class="tag sub">OD1.4</span></div>
+      <p>Art. 10. O Catálogo Municipal de Bases de Dados registrará, para cada base identificada:</p><p class="inc">I - nome, descrição e órgão responsável;</p><p class="inc">II - formato e periodicidade de atualização;</p><p class="inc">III - categoria de abertura, nos termos do art. 16;</p><p class="inc">IV - fundamento legal de eventual restrição; e</p><p class="inc">V - previsão de abertura, quando houver.</p><p>Parágrafo único. O Catálogo será publicado no Portal de Dados Abertos, sem prejuízo da proteção das informações sigilosas ou pessoais nele referidas.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Para explicar o que não é publicado, é preciso primeiro listar o que existe.</p></div>
+      <div><h4>Intenção</h4><p>Publicar não só as bases abertas, mas também as que ainda não foram abertas ou não podem ser, com o motivo.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Aracruz, art. 19; Baton Rouge, Parte 3.A.2 (inventário publicado).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.4</h4><p>Atende diretamente o OD1.4 na parte de "explicação para informações confidenciais, protegidas ou outras informações não elegíveis para liberação". Também é a base do DM2 (inventário de dados).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art11" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 11</span><span class="tag novo">Novo</span></div>
+      <p>Art. 11. Os dados abertos serão publicados de forma centralizada no Portal de Dados Abertos, mantido na página de Dados Abertos do Portal da Transparência até a implantação de ambiente específico.</p><p>§ 1º O Portal de Dados Abertos deverá:</p><p class="inc">I - permitir o acesso gratuito e sem cadastro aos dados;</p><p class="inc">II - apresentar os metadados de cada base, incluindo o contato do órgão responsável;</p><p class="inc">III - indicar a licença aberta aplicável; e</p><p class="inc">IV - conter ligação para os demais sítios eletrônicos oficiais em que o Município publique dados.</p><p>§ 2º Os órgãos e entidades que mantenham dados em sistemas ou sítios próprios deverão garantir que estejam referenciados no Portal de Dados Abertos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Hoje os dados de SBC estão espalhados (Portal da Transparência, GeoPortal, estatísticas do Planejamento Urbano, Portal da Saúde), e a página de Dados Abertos não aponta para todos.</p></div>
+      <div><h4>Intenção</h4><p>Fixar o local central e as exigências mínimas do portal, permitindo usar a página atual enquanto não houver um portal específico.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Porto Alegre, art. 9º (portal dentro do Portal da Transparência); Aracruz, art. 20, § 1º; Baton Rouge, Parte 4.</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Não é exigência do OD1, mas sustenta o OD3 (portal de dados abertos), em especial o OD3.3, que pede contato e ligação para os outros sítios.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo IV – Da participação da sociedade</div>
+  <article class="art novo" id="art12" data-tipo="novo" data-sub="OD1.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 12</span><span class="tag novo">Novo</span><span class="tag sub">OD1.2</span></div>
+      <p>Art. 12. Qualquer interessado poderá, por canal permanente disponível no Portal de Dados Abertos e no serviço de acesso à informação:</p><p class="inc">I - solicitar a abertura de bases de dados, nos termos do art. 30 da Lei Federal nº 14.129, de 2021;</p><p class="inc">II - sugerir bases de dados para inclusão no Plano de Dados Abertos; e</p><p class="inc">III - apontar erros, inconsistências ou desatualizações nos dados publicados.</p><p>Parágrafo único. As manifestações recebidas serão registradas e consideradas na revisão do Plano de Dados Abertos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O OD1.2 pede que a política tenha "planos para coletar feedback público regular". Nenhum decreto brasileiro lido tem escuta pública regular: no máximo, deixam o engajamento para o plano de cada órgão.</p></div>
+      <div><h4>Intenção</h4><p>Abrir um canal permanente que serve para três coisas: pedir abertura, sugerir prioridades e corrigir dados.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Lei 14.129/2021, art. 30; decreto federal 8.777/2016, art. 5º, § 2º, V; Porto Alegre, art. 7º, § 1º, V.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.2</h4><p>Primeira parte do OD1.2: escuta permanente.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art13" data-tipo="novo" data-sub="OD1.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 13</span><span class="tag novo">Novo</span><span class="tag sub">OD1.2</span></div>
+      <p>Art. 13. A coordenação da Política realizará, no mínimo uma vez por ano, consulta pública aberta à população sobre as prioridades de abertura de dados e sobre a qualidade e a utilidade dos dados publicados.</p><p>§ 1º A consulta poderá ser realizada por meio eletrônico, em audiência ou em encontros com usuários de dados, como pesquisadores, organizações da sociedade civil, imprensa e empreendedores.</p><p>§ 2º O resultado da consulta será publicado e considerado na revisão do Plano de Dados Abertos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Canal permanente é passivo: depende de alguém procurar. A WWC fala em feedback "regular".</p></div>
+      <div><h4>Intenção</h4><p>Garantir pelo menos uma escuta ativa por ano, com resultado publicado e efeito sobre o plano. É também a resposta à crítica do revisor do Raio-X: priorizar as demandas da comunidade.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Baton Rouge, Parte 3.A.6 (colaborar com o público para identificar bases de valor) e Seção 4 (coletar opinião pública); Fortaleza, art. 8º, II (plano com mecanismos de participação).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.2</h4><p>É o "feedback público regular" do OD1.2. O resultado da consulta também serve ao OD4 (informações sobre os usuários de dados abertos).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art14" data-tipo="novo" data-sub="OD1.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 14</span><span class="tag novo">Novo</span><span class="tag sub">OD1.2</span></div>
+      <p>Art. 14. A unidade responsável pelo recebimento dos pedidos de acesso à informação encaminhará à coordenação da Política, a cada trimestre, relação agregada dos temas mais solicitados, para subsidiar a priorização da abertura de bases de dados.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Os pedidos da LAI mostram o que a população procura e não encontra publicado.</p></div>
+      <div><h4>Intenção</h4><p>Transformar a demanda que já chega pela LAI em sinal para a priorização, sem expor quem pediu (relação agregada).</p></div>
+      <div class="origem"><h4>Origem</h4><p>Aracruz, arts. 16 e 29, § 1º (subsídios trimestrais da Ouvidoria); Baton Rouge, Parte 3.A.5 (frequência de pedidos como sinal de interesse).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.2</h4><p>Complementa o OD1.2 com uma fonte regular de informação sobre a demanda.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo V – Da transparência das decisões sobre os dados</div>
+  <article class="art novo" id="art15" data-tipo="novo" data-sub="OD1.4">
+    <div class="texto"><div class="cab"><span class="id">Art. 15</span><span class="tag novo">Novo</span><span class="tag sub">OD1.4</span></div>
+      <p>Art. 15. Serão publicados no Portal de Dados Abertos:</p><p class="inc">I - os critérios e a matriz de priorização da abertura de bases de dados e o resultado de sua aplicação;</p><p class="inc">II - o Catálogo Municipal de Bases de Dados, com a categoria de abertura de cada base e o fundamento de eventual restrição;</p><p class="inc">III - as solicitações de abertura de bases de dados e as respectivas respostas, em formato aberto, nos termos do § 5º do art. 30 da Lei Federal nº 14.129, de 2021, preservada a identificação dos solicitantes; e</p><p class="inc">IV - as atas das reuniões do CGPD que tratem desta Política.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O OD1.4 pede que a política se comprometa a divulgar como se decide o que se coleta, prioriza, guarda, usa e publica.</p></div>
+      <div><h4>Intenção</h4><p>Reunir num só artigo tudo o que será tornado público sobre as decisões: critérios, situação de cada base, pedidos e respostas, e as deliberações.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Lei 14.129/2021, art. 30, § 5º; Aracruz, Plano (matriz de priorização) e art. 19; Baton Rouge, Parte 1.9 (registro público dos pedidos de acesso).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.4</h4><p>É o compromisso central do OD1.4.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art16" data-tipo="novo" data-sub="OD1.4">
+    <div class="texto"><div class="cab"><span class="id">Art. 16</span><span class="tag novo">Novo</span><span class="tag sub">OD1.4</span></div>
+      <p>Art. 16. Cada base de dados será enquadrada em uma das seguintes categorias:</p><p class="inc">I - publicável integralmente;</p><p class="inc">II - publicável após tratamento, como anonimização ou agregação;</p><p class="inc">III - publicável parcialmente;</p><p class="inc">IV - de acesso restrito, quando puder ser compartilhada apenas nas hipóteses previstas em lei; ou</p><p class="inc">V - não publicável, em razão de sigilo, informação pessoal ou outra restrição legal.</p><p>§ 1º O enquadramento nas categorias dos incisos II a V será sempre fundamentado, com indicação da hipótese legal aplicável, entre as relacionadas no Anexo Único, sem revelar o conteúdo protegido.</p><p>§ 2º Consideram-se automaticamente passíveis de abertura as bases de dados que não contenham informação sigilosa, pessoal ou protegida por lei, aplicando-se o mesmo às partes não protegidas das demais bases.</p><p>§ 3º A abertura de base que contenha ou possa conter dados pessoais será precedida de manifestação do Encarregado de Proteção de Dados Pessoais, que poderá recomendar anonimização, agregação ou outras salvaguardas.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Explicar por que algo não é liberado exige um critério comum. Sem categorias, cada secretaria decide de um jeito.</p></div>
+      <div><h4>Intenção</h4><p>Dar cinco respostas possíveis para cada base, sempre com fundamento, e reafirmar que, na falta de restrição, a base é aberta.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Aracruz, art. 21 (cinco categorias) e art. 25, § 4º (manifestação do Encarregado); decreto federal 8.777/2016, art. 8º (abertura automática); Lei 14.129/2021, art. 36 (dados anonimizados).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.4</h4><p>Atende a parte do OD1.4 que pede "explicação para informações confidenciais, protegidas ou outras informações não elegíveis para liberação".</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art17" data-tipo="novo" data-sub="OD1.4">
+    <div class="texto"><div class="cab"><span class="id">Art. 17</span><span class="tag novo">Novo</span><span class="tag sub">OD1.4</span></div>
+      <p>Art. 17. A decisão que negar a abertura de base de dados será fundamentada e comunicada ao solicitante em seu inteiro teor, nos termos do art. 34 da Lei Federal nº 14.129, de 2021.</p><p>Parágrafo único. A negativa fundada em custo desproporcional ou não previsto deverá apresentar análise da quantificação do custo e da possibilidade de inclusão da base em edição futura do Plano de Dados Abertos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Quando a resposta é "não", o cidadão precisa saber por quê.</p></div>
+      <div><h4>Intenção</h4><p>Reforçar no decreto municipal a regra da Lei 14.129, com o detalhe da negativa por custo, que é a mais comum.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Lei 14.129/2021, art. 34; decreto federal 8.777/2016, art. 6º, parágrafo único; Porto Alegre, art. 11, parágrafo único.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.4</h4><p>Completa o OD1.4 nas decisões tomadas a pedido.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo VI – Do relatório anual e da revisão da Política</div>
+  <article class="art novo" id="art18" data-tipo="novo" data-sub="OD1.3 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 18</span><span class="tag novo">Novo</span><span class="tag sub">OD1.3</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 18. A coordenação da Política elaborará, até 31 de março de cada ano, relatório anual referente ao exercício anterior, que será aprovado pelo CGPD e publicado no Portal de Dados Abertos, contendo, no mínimo:</p><p class="inc">I - a execução do Plano de Dados Abertos;</p><p class="inc">II - as bases de dados abertas, atualizadas ou em processo de abertura;</p><p class="inc">III - as solicitações de abertura recebidas e as respostas dadas;</p><p class="inc">IV - o resultado da consulta pública prevista no art. 13 e como foi considerado;</p><p class="inc">V - as limitações técnicas, jurídicas ou operacionais encontradas;</p><p class="inc">VI - a avaliação da implementação desta Política; e</p><p class="inc">VII - as propostas de revisão deste Decreto e do Plano de Dados Abertos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O OD1.3 pede que a política garanta, por relatório no mínimo anual, a revisão periódica do texto e da prática. Só Aracruz, entre os decretos brasileiros lidos, prevê relatório anual.</p></div>
+      <div><h4>Intenção</h4><p>Data fixa, conteúdo mínimo e duas exigências que o OD1.3 cita expressamente: avaliar a implementação (VI) e propor revisão do texto (VII). A data de 31/03 coincide com a do relatório anual do SBC+i, proposto para o DM1; pode ser outra.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Aracruz, art. 32; Baton Rouge, Parte 5 (relatório anual até 31 de janeiro, com sugestões de melhoria).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.3</h4><p>É o OD1.3. A evidência pedida é o relatório mais recente; o primeiro sairá em 2027 (art. 21), depois do envio de 18/12/2026.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art19" data-tipo="novo" data-sub="OD1.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 19</span><span class="tag novo">Novo</span><span class="tag sub">OD1.3</span></div>
+      <p>Art. 19. O CGPD avaliará, a cada dois anos, com base nos relatórios anuais, a necessidade de revisão deste Decreto, encaminhando ao Prefeito as propostas de alteração.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O relatório propõe; alguém precisa decidir se o texto muda.</p></div>
+      <div><h4>Intenção</h4><p>Fechar o ciclo: relatório anual com propostas e avaliação formal da revisão a cada dois anos.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Aracruz, art. 35, § 2º (plano com vigência de dois anos); Baton Rouge, Parte 5.b.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.3</h4><p>Completa o OD1.3: a revisão do texto da política deixa de depender de iniciativa avulsa.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo VII – Das disposições finais</div>
+  <article class="art novo" id="art20" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 20</span><span class="tag novo">Novo</span></div>
+      <p>Art. 20. A Controladoria-Geral do Município e a Secretaria de Administração poderão editar, em ato conjunto, normas complementares para a execução deste Decreto, inclusive padrões de formato, metadados e licença.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Detalhes técnicos mudam mais rápido que um decreto.</p></div>
+      <div><h4>Intenção</h4><p>Deixar padrões de formato, metadados e licença para portaria conjunta.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto federal 8.777/2016, art. 5º, § 3º; Porto Alegre, art. 7º, § 3º; Aracruz, art. 31.</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio à execução.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art21" data-tipo="novo" data-sub="OD1.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 21</span><span class="tag novo">Novo</span><span class="tag sub">OD1.3</span></div>
+      <p>Art. 21. Ficam estabelecidos os seguintes prazos, contados da publicação deste Decreto:</p><p class="inc">I - 60 (sessenta) dias, para a publicação, no Portal de Dados Abertos, das unidades responsáveis e dos canais de contato de que trata o parágrafo único do art. 7º e do canal previsto no art. 12;</p><p class="inc">II - 120 (cento e vinte) dias, para a aprovação e a publicação do primeiro Plano de Dados Abertos; e</p><p class="inc">III - até 31 de março de 2027, para a publicação do primeiro relatório anual.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Sem prazo, a política fica no papel.</p></div>
+      <div><h4>Intenção</h4><p>Prazos curtos para o que é simples (contatos e canal) e um prazo realista para o plano. O primeiro relatório fica para 31/03/2027.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Porto Alegre, art. 15 (180 dias para o plano); Fortaleza, art. 8º, § 2º (90 dias); Aracruz, art. 9º, § 6º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.3</h4><p>O inciso III fixa o primeiro relatório do OD1.3. Os prazos dependem da data de publicação, que não se pode estimar daqui.</p></div>
+    </aside>
+  </article>
+  <article class="art igual" id="art22" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 22</span></div><p>Art. 22. Este Decreto entra em vigor na data de sua publicação.</p></div>
+  </article>
+  <div class="assinatura" data-bloco="assinatura">São Bernardo do Campo, ………..<br><b>Prefeito</b></div>
+  <div class="capitulo" data-bloco="anexo">Anexo Único – Hipóteses legais de restrição à abertura de dados</div>
+  <article class="art novo" id="anexo" data-tipo="novo" data-sub="OD1.4">
+    <div class="texto"><div class="cab"><span class="id">Anexo Único</span><span class="tag novo">Novo</span><span class="tag sub">OD1.4</span></div>
+      <table class="anexo"><thead><tr><th>Hipótese</th><th>Fundamento</th></tr></thead><tbody><tr><td>Informação classificada em grau de sigilo</td><td>Lei 12.527/2011, arts. 23 e 24; Decreto Municipal 18.882/2014, arts. 22 a 28</td></tr><tr><td>Informação pessoal relativa à intimidade, vida privada, honra e imagem</td><td>Lei 12.527/2011, art. 31</td></tr><tr><td>Dado pessoal e dado pessoal sensível</td><td>Lei 13.709/2018 (LGPD)</td></tr><tr><td>Sigilo fiscal</td><td>Código Tributário Nacional, art. 198</td></tr><tr><td>Sigilo bancário</td><td>Lei Complementar 105/2001</td></tr><tr><td>Documento preparatório, até a edição do ato decisório</td><td>Lei 12.527/2011, art. 7º, § 3º</td></tr><tr><td>Segredo de justiça e demais hipóteses legais de sigilo</td><td>Lei 12.527/2011, art. 22</td></tr><tr><td>Segredo industrial</td><td>Lei 9.279/1996</td></tr><tr><td>Direito autoral de terceiros</td><td>Lei 9.610/1998</td></tr></tbody></table></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Explicar o que não se publica exige dizer com base em quê.</p></div>
+      <div><h4>Intenção</h4><p>Dar uma lista fechada de hipóteses legais, que o catálogo e as negativas citam (art. 16, § 1º).</p></div>
+      <div class="origem"><h4>Origem</h4><p>Porto Alegre, Decreto 20.315/2019, Anexo I, reduzido às hipóteses aplicáveis a um município. A validar pela Procuradoria.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · OD1.4</h4><p>Concretiza a "explicação para informações confidenciais, protegidas ou outras informações não elegíveis para liberação".</p></div>
+    </aside>
+  </article>
+  <div class="vazio" id="vazio">Nenhum artigo corresponde ao filtro escolhido.</div>
+</section>
+
+<section class="cartao obs">
+  <h2>Observações para quem for decidir</h2>
+  <ol>
+    <li><b>Natureza deste texto.</b> É um rascunho de indicação técnica, para servir de base à equipe e à Procuradoria. Não é decisão do município.</li>
+    <li class="destaque"><b>Documentos em preparação no DTI.</b> Na reunião de 21/10/2026, a direção do DTI apresentou documentos que serão encaminhados à Procuradoria e que não foram vistos aqui. Se algum deles tratar de dados abertos, de governo digital ou da regulamentação da Lei 14.129, esta minuta deve ser cotejada com ele, e não apresentada como alternativa concorrente.</li>
+    <li><b>Pontos de escolha do município.</b> Art. 5º: quem coordena (aqui, Controladoria e DTI juntos). Art. 6º: qual colegiado aprova (aqui, o CGPD ampliado; alternativas: comissão nova ou o comitê do DM1). Art. 18: data do relatório anual (aqui, 31/03). A forma também é escolha: decreto próprio (aqui) ou capítulo no Decreto 18.882/2014.</li>
+    <li><b>Prazo da certificação (18/12/2026).</b> Para o OD1 contar, basta o decreto publicado antes do envio: o critério não tem janela temporal nem exige reuniões. O primeiro relatório anual (OD1.3) só sai em 2027. Como o OD1 pede 3 de 4, os demais subcritérios bastam no envio.</li>
+    <li><b>Ligação com outros critérios.</b> O Catálogo (art. 10) prepara o DM2 (inventário). O Portal (art. 11) sustenta o OD3. A consulta anual (art. 13) alimenta o OD4. O uso do CGPD (art. 6º) dialoga com a decisão do DM1.</li>
+    <li><b>Anexo Único.</b> A lista de hipóteses legais de restrição foi adaptada de Porto Alegre e precisa de validação jurídica.</li>
+  </ol>
+</section>
+
+<section class="cartao fontes">
+  <h2>Fontes</h2>
+  <ul>
+    <li>What Works Cities, critério OD1 (v4): definição, subcritérios, evidências e glossário; revisão do Raio-X (questão 6).</li>
+    <li>Lei Federal 14.129/2021, arts. 2º, III, e 29 a 37; Lei Federal 12.527/2011; Lei Federal 13.709/2018.</li>
+    <li>Decreto Municipal 18.882/2014 (LAI); Decreto Municipal 22.963/2025 e Portaria 10.510/2026 (CGPD); Lei Municipal 7.367/2025, arts. 35 e 645, XIII.</li>
+    <li>Decreto federal 8.777/2016; Porto Alegre, Decreto 20.315/2019; Fortaleza, Decreto 15.358/2022; Caruaru, Decreto 059/2024; Aracruz, Decretos 51.612 e 51.613/2026.</li>
+    <li>Baton Rouge, Resolução 53275/2017 (política de dados abertos), modelo indicado pela WWC.</li>
+  </ul>
+</section>
+
+</main>
+<div class="rodape">Minuta preparada para o Painel WWC · SBC. Rascunho de indicação técnica; não substitui a análise da Procuradoria.</div>
+
+<script>
+(function () {
+  var estado = { sub: 'todos' };
+  var arts = Array.prototype.slice.call(document.querySelectorAll('.art'));
+  var caps = Array.prototype.slice.call(document.querySelectorAll('.capitulo'));
+  var blocos = Array.prototype.slice.call(document.querySelectorAll('[data-bloco]'));
+  function aplicar() {
+    var visiveis = 0;
+    arts.forEach(function (a) {
+      var subs = (a.getAttribute('data-sub') || '').split(' ');
+      var ok = estado.sub === 'todos' || subs.indexOf(estado.sub) >= 0;
+      a.hidden = !ok; if (ok) visiveis++;
+    });
+    caps.forEach(function (c) {
+      var el = c.nextElementSibling, algum = false;
+      while (el && el.classList.contains('art')) { if (!el.hidden) algum = true; el = el.nextElementSibling; }
+      c.hidden = !algum;
+    });
+    blocos.forEach(function (b) { if (!b.classList.contains('capitulo')) b.hidden = estado.sub !== 'todos'; });
+    document.getElementById('vazio').style.display = visiveis ? 'none' : 'block';
+    document.getElementById('contagem').textContent = visiveis + ' de ' + arts.length + ' artigos';
+  }
+  document.querySelectorAll('[data-filtro]').forEach(function (g) {
+    g.addEventListener('click', function (ev) {
+      var b = ev.target.closest('button'); if (!b) return;
+      estado.sub = b.getAttribute('data-v');
+      g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      aplicar();
+    });
+  });
+  document.querySelectorAll('.sub-card .arts a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var alvo = document.querySelector(a.getAttribute('href'));
+      if (alvo && alvo.hidden) {
+        estado.sub = 'todos';
+        document.querySelectorAll('[data-filtro] button').forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-v') === 'todos' ? 'true' : 'false'); });
+        aplicar();
+      }
+    });
+  });
+  aplicar();
+})();
+</script>
+</body>
+</html>

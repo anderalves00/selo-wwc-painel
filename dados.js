@@ -30,6 +30,7 @@ window.PAINEL = {
   ],
 
   historico: [
+    { data: '2026-10-22', texto: 'OD1: publicada a minuta de decreto da Política Municipal de Dados Abertos, em rascunho, como indicação técnica (a decisão é do município). São 22 artigos e um anexo, cada um com por quê, intenção, de qual modelo veio e qual subcritério atende; os quatro subcritérios estão cobertos. Os pontos de escolha (colegiado, coordenação e data do relatório) estão marcados. Novo pedido à equipe: os temas dos documentos que o DTI vai encaminhar à Procuradoria, para cotejo.' },
     { data: '2026-10-22', texto: 'OD1: lidos por inteiro os decretos de dados abertos federal (8.777/2016), de Porto Alegre, Fortaleza, Caruaru e Aracruz. Aracruz (jul/2026) é o modelo brasileiro mais completo; Caruaru mostra que regulamentar a Lei 14.129 não basta; nenhum tem escuta pública regular, que virá do modelo de Baton Rouge. Faltam 3 escolhas (colegiado, coordenação e data do relatório anual) para redigir a minuta.' },
     { data: '2026-10-22', texto: 'OD1: a ficha ganhou a seção "Por que é preciso um ato normativo", com o que SBC já tem em cada subcritério e por que não basta. Incluída a opção D na decisão do instrumento (capítulo novo no decreto da LAI); a recomendação continua sendo um decreto próprio.' },
     { data: '2026-10-22', texto: 'OD3: ficha em rascunho. O portal tem bases abertas de verdade (contratos e obras em CSV, finanças em XLS, emendas em XLSX e 13 camadas de mapa no GeoPortal com dicionário de dados). Faltam dados por bairro e por grupo da população em formato aberto (o Perfil Socioeconômico por Bairro existe, mas só em PDF), contato, licença e links da página de Dados Abertos para os outros sites. O "Sim" pré-preenchido na plataforma precisa virar "Em andamento".' },
@@ -151,7 +152,7 @@ window.PAINEL = {
       regra: { min: 3, total: 4 }, janela: 'Sem janela',
       plataforma: { resposta: 'Vazio', nota: 'Na revisão do Raio-X, Dados Abertos foi rebaixado para "Em andamento": o portal atende à obrigação legal de transparência, mas falta uma política formal de dados abertos voltada a reuso e às demandas da comunidade.' },
       ficha: 'rascunho', classificacao: 'criar',
-      resumo: 'SBC não tem política de dados abertos. O que existe é a regulamentação da Lei de Acesso à Informação (Decreto 18.882/2014), que ajuda só em parte o OD1.4. Recomendação: um decreto curto da Política Municipal de Dados Abertos, que também adote o capítulo de abertura de dados da Lei 14.129/2021. Como o OD1 não tem janela nem exige reuniões, basta o decreto estar publicado antes de 18/12.',
+      resumo: 'SBC não tem política de dados abertos. O que existe é a regulamentação da Lei de Acesso à Informação (Decreto 18.882/2014), que ajuda só em parte o OD1.4. Indicação técnica: um decreto da Política Municipal de Dados Abertos, que também adote o capítulo de abertura de dados da Lei 14.129/2021. Já há uma minuta em rascunho, com cada artigo explicado (link na decisão abaixo). Como o OD1 não tem janela nem exige reuniões, basta o decreto estar publicado antes de 18/12. A direção do DTI prepara documentos para a Procuradoria que não foram vistos: a minuta deve ser cotejada com eles.',
       subcriterios: [
         { cod: 'OD1.1', texto: 'A política cria uma estrutura de governança para a liberação proativa de informações públicas.', situacao: 'nao_tem', classificacao: 'criar',
           nota: 'Há competências (Seção de Transparência da Controladoria, para o portal e a capacitação em dados abertos; DTI, para a estratégia de dados) e uma rede de representantes por órgão prevista no decreto da LAI, mas nenhuma estrutura para a publicação proativa.' },
@@ -185,7 +186,7 @@ window.PAINEL = {
         ],
         naoServe: [
           { titulo: 'A página de Dados Abertos do Portal da Transparência', texto: 'É um texto de apresentação, com base legal e termos de uso informais. Não tem governança, escuta, relatório nem regra de decisão. Conta para o OD3 (portal), não para o OD1.', links: [{ t: 'Página de Dados Abertos', u: 'https://www.saobernardo.sp.gov.br/web/transparencia/dados-abertos' }] },
-          { titulo: 'A proposta de ajustes ao decreto do SBC+i (feita para o DM1)', texto: 'A proposta de ajustes ao decreto do SBC+i foi feita para o DM1 (governança interna de dados) e deixou os dados abertos de fora de propósito: o decreto só sai depois da lei, e o escopo é cidade inteligente. A proposta de texto do OD1 ainda não foi redigida: o caminho recomendado é um decreto próprio (decisão acima).', links: [{ t: 'Ver a proposta do DM1 (não trata de dados abertos)', u: 'proposta-sbc-mais-i.html' }] }
+          { titulo: 'A proposta de ajustes ao decreto do SBC+i (feita para o DM1)', texto: 'A proposta de ajustes ao decreto do SBC+i foi feita para o DM1 (governança interna de dados) e deixou os dados abertos de fora de propósito: o decreto só sai depois da lei, e o escopo é cidade inteligente. A minuta do OD1 é outro documento, um decreto próprio (link na decisão acima).', links: [{ t: 'Ver a proposta do DM1 (não trata de dados abertos)', u: 'proposta-sbc-mais-i.html' }] }
         ]
       },
       justificativa: {
@@ -203,7 +204,7 @@ window.PAINEL = {
         conclusao: 'Resultado: o OD1.4 está meio coberto; o OD1.1, o OD1.2 e o OD1.3 não estão. Como o critério pede 3 de 4, é preciso um ato que, no mínimo, crie a governança, a escuta e o compromisso de explicar as decisões. A página de Dados Abertos não tem força normativa. A Lei 14.129/2021 cobriria boa parte do 1.4, mas só vale para o município se for adotada por ato próprio.'
       },
       decisao: {
-        titulo: 'Onde pôr a política de dados abertos',
+        titulo: 'Onde pôr a política de dados abertos (indicação técnica; a decisão é do município)',
         recomendada: 'A',
         opcoes: [
           { id: 'A', nome: 'Decreto próprio da Política Municipal de Dados Abertos', descricao: 'Decreto curto, que também adota o capítulo de abertura de dados da Lei 14.129/2021 e prevê a ligação com o comitê de governança do DM1.',
@@ -215,7 +216,8 @@ window.PAINEL = {
           { id: 'D', nome: 'Capítulo novo no Decreto 18.882/2014 (LAI)', descricao: 'Acrescentar ao decreto da Lei de Acesso à Informação um capítulo "Da Política Municipal de Dados Abertos", atualizando também a competência, que em 2014 era de uma secretaria que já não existe com esse nome.',
             pros: 'Aproveita o que a LAI já tem: a diretriz de divulgação proativa, os representantes por órgão (viram os coordenadores do 1.1), a rotina anual (vira o relatório do 1.3) e as regras de sigilo (base do 1.4).', contras: 'Reforça o enquadramento que o revisor do Raio-X criticou (dados abertos como obrigação legal de transparência, e não como reuso e demanda da comunidade); reabrir um decreto de 2014 pode levar a revisar outros artigos e alongar o trâmite.' }
         ],
-        nota: 'Recomendação mantida na opção A: um decreto próprio pode citar as estruturas da LAI ("os representantes de que trata o art. 7º do Decreto 18.882 acumulam a função de coordenador de dados abertos"), sem herdar o enquadramento de obrigação legal. A opção D fica como alternativa, se a Procuradoria preferir não criar ato novo. Se já houver minuta de regulamentação da Lei 14.129 (pedido 1), ela é o veículo natural da opção A.'
+        links: [{ t: 'Minuta de decreto da Política Municipal de Dados Abertos (rascunho, com cada artigo explicado)', u: 'proposta-od1-dados-abertos.html' }],
+        nota: 'A escolha cabe ao município (DTI e Procuradoria); a minuta segue a opção A como indicação. Recomendação mantida na opção A: um decreto próprio pode citar as estruturas da LAI ("os representantes de que trata o art. 7º do Decreto 18.882 acumulam a função de coordenador de dados abertos"), sem herdar o enquadramento de obrigação legal. A opção D fica como alternativa, se a Procuradoria preferir não criar ato novo. Se já houver minuta de regulamentação da Lei 14.129 (pedido 1), ela é o veículo natural da opção A.'
       },
       modelos: [
         { nome: 'Aracruz (ES): Decretos 51.612 e 51.613/2026', cobre: ['OD1.1', 'OD1.3', 'OD1.4'], texto: 'O modelo brasileiro mais completo, de julho de 2026 (Aracruz participa com SBC da Rede Cidades +I). Comissão com Controladoria, Encarregado e Transformação Digital; relatório anual publicado (art. 32); 5 categorias de publicabilidade das bases (art. 21); matriz de priorização com 8 critérios (Plano, item 5). Ponto fraco: não tem escuta pública direta (OD1.2).', u: 'https://aracruz.es.gov.br/storage/60809/51612---Institui-o-Plano-de-Dados-Abertos-ass.pdf' },
@@ -231,11 +233,11 @@ window.PAINEL = {
         { texto: 'Levantar o que SBC já tem', feito: true },
         { texto: 'Ler os modelos de referência', feito: true },
         { texto: 'Validar a análise internamente', feito: false },
-        { texto: 'Decidir o instrumento (opções A, B, C ou D)', feito: false, ancora: 'decisao-OD1' },
+        { texto: 'Município decide forma, colegiado, coordenação e data do relatório (indicações na minuta)', feito: false, ancora: 'decisao-OD1' },
         { texto: 'Receber da equipe os documentos pedidos', feito: false, ancora: 'pedidos-OD1' },
         { texto: 'Ler decretos brasileiros de dados abertos (federal, Porto Alegre, Fortaleza, Caruaru e Aracruz)', feito: true },
-        { texto: 'Escolher o colegiado, a coordenação e a data do relatório anual', feito: false, ancora: 'decisao-OD1' },
-        { texto: 'Redigir a minuta: governança, escuta, relatório anual e transparência das decisões', feito: false },
+        { texto: 'Redigir a minuta em rascunho, com os pontos de escolha marcados (colegiado, coordenação, data do relatório)', feito: true },
+        { texto: 'Cotejar a minuta com os documentos que o DTI vai encaminhar à Procuradoria', feito: false, ancora: 'pedidos-OD1' },
         { texto: 'Trâmite: Procuradoria, assinatura e publicação (antes de 18/12)', feito: false },
         { texto: 'Reunir as evidências e preparar a resposta', feito: false },
         { texto: 'Equipe insere resposta e arquivos na plataforma', feito: false }
@@ -244,7 +246,8 @@ window.PAINEL = {
         { texto: 'Se existe minuta, estudo ou processo de regulamentação local da Lei 14.129/2021 (a página de Dados Abertos diz que "o município estuda")', status: 'a_pedir' },
         { texto: 'Se foram nomeados os representantes por órgão do art. 7º do Decreto 18.882/2014 e se a Comissão Mista de Reavaliação (art. 21) foi constituída', status: 'a_pedir' },
         { texto: 'Qual unidade mantém hoje a página de Dados Abertos (Controladoria ou DTI)', status: 'a_pedir' },
-        { texto: 'O que é o portal de dados abertos "em desenvolvimento" citado no PPA 2026–2029: ferramenta, responsável e prazo', status: 'a_pedir' }
+        { texto: 'O que é o portal de dados abertos "em desenvolvimento" citado no PPA 2026–2029: ferramenta, responsável e prazo', status: 'a_pedir' },
+        { texto: 'Quais documentos o DTI vai encaminhar à Procuradoria (ao menos os temas), para cotejar com a minuta: algum trata de dados abertos, governo digital ou da Lei 14.129?', status: 'a_pedir' }
       ]
     },
     {
