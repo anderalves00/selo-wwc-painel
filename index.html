@@ -141,6 +141,9 @@ details[open] > summary .seta { transform: rotate(90deg); }
 .corpo h3 { font-size: 15px; color: var(--azul-esc); margin: 22px 0 10px; text-transform: uppercase; letter-spacing: .04em; }
 .definicao { font-size: 15px; margin-top: 16px; padding: 12px 14px; background: var(--azul-claro); border-radius: 8px; }
 .resumo { margin-top: 12px; padding: 12px 14px; border-left: 4px solid var(--laranja); background: var(--laranja-claro); border-radius: 0 8px 8px 0; }
+.proposta-link { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; margin-top: 12px; padding: 12px 14px; border: 2px solid var(--azul); border-radius: 8px; background: var(--azul-claro); text-decoration: none; color: inherit; }
+.proposta-link b { color: var(--azul); }
+.proposta-link:hover { background: #d6e8f5; }
 .alerta { margin-top: 12px; padding: 10px 14px; border-left: 4px solid var(--vermelho); background: var(--vermelho-claro); border-radius: 0 8px 8px 0; }
 .nota { color: var(--texto-suave); font-size: 14px; margin-top: 10px; }
 .acoes-card { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
@@ -518,6 +521,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
         ${relatorioHtml(c)}
         <div class="definicao"><b>O critério:</b> ${esc(c.definicao)}</div>
         ${c.resumo ? `<div class="resumo"><b>Situação de SBC:</b> ${esc(c.resumo)}</div>` : ''}
+        ${(c.propostas || []).map(pr => `<a class="proposta-link" href="${esc(pr.u)}"><b>Abrir: ${esc(pr.t)} →</b><span>${esc(pr.nota || '')}</span></a>`).join('')}
         ${pf.alerta ? `<div class="alerta"><b>Atenção:</b> ${esc(pf.alerta)}</div>` : ''}
         ${pf.nota ? `<div class="nota"><b>Na plataforma:</b> ${esc(pf.nota)}</div>` : ''}
         ${c.nota ? `<div class="nota">${esc(c.nota)}</div>` : ''}

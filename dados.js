@@ -30,6 +30,7 @@ window.PAINEL = {
   ],
 
   historico: [
+    { data: '2026-10-22', texto: 'DM1 e OD1: as recomendações sobre instrumento, colegiado e coordenação passam a ser indicações técnicas, porque a decisão cabe ao município (DTI e Procuradoria). Os cartões do DM1 e do OD1 ganharam um botão no topo para abrir a proposta de texto de cada um.' },
     { data: '2026-10-22', texto: 'OD1: publicada a minuta de decreto da Política Municipal de Dados Abertos, em rascunho, como indicação técnica (a decisão é do município). São 22 artigos e um anexo, cada um com por quê, intenção, de qual modelo veio e qual subcritério atende; os quatro subcritérios estão cobertos. Os pontos de escolha (colegiado, coordenação e data do relatório) estão marcados. Novo pedido à equipe: os temas dos documentos que o DTI vai encaminhar à Procuradoria, para cotejo.' },
     { data: '2026-10-22', texto: 'OD1: lidos por inteiro os decretos de dados abertos federal (8.777/2016), de Porto Alegre, Fortaleza, Caruaru e Aracruz. Aracruz (jul/2026) é o modelo brasileiro mais completo; Caruaru mostra que regulamentar a Lei 14.129 não basta; nenhum tem escuta pública regular, que virá do modelo de Baton Rouge. Faltam 3 escolhas (colegiado, coordenação e data do relatório anual) para redigir a minuta.' },
     { data: '2026-10-22', texto: 'OD1: a ficha ganhou a seção "Por que é preciso um ato normativo", com o que SBC já tem em cada subcritério e por que não basta. Incluída a opção D na decisão do instrumento (capítulo novo no decreto da LAI); a recomendação continua sendo um decreto próprio.' },
@@ -58,6 +59,7 @@ window.PAINEL = {
       regra: { min: 2, total: 3 }, janela: 'Trimestral',
       plataforma: { resposta: 'Em andamento', nota: 'Pré-preenchido a partir do Raio-X de 31/08/2026. A própria resposta enviada admite que faltam registros de reuniões trimestrais do grupo de governança.' },
       ficha: 'rascunho', classificacao: 'criar',
+      propostas: [{ t: 'Proposta de ajustes ao decreto do Programa SBC+i', u: 'proposta-sbc-mais-i.html', nota: 'Rascunho de indicação técnica, sobre a minuta da Procuradoria. A decisão é do município.' }],
       resumo: 'Nenhum ato de SBC cobre o DM1 hoje. O Decreto 22.963/2025 tem aprovação do prefeito e um comitê, mas trata só de proteção de dados (LGPD), não marca reuniões e não tem atas localizadas. Recomendação: um decreto de governança de dados que cubra os três subcritérios.',
       subcriterios: [
         { cod: 'DM1.1', texto: 'Aprovação executiva e uma estratégia de dados de toda a prefeitura, estatuto, declaração de objetivos ou conjunto documentado de metas e objetivos.', situacao: 'parcial', classificacao: 'criar',
@@ -102,7 +104,7 @@ window.PAINEL = {
         ]
       },
       decisao: {
-        titulo: 'Qual instrumento propor para o DM1',
+        titulo: 'Qual instrumento usar para o DM1 (indicação técnica; a decisão é do município)',
         recomendada: 'A',
         opcoes: [
           { id: 'A', nome: 'Decreto novo de política de governança de dados', descricao: 'Objetivos, princípios e um comitê com reunião no mínimo trimestral, ancorado no DTI (competência do art. 645, XIII), com a Controladoria e o Encarregado como membros.',
@@ -112,7 +114,7 @@ window.PAINEL = {
           { id: 'C', nome: 'Usar o GT Cidade Inteligente (SBC+i)', descricao: 'O GT seria o grupo do DM1.2, com atribuições e reuniões definidas no decreto do SBC+i, que está em trâmite (processo SB 100144/2026).',
             pros: 'O projeto de lei e a minuta de decreto já existem e já tratam de dados; a reescrita do art. 5º pedida pela Procuradoria abre espaço para incluir reunião trimestral com ata e princípios de uso ético.', contras: 'A lei precisa passar pela Câmara antes do decreto, e não há como saber se tudo sai antes de 18/12; o escopo é cidade inteligente, não estratégia de dados.' }
         ],
-        nota: 'Já existe a proposta de redação para a opção C (link abaixo): texto consolidado do decreto do SBC+i, com cada mudança justificada, a levar à Secretaria de Administração. Recomendação em duas frentes: para 18/12, o CGPD com atas (opção B), se já houver reuniões; em paralelo, propor os ajustes na minuta do decreto do SBC+i (opção C), que servem à revalidação e ao ato guarda-chuva.',
+        nota: 'A escolha cabe ao município (DTI e Procuradoria); a indicação técnica são as duas frentes descritas a seguir. Já existe a proposta de redação para a opção C (link abaixo): texto consolidado do decreto do SBC+i, com cada mudança justificada, a levar à Secretaria de Administração. Recomendação em duas frentes: para 18/12, o CGPD com atas (opção B), se já houver reuniões; em paralelo, propor os ajustes na minuta do decreto do SBC+i (opção C), que servem à revalidação e ao ato guarda-chuva.',
         links: [{ t: 'Proposta de ajustes ao decreto do SBC+i, com explicação de cada mudança', u: 'proposta-sbc-mais-i.html' }]
       },
       modelos: [
@@ -126,7 +128,7 @@ window.PAINEL = {
         { texto: 'Levantar o que SBC já tem', feito: true },
         { texto: 'Ler os modelos de referência', feito: true },
         { texto: 'Validar a análise internamente', feito: false },
-        { texto: 'Decidir o instrumento (opções A, B ou C)', feito: false, ancora: 'decisao-DM1' },
+        { texto: 'Município decide o instrumento (indicação: CGPD com atas para 18/12 e ajustes no decreto do SBC+i em paralelo)', feito: false, ancora: 'decisao-DM1' },
         { texto: 'Receber da equipe os documentos pedidos', feito: false, ancora: 'pedidos-DM1' },
         { texto: 'Redigir a minuta: objetivos, princípios, comitê e relatório anual', feito: false },
         { texto: 'Trâmite: Procuradoria, assinatura e publicação', feito: false },
@@ -152,7 +154,8 @@ window.PAINEL = {
       regra: { min: 3, total: 4 }, janela: 'Sem janela',
       plataforma: { resposta: 'Vazio', nota: 'Na revisão do Raio-X, Dados Abertos foi rebaixado para "Em andamento": o portal atende à obrigação legal de transparência, mas falta uma política formal de dados abertos voltada a reuso e às demandas da comunidade.' },
       ficha: 'rascunho', classificacao: 'criar',
-      resumo: 'SBC não tem política de dados abertos. O que existe é a regulamentação da Lei de Acesso à Informação (Decreto 18.882/2014), que ajuda só em parte o OD1.4. Indicação técnica: um decreto da Política Municipal de Dados Abertos, que também adote o capítulo de abertura de dados da Lei 14.129/2021. Já há uma minuta em rascunho, com cada artigo explicado (link na decisão abaixo). Como o OD1 não tem janela nem exige reuniões, basta o decreto estar publicado antes de 18/12. A direção do DTI prepara documentos para a Procuradoria que não foram vistos: a minuta deve ser cotejada com eles.',
+      propostas: [{ t: 'Minuta de decreto da Política Municipal de Dados Abertos', u: 'proposta-od1-dados-abertos.html', nota: 'Rascunho de indicação técnica: 22 artigos e um anexo, cada um explicado. A decisão é do município.' }],
+      resumo: 'SBC não tem política de dados abertos. O que existe é a regulamentação da Lei de Acesso à Informação (Decreto 18.882/2014), que ajuda só em parte o OD1.4. Indicação técnica: um decreto da Política Municipal de Dados Abertos, que também adote o capítulo de abertura de dados da Lei 14.129/2021. Já há uma minuta em rascunho, com cada artigo explicado (botão logo abaixo). Como o OD1 não tem janela nem exige reuniões, basta o decreto estar publicado antes de 18/12. A direção do DTI prepara documentos para a Procuradoria que não foram vistos: a minuta deve ser cotejada com eles.',
       subcriterios: [
         { cod: 'OD1.1', texto: 'A política cria uma estrutura de governança para a liberação proativa de informações públicas.', situacao: 'nao_tem', classificacao: 'criar',
           nota: 'Há competências (Seção de Transparência da Controladoria, para o portal e a capacitação em dados abertos; DTI, para a estratégia de dados) e uma rede de representantes por órgão prevista no decreto da LAI, mas nenhuma estrutura para a publicação proativa.' },
