@@ -30,6 +30,7 @@ window.PAINEL = {
   ],
 
   historico: [
+    { data: '2026-10-22', texto: 'OD3: novo exemplo visual de como a página de Dados Abertos ficaria como portal central (catálogo com links reais, contato, licença e política), com botão no cartão do OD3. Decidido manter o "Sim" na plataforma, a confirmar com a equipe; para ele se sustentar, o catálogo e as planilhas do Perfil por Bairro precisam estar publicados antes do envio.' },
     { data: '2026-10-22', texto: 'OD3: ficha aprofundada. O inventário do menu do Portal da Transparência achou dados em formato aberto em pelo menos 13 lugares (entre eles renúncia de receita, multas de trânsito, doações, obras de anos anteriores e recursos recebidos), e a página de Dados Abertos não aponta para nenhum deles. O plano passa a ter um catálogo com uma linha e um link por base. Os 26 capítulos do Perfil por Bairro seguem o mesmo modelo de 17 tabelas; a renda está num gráfico, com dados de 2010. O texto pré-preenchido na plataforma diz que o patrimônio é legível por máquina, mas ele só está em PDF. Dois pedidos novos à equipe.' },
     { data: '2026-10-22', texto: 'OD1: lida a resposta do Executivo à Indicação nº 14.825/2025 da Câmara (Ofício nº 4027/2025-SG-011): as sugestões foram só encaminhadas à secretaria competente, sem compromisso. Com isso, não há mais leitura pendente no OD1.' },
     { data: '2026-10-22', texto: 'OD1: lidos o glossário da plataforma e o Fórum da WWC. O glossário define "codificar" como "sistematizar políticas": a WWC exige política escrita, não necessariamente lei ou decreto (corrigida a justificativa). Um texto da WWC de jan/2026 recomenda que o mesmo órgão de governança cuide do DM1 e do OD1: na minuta, a pauta de dados abertos do CGPD passa a ser trimestral.' },
@@ -269,8 +270,9 @@ window.PAINEL = {
       titulo: 'Portal de dados abertos',
       definicao: 'A prefeitura publica dados abertos em um local central e público on-line.',
       regra: { min: 3, total: 3 }, janela: 'Sem janela',
-      plataforma: { resposta: 'Sim (pré-preenchido)', alerta: 'A resposta veio pré-preenchida com "Sim", mas a revisão do Raio-X rebaixou Dados Abertos para "Em andamento". Hoje o "Sim" não se sustenta: marcar "Em andamento" até as ações do plano estarem publicadas. O texto pré-preenchido também precisa ser reescrito: diz que o patrimônio público está em formato legível por máquina, mas ele só está em PDF, e cita um painel Power BI, que não é dado aberto.' },
+      plataforma: { resposta: 'Sim (pré-preenchido)', alerta: 'A resposta veio pré-preenchida com "Sim", mas a revisão do Raio-X rebaixou Dados Abertos para "Em andamento". Decisão de 22/10/2026: manter o "Sim", a confirmar com a equipe. Para ele se sustentar na revisão, o catálogo da página de Dados Abertos e as planilhas do Perfil por Bairro precisam estar publicados antes do envio (18/12). O texto pré-preenchido também precisa ser reescrito: diz que o patrimônio público está em formato legível por máquina, mas ele só está em PDF, e cita um painel Power BI, que não é dado aberto.' },
       ficha: 'rascunho', classificacao: 'criar',
+      propostas: [{ t: 'Exemplo: a página de Dados Abertos como portal central', u: 'proposta-od3-catalogo.html', nota: 'As três perguntas do critério, a página de hoje e um exemplo do catálogo com links reais, contato e licença. Rascunho de indicação técnica.' }],
       resumo: 'Há bases abertas de verdade em pelo menos 13 lugares (contratos e obras em CSV, finanças em XLS, emendas, renúncia de receita, multas e doações em XLSX e 13 camadas de mapa no GeoPortal, com dicionário de dados), gratuitas e sem cadastro. Mas estão espalhadas: a página de Dados Abertos anuncia um catálogo que não existe e não aponta para nenhuma delas, nem traz contato e licença. Faltam também dados desagregados por bairro e por grupo da população em formato aberto. Tudo isso é edição de página e publicação de planilhas que já existem.',
       subcriterios: [
         { cod: 'OD3.1', texto: 'Os dados abertos são legíveis por máquina, podem ser baixados e são gratuitos.', situacao: 'tem', classificacao: 'atende',
@@ -318,7 +320,7 @@ window.PAINEL = {
         { texto: 'Publicar as tabelas do Perfil por Bairro em CSV ou XLSX', feito: false },
         { texto: 'Atualizar ou retirar os relatórios mensais de 2021–2023 de receitas e despesas', feito: false },
         { texto: 'Reunir as evidências e preparar a resposta', feito: false },
-        { texto: 'Equipe corrige o "Sim" pré-preenchido e insere a resposta', feito: false }
+        { texto: 'Equipe confirma o "Sim", reescreve o texto pré-preenchido e insere a resposta com o link do catálogo', feito: false }
       ],
       pedidos: [
         { texto: 'Qual unidade mantém a página de Dados Abertos e quem pode editá-la', status: 'a_pedir' },
