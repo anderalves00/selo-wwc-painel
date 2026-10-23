@@ -1,7 +1,7 @@
 // Conteúdo do painel. É o único arquivo que muda a cada avanço do trabalho.
 // Fonte da verdade: as fichas em .claude/docs/fichas/ do repositório privado Selo_WWC.
 // Nada de nomes de servidores, e-mails ou telefones aqui: o painel é público (publicar.ps1 verifica).
-// definicao e subcriterios[].texto: sempre o texto oficial da plataforma em português (fontes/wwc/criterios-pt/), sem paráfrase (regra de 2026-10-23).
+// definicao e subcriterios[].texto: tradução clara feita a partir do original em inglês (decisão do usuário, 2026-10-23); tabela em fontes/wwc/traducao-clara.json.
 // Relatório de aderência, por critério (opcional): relatorio: { status: 'rascunho' | 'final', url, pendencias, atualizado: 'AAAA-MM-DD' }.
 // Sem url, o botão aparece desativado. O documento em si nunca entra neste repositório: só o link.
 // Resposta para a plataforma (começa quando a classificação chega a 'atende' ou 'juntando'):
@@ -93,18 +93,18 @@ window.PAINEL = {
     {
       codigo: 'DM1', area: 'DM', ordem: 1, essencial: true,
       titulo: 'Implementando a estratégia e a governança de dados',
-      definicao: 'Sua prefeitura mantém uma lista documentada de responsabilidades de estratégia e governança de dados e se reúne a cada trimestre, no mínimo, para desenvolver essas responsabilidades.',
+      definicao: 'A prefeitura mantém uma lista documentada de responsabilidades de estratégia e governança de dados e se reúne pelo menos a cada trimestre para cumprir essas responsabilidades.',
       regra: { min: 2, total: 3 }, janela: 'Trimestral',
       plataforma: { resposta: 'Em andamento', nota: 'Pré-preenchido a partir do Raio-X de 31/08/2026. A própria resposta enviada admite que faltam registros de reuniões trimestrais do grupo de governança.' },
       ficha: 'rascunho', classificacao: 'criar',
       propostas: [{ t: 'Proposta de ajustes ao decreto do Programa SBC+i', u: 'proposta-sbc-mais-i.html', nota: 'Rascunho de indicação técnica, sobre a minuta da Procuradoria. A decisão é do município.' }],
       resumo: 'Nenhum ato de SBC cobre o DM1 hoje. O Decreto 22.963/2025 tem aprovação do prefeito e um comitê, mas trata só de proteção de dados (LGPD), não marca reuniões e não tem atas localizadas. Recomendação: um decreto de governança de dados que cubra os três subcritérios.',
       subcriterios: [
-        { cod: 'DM1.1', texto: 'Seu processo de estratégia e governança de dados tem aprovação executiva e é guiado por uma estratégia de dados de toda a prefeitura, um estatuto, uma declaração de objetivos ou um conjunto documentado de metas e objetivos.', situacao: 'parcial', classificacao: 'criar',
+        { cod: 'DM1.1', texto: 'O processo de estratégia e governança de dados da prefeitura tem a aprovação da alta gestão e é orientado por uma estratégia de dados que abrange toda a prefeitura, um estatuto, uma declaração de propósito ou um conjunto documentado de metas e objetivos.', situacao: 'parcial', classificacao: 'criar',
           nota: 'O Decreto 22.963/2025 tem aprovação do prefeito e objetivos, mas só de proteção de dados. Falta o documento que oriente a governança de dados como um todo (uso, qualidade, abertura).', refs: ['dec22963', 'lei7367_645'] },
-        { cod: 'DM1.2', texto: 'O grupo encarregado pela estratégia e governança de dados se reúne a cada trimestre, no mínimo, para desenvolver responsabilidades definidas.', situacao: 'parcial', classificacao: 'criar_risco',
+        { cod: 'DM1.2', texto: 'O grupo com autoridade sobre a estratégia e a governança de dados se reúne pelo menos a cada trimestre para cumprir responsabilidades definidas.', situacao: 'parcial', classificacao: 'criar_risco',
           nota: 'O CGPD (Comitê Gestor de Proteção de Dados, criado pelo Decreto 22.963/2025) tem atribuições definidas e membros nomeados desde ago/2026 (Portaria 10.510), mas o escopo é a LGPD e as atas das reuniões ainda não foram localizadas. Com atas de duas reuniões até 18/12, passa a "atende juntando documentos".', refs: ['cgpd', 'port10510'] },
-        { cod: 'DM1.3', texto: 'Sua estratégia de dados e seu processo de governança incluem uma estrutura que enfatiza a transparência, a prestação de contas e o uso ético de dados a serviço do avanço dos resultados para todos os residentes.', situacao: 'nao_tem', classificacao: 'criar',
+        { cod: 'DM1.3', texto: 'O processo de estratégia e governança de dados da prefeitura inclui uma estrutura que dá ênfase à transparência, à prestação de contas e ao uso ético dos dados, a serviço de melhores resultados para todos os moradores.', situacao: 'nao_tem', classificacao: 'criar',
           nota: 'Há peças dispersas (LGPD no Decreto 22.963, princípios da Lei 7.578), mas nenhuma estrutura que reúna os três temas.', refs: ['dec22963', 'lei7578'] }
       ],
       evidencias: [
@@ -188,20 +188,20 @@ window.PAINEL = {
     {
       codigo: 'OD1', area: 'OD', ordem: 2,
       titulo: 'Política de dados abertos',
-      definicao: 'Seu governo local possui uma política de dados abertos, formalizada e disponível ao público, que estabelece o compromisso com a transparência de dados e a divulgação proativa de dados e práticas de dados do governo local.',
+      definicao: 'A prefeitura tem uma política de dados abertos formalizada e disponível ao público, que estabelece o compromisso com a transparência de dados e com a divulgação proativa dos dados da prefeitura e de suas práticas de gestão de dados.',
       regra: { min: 3, total: 4 }, janela: 'Sem janela',
       plataforma: { resposta: 'Vazio', nota: 'Na revisão do Raio-X, Dados Abertos foi rebaixado para "Em andamento": o portal atende à obrigação legal de transparência, mas falta uma política formal de dados abertos voltada a reuso e às demandas da comunidade.' },
       ficha: 'rascunho', classificacao: 'criar',
       propostas: [{ t: 'Minuta de decreto da Política Municipal de Dados Abertos', u: 'proposta-od1-dados-abertos.html', nota: 'Rascunho de indicação técnica: 23 artigos e um anexo, cada um explicado. A decisão é do município.' }],
       resumo: 'SBC não tem política de dados abertos. O que existe é a regulamentação da Lei de Acesso à Informação (Decreto 18.882/2014), que ajuda só em parte o OD1.4. Indicação técnica: um decreto da Política Municipal de Dados Abertos, que também adote o capítulo de abertura de dados da Lei 14.129/2021. Já há uma minuta em rascunho, com cada artigo explicado (botão logo abaixo). Como o OD1 não tem janela nem exige reuniões, basta o decreto estar publicado antes de 18/12. A direção do DTI prepara documentos para a Procuradoria que não foram vistos: a minuta deve ser cotejada com eles.',
       subcriterios: [
-        { cod: 'OD1.1', texto: 'A política cria uma estrutura de governança para a liberação proativa de informações públicas.', situacao: 'nao_tem', classificacao: 'criar',
+        { cod: 'OD1.1', texto: 'A política cria uma estrutura de governança para a divulgação proativa de informações públicas.', situacao: 'nao_tem', classificacao: 'criar',
           nota: 'Há competências (Seção de Transparência da Controladoria, para o portal e a capacitação em dados abertos; DTI, para a estratégia de dados) e uma rede de representantes por órgão prevista no decreto da LAI, mas nenhuma estrutura para a publicação proativa.' },
-        { cod: 'OD1.2', texto: 'A política inclui planos para coletar feedback público regular sobre o programa de dados abertos.', situacao: 'nao_tem', classificacao: 'criar',
+        { cod: 'OD1.2', texto: 'A política inclui planos para coletar, de forma regular, contribuições do público sobre o programa de dados abertos.', situacao: 'nao_tem', classificacao: 'criar',
           nota: 'Não há escuta sobre dados abertos. A pesquisa de satisfação do Portal da Transparência (Decreto 23.215/2026, art. 6º, X) é usada para melhorar os serviços, não para saber que dados a população quer.' },
-        { cod: 'OD1.3', texto: 'A política garante, através de relatórios anuais, no mínimo, a revisão periódica da linguagem da política e da prática de implementação.', situacao: 'nao_tem', classificacao: 'criar_risco',
+        { cod: 'OD1.3', texto: 'A política garante a revisão periódica do seu texto e da forma como está sendo aplicada, por meio de relatórios pelo menos anuais.', situacao: 'nao_tem', classificacao: 'criar_risco',
           nota: 'A prefeitura já publica todo ano o relatório da LAI (2012 a 2025), o que mostra que a rotina existe. Mas uma política nova não terá relatório publicado antes de 18/12, e não se sabe se o revisor aceita a política sem o primeiro relatório. O OD1 pede 3 de 4, então não depende deste.' },
-        { cod: 'OD1.4', texto: 'A política se compromete com a divulgação pública da tomada de decisões referente à coleta, priorização, armazenamento, uso, análise, e publicação de dados e informações públicas, incluindo explicação para informações confidenciais, protegidas ou outras informações não elegíveis para liberação.', situacao: 'parcial', classificacao: 'criar',
+        { cod: 'OD1.4', texto: 'A política se compromete a tornar públicas as decisões sobre coleta, priorização, armazenamento, uso, análise e publicação de dados e informações públicas, explicando também por que certas informações não podem ser divulgadas (por serem sensíveis, protegidas ou por outro motivo).', situacao: 'parcial', classificacao: 'criar',
           nota: 'O decreto da LAI já obriga a fundamentar negativas e a publicar todo ano o rol de documentos sigilosos (2023–2025: nenhum). Isso vale só para pedidos e sigilo. Falta o compromisso de explicar como se decide o que se abre e em que ordem.' }
       ],
       evidencias: ['Link para a política de dados abertos publicada.', 'Cópia do relatório anual mais recente, se a política o exigir.'],
@@ -301,18 +301,18 @@ window.PAINEL = {
     {
       codigo: 'OD3', area: 'OD', ordem: 3,
       titulo: 'Portal de dados abertos',
-      definicao: 'Sua prefeitura publica dados abertos em um local central e público on-line.',
+      definicao: 'A prefeitura publica dados abertos num local central e público na internet.',
       regra: { min: 3, total: 3 }, janela: 'Sem janela',
       plataforma: { resposta: 'Sim (pré-preenchido)', alerta: 'A resposta veio pré-preenchida com "Sim", mas a revisão do Raio-X rebaixou Dados Abertos para "Em andamento". Decisão de 22/10/2026: manter o "Sim", a confirmar com a equipe. Para ele se sustentar na revisão, o catálogo da página de Dados Abertos e as planilhas do Perfil por Bairro precisam estar publicados antes do envio (18/12). O texto pré-preenchido também precisa ser reescrito: diz que o patrimônio público está em formato legível por máquina, mas ele só está em PDF, e cita um painel Power BI, que não é dado aberto.' },
       ficha: 'rascunho', classificacao: 'criar',
       propostas: [{ t: 'Exemplo: a página de Dados Abertos como portal central', u: 'proposta-od3-catalogo.html', nota: 'As três perguntas do critério, a página de hoje e um exemplo do catálogo com links reais, contato e licença. Rascunho de indicação técnica.' }],
       resumo: 'Há bases abertas de verdade em pelo menos 13 lugares (contratos e obras em CSV, finanças em XLS, emendas, renúncia de receita, multas e doações em XLSX e 13 camadas de mapa no GeoPortal, com dicionário de dados), gratuitas e sem cadastro. Mas estão espalhadas: a página de Dados Abertos anuncia um catálogo que não existe e não aponta para nenhuma delas, nem traz contato e licença. Faltam também dados desagregados por bairro e por grupo da população em formato aberto. Tudo isso é edição de página e publicação de planilhas que já existem.',
       subcriterios: [
-        { cod: 'OD3.1', texto: 'Os dados abertos podem ser lidos por máquina, podem ser baixados e estão disponibilizados gratuitamente.', situacao: 'tem', classificacao: 'atende',
+        { cod: 'OD3.1', texto: 'Os dados abertos são legíveis por máquina, podem ser baixados e estão disponíveis gratuitamente.', situacao: 'tem', classificacao: 'atende',
           nota: 'Contratos e obras em andamento em CSV (atualizados em 22/10/2026), relatórios fiscais de 2026 em XLS, emendas, renúncia de receita, multas de trânsito, doações e obras de anos anteriores em XLSX, e camadas do GeoPortal em shapefile, todos sem login. Para reduzir o risco na revisão: pôr uma licença aberta explícita, atualizar os relatórios mensais da página principal, que param em 2023, e corrigir o texto pré-preenchido sobre o patrimônio.' },
-        { cod: 'OD3.2', texto: 'Quando possível e enquanto mantém a privacidade e a confidencialidade, os dados abertos são publicados desagregados por subgrupos geográficos e demográficos.', situacao: 'parcial', classificacao: 'criar',
+        { cod: 'OD3.2', texto: 'Quando possível, e preservando a privacidade e o sigilo, os dados abertos são publicados separados por território e por grupos da população.', situacao: 'parcial', classificacao: 'criar',
           nota: 'As bases do portal não são desagregadas. O Perfil Socioeconômico por Bairro 2026 tem o que o critério pede nos 26 capítulos (bairro × idade, sexo, cor ou raça, vulnerabilidade), mas só em PDF. Publicar essas tabelas em planilha, com o nome do bairro igual ao da camada de bairros do GeoPortal, resolve. A renda está num gráfico, com dados do Censo 2010.' },
-        { cod: 'OD3.3', texto: 'Os dados abertos são contextualizados adequadamente com linguagem clara, informações de contato, políticas e/ou relatórios e outros documentos pertinentes. Se houver algum tipo de dado em sites separados, o portal de dados abertos principal deve ser claramente vinculado a eles.', situacao: 'parcial', classificacao: 'criar',
+        { cod: 'OD3.3', texto: 'Os dados abertos vêm com o contexto adequado: linguagem clara, informações de contato, políticas e/ou relatórios relacionados e outros documentos. Se algum tipo de dado estiver em outros sites, o portal principal de dados abertos aponta claramente para eles.', situacao: 'parcial', classificacao: 'criar',
           nota: 'A página explica em linguagem clara o que são dados abertos e cita a base legal. É a maior lacuna do critério: os dados estão em 17 páginas e sistemas que a página não cita, e ela diz ter um catálogo que não existe. Faltam também contato da unidade responsável, licença e uma descrição por base.' }
       ],
       evidencias: ['Link para o portal de dados abertos. Se houver vários sites, um deles deve apontar para os outros.'],
@@ -368,52 +368,52 @@ window.PAINEL = {
     {
       codigo: 'DM2', area: 'DM', ordem: 4,
       titulo: 'Mantendo um inventário de dados abrangente',
-      definicao: 'Sua prefeitura mantém um inventário de dados detalhado que torna seus dados e dados relevantes de terceiros mais localizáveis e acessíveis e melhor cuidados.',
+      definicao: 'A prefeitura mantém um inventário de dados detalhado, que torna seus dados, e os dados relevantes de terceiros, mais fáceis de encontrar, mais acessíveis e mais bem cuidados.',
       regra: { min: 3, total: 4 }, janela: '24 meses', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
       subcriterios: [
-        { cod: 'DM2.1', texto: 'Sua prefeitura segue uma metodologia documentada para coletar e atualizar rotineiramente o inventário de dados no mínimo a cada 24 meses e está em conformidade com a metodologia.' },
-        { cod: 'DM2.2', texto: 'Pelo menos 80% dos departamentos da sua prefeitura contribuem com conjuntos de dados para o inventário de dados.' },
-        { cod: 'DM2.3', texto: 'O inventário de dados é disponibilizado internamente ao pessoal da prefeitura.' },
-        { cod: 'DM2.4', texto: 'Uma versão do inventário de dados é disponibilizada externamente e publicada online.' }
+        { cod: 'DM2.1', texto: 'A prefeitura segue uma metodologia documentada para levantar e atualizar o inventário de dados com regularidade, no mínimo a cada 24 meses, e cumpre essa metodologia.' },
+        { cod: 'DM2.2', texto: 'Pelo menos 80% das secretarias e órgãos da prefeitura contribuem com conjuntos de dados para o inventário.' },
+        { cod: 'DM2.3', texto: 'O inventário de dados está disponível internamente para os servidores da prefeitura.' },
+        { cod: 'DM2.4', texto: 'Uma versão do inventário de dados está disponível para o público e publicada na internet.' }
       ],
       evidencias: ['Cópia do inventário de dados.', 'Processo documentado para coletar e atualizar o inventário.']
     },
     {
       codigo: 'DM3', area: 'DM', ordem: 5,
       titulo: 'Compartilhando dados',
-      definicao: 'Sua prefeitura tem processos documentados e fáceis de usar para agilizar o compartilhamento de dados, incluindo dados protegidos, tanto internamente na prefeitura quanto com parceiros externos.',
+      definicao: 'A prefeitura tem processos documentados e fáceis de usar para agilizar o compartilhamento de dados, inclusive de dados protegidos, tanto entre secretarias quanto com parceiros externos.',
       regra: { min: 3, total: 4 }, janela: 'Sem janela', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
       subcriterios: [
-        { cod: 'DM3.1', texto: 'Sua prefeitura tem um processo documentado para compartilhar dados internamente e com parceiros externos que inclui orientações sobre quando entrar em acordos de compartilhamento de dados.' },
-        { cod: 'DM3.2', texto: 'Sua prefeitura tem um processo documentado para determinar quando e como tornar os dados abertos. Ao priorizar conjuntos de dados para liberação, o processo inclui a avaliação de potenciais oportunidades e danos e consideração de solicitações anteriores de dados.' },
-        { cod: 'DM3.3', texto: 'Sua prefeitura tem um método simples de coletar solicitações internas e externas para compartilhar dados, e exige que os titulares de dados dentro da prefeitura respondam em tempo hábil.' },
-        { cod: 'DM3.4', texto: 'Sua prefeitura contribui e utiliza sistemas de dados compartilhados e/ou integrados entre secretarias (e outros órgãos), entre vários níveis de governo ou com parceiros externos para informar a tomada de decisões e melhorar os serviços e os resultados.' }
+        { cod: 'DM3.1', texto: 'A prefeitura tem um processo documentado para compartilhar dados internamente e com parceiros externos, com orientações sobre quando firmar acordos de compartilhamento de dados.' },
+        { cod: 'DM3.2', texto: 'A prefeitura tem um processo documentado para decidir quando e como abrir dados, que inclui avaliar as possíveis oportunidades e danos e considerar os pedidos de dados já recebidos para priorizar quais bases publicar.' },
+        { cod: 'DM3.3', texto: 'A prefeitura tem uma forma fácil de receber pedidos internos e externos de compartilhamento de dados e exige que as áreas responsáveis pelos dados respondam em prazo adequado.' },
+        { cod: 'DM3.4', texto: 'A prefeitura contribui com sistemas de dados compartilhados ou integrados, e os utiliza, entre secretarias, com outras esferas de governo ou com parceiros externos, para apoiar decisões e melhorar serviços e resultados.' }
       ],
       evidencias: ['Link de canal on-line para pedir ou compartilhar dados.', 'Políticas ou processos de compartilhamento e de abertura de dados.', 'Inventário ou cópia de um acordo de compartilhamento de dados vigente.']
     },
     {
       codigo: 'DM4', area: 'DM', ordem: 6,
       titulo: 'Melhorando a qualidade dos dados',
-      definicao: 'Sua prefeitura tem e realiza políticas ou práticas documentadas para melhorar a qualidade dos dados.',
+      definicao: 'A prefeitura tem e aplica políticas ou práticas documentadas para melhorar a qualidade dos dados.',
       regra: { min: 4, total: 5 }, janela: 'Sem janela', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
       subcriterios: [
-        { cod: 'DM4.1', texto: 'Sua prefeitura implementou e publicou conjuntos de dados que estão em conformidade com pelo menos um padrão de dados cívicos (por exemplo, a Especificação Geral de Feed de Trânsito) para melhorar a interoperabilidade externa.' },
-        { cod: 'DM4.2', texto: 'O seu governo local implementa processos para documentar a origem, a metodologia de coleta e/ou os problemas conhecidos de qualidade com conjuntos de dados e para melhorar os problemas identificados de qualidade de dados (Ex.:, realizar auditorias regulares de qualidade de dados, estabelecer canais de feedback para usuários de dados, etc.).' },
-        { cod: 'DM4.3', texto: 'Sua prefeitura tem padrões documentados para melhorar a interoperabilidade interna de dados, de modo que determinados campos comuns (p. ex., endereço) sejam consistentes em toda a organização.' },
-        { cod: 'DM4.4', texto: 'Sua prefeitura produz metadados completos e de alta qualidade para conjuntos de dados protegidos e publicados abertamente.' },
-        { cod: 'DM4.5', texto: 'Seu governo local solicita proativamente o feedback da comunidade para identificar problemas de qualidade de dados e melhorar a qualidade de conjuntos de dados considerados imprecisos, incompletos ou que apresentam limitações ou vieses fundamentais.' }
+        { cod: 'DM4.1', texto: 'A prefeitura adotou e publicou conjuntos de dados que seguem pelo menos um padrão de dados cívicos (por exemplo, o GTFS, de transporte público), para facilitar a integração com sistemas externos.' },
+        { cod: 'DM4.2', texto: 'A prefeitura aplica processos para documentar a origem, o método de coleta e os problemas de qualidade conhecidos de cada conjunto de dados, e para corrigir os problemas de qualidade identificados (por exemplo, com auditorias regulares de qualidade ou canais de retorno para quem usa os dados).' },
+        { cod: 'DM4.3', texto: 'A prefeitura documenta padrões para os dados internos, para facilitar a integração entre os sistemas da própria prefeitura, de modo que campos comuns (como o endereço) sejam registrados da mesma forma em todos os órgãos.' },
+        { cod: 'DM4.4', texto: 'A prefeitura produz metadados de alta qualidade e completos tanto para os conjuntos de dados protegidos quanto para os publicados como dados abertos.' },
+        { cod: 'DM4.5', texto: 'A prefeitura busca ativamente a opinião da comunidade para identificar problemas de qualidade e melhorar os conjuntos de dados considerados imprecisos, incompletos ou com limitações ou vieses importantes.' }
       ],
       evidencias: ['Documentos sobre como a qualidade é avaliada e corrigida.', 'Link de um conjunto aberto que segue padrão cívico, com o nome do padrão.', 'Orientações internas de metadados e padrões.', 'Evidência de retorno contínuo da comunidade sobre a qualidade.']
     },
     {
       codigo: 'DM5', area: 'DM', ordem: 7,
       titulo: 'Protegendo a privacidade e a confidencialidade dos dados',
-      definicao: 'Sua prefeitura documentou políticas ou práticas para proteger a privacidade e a confidencialidade dos dados mantidos pelo governo.',
+      definicao: 'A prefeitura tem políticas ou práticas documentadas para proteger a privacidade e o sigilo dos dados que mantém.',
       regra: { min: 2, total: 3 }, janela: 'Anual', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
       subcriterios: [
-        { cod: 'DM5.1', texto: 'Sua prefeitura tem um processo para envolver moradores e outras partes interessadas externas nas práticas de gestão de riscos de privacidade do governo.' },
-        { cod: 'DM5.2', texto: 'Sua prefeitura tem um processo documentado para reduzir a possibilidade de liberar inadvertidamente dados privados, sensíveis ou confidenciais (por exemplo, informações pessoalmente identificáveis) para conjuntos de dados compartilhados interna e externamente.' },
-        { cod: 'DM5.3', texto: 'Sua prefeitura oferece informações e treinamento para a equipe pelo menos anualmente sobre como avaliar e reduzir os riscos de privacidade e outros riscos associados aos seus dados.' }
+        { cod: 'DM5.1', texto: 'A prefeitura tem um processo para envolver os moradores e outros interessados externos nas práticas de gestão de riscos à privacidade.' },
+        { cod: 'DM5.2', texto: 'A prefeitura tem um processo documentado para reduzir a chance de divulgar por engano dados privados, sensíveis ou sigilosos (como dados que identificam pessoas), tanto nos conjuntos de dados compartilhados internamente quanto nos compartilhados com o público.' },
+        { cod: 'DM5.3', texto: 'A prefeitura oferece aos servidores, pelo menos uma vez por ano, informação e treinamento sobre como avaliar e reduzir os riscos à privacidade e outros riscos ligados aos seus dados.' }
       ],
       evidencias: ['Resumo das práticas de proteção de dados pessoais.', 'Memorandos ou materiais de treinamento sobre riscos de privacidade.', 'Evidência de treinamentos anuais.'],
       nota: 'O Decreto 22.963/2025 (Programa de Proteção de Dados) é o ponto de partida provável.'
@@ -421,12 +421,12 @@ window.PAINEL = {
     {
       codigo: 'DM6', area: 'DM', ordem: 8,
       titulo: 'Gerenciando a segurança dos dados',
-      definicao: 'Sua prefeitura documentou políticas ou práticas para gerenciar riscos de violação, perda ou manipulação não autorizada de dados.',
+      definicao: 'A prefeitura tem políticas ou práticas documentadas para gerenciar o risco de vazamento, perda ou alteração não autorizada de dados.',
       regra: { min: 3, total: 3 }, janela: 'Anual', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
       subcriterios: [
-        { cod: 'DM6.1', texto: 'Sua prefeitura tem um Superintendente de TI/Diretor de Segurança da Informação ou uma função e/ou atribuição semelhante que aconselha, no mínimo anualmente, o prefeito / a prefeita.' },
-        { cod: 'DM6.2', texto: 'Sua prefeitura tem um plano ou protocolo de segurança virtual documentado que inclui continuidade de operações e planos de recuperação e um processo regular de avaliação de riscos de segurança, que pode ser feito por terceiros ou outra agência independente.' },
-        { cod: 'DM6.3', texto: 'Sua prefeitura oferece treinamentos anuais para atualizar a equipe municipal sobre políticas e procedimentos de gestão de riscos de violação, perda ou manipulação não autorizada de dados.' }
+        { cod: 'DM6.1', texto: 'A prefeitura tem um responsável pela segurança da informação, ou função equivalente, que orienta a alta gestão pelo menos uma vez por ano.' },
+        { cod: 'DM6.2', texto: 'A prefeitura tem um plano ou protocolos de segurança cibernética documentados, que incluem planos de continuidade das operações e de recuperação e uma avaliação regular dos riscos de segurança, que pode ser feita por terceiros ou por outro órgão independente.' },
+        { cod: 'DM6.3', texto: 'A prefeitura oferece treinamentos anuais para atualizar os servidores sobre as políticas e os procedimentos para gerenciar o risco de vazamento, perda ou alteração não autorizada de dados.' }
       ],
       evidencias: ['Cópia da política ou prática documentada.', 'Evidência de treinamentos anuais.'],
       nota: 'Ponto de partida provável: Decreto 22.453/2023 (Política de Segurança da Informação).'
@@ -434,35 +434,35 @@ window.PAINEL = {
     {
       codigo: 'DM7', area: 'DM', ordem: 9,
       titulo: 'Práticas de dados qualitativos',
-      definicao: 'Sua prefeitura tem uma estratégia ou processo documentado para coletar rotineiramente dados qualitativos e sugestões da comunidade de moradores e outras partes interessadas externas para informar a tomada de decisões.',
+      definicao: 'A prefeitura tem uma estratégia ou um processo documentado para coletar com regularidade a opinião da comunidade e dados qualitativos de moradores e de outros interessados externos, para apoiar as decisões.',
       regra: { min: 2, total: 2 }, janela: 'Sem janela', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
       subcriterios: [
-        { cod: 'DM7.1', texto: 'Sua prefeitura usa métodos qualitativos rigorosos de coleta de dados qualitativos (ou seja, discussões em grupo, entrevistas, perguntas abertas de pesquisa etc.) que são éticos, igualitários e/ou participativos.' },
-        { cod: 'DM7.2', texto: 'Sua prefeitura requer um protocolo de avaliação para orientar a pesquisa qualitativa que é revisada por um especialista em métodos apropriados de coleta de dados e/ou usa uma estrutura validada de melhores práticas desenvolvidas por especialistas experientes.' }
+        { cod: 'DM7.1', texto: 'A prefeitura usa métodos rigorosos de coleta de dados qualitativos (como grupos focais, entrevistas e perguntas abertas em pesquisas), que sejam éticos, representativos e/ou participativos, para apoiar as decisões.' },
+        { cod: 'DM7.2', texto: 'A prefeitura exige um protocolo de avaliação para orientar a pesquisa qualitativa, revisado por um especialista em métodos de coleta de dados, e/ou usa um modelo validado de boas práticas elaborado por especialistas.' }
       ],
       evidencias: ['Estratégia ou processo documentado de coleta qualitativa.', 'Resumo de como se garante que os métodos são éticos e participativos.', 'Exemplo de protocolo revisado por especialista.', 'Exemplo de decisão informada por escuta da comunidade.']
     },
     {
       codigo: 'DM8', area: 'DM', ordem: 10,
       titulo: 'Dados desagregados para tomada de decisões',
-      definicao: 'Sua prefeitura coleta e analisa dados desagregados por subgrupos geográficos e demográficos para informar a tomada de decisões sobre as principais prioridades da prefeitura.',
+      definicao: 'A prefeitura coleta e analisa dados separados por território e por grupos da população para apoiar as decisões sobre as principais prioridades do município.',
       regra: { min: 2, total: 2 }, janela: 'Sem janela', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
       subcriterios: [
-        { cod: 'DM8.1', texto: 'Sua prefeitura tem um padrão de dados demográficos documentado que é usado para liberar e compartilhar esses dados no mesmo formato em toda a prefeitura.' },
-        { cod: 'DM8.2', texto: 'Sua prefeitura coleta e compartilha interna e externamente dados desagregados por subgrupos geográficos e demográficos (como raça, etnia, sexo, idade, pessoa com deficiência, renda, etc.).' }
+        { cod: 'DM8.1', texto: 'A prefeitura tem um padrão documentado de dados demográficos, usado para publicar e compartilhar esses dados no mesmo formato em toda a prefeitura.' },
+        { cod: 'DM8.2', texto: 'A prefeitura coleta e compartilha, interna e externamente, dados separados por território e por grupos da população (como raça, etnia, gênero, idade, deficiência, renda e condição de veterano).' }
       ],
       evidencias: ['Exemplos de conjuntos desagregados.', 'Padrão demográfico seguido por vários órgãos.', 'Como a equipe acessa o padrão ou é treinada nele.']
     },
     {
       codigo: 'DM9', area: 'DM', ordem: 11,
       titulo: 'Padrão de serviço de dados',
-      definicao: 'Sua prefeitura tem um padrão de qualidade para todo o governo, documentado e aberto ao público, para desenvolver e implementar serviços de dados e análises de dados de alta qualidade.',
+      definicao: 'A prefeitura tem um padrão documentado e público para desenvolver e implantar serviços de dados e de análise de dados de alta qualidade em toda a prefeitura.',
       regra: { min: 3, total: 4 }, janela: 'Sem janela', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
       subcriterios: [
-        { cod: 'DM9.1', texto: 'O padrão se compromete a apoiar e melhorar continuamente os serviços de dados e análises ao longo do tempo e conceitua os serviços de dados e análises como serviços integrais.' },
-        { cod: 'DM9.2', texto: 'Esse padrão garante que a disponibilização de dados e análises é realizada de forma acessível, confiável, segura e ética, informada pelas necessidades do usuário e com definições bem estabelecidas de sucesso e desempenho.' },
-        { cod: 'DM9.3', texto: 'Esse padrão inclui as melhores práticas para desenvolver, implementar e para garantir a qualidade de dados e análises de dados entregues como um serviço público.' },
-        { cod: 'DM9.4', texto: 'Para apoiar a implementação do padrão de serviço de dados, seu governo local tem uma equipe que o projeta e executa, uma governança que ajuda a apoiar a adoção e a orientação para apoiar as equipes no engajamento com o padrão.' }
+        { cod: 'DM9.1', texto: 'O padrão se compromete a manter e melhorar continuamente os serviços de dados e de análise ao longo do tempo e os trata como serviços completos.' },
+        { cod: 'DM9.2', texto: 'O padrão garante serviços de dados e de análise acessíveis, confiáveis, seguros e éticos, orientados pelas necessidades dos usuários, com critérios de sucesso definidos e dados de desempenho associados.' },
+        { cod: 'DM9.3', texto: 'O padrão inclui boas práticas para o desenho, a entrega e a qualidade dos dados e das análises oferecidos como serviço.' },
+        { cod: 'DM9.4', texto: 'Para apoiar a aplicação do padrão de serviços de dados, a prefeitura tem uma equipe que o elabora e o gerencia, uma governança que ajuda na adoção e orientações para apoiar as equipes que o usam.' }
       ],
       evidencias: ['Padrão de serviço de dados documentado e público.', 'Resumo da equipe, da governança e da orientação de adoção.'],
       nota: 'Pré-requisito do CI2.1 e do OD4.1.'
@@ -470,11 +470,11 @@ window.PAINEL = {
     {
       codigo: 'CI1', area: 'CI', ordem: 12,
       titulo: 'Treinamento e colaboração no uso de dados com a comunidade',
-      definicao: 'Sua prefeitura apoia os esforços para educar, aprimorar e ativar membros da comunidade (tanto indivíduos quanto organizações locais, por exemplo, grupos cívicos, parceiros locais, fornecedores, prestadores de serviços) para entender melhor e usar os serviços de dados e análises da prefeitura para aprofundar o impacto da comunidade.',
+      definicao: 'A prefeitura apoia ações para capacitar e mobilizar a comunidade (pessoas e organizações locais, como grupos cívicos, parceiros nos territórios, fornecedores e prestadores de serviço) para entender e usar melhor os dados e os serviços de análise da prefeitura, ampliando o impacto na comunidade.',
       regra: { min: 2, total: 2 }, janela: 'Anual', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
       subcriterios: [
-        { cod: 'CI1.1', texto: 'No ano passado, sua prefeitura forneceu ou participou de pelo menos três treinamentos para ensinar aos membros da comunidade habilidades básicas sobre compreensão e uso de dados compartilhados e/ou abertos em geral ou para aprimorar ou ativar membros da comunidade para usar dados da prefeitura visando aprofundar o impacto na comunidade.' },
-        { cod: 'CI1.2', texto: 'Seu governo local tem um processo ou estratégia documentada para identificar e engajar proativamente diferentes comunidades a fim de garantir que os serviços de dados e análises da cidade sejam acessíveis a comunidades de difícil acesso.' }
+        { cod: 'CI1.1', texto: 'No último ano, a prefeitura ofereceu ou participou de pelo menos três treinamentos para ensinar à comunidade habilidades básicas para entender e usar dados abertos e/ou compartilhados, ou para capacitar e mobilizar a comunidade a usar os dados e os serviços de análise da prefeitura e ampliar o impacto na comunidade.' },
+        { cod: 'CI1.2', texto: 'A prefeitura tem um processo ou uma estratégia documentada para identificar e envolver ativamente diferentes comunidades, garantindo que os dados e os serviços de análise da prefeitura sejam acessíveis também às comunidades mais difíceis de alcançar.' }
       ],
       evidencias: ['Processo documentado ou exemplos de engajamento de comunidades de difícil acesso.', 'Evidência de treinamentos para a comunidade nos últimos 12 meses.', 'Resumo dos esforços de capacitação de parceiros.', 'Resultados de colaboração com a comunidade usando dados abertos.'],
       pistas: [
@@ -485,13 +485,13 @@ window.PAINEL = {
     {
       codigo: 'CI2', area: 'CI', ordem: 13,
       titulo: 'Prestação de serviços de análises de dados',
-      definicao: 'Sua prefeitura desenvolve serviços de análises de dados voltados para usuários internos e para moradores, utilizando dados do inventário de dados da prefeitura para melhorar a vida e o trabalho da comunidade e do governo.',
+      definicao: 'A prefeitura desenvolve serviços de análise de dados para uso interno e para os moradores, que usam dados do inventário de dados da prefeitura para melhorar a vida e o trabalho da comunidade e do governo.',
       regra: { min: 2, total: 3 }, janela: 'Sem janela', ficha: 'nao_iniciada',
       plataforma: { resposta: 'Sim (pré-preenchido)', nota: 'Veio do Raio-X, em que a resposta de Impacto na comunidade foi aceita.' },
       subcriterios: [
-        { cod: 'CI2.1', texto: 'Sua prefeitura usa o processo descrito no padrão de serviço de dados para toda a prefeitura para criar e fornecer serviços de análises internos ou voltados para residentes.' },
-        { cod: 'CI2.2', texto: 'Sua prefeitura tem pelo menos um serviço de análises orientado por dados disponível para usuários internos e pelo menos um serviço orientado por dados disponível para moradores e parceiros externos.' },
-        { cod: 'CI2.3', texto: 'Sua prefeitura desenvolve de forma contínua e sistemática, e aprimora de maneira iterativa, serviços de análises de alta qualidade que têm impacto comprovado para os moradores ou para usuários internos.' }
+        { cod: 'CI2.1', texto: 'A prefeitura usa o processo definido no padrão de serviços de dados do município para criar e entregar serviços de análise, internos ou voltados aos moradores.' },
+        { cod: 'CI2.2', texto: 'A prefeitura tem pelo menos um serviço de análise de dados disponível para usuários internos e pelo menos um disponível para moradores e parceiros externos.' },
+        { cod: 'CI2.3', texto: 'A prefeitura desenvolve, de forma contínua e sistemática, serviços de análise de alta qualidade e os aprimora a cada ciclo, com impacto comprovado para os moradores ou para os usuários internos.' }
       ],
       evidencias: ['Exemplos de uso do padrão de serviço de dados.', 'Exemplos de serviços de análises internos e externos.', 'Exemplo de melhoria contínua com impacto comprovado.'],
       pistas: [
@@ -503,11 +503,11 @@ window.PAINEL = {
     {
       codigo: 'CI3', area: 'CI', ordem: 14,
       titulo: 'Promoção de dados e evidências',
-      definicao: 'Sua prefeitura usa evidências, e/ou insights de dados organizacionais que produz, a fim de contribuir para uma base de conhecimento mais ampla e para colaborar e catalisar parceiros externos ou partes interessadas a fazê-lo também.',
+      definicao: 'A prefeitura usa as evidências e/ou as informações dos dados que produz para contribuir com uma base de conhecimento mais ampla, colaborar com parceiros externos e interessados e estimulá-los a fazer o mesmo.',
       regra: { min: 1, total: 2 }, janela: 'Anual', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
       subcriterios: [
-        { cod: 'CI3.1', texto: 'Pelo menos duas vezes no último ano, seu governo local compartilhou proativamente evidências geradas pelo governo municipal, resultados de avaliações ou insights de dados organizacionais com parceiros externos relevantes (por exemplo, organizações sem fins lucrativos, organizações comunitárias, agências estaduais, federais ou outras jurisdições).' },
-        { cod: 'CI3.2', texto: 'No ano passado, sua prefeitura apoiou com sucesso parceiros externos ou partes interessadas a adotar uma prática baseada em evidências.' }
+        { cod: 'CI3.1', texto: 'Pelo menos duas vezes no último ano, a prefeitura compartilhou por iniciativa própria evidências, resultados de avaliações ou informações dos seus dados com parceiros externos relevantes (por exemplo, organizações sem fins lucrativos, organizações comunitárias, órgãos estaduais ou de outros municípios).' },
+        { cod: 'CI3.2', texto: 'No último ano, a prefeitura apoiou com sucesso parceiros externos ou interessados a adotar uma prática baseada em evidências.' }
       ],
       evidencias: ['Exemplos de compartilhamento (artigo, apresentação, aprendizagem entre pares, reconhecimento estadual ou federal). Site e redes sociais não contam.', 'Exemplos de parceiros que adotaram prática baseada em evidências.'],
       pistas: [
@@ -518,24 +518,24 @@ window.PAINEL = {
     {
       codigo: 'OD2', area: 'OD', ordem: 15,
       titulo: 'Orientações ao usuário para dados abertos e compartilhados',
-      definicao: 'Sua prefeitura fornece orientações claras para ajudar todos os usuários internos e externos (funcionários, moradores, empresas, etc.) a acessar, analisar, envolver e usar dados abertos e compartilhados da prefeitura.',
+      definicao: 'A prefeitura oferece orientações práticas e claras para ajudar todos os usuários, internos e externos (servidores, moradores, empresas etc.), a acessar, analisar, explorar e usar os dados abertos e compartilhados da prefeitura.',
       regra: { min: 3, total: 4 }, janela: 'Sem janela', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
       subcriterios: [
-        { cod: 'OD2.1', texto: 'As orientações ao usuário, ou metadados relacionados, explicam o que significa cada campo do(s) conjunto(s) de dados pertinente(s), bem como os valores de dados possíveis para cada campo.' },
-        { cod: 'OD2.2', texto: 'As orientações ao usuário explicam o contexto e o conteúdo de um ou mais conjuntos de dados.' },
-        { cod: 'OD2.3', texto: 'As orientações ao usuário explicam as limitações dos dados, abrangendo problemas como qualidade de dados, métodos de coleta de dados, dados ausentes, proteções de privacidade e limitações de escopo. Isso deve ajudar os usuários a entender como os dados podem e não podem ser usados e interpretados.' },
-        { cod: 'OD2.4', texto: 'As orientações ao usuário explicam qual departamento/órgão/escritório do governo é responsável em relação aos dados, qual fluxo de trabalho ou processo é usado para criar e atualizar os dados e a frequência com que os dados são atualizados ou adicionados.' }
+        { cod: 'OD2.1', texto: 'As orientações ao usuário, ou os metadados correspondentes, explicam o que significa cada campo das bases de dados e quais valores cada campo pode ter.' },
+        { cod: 'OD2.2', texto: 'As orientações ao usuário explicam o contexto e o conteúdo de uma ou mais bases de dados.' },
+        { cod: 'OD2.3', texto: 'As orientações ao usuário explicam as limitações dos dados, como qualidade, métodos de coleta, dados faltantes, proteção da privacidade e limites de abrangência. Isso deve ajudar o usuário a entender como os dados podem e não podem ser usados e interpretados.' },
+        { cod: 'OD2.4', texto: 'As orientações ao usuário informam qual secretaria ou órgão é responsável pelos dados, qual é o processo usado para criá-los e atualizá-los e com que frequência são atualizados ou ampliados.' }
       ],
       evidencias: ['Links para as orientações aos usuários (no portal ou internas).']
     },
     {
       codigo: 'OD4', area: 'OD', ordem: 16,
       titulo: 'Informações sobre os usuários de dados',
-      definicao: 'Sua prefeitura rastreia e documenta informações sobre usuários de dados internos e externos e incorpora as necessidades do usuário no projeto e na implementação de seus serviços de dados e análises de dados e de suas práticas de transparência.',
+      definicao: 'A prefeitura acompanha e registra informações sobre quem usa seus dados, dentro e fora da prefeitura, e leva em conta as necessidades desses usuários no desenho e na execução de seus serviços de dados e de análise e de suas práticas de transparência.',
       regra: { min: 2, total: 2 }, janela: '24 meses', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
       subcriterios: [
-        { cod: 'OD4.1', texto: 'Seu governo local utiliza práticas rigorosas de coleta de dados qualitativos ou de pesquisa de usuários (por exemplo, personas de usuários, técnicas de workshops colaborativos, entrevistas, questionários etc.) para obter insights sobre seus usuários de dados e incorporar as necessidades dos usuários ao projeto e à implementação de serviços de dados e análise de dados.' },
-        { cod: 'OD4.2', texto: 'Sua prefeitura analisa estatísticas de download de dados, estatísticas de uso de sites, contagens de solicitações de registros públicos, solicitações de compartilhamento de dados ou outras métricas de demanda por informações para informar a priorização de novas versões de dados e melhorias de serviço.' }
+        { cod: 'OD4.1', texto: 'A prefeitura usa métodos rigorosos de coleta de dados qualitativos ou de pesquisa com usuários (como perfis de usuário, oficinas colaborativas, entrevistas e pesquisas) para entender quem usa seus dados e incorporar as necessidades desses usuários no desenho e na execução dos serviços de dados e de análise.' },
+        { cod: 'OD4.2', texto: 'A prefeitura analisa estatísticas de download de dados, de acesso ao site, o número de pedidos de acesso à informação, os pedidos de compartilhamento de dados ou outras medidas de demanda por informação para priorizar novas publicações de dados e melhorias nos serviços.' }
       ],
       evidencias: ['Link para dados de uso (ex.: estatísticas de download) e como são usados.', 'Resumo das pesquisas com usuários e de como influenciaram os serviços.']
     }
