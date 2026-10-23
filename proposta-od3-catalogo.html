@@ -101,7 +101,7 @@ td a { font-weight: 700; }
       <h1>Exemplo: a página de Dados Abertos como portal central</h1>
       <div class="subtitulo">Rascunho de indicação técnica · 22/10/2026 · Para conversa com a equipe que mantém a página</div>
     </div>
-    <a class="voltar" href="index.html#OD3">← Voltar ao painel (OD3)</a>
+    <a class="voltar" href="index.html#OD3" onclick="if (history.length === 1) { window.close(); return false; }">← Voltar ao painel (OD3)</a>
   </div>
 </header>
 
@@ -109,10 +109,10 @@ td a { font-weight: 700; }
   <section class="cartao">
     <h2>O que o OD3 pede, em três perguntas</h2>
     <p>O critério pede os três subcritérios (3 de 3). Hoje SBC atende o primeiro; o segundo e o terceiro dependem de editar a página e publicar planilhas que já existem.</p>
-    <p style="font-size:13.5px;color:var(--texto-suave)">As perguntas em azul são um resumo nosso, para facilitar a conversa. O texto oficial da WWC está logo abaixo de cada uma, em letra menor.</p>
+    <p style="font-size:14px;background:var(--laranja-claro);border-left:4px solid var(--laranja);padding:8px 12px;border-radius:0 6px 6px 0"><b>Aviso:</b> as três perguntas em azul são um resumo nosso, escrito para facilitar a conversa; não são texto da WWC. O texto oficial de cada subcritério está logo abaixo da pergunta, no quadro "Texto da WWC".</p>
     <div class="perguntas">
       <div class="perg">
-        <h3>OD3.1 · Dá para baixar dados em planilha, de graça?</h3>
+        <h3>OD3.1 · Dá para baixar dados em planilha?</h3>
         <div class="oficial"><b>Texto da WWC:</b> "Os dados abertos podem ser lidos por máquina, podem ser baixados e estão disponibilizados gratuitamente."</div>
         <div><span class="selo ok">Já atende</span></div>
         <div class="linha hoje"><b>Hoje:</b> contratos e obras em CSV, finanças em XLS, várias planilhas em XLSX e mapas em shapefile, sem login.</div>
@@ -220,7 +220,7 @@ td a { font-weight: 700; }
       <li>A secretaria responsável e a frequência de atualização de cada base.</li>
       <li>O e-mail institucional de contato.</li>
       <li>Se o Planejamento Urbano pode publicar as tabelas do Perfil por Bairro em planilha.</li>
-      <li>Se todas as planilhas do inventário entram no catálogo. Antes, duas revisões: as planilhas da consulta pública do PPA 2026–2029 (revisar com quem publicou) e os relatórios formatados para impressão (cabeçalho, títulos e total no fim), que ficariam melhores como tabelas simples.</li>
+      <li>Se todas as planilhas que já estão no portal entram no catálogo. Antes de incluí-las, duas verificações:<ul style="margin-top:4px"><li><b>Consulta pública do PPA 2026–2029:</b> as planilhas com as respostas dos moradores (bancos 08 e 09 da página do PPA) devem ser revistas com quem as publicou, para conferir se não há informação pessoal de quem participou. Dado aberto não pode identificar pessoas.</li><li><b>Planilhas em formato de relatório:</b> algumas, como a de renúncia de receita, foram feitas para impressão, com cabeçalho, títulos e total no fim. Elas funcionam, mas o ideal em dados abertos é uma tabela simples: uma linha por registro e uma coluna por informação, para que qualquer programa leia direto.</li></ul></li>
       <li>Se o Planejamento Urbano vai pedir ao IBGE o acesso controlado aos microdados do Censo 2022 para atualizar a renda por região (hoje é do Censo 2010).</li>
     </ol>
   </section>

@@ -11,6 +11,36 @@
 
 const LEIS = 'https://leis.org/prefeitura/sp/sao-bernardo-do-campo/lei/';
 const NM2676 = 'https://www.saobernardo.sp.gov.br/documents/10181/2361282/NM+2676+de+07.08.2026+-+Conteu%CC%81do+Integral.pdf/11eeb475-0287-4c05-e8e2-aea4d61e05fc#page=16';
+const L7367 = LEIS + 'lei-ordinaria/2025/7367/lei-ordinaria-n-7367-2025-dispoe-sobre-a-estrutura-administrativa-do-municipio-de-sao-bernardo-do-campo-alteracao-das-leis-municipais-n-s-2240-de-13-de-agosto-de-1976-e-6745-de-7-de-fevereiro-de-2019-e-da-outras/';
+
+// Cadastro de normas e documentos citados. Itens do critério apontam para cá com refs: ['chave'].
+// t = nome completo; d = do que trata, em uma frase; u = link (sem u: documento interno, sem link público).
+window.REFS = {
+  lei7367_645: { t: 'Lei nº 7.367/2025, art. 645, inciso XIII', d: 'Estrutura administrativa da Prefeitura. O inciso XIII dá ao Departamento de Tecnologia da Informação (DTI) a tarefa de "definir a estratégia de dados do Município, estabelecendo princípios, padrões e políticas para a gestão de dados".', u: L7367 + '#:~:text=Art.%20645.' },
+  lei7367_35: { t: 'Lei nº 7.367/2025, art. 35', d: 'Seção de Transparência da Controladoria (CG-001): coordena o Portal da Transparência e a capacitação em dados abertos.', u: L7367 + '#:~:text=Art.%2035.' },
+  dec22963: { t: 'Decreto nº 22.963/2025', d: 'Cria o Programa de Proteção de Dados (LGPD) e o Comitê Gestor de Proteção de Dados (CGPD), coordenado pela Controladoria. Atribuições do comitê no art. 4º.', u: 'https://leis.org/2cax4#:~:text=Art.%203%C2%BA' },
+  cgpd: { t: 'CGPD: Comitê Gestor de Proteção de Dados', d: 'Colegiado criado pelo Decreto nº 22.963/2025 (art. 3º), com membros nomeados pela Portaria nº 10.510/2026. Escopo atual: LGPD. A 1ª reunião foi proposta para setembro de 2026.', u: 'https://leis.org/2cax4#:~:text=Art.%203%C2%BA' },
+  nm2529: { t: 'Notícias do Município nº 2529, de 06/06/2025, p. 8 a 10', d: 'Publicação oficial do Decreto nº 22.963/2025 e da Portaria nº 10.364/2025 (designa a Encarregada de Proteção de Dados).', u: 'https://www.saobernardo.sp.gov.br/documents/10181/2045904/NM%2B2529%2Bde%2B06.06.2025%2B-%2B%2BConteu%CC%81do%2BIntegral.pdf/105bbfa3-9bc7-fe37-c79f-75e1150b4c10#page=8' },
+  port10510: { t: 'Portaria nº 10.510/2026 (Notícias do Município nº 2676, p. 16)', d: 'Nomeia os 8 membros do CGPD: 3 da Controladoria, 4 da Secretaria de Administração e 1 da Procuradoria.', u: NM2676 },
+  port10500: { t: 'Portaria nº 10.500/2026 (Notícias do Município nº 2661, p. 2)', d: 'Designa os 5 secretários do Grupo de Trabalho Cidade Inteligente (programa SBC+i). Não define atribuições nem reuniões.', u: 'https://www.saobernardo.sp.gov.br/documents/10181/2361282/NM+2661+de+08.07.2026+-+Conteu%CC%81do+Integral.pdf/505b66ea-e307-5c8c-5bf4-1ce932e5ede3#page=2' },
+  proc65650: { t: 'Processo SB nº 65650/2026 (interno, sem link público)', d: 'Processo da Portaria nº 10.500/2026 (GT Cidade Inteligente). Lido: tem só a minuta e a publicação, sem atas; arquivado em 29/07/2026.' },
+  proc100144: { t: 'Processo SB nº 100144/2026 (interno, sem link público)', d: 'Projeto de lei e minuta de decreto do Programa SBC+i. A Procuradoria pediu para reescrever o art. 5º do decreto.' },
+  prop_sbci: { t: 'Proposta de ajustes ao decreto do SBC+i (painel)', d: 'Texto do decreto com as mudanças sugeridas para o DM1 (reunião trimestral com ata, princípios de uso ético de dados), cada uma explicada.', u: 'proposta-sbc-mais-i.html' },
+  dec23236: { t: 'Decreto nº 23.236/2026, art. 5º', d: 'Grupo de Trabalho de Desburocratização. Modelo de redação do próprio município: reunião mensal e registro de todas as reuniões em processo administrativo.', u: LEIS + 'decreto/2026/23236/decreto-n-23236-2026-dispoe-sobre-a-criacao-do-grupo-de-trabalho-municipal-de-desburocratizacao-gtmd-do-ambiente-de-negocios-visando-o-cumprimento-dos-requisitos-do-programa-facilita-sp-municipios-e-a-evolucao-da-classificacao-municipal-na-jornada-de-simplificacao-e-da-outras/#:~:text=Art.%205%C2%BA' },
+  lei7578: { t: 'Lei nº 7.578/2026, art. 2º', d: 'Política Municipal de Inovação. Entre os princípios, "transparência e governança colaborativa" e "privacidade e proteção de dados".', u: LEIS + 'lei-ordinaria/2026/7578/lei-ordinaria-n-7578-2026-institui-a-politica-municipal-de-inovacao-dispoe-sobre-instrumentos-de-fomento-a-pesquisa-cientifica-ao-desenvolvimento-tecnologico-e-a-inovacao-no-municipio-de-sao-bernardo-do-campo-e-da-outras/#:~:text=Art.%202%C2%BA' },
+  pdtic: { t: 'PDTIC: Plano Diretor de Tecnologia da Informação', d: 'Plano de TI. O de 2022–2025 venceu; o de 2026–2029 foi contratado em jul/2026 e trata de governança de TI, não de estratégia de dados.', u: 'https://www.saobernardo.sp.gov.br/web/sbc/pd-tic' },
+  dec18882: { t: 'Decreto nº 18.882/2014', d: 'Regulamenta a Lei de Acesso à Informação na Prefeitura: representantes por órgão (art. 7º), negativas fundamentadas e publicação anual de documentos sigilosos.', u: LEIS + 'decreto/2014/18882/decreto-n-18882-2014-regulamenta-o-procedimento-de-acesso-a-informacoes-publicas-garantido-no-inciso-xxxiii-do-art-5-no-inciso-ii-do-art-37-e-no-2-do-art-216-da-constituicao-federal-regulamentados-pela-lei-federal-n-12527-de-18-de-novembro-de-2011-e-da-outras/' },
+  lei14129: { t: 'Lei Federal nº 14.129/2021 (Governo Digital), arts. 29 a 37', d: 'Regras federais de abertura de dados. Só valem para o município se ele as adotar por ato próprio.', u: 'https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14129.htm#art29' },
+  ind14825: { t: 'Indicação nº 14.825/2025 da Câmara Municipal', d: 'A Câmara pediu ao Executivo estudos para a Política Municipal de Dados Abertos; o Executivo respondeu só que encaminhou à secretaria.', u: 'https://www.camarasbc.sp.gov.br/documento/indicacao-no-14825-2025-547418' },
+  ppa720: { t: 'PPA 2026–2029, Anexo V, item 720', d: 'Resposta oficial a uma sugestão de "Portal de Dados Abertos Municipal": não incluída por existir "iniciativa semelhante em desenvolvimento".', u: 'https://www.saobernardo.sp.gov.br/web/transparencia/ppa' },
+  pag_dados_abertos: { t: 'Página "Dados abertos" do Portal da Transparência', d: 'Página atual de dados abertos da Prefeitura: só texto, sem lista de bases nem links.', u: 'https://www.saobernardo.sp.gov.br/web/transparencia/dados-abertos' },
+  perfil_bairros: { t: 'Perfil Socioeconômico por Bairro 2026 (Secretaria de Planejamento Urbano)', d: '26 capítulos, um por bairro ou região, com idade, sexo, cor ou raça, vulnerabilidade e renda (esta do Censo 2010). Só em PDF.', u: 'https://www.saobernardo.sp.gov.br/web/sbc/perfilsocioeconomicobairros' },
+  ibge_microdados: { t: 'IBGE: microdados da amostra do Censo 2022 (31/08/2026)', d: 'Trazem a renda do Censo 2022. Acesso público só por estado; acesso controlado (gov.br e termo) por Áreas de Ponderação.', u: 'https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/47888-ibge-disponibiliza-microdados-da-amostra-do-censo-demografico-2022-com-novo-modelo-de-acesso-e-reforco-a-confidencialidade' },
+  gcp: { t: 'Sistema de Gastos com Pessoal', d: 'Relação de servidores, estagiários e remuneração. Em 22/10/2026 a pesquisa de servidores devolveu erro 404.', u: 'https://gcp.saobernardo.sp.gov.br/gastos-com-pessoal/' },
+  contratos: { t: 'Sistema de Contratos', d: 'Contratos e aditamentos, com exportação em CSV, Excel e PDF por ano.', u: 'https://transparencia.saobernardo.sp.gov.br/contratos' },
+  geoportal: { t: 'GeoPortal (aba Downloads)', d: '13 camadas de mapa em shapefile e o dicionário de dados, sem cadastro.', u: 'https://geo.saobernardo.sp.gov.br/' },
+  painel_estatistico: { t: 'Painel Estatístico (Secretaria de Planejamento Urbano)', d: 'Estatísticas do município de 2019 a 2025, só em PDF.', u: 'https://www.saobernardo.sp.gov.br/web/sbc/painel-estatistico' }
+};
 
 window.PAINEL = {
   atualizado: '2026-10-23',
@@ -70,11 +100,11 @@ window.PAINEL = {
       resumo: 'Nenhum ato de SBC cobre o DM1 hoje. O Decreto 22.963/2025 tem aprovação do prefeito e um comitê, mas trata só de proteção de dados (LGPD), não marca reuniões e não tem atas localizadas. Recomendação: um decreto de governança de dados que cubra os três subcritérios.',
       subcriterios: [
         { cod: 'DM1.1', texto: 'Aprovação executiva e uma estratégia de dados de toda a prefeitura, estatuto, declaração de objetivos ou conjunto documentado de metas e objetivos.', situacao: 'parcial', classificacao: 'criar',
-          nota: 'O Decreto 22.963/2025 tem aprovação do prefeito e objetivos, mas só de proteção de dados. Falta o documento que oriente a governança de dados como um todo (uso, qualidade, abertura).' },
+          nota: 'O Decreto 22.963/2025 tem aprovação do prefeito e objetivos, mas só de proteção de dados. Falta o documento que oriente a governança de dados como um todo (uso, qualidade, abertura).', refs: ['dec22963', 'lei7367_645'] },
         { cod: 'DM1.2', texto: 'O grupo encarregado da estratégia e governança de dados se reúne no mínimo a cada trimestre para desenvolver responsabilidades definidas.', situacao: 'parcial', classificacao: 'criar_risco',
-          nota: 'O CGPD tem atribuições definidas e membros nomeados desde ago/2026 (Portaria 10.510), mas o escopo é a LGPD e as atas das reuniões ainda não foram localizadas. Com atas de duas reuniões até 18/12, passa a "atende juntando documentos".' },
+          nota: 'O CGPD (Comitê Gestor de Proteção de Dados, criado pelo Decreto 22.963/2025) tem atribuições definidas e membros nomeados desde ago/2026 (Portaria 10.510), mas o escopo é a LGPD e as atas das reuniões ainda não foram localizadas. Com atas de duas reuniões até 18/12, passa a "atende juntando documentos".', refs: ['cgpd', 'port10510'] },
         { cod: 'DM1.3', texto: 'A estratégia e o processo de governança incluem uma estrutura que enfatiza transparência, prestação de contas e uso ético de dados a serviço de todos os residentes.', situacao: 'nao_tem', classificacao: 'criar',
-          nota: 'Há peças dispersas (LGPD no Decreto 22.963, princípios da Lei 7.578), mas nenhuma estrutura que reúna os três temas.' }
+          nota: 'Há peças dispersas (LGPD no Decreto 22.963, princípios da Lei 7.578), mas nenhuma estrutura que reúna os três temas.', refs: ['dec22963', 'lei7578'] }
       ],
       evidencias: [
         'Atas ou pautas das duas reuniões mais recentes do grupo de governança de dados.',
@@ -114,11 +144,11 @@ window.PAINEL = {
         titulo: 'Qual instrumento usar para o DM1 (indicação técnica; a decisão é do município)',
         recomendada: 'A',
         opcoes: [
-          { id: 'A', nome: 'Decreto novo de política de governança de dados', descricao: 'Objetivos, princípios e um comitê com reunião no mínimo trimestral, ancorado no DTI (competência do art. 645, XIII), com a Controladoria e o Encarregado como membros.',
+          { id: 'A', nome: 'Decreto novo de política de governança de dados', descricao: 'Um decreto novo com objetivos, princípios e um comitê que se reúna no mínimo a cada trimestre. O comitê ficaria com o Departamento de Tecnologia da Informação (DTI), que tem a competência legal para definir a estratégia de dados (Lei nº 7.367/2025, art. 645, XIII), e teria a Controladoria e a Encarregada de Proteção de Dados como membros.', refs: ['lei7367_645', 'dec23236'],
             pros: 'Escopo certo para o DM1.1 e o DM1.3; competência legal clara; pode abrigar também a política de dados abertos (OD1).', contras: 'Trâmite completo de ato novo; precisa escrever a divisão de papéis com o CGPD para não haver sobreposição.' },
-          { id: 'B', nome: 'Ampliar o Decreto 22.963/2025', descricao: 'Transformar o CGPD em comitê de proteção e governança de dados, acrescentando estratégia, princípios e periodicidade.',
+          { id: 'B', nome: 'Ampliar o Decreto 22.963/2025', descricao: 'Alterar o Decreto nº 22.963/2025 para transformar o CGPD (Comitê Gestor de Proteção de Dados, hoje só de LGPD) em comitê de proteção e governança de dados, acrescentando estratégia, princípios e reunião periódica com ata.', refs: ['dec22963', 'cgpd', 'port10510'],
             pros: 'Aproveita um colegiado que já existe, com membros nomeados (Portaria 10.510/2026) e o DTI representado.', contras: 'A coordenação é da Controladoria, enquanto a lei dá a estratégia de dados ao DTI; mistura conformidade com uso de dados.' },
-          { id: 'C', nome: 'Usar o GT Cidade Inteligente (SBC+i)', descricao: 'O GT seria o grupo do DM1.2, com atribuições e reuniões definidas no decreto do SBC+i, que está em trâmite (processo SB 100144/2026).',
+          { id: 'C', nome: 'Usar o GT Cidade Inteligente (SBC+i)', descricao: 'O Grupo de Trabalho Cidade Inteligente (Portaria nº 10.500/2026) seria o grupo do DM1.2, com atribuições e reuniões definidas no decreto do SBC+i, que está em trâmite (processo SB 100144/2026).', refs: ['port10500', 'proc100144', 'prop_sbci'],
             pros: 'O projeto de lei e a minuta de decreto já existem e já tratam de dados; a reescrita do art. 5º pedida pela Procuradoria abre espaço para incluir reunião trimestral com ata e princípios de uso ético.', contras: 'A lei precisa passar pela Câmara antes do decreto, e não há como saber se tudo sai antes de 18/12; o escopo é cidade inteligente, não estratégia de dados.' }
         ],
         nota: 'A escolha cabe ao município (DTI e Procuradoria); a indicação técnica são as duas frentes descritas a seguir. Já existe a proposta de redação para a opção C (link abaixo): texto consolidado do decreto do SBC+i, com cada mudança justificada, a levar à Secretaria de Administração. Recomendação em duas frentes: para 18/12, o CGPD com atas (opção B), se já houver reuniões; em paralelo, propor os ajustes na minuta do decreto do SBC+i (opção C), que servem à revalidação e ao ato guarda-chuva.',
@@ -146,11 +176,11 @@ window.PAINEL = {
         { texto: 'Equipe insere resposta e arquivos na plataforma', feito: false }
       ],
       pedidos: [
-        { texto: 'Atas ou pautas das reuniões do CGPD desde ago/2026 (as portarias da Encarregada e dos membros já foram localizadas: 10.364/2025 e 10.510/2026)', status: 'a_pedir' },
-        { texto: 'Atas ou pautas do GT Cidade Inteligente (o processo da Portaria 10.500/2026 foi lido e não tem atas; falta saber se o grupo se reuniu e onde estão os registros)', status: 'a_pedir' },
-        { texto: 'Documento do DTI produzido com base no art. 645, XIII (estratégia, padrões ou políticas de dados)', status: 'a_pedir' },
-        { texto: 'Se o termo de referência do PDTIC 2026–2029 inclui estratégia de dados (lido: não inclui; o escopo é governança de TIC)', status: 'validado' },
-        { texto: 'Registros de reuniões de coordenação do SBC+i ou do Gesgov que tratem de dados', status: 'a_pedir' }
+        { texto: 'Atas ou pautas das reuniões do CGPD desde ago/2026 (as portarias da Encarregada e dos membros já foram localizadas: 10.364/2025 e 10.510/2026)', refs: ['cgpd', 'port10510'], status: 'a_pedir' },
+        { texto: 'Atas ou pautas do GT Cidade Inteligente (o processo da Portaria 10.500/2026 foi lido e não tem atas; falta saber se o grupo se reuniu e onde estão os registros)', refs: ['port10500', 'proc65650'], status: 'a_pedir' },
+        { texto: 'Algum documento em que o DTI tenha definido a estratégia, os padrões ou as políticas de dados do município, como manda a Lei nº 7.367/2025, art. 645, XIII. Não encontramos nenhum; se não existir, é isso que o ato do DM1 vai criar', refs: ['lei7367_645'], status: 'a_pedir' },
+        { texto: 'Se o termo de referência do PDTIC 2026–2029 inclui estratégia de dados (lido: não inclui; o escopo é governança de TIC)', refs: ['pdtic'], status: 'validado' },
+        { texto: 'Registros de reuniões de coordenação do SBC+i ou do Gesgov (plataforma de acompanhamento das metas do Plano de Governo, sem ato oficial localizado) que tratem de dados', refs: ['proc100144'], status: 'a_pedir' }
       ]
     },
 
@@ -259,12 +289,12 @@ window.PAINEL = {
         { texto: 'Equipe insere resposta e arquivos na plataforma', feito: false }
       ],
       pedidos: [
-        { texto: 'Se existe minuta, estudo ou processo de regulamentação local da Lei 14.129/2021 (a página de Dados Abertos diz que "o município estuda")', status: 'a_pedir' },
-        { texto: 'Se foram nomeados os representantes por órgão do art. 7º do Decreto 18.882/2014 e se a Comissão Mista de Reavaliação (art. 21) foi constituída', status: 'a_pedir' },
-        { texto: 'Qual unidade mantém hoje a página de Dados Abertos (Controladoria ou DTI)', status: 'a_pedir' },
-        { texto: 'O que é o portal de dados abertos "em desenvolvimento" citado no PPA 2026–2029: ferramenta, responsável e prazo', status: 'a_pedir' },
-        { texto: 'Quais documentos o DTI vai encaminhar à Procuradoria (ao menos os temas), para cotejar com a minuta: algum trata de dados abertos, governo digital ou da Lei 14.129?', status: 'a_pedir' },
-        { texto: 'Resposta do Executivo à Indicação nº 14.825/2025 da Câmara (Ofício nº 4027/2025-SG-011): lida; diz só que as sugestões foram encaminhadas à secretaria competente', status: 'validado' }
+        { texto: 'Se existe minuta, estudo ou processo de regulamentação local da Lei 14.129/2021 (a página de Dados Abertos diz que "o município estuda")', refs: ['lei14129', 'pag_dados_abertos'], status: 'a_pedir' },
+        { texto: 'Se foram nomeados os representantes por órgão do art. 7º do Decreto 18.882/2014 e se a Comissão Mista de Reavaliação (art. 21) foi constituída', refs: ['dec18882'], status: 'a_pedir' },
+        { texto: 'Qual unidade mantém hoje a página de Dados Abertos (Controladoria ou DTI)', refs: ['pag_dados_abertos', 'lei7367_35', 'lei7367_645'], status: 'a_pedir' },
+        { texto: 'O que é o portal de dados abertos "em desenvolvimento" citado no PPA 2026–2029: ferramenta, responsável e prazo', refs: ['ppa720'], status: 'a_pedir' },
+        { texto: 'Quais documentos o DTI vai encaminhar à Procuradoria (ao menos os temas), para cotejar com a minuta: algum trata de dados abertos, governo digital ou da Lei 14.129?', refs: ['lei14129'], status: 'a_pedir' },
+        { texto: 'Resposta do Executivo à Indicação nº 14.825/2025 da Câmara (Ofício nº 4027/2025-SG-011): lida; diz só que as sugestões foram encaminhadas à secretaria competente', refs: ['ind14825'], status: 'validado' }
       ]
     },
     {
@@ -325,13 +355,13 @@ window.PAINEL = {
         { texto: 'Equipe confirma o "Sim", reescreve o texto pré-preenchido e insere a resposta com o link do catálogo', feito: false }
       ],
       pedidos: [
-        { texto: 'Qual unidade mantém a página de Dados Abertos e quem pode editá-la', status: 'a_pedir' },
-        { texto: 'O que é o portal de dados abertos "em desenvolvimento" citado no PPA 2026–2029 e quando fica pronto', status: 'a_pedir' },
-        { texto: 'Se o Planejamento Urbano pode publicar as tabelas do Perfil por Bairro e do Painel Estatístico em CSV ou XLSX', status: 'a_pedir' },
-        { texto: 'Se o GeoPortal pode ser apresentado como parte do portal de dados abertos, e quem responde pelas camadas', status: 'a_pedir' },
-        { texto: 'Revisar, com quem publicou, as planilhas da consulta pública do PPA 2026–2029 antes de incluí-las no catálogo', status: 'a_pedir' },
-        { texto: 'Se o sistema de gastos com pessoal está funcionando e em que formato exporta; e se todos os contratos de 2025 estão no sistema de contratos', status: 'a_pedir' },
-        { texto: 'Se o Planejamento Urbano vai pedir ao IBGE o acesso controlado aos microdados do Censo 2022 para atualizar a renda do Perfil por Bairro, hoje do Censo 2010', status: 'a_pedir' }
+        { texto: 'Qual unidade mantém a página de Dados Abertos e quem pode editá-la', refs: ['pag_dados_abertos'], status: 'a_pedir' },
+        { texto: 'O que é o portal de dados abertos "em desenvolvimento" citado no PPA 2026–2029 e quando fica pronto', refs: ['ppa720'], status: 'a_pedir' },
+        { texto: 'Se o Planejamento Urbano pode publicar as tabelas do Perfil por Bairro e do Painel Estatístico em CSV ou XLSX', refs: ['perfil_bairros', 'painel_estatistico'], status: 'a_pedir' },
+        { texto: 'Se o GeoPortal pode ser apresentado como parte do portal de dados abertos, e quem responde pelas camadas', refs: ['geoportal'], status: 'a_pedir' },
+        { texto: 'Revisar, com quem publicou, as planilhas da consulta pública do PPA 2026–2029 antes de incluí-las no catálogo', refs: ['ppa720'], status: 'a_pedir' },
+        { texto: 'Se o sistema de gastos com pessoal está funcionando e em que formato exporta; e se todos os contratos de 2025 estão no sistema de contratos', refs: ['gcp', 'contratos'], status: 'a_pedir' },
+        { texto: 'Se o Planejamento Urbano vai pedir ao IBGE o acesso controlado aos microdados do Censo 2022 para atualizar a renda do Perfil por Bairro, hoje do Censo 2010', refs: ['ibge_microdados', 'perfil_bairros'], status: 'a_pedir' }
       ]
     },
     {

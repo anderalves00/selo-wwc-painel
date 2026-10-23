@@ -154,6 +154,12 @@ details[open] > summary .seta { transform: rotate(90deg); }
 .resumo { margin-top: 12px; padding: 12px 14px; border-left: 4px solid var(--laranja); background: var(--laranja-claro); border-radius: 0 8px 8px 0; }
 .proposta-link { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; margin-top: 12px; padding: 12px 14px; border: 2px solid var(--azul); border-radius: 8px; background: var(--azul-claro); text-decoration: none; color: inherit; }
 .proposta-link b { color: var(--azul); }
+.refs { margin-top: 5px; font-size: 12.5px; color: var(--texto-suave); }
+.refs a { font-weight: 600; }
+.refs .sl { font-style: italic; }
+.lista-refs { margin: 8px 0 0; padding-left: 18px; font-size: 14px; }
+.lista-refs li { margin: 6px 0; }
+.lista-refs .d { color: var(--texto-suave); font-size: 13.5px; }
 .proposta-link:hover { background: #d6e8f5; }
 .alerta { margin-top: 12px; padding: 10px 14px; border-left: 4px solid var(--vermelho); background: var(--vermelho-claro); border-radius: 0 8px 8px 0; }
 .nota { color: var(--texto-suave); font-size: 14px; margin-top: 10px; }
@@ -461,13 +467,18 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
 
   // Cartões dos critérios
   const linksHtml = ls => ls && ls.length ? `<div class="links">${ls.map(l => ext(l.u, l.t)).join('')}</div>` : '';
+  const R = window.REFS || {};
+  const refLink = k => { const r = R[k]; if (!r) return ''; return r.u ? `<a href="${esc(r.u)}" target="_blank" rel="noopener noreferrer" title="${esc(r.d || '')}">${esc(r.t)}</a>` : `<span class="sl" title="${esc(r.d || '')}">${esc(r.t)}</span>`; };
+  const refsHtml = ks => ks && ks.length ? `<div class="refs">Referência: ${ks.map(refLink).join(' · ')}</div>` : '';
+  const refsDoCriterio = c => { const ks = []; [...(c.subcriterios || []), ...(c.pedidos || []), ...(c.plano || []), ...((c.decisao || {}).opcoes || []),
+      ...((c.sbc || {}).tem || []), ...((c.sbc || {}).incompleto || []), ...((c.sbc || {}).naoTem || [])].forEach(x => (x.refs || []).forEach(k => { if (R[k] && !ks.includes(k)) ks.push(k); })); return ks; };
   const itemHtml = i => `<div class="item"><strong>${esc(i.titulo)}</strong>${esc(i.texto || '')}${i.falta ? `<div class="falta"><b>Falta:</b> ${esc(i.falta)}</div>` : ''}${linksHtml(i.links)}</div>`;
 
   function cartao(c) {
     const pf = c.plataforma || {};
     const subsHtml = c.subcriterios.map(s => `<div class="sub"><div class="c">${s.cod}</div><div>${esc(s.texto)}
       <div class="tags">${s.situacao ? tag(SITUACAO[s.situacao]) : '<span class="tag t-borda">Situação de SBC a levantar</span>'}${s.classificacao ? tag(CLASSE[s.classificacao]) : ''}</div></div>
-      ${s.nota ? `<div class="n">${esc(s.nota)}</div>` : ''}</div>`).join('');
+      ${s.nota ? `<div class="n">${esc(s.nota)}${refsHtml(s.refs)}</div>` : ''}</div>`).join('');
 
     let analise = '';
     if (c.sbc) {
@@ -489,7 +500,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       const d = c.decisao;
       analise += `<h3 id="decisao-${c.codigo}">Decisão em aberto: ${esc(d.titulo)}</h3><div class="opcoes">${d.opcoes.map(o => `<div class="opcao ${o.id === d.recomendada ? 'rec' : ''}">
         <h4>${o.id} · ${esc(o.nome)} ${o.id === d.recomendada ? '<span class="tag t-verde">Recomendada</span>' : ''}</h4>
-        <p>${esc(o.descricao)}</p><p class="pro"><b>A favor:</b> ${esc(o.pros)}</p><p class="contra"><b>Contra:</b> ${esc(o.contras)}</p></div>`).join('')}</div>
+        <p>${esc(o.descricao)}</p>${refsHtml(o.refs)}<p class="pro"><b>A favor:</b> ${esc(o.pros)}</p><p class="contra"><b>Contra:</b> ${esc(o.contras)}</p></div>`).join('')}</div>
         ${d.nota ? `<div class="nota">${esc(d.nota)}</div>` : ''}${linksHtml(d.links)}`;
     }
     if (c.plano && c.plano.length) {
@@ -506,7 +517,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
         <div class="progresso" style="margin:0 0 10px"><div class="rotulo"><span>Concluídos (validados ou inexistentes)</span><span>${resolvidos} de ${c.pedidos.length}</span></div>
         <div class="trilho"><span style="width:${100 * resolvidos / c.pedidos.length}%;background:var(--verde)"></span></div></div>
         ${AVISO_PEDIDOS}
-        <ul class="checklist">${c.pedidos.map(p => `<li class="${pedidoConcluido(p) ? 'feito' : ''}"><span class="caixa">${pedidoConcluido(p) ? '✓' : ''}</span><span>${esc(p.texto)} ${tag(PEDIDO[p.status])}</span></li>`).join('')}</ul>`;
+        <ul class="checklist">${c.pedidos.map(p => `<li class="${pedidoConcluido(p) ? 'feito' : ''}"><span class="caixa">${pedidoConcluido(p) ? '✓' : ''}</span><span>${esc(p.texto)} ${tag(PEDIDO[p.status])}${refsHtml(p.refs)}</span></li>`).join('')}</ul>`;
     }
     analise += respostaHtml(c);
     if (c.modelos && c.modelos.length) {
@@ -533,10 +544,11 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
         ${relatorioHtml(c)}
         <div class="definicao"><b>O critério:</b> ${esc(c.definicao)}</div>
         ${c.resumo ? `<div class="resumo"><b>Situação de SBC:</b> ${esc(c.resumo)}</div>` : ''}
-        ${(c.propostas || []).map(pr => `<a class="proposta-link" href="${esc(pr.u)}"><b>Abrir: ${esc(pr.t)} →</b><span>${esc(pr.nota || '')}</span></a>`).join('')}
+        ${(c.propostas || []).map(pr => `<a class="proposta-link" href="${esc(pr.u)}" target="_blank" rel="noopener"><b>Abrir: ${esc(pr.t)} →</b><span>${esc(pr.nota || '')}</span></a>`).join('')}
         ${pf.alerta ? `<div class="alerta"><b>Atenção:</b> ${esc(pf.alerta)}</div>` : ''}
         ${pf.nota ? `<div class="nota"><b>Na plataforma:</b> ${esc(pf.nota)}</div>` : ''}
         ${c.nota ? `<div class="nota">${esc(c.nota)}</div>` : ''}
+        ${(() => { const ks = refsDoCriterio(c); return ks.length ? `<details class="nao-serve" id="refs-${c.codigo}"><summary>Normas e documentos citados neste critério (${ks.length})</summary><ul class="lista-refs">${ks.map(k => `<li>${refLink(k)}${R[k].u ? '' : ''}<div class="d">${esc(R[k].d || '')}</div></li>`).join('')}</ul></details>` : ''; })()}
         <h3>O que precisa atender</h3><div class="sub-lista">${subsHtml}</div>
         <h3>Evidências a apresentar</h3><ul class="lista-simples">${c.evidencias.map(e => `<li>${esc(e)}</li>`).join('')}</ul>
         ${analise}
