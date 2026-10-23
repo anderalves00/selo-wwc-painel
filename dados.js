@@ -105,9 +105,9 @@ window.PAINEL = {
         { v: 'v01', data: '21/10/2026', situacao: 'substituida', t: 'Ajustes ao decreto do SBC+i', u: 'proposta-sbc-mais-i.html',
           d: 'Acrescentava ao GT do SBC+i competências de dados, reunião trimestral com ata, objetivos, princípios e relatório anual. Substituída em 23/10/2026: o decreto de governança digital e de dados do DTI cobre tudo isso, e manter as duas criaria dois colegiados de dados.' },
         { v: 'v02', data: '23/10/2026', situacao: 'vigente', t: 'Decreto de Governança Digital e de Dados, como o DTI redigiu', u: 'dm1-v02-governanca-digital.html',
-          d: 'Texto integral da minuta do SB 101842/2026, com a relação de cada artigo com a WWC. Publicado antes de 18/12, atende o DM1.1 e o DM1.3. Ao SBC+i fica só uma remissão à nova Política.' },
-        { v: 'v03', data: '—', situacao: 'em_preparo', t: 'Decreto de Governança Digital e de Dados com ajustes para a WWC',
-          d: 'O mesmo decreto com ajustes propostos e explicados (vigência, "uso ético", objetivos de dados, dados abertos entre os atos específicos), depois de um estudo detalhado da v02 contra o que a WWC pede.' }
+          d: 'Texto integral da minuta do SB 101842/2026, sem alteração, com a nossa análise de cada artigo frente à WWC e as alterações possíveis (vigência, "uso ético", objetivos de dados, dados abertos entre os atos específicos). Publicado antes de 18/12, atende o DM1.1 e o DM1.3. Ao SBC+i fica só uma remissão à nova Política.' },
+        { v: 'v03', data: '—', situacao: 'aguarda', t: 'Decreto de Governança Digital e de Dados com as alterações aprovadas',
+          d: 'Só é criada depois de a equipe aprovar as alterações possíveis da v02: o texto passa a incorporá-las, cada uma marcada e explicada.' }
       ],
       propostas: [{ t: 'Proposta de ajustes ao decreto do Programa SBC+i', u: 'proposta-sbc-mais-i.html', nota: 'Substituída em 23/10/2026, fica como registro: o decreto de governança digital e de dados do DTI (SB 101842/2026) já cobre o que esta proposta acrescentava ao DM1.' }],
       resumo: 'Nenhum ato em vigor cobre o DM1. Em 23/10/2026 o DTI enviou à Procuradoria a minuta do decreto da Política e do Programa Municipal de Governança Digital e de Dados (SB 101842/2026). Publicado antes de 18/12, ele atende o DM1.1 e o DM1.3 (2 de 3). O comitê que criaria (CGD) se reúne todo mês e depois a cada dois meses, com ata, mas o decreto só vigora 90 dias depois de publicado: até 18/12, o DM1.2 continua dependendo das atas do CGPD.',

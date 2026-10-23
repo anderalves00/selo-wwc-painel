@@ -297,7 +297,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
 </div>
 <footer>Página de trabalho da equipe. Não indexada por buscadores. As respostas só são inseridas na plataforma depois da validação da equipe.</footer>
 
-<script src="dados.js?v=14894BB53C"></script>
+<script src="dados.js?v=09A0DA2B95"></script>
 <script>
 (function () {
   const P = window.PAINEL;
@@ -438,7 +438,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
     `<h2>Referência</h2><a href="#legenda"><span class="tit" style="color:inherit">Como ler</span></a><a href="#historico"><span class="tit" style="color:inherit">Histórico</span></a>`;
 
   // Versões da recomendação (regra do usuário, 2026-10-23): nenhuma versão é apagada; a vigente fica em destaque
-  const VSIT = { vigente: ['Vigente', 't-verde'], substituida: ['Substituída', 't-cinza'], em_preparo: ['Em preparo', 't-laranja'] };
+  const VSIT = { vigente: ['Vigente', 't-verde'], substituida: ['Substituída', 't-cinza'], em_preparo: ['Em preparo', 't-laranja'], aguarda: ['Aguarda aprovação da equipe', 't-laranja'] };
   function versoesHtml(c) {
     const vg = c.versoes.find(x => x.situacao === 'vigente');
     const destaque = vg && vg.u ? `<a class="proposta-link" href="${esc(vg.u)}" target="_blank" rel="noopener"><b>Abrir a versão vigente (${esc(vg.v)}): ${esc(vg.t)} →</b><span>${esc(vg.d || '')}</span></a>` : '';
