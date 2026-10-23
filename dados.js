@@ -64,6 +64,7 @@ window.PAINEL = {
   // Histórico (regra do usuário, 2026-10-23): só o avanço de cada critério, começando pelo código ("DM1: ..."),
   // com breve contexto e o que mudou no entendimento. Ajuste de layout ou correção de link do painel não entra.
   historico: [
+    { data: '2026-10-23', texto: 'DM1 e OD1: as recomendações passam a ter versões. Como se trata de texto normativo, que cada membro da equipe pode ler de um jeito, nenhuma versão é apagada: cada uma fica com a data, a base documental e o motivo da troca. DM1: v01 (ajustes ao decreto do SBC+i, substituída), v02 (o decreto do DTI como foi redigido, com a relação de cada artigo com a WWC, vigente) e v03 (o mesmo decreto com ajustes para a WWC, em preparo). OD1: v01 (minuta atual) e v02 (alinhada ao novo decreto, em preparo).' },
     { data: '2026-10-23', texto: 'DM1: o DTI enviou à Procuradoria a minuta do decreto da Política e do Programa Municipal de Governança Digital e de Dados (SB 101842/2026). Publicado antes de 18/12, ele atende o DM1.1 e o DM1.3, ou seja, 2 de 3, e passa a ser o veículo principal do critério. O comitê que ele cria (CGD) atende o DM1.2 no desenho, mas o decreto só vigora 90 dias depois da publicação: até 18/12, o DM1.2 continua dependendo das atas do CGPD. A proposta de ajustes ao decreto do SBC+i foi substituída e fica como registro; ao decreto do SBC+i fica só a sugestão de um artigo que remeta à governança da nova Política.' },
     { data: '2026-10-23', texto: 'OD1: o SB 101842/2026 não cobre nenhum subcritério do OD1, e a minuta de dados abertos continua necessária, como ato específico do eixo de dados do novo Programa. Ela precisa de ajustes: o novo decreto reserva o CGPD à LGPD e cria o CGD, que passaria a aprovar o plano e o relatório de dados abertos; e o catálogo de bases deve ser um só.' },
     { data: '2026-10-23', texto: 'OD3: consultado o IBGE. A renda do Perfil por Bairro é do Censo 2010 porque a do Censo 2022 não tinha saído; ela saiu em 31/08/2026, nos microdados da amostra. O acesso público vai só até o estado; para chegar perto do bairro, a Prefeitura precisa do acesso controlado (gov.br e termo de confidencialidade), por Áreas de Ponderação. Novo pedido à equipe. O exemplo do catálogo passou a mostrar o texto oficial de cada subcritério e um quadro com os termos técnicos.' },
@@ -100,6 +101,14 @@ window.PAINEL = {
       regra: { min: 2, total: 3 }, janela: 'Trimestral',
       plataforma: { resposta: 'Em andamento', nota: 'Pré-preenchido a partir do Raio-X de 31/08/2026. A própria resposta enviada admite que faltam registros de reuniões trimestrais do grupo de governança.' },
       ficha: 'rascunho', classificacao: 'criar',
+      versoes: [
+        { v: 'v01', data: '21/10/2026', situacao: 'substituida', t: 'Ajustes ao decreto do SBC+i', u: 'proposta-sbc-mais-i.html',
+          d: 'Acrescentava ao GT do SBC+i competências de dados, reunião trimestral com ata, objetivos, princípios e relatório anual. Substituída em 23/10/2026: o decreto de governança digital e de dados do DTI cobre tudo isso, e manter as duas criaria dois colegiados de dados.' },
+        { v: 'v02', data: '23/10/2026', situacao: 'vigente', t: 'Decreto de Governança Digital e de Dados, como o DTI redigiu', u: 'dm1-v02-governanca-digital.html',
+          d: 'Texto integral da minuta do SB 101842/2026, com a relação de cada artigo com a WWC. Publicado antes de 18/12, atende o DM1.1 e o DM1.3. Ao SBC+i fica só uma remissão à nova Política.' },
+        { v: 'v03', data: '—', situacao: 'em_preparo', t: 'Decreto de Governança Digital e de Dados com ajustes para a WWC',
+          d: 'O mesmo decreto com ajustes propostos e explicados (vigência, "uso ético", objetivos de dados, dados abertos entre os atos específicos), depois de um estudo detalhado da v02 contra o que a WWC pede.' }
+      ],
       propostas: [{ t: 'Proposta de ajustes ao decreto do Programa SBC+i', u: 'proposta-sbc-mais-i.html', nota: 'Substituída em 23/10/2026, fica como registro: o decreto de governança digital e de dados do DTI (SB 101842/2026) já cobre o que esta proposta acrescentava ao DM1.' }],
       resumo: 'Nenhum ato em vigor cobre o DM1. Em 23/10/2026 o DTI enviou à Procuradoria a minuta do decreto da Política e do Programa Municipal de Governança Digital e de Dados (SB 101842/2026). Publicado antes de 18/12, ele atende o DM1.1 e o DM1.3 (2 de 3). O comitê que criaria (CGD) se reúne todo mês e depois a cada dois meses, com ata, mas o decreto só vigora 90 dias depois de publicado: até 18/12, o DM1.2 continua dependendo das atas do CGPD.',
       subcriterios: [
@@ -196,6 +205,12 @@ window.PAINEL = {
       regra: { min: 3, total: 4 }, janela: 'Sem janela',
       plataforma: { resposta: 'Vazio', nota: 'Na revisão do Raio-X, Dados Abertos foi rebaixado para "Em andamento": o portal atende à obrigação legal de transparência, mas falta uma política formal de dados abertos voltada a reuso e às demandas da comunidade.' },
       ficha: 'rascunho', classificacao: 'criar',
+      versoes: [
+        { v: 'v01', data: '22/10/2026', situacao: 'vigente', t: 'Minuta de decreto da Política Municipal de Dados Abertos', u: 'proposta-od1-dados-abertos.html',
+          d: 'Rascunho de indicação técnica: 23 artigos e um anexo, cada um explicado. Cobre os quatro subcritérios. O CGPD aprova o plano e o relatório.' },
+        { v: 'v02', data: '—', situacao: 'em_preparo', t: 'Minuta alinhada ao decreto de Governança Digital e de Dados (SB 101842/2026)',
+          d: 'A política vira o ato específico do eixo de dados do novo Programa. O plano e o relatório passam ao novo comitê (CGD), com o CGPD na transição, e o catálogo de bases passa a ser um só.' }
+      ],
       propostas: [{ t: 'Minuta de decreto da Política Municipal de Dados Abertos', u: 'proposta-od1-dados-abertos.html', nota: 'Rascunho de indicação técnica: 23 artigos e um anexo, cada um explicado. A decisão é do município.' }],
       resumo: 'SBC não tem política de dados abertos. O que existe é a regulamentação da Lei de Acesso à Informação (Decreto 18.882/2014), que ajuda só em parte o OD1.4. Indicação técnica: um decreto da Política Municipal de Dados Abertos, que também adote o capítulo de abertura de dados da Lei 14.129/2021. Já há uma minuta em rascunho, com cada artigo explicado (botão logo abaixo). Como o OD1 não tem janela nem exige reuniões, basta o decreto estar publicado antes de 18/12. O decreto de governança digital e de dados que o DTI enviou à Procuradoria (SB 101842/2026) não cobre o OD1: a minuta continua necessária, como ato específico do eixo de dados desse Programa, e precisa de ajustes para se alinhar a ele, sobretudo no colegiado.',
       subcriterios: [

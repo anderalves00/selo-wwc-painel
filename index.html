@@ -161,6 +161,12 @@ details[open] > summary .seta { transform: rotate(90deg); }
 .lista-refs li { margin: 6px 0; }
 .lista-refs .d { color: var(--texto-suave); font-size: 13.5px; }
 .proposta-link:hover { background: #d6e8f5; }
+details.versoes { margin-top: 10px; border: 1px solid var(--borda); border-radius: 8px; padding: 8px 14px; }
+details.versoes > summary { cursor: pointer; font-weight: 700; color: var(--azul-esc); }
+.lista-versoes { list-style: none; margin: 8px 0 4px; padding: 0; font-size: 14px; }
+.lista-versoes li { padding: 8px 0; border-top: 1px solid var(--borda); }
+.lista-versoes li.v-substituida { color: var(--texto-suave); }
+.lista-versoes .d { font-size: 13.5px; color: var(--texto-suave); margin-top: 2px; }
 .alerta { margin-top: 12px; padding: 10px 14px; border-left: 4px solid var(--vermelho); background: var(--vermelho-claro); border-radius: 0 8px 8px 0; }
 .nota { color: var(--texto-suave); font-size: 14px; margin-top: 10px; }
 .acoes-card { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
@@ -291,7 +297,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
 </div>
 <footer>Página de trabalho da equipe. Não indexada por buscadores. As respostas só são inseridas na plataforma depois da validação da equipe.</footer>
 
-<script src="dados.js?v=CDEACC6032"></script>
+<script src="dados.js?v=14894BB53C"></script>
 <script>
 (function () {
   const P = window.PAINEL;
@@ -431,6 +437,17 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       .map(c => `<a href="#${c.codigo}" data-nav="${c.codigo}"><span class="ponto" style="background:${FICHA[c.ficha].cor}" title="${esc(FICHA[c.ficha].r)}"></span><span class="cod">${c.codigo}</span><span class="tit">${esc(c.titulo)}</span></a>`).join('')).join('') +
     `<h2>Referência</h2><a href="#legenda"><span class="tit" style="color:inherit">Como ler</span></a><a href="#historico"><span class="tit" style="color:inherit">Histórico</span></a>`;
 
+  // Versões da recomendação (regra do usuário, 2026-10-23): nenhuma versão é apagada; a vigente fica em destaque
+  const VSIT = { vigente: ['Vigente', 't-verde'], substituida: ['Substituída', 't-cinza'], em_preparo: ['Em preparo', 't-laranja'] };
+  function versoesHtml(c) {
+    const vg = c.versoes.find(x => x.situacao === 'vigente');
+    const destaque = vg && vg.u ? `<a class="proposta-link" href="${esc(vg.u)}" target="_blank" rel="noopener"><b>Abrir a versão vigente (${esc(vg.v)}): ${esc(vg.t)} →</b><span>${esc(vg.d || '')}</span></a>` : '';
+    const linhas = c.versoes.map(x => { const s = VSIT[x.situacao] || [x.situacao, 't-cinza'];
+      const tit = x.u ? `<a href="${esc(x.u)}" target="_blank" rel="noopener">${esc(x.t)}</a>` : esc(x.t);
+      return `<li class="v-${x.situacao}"><b>${esc(x.v)}</b> · ${esc(x.data)} · ${tit} <span class="tag ${s[1]}">${s[0]}</span><div class="d">${esc(x.d || '')}</div></li>`; }).join('');
+    return `${destaque}<details class="versoes"><summary>Versões da recomendação (${c.versoes.length})</summary><p class="nota" style="margin-top:6px">Cada versão registra a recomendação numa data, com a base documental daquele momento. Nenhuma é apagada: a anterior fica como registro, com o motivo da troca.</p><ul class="lista-versoes">${linhas}</ul></details>`;
+  }
+
   // Relatório de aderência: o documento de entrega fica fora do painel (é confidencial); aqui só o atalho
   function relatorioHtml(c) {
     const r = c.relatorio || {};
@@ -544,7 +561,8 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
         ${relatorioHtml(c)}
         <div class="definicao"><b>O critério:</b> ${esc(c.definicao)}</div>
         ${c.resumo ? `<div class="resumo"><b>Situação de SBC:</b> ${esc(c.resumo)}</div>` : ''}
-        ${(c.propostas || []).map(pr => `<a class="proposta-link" href="${esc(pr.u)}" target="_blank" rel="noopener"><b>Abrir: ${esc(pr.t)} →</b><span>${esc(pr.nota || '')}</span></a>`).join('')}
+        ${c.versoes ? versoesHtml(c) : ''}
+        ${c.versoes ? '' : (c.propostas || []).map(pr => `<a class="proposta-link" href="${esc(pr.u)}" target="_blank" rel="noopener"><b>Abrir: ${esc(pr.t)} →</b><span>${esc(pr.nota || '')}</span></a>`).join('')}
         ${pf.alerta ? `<div class="alerta"><b>Atenção:</b> ${esc(pf.alerta)}</div>` : ''}
         ${pf.nota ? `<div class="nota"><b>Na plataforma:</b> ${esc(pf.nota)}</div>` : ''}
         ${c.nota ? `<div class="nota">${esc(c.nota)}</div>` : ''}
