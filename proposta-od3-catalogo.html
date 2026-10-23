@@ -60,7 +60,7 @@ main { padding: 24px 32px 48px; display: grid; gap: 22px; max-width: 1200px; mar
 .exemplo-corpo h3 { font-size: 18px; color: var(--azul-esc); margin-bottom: 4px; }
 .exemplo-corpo .intro { font-size: 14px; margin: 0 0 12px; }
 .tabela-rolagem { overflow-x: auto; }
-table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 640px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 760px; }
 th { background: var(--azul-esc); color: #fff; text-align: left; padding: 7px 8px; font-weight: 700; }
 td { padding: 7px 8px; border-bottom: 1px solid var(--borda); vertical-align: top; }
 tr:nth-child(even) td { background: #f6f9fc; }
@@ -149,23 +149,23 @@ td a { font-weight: 700; }
           <p class="intro">Todos os conjuntos de dados publicados pela Prefeitura, em um só lugar. Clique no nome para abrir.</p>
           <div class="tabela-rolagem">
             <table>
-              <thead><tr><th>Conjunto de dados</th><th>Secretaria responsável</th><th>Formato</th><th>Atualização</th></tr></thead>
+              <thead><tr><th>Conjunto de dados</th><th>Secretaria responsável</th><th>Formato</th><th>Atualização</th><th>Ano de referência dos dados</th></tr></thead>
               <tbody>
-                <tr><td><a href="https://transparencia.saobernardo.sp.gov.br/contratos" target="_blank" rel="noopener">Contratos e aditamentos</a></td><td class="indef">a definir pela equipe</td><td class="fmt">CSV, Excel, PDF</td><td>Diária</td></tr>
-                <tr><td><a href="https://obras.saobernardo.sp.gov.br/transparencia/obras-em-andamento" target="_blank" rel="noopener">Obras em andamento</a></td><td class="indef">a definir pela equipe</td><td class="fmt">CSV, Excel, PDF</td><td>Diária</td></tr>
-                <tr><td><a href="https://transparencia-fiscal.saobernardo.sp.gov.br/transparencia-fiscal/municipio-sbc/inicio" target="_blank" rel="noopener">Receitas e despesas</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLS</td><td>Mensal</td></tr>
-                <tr><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/emendas-parlamentares" target="_blank" rel="noopener">Emendas parlamentares</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLSX</td><td class="indef">a informar</td></tr>
-                <tr><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/renuncia-de-receita1" target="_blank" rel="noopener">Renúncia de receita</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLSX, TXT</td><td>Mensal (2021 a 2025)</td></tr>
-                <tr><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/receitas-e-destinacao-de-multas-de-transito" target="_blank" rel="noopener">Multas de trânsito: receita e destinação</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLSX</td><td>Anual (2019 a 2024)</td></tr>
-                <tr><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/doacoes" target="_blank" rel="noopener">Doações recebidas</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLSX</td><td class="indef">a informar</td></tr>
-                <tr><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/planilha-de-obras-de-exercicios-anteriores" target="_blank" rel="noopener">Obras de exercícios anteriores</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLSX, TXT</td><td>Trimestral desde 2020 (série 2016 a mar/2026)</td></tr>
-                <tr><td><a href="https://geo.saobernardo.sp.gov.br/" target="_blank" rel="noopener">Mapas: bairros, zoneamento, equipamentos públicos e mais 10 camadas</a></td><td>Planejamento Urbano (fonte declarada no dicionário)</td><td class="fmt">Shapefile + dicionário XLSX</td><td>Anual ou conforme demanda</td></tr>
-                <tr class="falta"><td><a href="https://www.saobernardo.sp.gov.br/web/sbc/perfilsocioeconomicobairros" target="_blank" rel="noopener">Perfil socioeconômico por bairro (idade, sexo, cor ou raça, IPVS)</a></td><td>Planejamento Urbano</td><td class="fmt">Hoje só PDF → publicar em XLSX</td><td>Anual</td></tr>
-                <tr class="falta"><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/patrimonio" target="_blank" rel="noopener">Patrimônio público</a></td><td class="indef">a definir pela equipe</td><td class="fmt">Hoje só PDF → publicar em XLSX</td><td class="indef">a informar</td></tr>
+                <tr><td><a href="https://transparencia.saobernardo.sp.gov.br/contratos" target="_blank" rel="noopener">Contratos e aditamentos</a></td><td class="indef">a definir pela equipe</td><td class="fmt">CSV, Excel, PDF</td><td>Diária</td><td>Por ano (2024 a 2026 conferidos)</td></tr>
+                <tr><td><a href="https://obras.saobernardo.sp.gov.br/transparencia/obras-em-andamento" target="_blank" rel="noopener">Obras em andamento</a></td><td class="indef">a definir pela equipe</td><td class="fmt">CSV, Excel, PDF</td><td>Diária</td><td>Situação atual</td></tr>
+                <tr><td><a href="https://transparencia-fiscal.saobernardo.sp.gov.br/transparencia-fiscal/municipio-sbc/inicio" target="_blank" rel="noopener">Receitas e despesas</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLS</td><td>Mensal</td><td>2026 (no sistema)</td></tr>
+                <tr><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/emendas-parlamentares" target="_blank" rel="noopener">Emendas parlamentares</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLSX</td><td class="indef">a informar</td><td><span class="indef">a informar</span></td></tr>
+                <tr><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/renuncia-de-receita1" target="_blank" rel="noopener">Renúncia de receita</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLSX, TXT</td><td>Mensal (2021 a 2025)</td><td>2021 a 2025</td></tr>
+                <tr><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/receitas-e-destinacao-de-multas-de-transito" target="_blank" rel="noopener">Multas de trânsito: receita e destinação</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLSX</td><td>Anual (2019 a 2024)</td><td>2019 a 2024</td></tr>
+                <tr><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/doacoes" target="_blank" rel="noopener">Doações recebidas</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLSX</td><td class="indef">a informar</td><td>2020 a 2022; demais sem período indicado</td></tr>
+                <tr><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/planilha-de-obras-de-exercicios-anteriores" target="_blank" rel="noopener">Obras de exercícios anteriores</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLSX, TXT</td><td>Trimestral desde 2020 (série 2016 a mar/2026)</td><td>2016 a mar/2026</td></tr>
+                <tr><td><a href="https://geo.saobernardo.sp.gov.br/" target="_blank" rel="noopener">Mapas: bairros, zoneamento, equipamentos públicos e mais 10 camadas</a></td><td>Planejamento Urbano (fonte declarada no dicionário)</td><td class="fmt">Shapefile + dicionário XLSX</td><td>Anual ou conforme demanda</td><td>Varia por camada: 2014 a 2026</td></tr>
+                <tr class="falta"><td><a href="https://www.saobernardo.sp.gov.br/web/sbc/perfilsocioeconomicobairros" target="_blank" rel="noopener">Perfil socioeconômico por bairro (idade, sexo, cor ou raça, IPVS)</a></td><td>Planejamento Urbano</td><td class="fmt">Hoje só PDF → publicar em XLSX</td><td>Anual</td><td><b>Edição 2026</b>; dados do Censo 2022 e estimativa 2025; <b>renda: Censo 2010</b></td></tr>
+                <tr class="falta"><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/patrimonio" target="_blank" rel="noopener">Patrimônio público</a></td><td class="indef">a definir pela equipe</td><td class="fmt">Hoje só PDF → publicar em XLSX</td><td class="indef">a informar</td><td>2023 a mar/2025</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="nota-tab">Linhas em vermelho: o dado existe, mas ainda não está em formato aberto. A lista completa de partida está no inventário da ficha OD3.</p>
+          <p class="nota-tab">Linhas em vermelho: o dado existe, mas ainda não está em formato aberto. "Atualização" é a frequência de publicação; "Ano de referência" é o período a que os dados se referem, que pode ser mais antigo que a publicação (no Perfil, a edição é de 2026, mas a renda é do Censo 2010). A lista completa de partida está no inventário da ficha OD3.</p>
           <div class="quadros">
             <div class="quadro contato"><b>Fale com a equipe de dados abertos</b>E-mail institucional: <span class="indef">a definir pela equipe</span>. Peça a abertura de uma base nova.</div>
             <div class="quadro licenca"><b>Licença</b>Os dados podem ser usados livremente, com citação da fonte: Creative Commons Atribuição 4.0 (CC BY 4.0).</div>
@@ -184,6 +184,7 @@ td a { font-weight: 700; }
         <tbody>
           <tr><td>Catálogo com link para cada base, inclusive as de outros sites</td><td>OD3.3</td><td>O critério pede que o portal principal aponte claramente para os dados publicados em sites separados.</td></tr>
           <tr><td>Secretaria responsável, formato e atualização em cada linha</td><td>OD3.3</td><td>Contextualização: o modelo citado pela WWC (Corrientes, Argentina) mostra em cada base a área responsável, a frequência e a última atualização.</td></tr>
+          <tr><td>Ano de referência dos dados, separado da data de publicação</td><td>OD3.3</td><td>Evita que um dado antigo pareça atual. Exemplo: o Perfil por Bairro é a edição 2026, mas a renda vem do Censo 2010, porque a renda do Censo 2022 não estava disponível na publicação.</td></tr>
           <tr><td>Contato da equipe</td><td>OD3.3</td><td>O critério pede "informações de contato".</td></tr>
           <tr><td>Licença aberta</td><td>OD3.1</td><td>Deixa claro que o dado é gratuito e reutilizável; hoje há só termos informais.</td></tr>
           <tr><td>Perfil por Bairro em planilha</td><td>OD3.2</td><td>É o dado desagregado por território e por grupo da população que o critério pede, em formato legível por máquina.</td></tr>
