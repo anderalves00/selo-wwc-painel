@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>DM1 v02 governança</title>
+<title>Decreto governança v02</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f71b3'/%3E%3Crect y='26' width='32' height='6' fill='%23ff8200'/%3E%3Cpath d='M8 20l5-6 4 4 7-9' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -127,14 +127,26 @@ del.sup { text-decoration: line-through; text-decoration-thickness: 1.5px; color
 .tag.dti { background: #eef1f4; color: var(--texto-suave); }
 .tag.v03 { background: #fde7c4; color: #8a4b00; }
 .art.anot .texto { background: #f7faf7; border-left: 5px solid var(--verde); }
+.art.semrel .texto { color: #555b61; }
 .art.anot.lacuna .texto { background: var(--laranja-claro); border-left-color: var(--laranja); }
+.expl .analise { background: var(--verde-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .analise h4 { color: var(--verde); }
+.art.semrel .expl .analise { background: #f3f5f7; }
+.art.semrel .expl .analise h4 { color: var(--texto-suave); }
 .expl .v03 { background: #fde7c4; border-radius: 6px; padding: 8px 11px; }
 .expl .v03 h4 { color: #8a4b00; }
+.expl .redacao { background: #fff; border: 1px solid #f0c98a; border-radius: 6px; padding: 8px 10px; margin: 6px 0; font-size: 13.5px; }
+.expl .redacao p { margin: 0 0 5px; }
+ins { background: #d9f2d9; text-decoration: none; border-bottom: 2px solid var(--verde); }
+del { background: #fbe0de; color: #8a1f17; }
 .aviso { background: var(--azul-claro); border-left: 5px solid var(--azul); border-radius: 6px; padding: 12px 16px; }
-table.versoes { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 6px; }
-table.versoes td, table.versoes th { border-top: 1px solid var(--borda); padding: 8px 10px; text-align: left; vertical-align: top; }
-table.versoes tr.vigente td { background: var(--verde-claro); }
-.lista-v03 li { margin-bottom: 6px; }
+table.tab { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 6px; }
+table.tab td, table.tab th { border-top: 1px solid var(--borda); padding: 8px 10px; text-align: left; vertical-align: top; }
+table.tab tr.vigente td { background: var(--verde-claro); }
+table.tab td.cod { white-space: nowrap; font-weight: 800; }
+table.tab .arts a { display: inline-block; font-size: 12.5px; font-weight: 700; text-decoration: none; background: var(--azul-claro); padding: 1px 7px; border-radius: 6px; margin: 1px 2px; }
+.lista-alt li { margin-bottom: 8px; }
+@media (max-width: 760px) { table.tab.crit td:nth-child(2) { display: none; } table.tab.crit th:nth-child(2) { display: none; } }
 </style>
 </head>
 <body>
@@ -142,9 +154,9 @@ table.versoes tr.vigente td { background: var(--verde-claro); }
 <header class="topo">
   <div class="topo-int">
     <div>
-      <div class="sobre">Painel WWC · SBC · Critério DM1 · Versão v02</div>
+      <div class="sobre">Painel WWC · SBC · DM1 e demais critérios de foco · Versão v02</div>
       <h1>Decreto da Política e do Programa de Governança Digital e de Dados</h1>
-      <div class="subtitulo">Texto do DTI (processo SB 101842/2026, enviado à Procuradoria em 23/10/2026), com a relação de cada artigo com a WWC · Versão v02, 23/10/2026</div>
+      <div class="subtitulo">Texto do DTI (processo SB 101842/2026, enviado à Procuradoria em 23/10/2026), com a análise de cada artigo frente aos 16 critérios de foco · Versão v02, 23/10/2026</div>
     </div>
     <a class="voltar" href="index.html#DM1" onclick="if (history.length === 1) { window.close(); return false; }">← Voltar ao painel (DM1)</a>
   </div>
@@ -155,11 +167,18 @@ table.versoes tr.vigente td { background: var(--verde-claro); }
     <span class="rot">Mostrar:</span>
     <div class="grupo" data-filtro="sub">
       <button class="chip" type="button" data-v="todos" aria-pressed="true">Todos</button>
-      <button class="chip" type="button" data-v="DM1.1" aria-pressed="false">DM1.1</button>
-      <button class="chip" type="button" data-v="DM1.2" aria-pressed="false">DM1.2</button>
-      <button class="chip" type="button" data-v="DM1.3" aria-pressed="false">DM1.3</button>
-      <button class="chip" type="button" data-v="OD1" aria-pressed="false">Ligação com o OD1</button>
-      <button class="chip" type="button" data-v="v03" aria-pressed="false">Só alterações possíveis</button>
+      <button class="chip" type="button" data-v="alt" aria-pressed="false">Só alterações possíveis</button>
+      <button class="chip" type="button" data-v="DM1" aria-pressed="false">DM1</button>
+      <button class="chip" type="button" data-v="DM2" aria-pressed="false">DM2</button>
+      <button class="chip" type="button" data-v="DM3" aria-pressed="false">DM3</button>
+      <button class="chip" type="button" data-v="DM4" aria-pressed="false">DM4</button>
+      <button class="chip" type="button" data-v="DM5" aria-pressed="false">DM5</button>
+      <button class="chip" type="button" data-v="DM6" aria-pressed="false">DM6</button>
+      <button class="chip" type="button" data-v="DM8" aria-pressed="false">DM8</button>
+      <button class="chip" type="button" data-v="DM9" aria-pressed="false">DM9</button>
+      <button class="chip" type="button" data-v="CI2" aria-pressed="false">CI2</button>
+      <button class="chip" type="button" data-v="CI3" aria-pressed="false">CI3</button>
+      <button class="chip" type="button" data-v="OD1" aria-pressed="false">OD1</button>
     </div>
     <span class="contagem" id="contagem"></span>
   </div>
@@ -169,70 +188,68 @@ table.versoes tr.vigente td { background: var(--verde-claro); }
 
 <section class="cartao">
   <h2>O que é esta página</h2>
-  <div class="aviso"><p><b>Versão v02 da recomendação para o DM1.</b> O texto do decreto é o da minuta do DTI, sem alteração; ainda não passou pela Procuradoria. Ao lado dos artigos que tratam do critério DM1 da certificação What Works Cities está a nossa análise (o que atende e o que falta) e, quando houver, a alteração possível. Artigos sem análise não tratam diretamente do critério.</p><p>O nome do Prefeito foi substituído por [Prefeito], pela regra do painel.</p></div>
-  <p style="margin-top:12px"><b>Conclusão:</b> publicado antes de 18/12/2026, o decreto atende o DM1.1 e o DM1.3, ou seja, 2 de 3 subcritérios. O comitê que ele cria (CGD) atende o DM1.2 no desenho, mas só será instalado depois de 18/12, porque o decreto entra em vigor 90 dias após a publicação. Até lá, o DM1.2 depende das atas do Comitê Gestor de Proteção de Dados (CGPD).</p>
+  <div class="aviso"><p><b>Versão v02.</b> O texto do decreto é o da minuta do DTI, sem alteração; ainda não passou pela Procuradoria. Ao lado de cada artigo está a nossa <b>análise</b> frente aos 16 critérios de foco da certificação What Works Cities (o que atende e o que falta) e, quando houver, a <b>alteração possível</b>, já com a redação proposta. As alterações são sugestões: as que a equipe aprovar entram no texto da v03.</p><p>O nome do Prefeito foi substituído por [Prefeito], pela regra do painel.</p></div>
+  <p style="margin-top:12px"><b>Conclusão para o DM1:</b> publicado antes de 18/12/2026, o decreto atende o DM1.1 e o DM1.3 (2 de 3). O comitê que ele cria (CGD) atende o DM1.2 na forma, mas só será instalado depois de 18/12, porque o decreto entra em vigor 90 dias após a publicação; até lá, o DM1.2 depende das atas do Comitê Gestor de Proteção de Dados (CGPD). <b>Para os demais critérios,</b> o decreto prepara o terreno, mas sozinho não atende nenhum: as alterações dos arts. 7º e 25 são as que mais aproximam o texto do que a WWC pede (DM2, DM3, DM4, DM5.2 e DM9).</p>
   <div class="legenda">
     <span><span class="tag dti">Texto do DTI</span> sem alteração</span>
-    <span><span class="tag sub">DM1.x</span> subcritério da WWC a que o artigo responde</span>
-    <span><span class="tag v03">Alteração possível</span> sugestão a levar à equipe</span>
+    <span><span class="tag sub">DM1.x</span> critério ou subcritério a que o artigo se liga</span>
+    <span><span class="tag v03">Alteração possível</span> sugestão, com redação proposta</span>
+    <span><ins>texto incluído</ins> · <del>texto retirado</del></span>
   </div>
 </section>
 
 <section class="cartao">
-  <h2>Versões da recomendação do DM1</h2>
+  <h2>Versões</h2>
   <p class="nota">Cada versão registra a recomendação numa data, com a base documental daquele momento. Nenhuma é apagada: quando uma nova surge, a anterior fica como registro, com o motivo da troca.</p>
-  <table class="versoes"><thead><tr><th>Versão</th><th>Data</th><th>O que é</th><th>Situação</th></tr></thead><tbody>
+  <table class="tab"><thead><tr><th>Versão</th><th>Data</th><th>O que é</th><th>Situação</th></tr></thead><tbody>
     <tr class=""><td><b>v01</b></td><td>21/10/2026</td><td><a href="proposta-sbc-mais-i.html">Ajustes ao decreto do SBC+i</a><br><span style="color:var(--texto-suave)">Base: minuta do decreto do SBC+i (SB 100144/2026). Acrescentava ao GT do SBC+i competências de dados, reunião trimestral com ata, objetivos, princípios e relatório anual.</span></td><td>Substituída em 23/10/2026</td></tr>
-    <tr class="vigente"><td><b>v02</b></td><td>23/10/2026</td><td><b>Decreto de Governança Digital e de Dados, como o DTI redigiu</b> (esta página)<br><span style="color:var(--texto-suave)">Base: SB 101842/2026. O decreto já traz objetivos, princípios, comitê com reunião periódica e ata e relatório público. Ao SBC+i fica só uma remissão à nova Política.</span></td><td>Vigente</td></tr>
+    <tr class="vigente"><td><b>v02</b></td><td>23/10/2026</td><td><b>Decreto de Governança Digital e de Dados, como o DTI redigiu</b> (esta página)<br><span style="color:var(--texto-suave)">Base: SB 101842/2026. Inteiro teor sem alteração, com a análise de cada artigo contra os 16 critérios de foco e as alterações possíveis, com redação proposta. Ao SBC+i fica só uma remissão à nova Política.</span></td><td>Vigente</td></tr>
     <tr class=""><td><b>v03</b></td><td>—</td><td>Decreto de Governança Digital e de Dados com as alterações aprovadas<br><span style="color:var(--texto-suave)">O texto da v02 com as alterações possíveis que a equipe aprovar, cada uma marcada e explicada.</span></td><td>Aguarda aprovação da equipe</td></tr>
   </tbody></table>
 </section>
 
 <section class="cartao">
-  <h2>O que a WWC pede e onde o decreto responde</h2>
-  <div class="subs">
-    <div class="sub-card">
-      <h3>DM1.1 · Aprovação executiva e objetivos</h3>
-      <div class="pede">Aprovação da alta gestão e uma estratégia de dados de toda a prefeitura, um estatuto, uma declaração de propósito ou um conjunto documentado de metas e objetivos.</div>
-      <div class="linha hoje"><b>Antes:</b> Só o Decreto 22.963/2025, que trata de proteção de dados (LGPD).</div>
-      <div class="linha depois"><b>No decreto:</b> Decreto do Prefeito para toda a Administração Direta, com objetivos (art. 3º) e um eixo de dados e interoperabilidade (art. 6º). Metas e prazos vêm no Plano Executivo.</div>
-      <div class="linha"><b>Avaliação:</b> Atende quando publicado</div>
-      <div class="arts"><a href="#art1">Art. 1º</a><a href="#art3">Art. 3º</a><a href="#art6">Art. 6º</a><a href="#art25">Art. 25</a><a href="#art32">Art. 32</a><a href="#art39">Art. 39</a><a href="#art40">Art. 40</a></div>
-    </div>
-    <div class="sub-card">
-      <h3>DM1.2 · Grupo que se reúne a cada trimestre</h3>
-      <div class="pede">O grupo com autoridade sobre a estratégia e a governança de dados se reúne pelo menos a cada trimestre para cumprir responsabilidades definidas.</div>
-      <div class="linha hoje"><b>Antes:</b> CGPD com membros nomeados, mas escopo de LGPD, sem periodicidade no ato e sem atas localizadas.</div>
-      <div class="linha depois"><b>No decreto:</b> CGD com sete competências (art. 12), reunião mensal e depois a cada dois meses, e ata com presença e fundamentação. Só se instala depois de 18/12, por causa da vigência de 90 dias (art. 40).</div>
-      <div class="linha"><b>Avaliação:</b> Atende no desenho, não até 18/12</div>
-      <div class="arts"><a href="#art10">Art. 10</a><a href="#art11">Art. 11</a><a href="#art12">Art. 12</a><a href="#art13">Art. 13</a><a href="#art14">Art. 14</a><a href="#art19">Art. 19</a><a href="#art40">Art. 40</a></div>
-    </div>
-    <div class="sub-card">
-      <h3>DM1.3 · Transparência, prestação de contas e uso ético</h3>
-      <div class="pede">Uma estrutura que dá ênfase à transparência, à prestação de contas e ao uso ético dos dados, a serviço de melhores resultados para todos os moradores.</div>
-      <div class="linha hoje"><b>Antes:</b> Peças dispersas: LGPD no Decreto 22.963 e princípios da Lei 7.578/2026.</div>
-      <div class="linha depois"><b>No decreto:</b> Princípios (art. 4º), registros que separam autoria, decisão e resultado (art. 20), relatório semestral público (art. 35), minimização (art. 26) e regras de IA com aviso ao cidadão (art. 29). Não usa a palavra "ético".</div>
-      <div class="linha"><b>Avaliação:</b> Atende quando publicado</div>
-      <div class="arts"><a href="#art4">Art. 4º</a><a href="#art12">Art. 12</a><a href="#art14">Art. 14</a><a href="#art18">Art. 18</a><a href="#art20">Art. 20</a><a href="#art26">Art. 26</a><a href="#art28">Art. 28</a><a href="#art29">Art. 29</a><a href="#art34">Art. 34</a><a href="#art35">Art. 35</a><a href="#art40">Art. 40</a></div>
-    </div>
-  </div>
+  <h2>O decreto frente aos 16 critérios de foco</h2>
+  <table class="tab crit"><thead><tr><th>Critério</th><th>O que o decreto traz</th><th>Avaliação</th><th>Artigos</th></tr></thead><tbody>
+    <tr><td class="cod">DM1<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Estratégia e governança de dados</span></td><td>Política com objetivos e princípios, comitê (CGD) com reunião mensal e depois bimestral e ata, relatório semestral público, regras de IA.</td><td>Atende o DM1.1 e o DM1.3 quando publicado (2 de 3). O DM1.2 está no desenho, mas o CGD só se instala depois de 18/12. As alterações dos arts. 3º, 4º, 12 e 40 reforçam os três.</td><td class="arts"><a href="#art1">1</a><a href="#art3">3</a><a href="#art4">4</a><a href="#art6">6</a><a href="#art10">10</a><a href="#art11">11</a><a href="#art12">12</a><a href="#art13">13</a><a href="#art14">14</a><a href="#art15">15</a><a href="#art16">16</a><a href="#art18">18</a><a href="#art19">19</a><a href="#art20">20</a><a href="#art25">25</a><a href="#art26">26</a><a href="#art29">29</a><a href="#art32">32</a><a href="#art34">34</a><a href="#art35">35</a><a href="#art39">39</a><a href="#art40">40</a></td></tr>
+    <tr><td class="cod">DM2<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Inventário de dados</span></td><td>Só como tema da futura regulamentação de dados: catálogo e metadados (art. 25).</td><td>Não atende sozinho. A alteração do art. 25 põe no decreto a metodologia, a atualização a cada 2 anos, a contribuição de todos os órgãos e a versão pública que o DM2 pede.</td><td class="arts"><a href="#art1">1</a><a href="#art2">2</a><a href="#art5">5</a><a href="#art21">21</a><a href="#art25">25</a></td></tr>
+    <tr><td class="cod">DM3<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Compartilhamento de dados</span></td><td>Condições para integrar e compartilhar: finalidade, minimização, destinatários (art. 26); arquitetura sem centralização obrigatória (art. 27).</td><td>Não atende sozinho: faltam o processo documentado, a orientação sobre acordos, o canal de pedidos com prazo e o processo de abertura. A alteração do art. 25 os prevê.</td><td class="arts"><a href="#art9">9</a><a href="#art25">25</a><a href="#art26">26</a><a href="#art27">27</a></td></tr>
+    <tr><td class="cod">DM4<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Qualidade de dados</span></td><td>Qualidade e metadados como tema da regulamentação (art. 25). O piloto proposto pelo DTI é de endereços e referências territoriais.</td><td>Não atende sozinho. O piloto de endereços é exatamente o exemplo da WWC no DM4.3 (campos comuns, como o endereço). A alteração do art. 25 prevê padrões comuns e metadados com origem e limitações.</td><td class="arts"><a href="#art2">2</a><a href="#art25">25</a></td></tr>
+    <tr><td class="cod">DM5<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Privacidade</span></td><td>Proteção desde a concepção (art. 28), minimização (arts. 14, § 3º, e 26), CGPD preservado (art. 19).</td><td>Apoia, mas não atende: falta o processo para evitar divulgação indevida (DM5.2), que a alteração do art. 25 prevê. A capacitação anual (DM5.3) cabe ao Decreto 22.963, que já prevê capacitação sem periodicidade.</td><td class="arts"><a href="#art9">9</a><a href="#art14">14</a><a href="#art19">19</a><a href="#art24">24</a><a href="#art25">25</a><a href="#art28">28</a></td></tr>
+    <tr><td class="cod">DM6<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Segurança da informação</span></td><td>Remete à Política de Segurança da Informação (Decreto 22.453/2023) e dá ao DTI as avaliações de segurança e continuidade (arts. 17 e 28).</td><td>Não trata diretamente. Depende do anexo da PSI, a analisar na ficha do DM6.</td><td class="arts"><a href="#art17">17</a><a href="#art28">28</a></td></tr>
+    <tr><td class="cod">DM7<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Escuta qualitativa da comunidade</span></td><td>Só a menção a contribuições recebidas pelos canais existentes (art. 12, V).</td><td>Não trata.</td><td class="arts">—</td></tr>
+    <tr><td class="cod">DM8<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Dados por território e por grupo da população</span></td><td>Nada específico.</td><td>Não trata. A alteração do art. 34 pede indicadores desagregados quando pertinente, o que ajuda pouco: o DM8 pede padrão demográfico e dados desagregados compartilhados.</td><td class="arts"><a href="#art34">34</a></td></tr>
+    <tr><td class="cod">DM9<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Padrão de serviços de dados</span></td><td>Eixo de inteligência estratégica e resultados (art. 6º), com ato próprio (art. 7º).</td><td>Não trata. A alteração do art. 7º faz do ato desse eixo o padrão público de serviços de dados que o DM9 pede.</td><td class="arts"><a href="#art6">6</a><a href="#art7">7</a><a href="#art29">29</a><a href="#art33">33</a></td></tr>
+    <tr><td class="cod">CI1<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Capacitação da comunidade em dados</span></td><td>Nada (o eixo de capacidades é interno).</td><td>Não trata.</td><td class="arts">—</td></tr>
+    <tr><td class="cod">CI2<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Serviços de análise de dados</span></td><td>Eixo de inteligência estratégica e resultados.</td><td>Não trata. O CI2.1 depende do padrão do DM9 (alteração do art. 7º).</td><td class="arts"><a href="#art6">6</a><a href="#art7">7</a></td></tr>
+    <tr><td class="cod">CI3<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Compartilhar evidências com parceiros</span></td><td>Relatório semestral público com resultados verificados (art. 35); convidados externos no CGD (art. 11, § 6º).</td><td>Pode apoiar o CI3.1 se o relatório for levado a parceiros externos; publicar no portal, sozinho, não demonstra o compartilhamento. Não se sabe se a WWC aceitaria.</td><td class="arts"><a href="#art11">11</a><a href="#art35">35</a></td></tr>
+    <tr><td class="cod">OD1<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Política de dados abertos</span></td><td>Cita "abertura" na regulamentação de dados (art. 25) e "padrões abertos" (art. 4º, § 1º, VI); não adota o capítulo de abertura de dados da Lei 14.129 (art. 4º, § 2º).</td><td>Não atende: a política de dados abertos precisa de ato próprio, que se encaixa nos arts. 7º, 8º e 25. As alterações dos arts. 8º, 12 e 35 fazem essa ligação.</td><td class="arts"><a href="#art4">4</a><a href="#art7">7</a><a href="#art8">8</a><a href="#art12">12</a><a href="#art25">25</a><a href="#art35">35</a></td></tr>
+    <tr><td class="cod">OD2<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Orientações ao usuário de dados</span></td><td>Nada.</td><td>Não trata.</td><td class="arts">—</td></tr>
+    <tr><td class="cod">OD3<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Portal de dados abertos</span></td><td>Nada; o catálogo previsto pelo DTI terá parte pública (proposta técnica, p. 28).</td><td>Não trata.</td><td class="arts">—</td></tr>
+    <tr><td class="cod">OD4<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Conhecer quem usa os dados</span></td><td>Nada.</td><td>Não trata.</td><td class="arts">—</td></tr>
+  </tbody></table>
 </section>
 
 <section class="cartao">
   <h2>Alterações possíveis, para aprovação da equipe</h2>
-  <ul class="lista-v03">
-    <li><a href="#art3"><b>Art. 3º</b></a>: Acrescentar objetivos próprios de dados (qualidade, inventário, abertura, uso de dados nas decisões), para o DM1.1 não depender só do Plano Executivo.</li>
-    <li><a href="#art4"><b>Art. 4º</b></a>: Acrescentar "uso ético e responsável dos dados" entre os princípios: é o termo do DM1.3.</li>
-    <li><a href="#art8"><b>Art. 8º</b></a>: Incluir "abertura de dados" na lista do § 1º, para amarrar a política do OD1 ao Programa.</li>
-    <li><a href="#art40"><b>Art. 40</b></a>: Propor vigência na publicação, ao menos dos Capítulos I e II (objetivos, princípios e eixos), mantendo os prazos de instalação do CGD.</li>
+  <ul class="lista-alt">
+    <li><a href="#art3"><b>Art. 3º</b></a>: O DM1.1 aceita um "conjunto documentado de metas e objetivos". Com objetivos próprios de dados, o decreto basta para o DM1.1 já na publicação, sem esperar o Plano Executivo. Cada inciso aponta para um critério: I para o DM2, II para o DM4, III para o DM3, IV para o OD1 e V para o DM8. Origem: diretrizes da Portaria GM/MPO 201/2025 (Política de Governança de Dados do Ministério do Planejamento e Orçamento), art. 4º.</li>
+    <li><a href="#art4"><b>Art. 4º</b></a>: O DM1.3 pede uma estrutura com ênfase em "transparência, prestação de contas e uso ético dos dados, a serviço de melhores resultados para todos os moradores". "Uso ético" é o termo do critério, e "equidade" traduz o "para todos os moradores". Precedente brasileiro: Portaria GM/MPO 201/2025 (Política de Governança de Dados do Ministério do Planejamento e Orçamento), art. 3º, I ("Ética, responsabilidade e sustentabilidade").</li>
+    <li><a href="#art7"><b>Art. 7º</b></a>: O DM9 pede um padrão documentado e público para serviços de dados e de análise, e o CI2.1 pede que os serviços sigam esse padrão. Dizer no decreto que o ato do eixo 5 terá esse conteúdo cria o compromisso sem antecipar o texto do ato.</li>
+    <li><a href="#art8"><b>Art. 8º</b></a>: Amarra a política de dados abertos (OD1) ao Programa, como ato específico, e evita que ela pareça uma governança paralela.</li>
+    <li><a href="#art12"><b>Art. 12</b></a>: O DM1.2 pede um grupo "com autoridade sobre a estratégia e a governança de dados" que se reúna para cumprir "responsabilidades definidas". Uma competência expressa de dados deixa isso claro. A WWC também recomenda que o mesmo órgão cuide do DM1 e do OD1 (texto "Better Together", Fórum, jan/2026). Ajuste de redação: o "e" que hoje fecha o inciso VI passa para o final do inciso VII.</li>
+    <li><a href="#art25"><b>Art. 25</b></a>: Cada inciso responde a subcritérios que o decreto só cita como tema: I ao DM2.1, DM2.2, DM2.3 e DM2.4; II ao DM4.2, DM4.3 e DM4.4; III ao DM3.1 e DM3.3; IV ao DM3.2; V ao DM5.2. O piloto que o DTI propõe (endereços e referências territoriais) é o exemplo da própria WWC no DM4.3. Origem: Portaria GM/MPO 201/2025 (Política de Governança de Dados do Ministério do Planejamento e Orçamento), art. 5º (catálogo, glossário e guias de padrões e de processos de dados).</li>
+    <li><a href="#art34"><b>Art. 34</b></a>: O DM8.2 pede dados separados por território e por grupos da população, compartilhados interna e externamente; o OD3.2 pede o mesmo nos dados abertos. Ajuda pouco sozinho, porque o DM8 pede também um padrão demográfico (DM8.1), mas fixa o hábito nos indicadores do Programa.</li>
+    <li><a href="#art35"><b>Art. 35</b></a>: O OD1.3 pede que a política de dados abertos tenha revisão periódica do texto e da implementação, por relatório no mínimo anual. Usar o relatório do Programa evita um relatório a mais e reforça a prestação de contas do DM1.3.</li>
+    <li><a href="#art40"><b>Art. 40</b></a>: Objetivos, princípios e eixos passam a valer na publicação, o que permite usá-los no envio de 18/12 (DM1.1 e DM1.3). O parágrafo mantém os 90 dias de preparação que o DTI previu para instalar o CGD, aprovar os planos e publicar o primeiro relatório.</li>
   </ul>
-  <p class="nota">São sugestões, não alterações feitas. As que a equipe aprovar entram no texto da v03, marcadas e explicadas. A lista será completada com o estudo detalhado desta versão contra o que a WWC pede.</p>
+  <p class="nota">São sugestões, não alterações feitas. A redação proposta de cada uma está no quadro à direita do artigo. As aprovadas entram no texto da v03, marcadas e explicadas.</p>
 </section>
 
 <section class="cartao decreto" id="decreto">
   <div class="decreto-cab">
-    <h2>Texto do decreto</h2>
-    <div class="nota">Use os filtros acima para ver só os artigos de um subcritério ou só as alterações possíveis.</div>
+    <h2>Texto do decreto, com análise</h2>
+    <div class="nota">Use os filtros acima para ver só os artigos ligados a um critério ou só os que têm alteração possível.</div>
   </div>
   <div class="ementa" data-bloco="preambulo">
     <p class="num">DECRETO Nº ……………</p>
@@ -244,227 +261,300 @@ table.versoes tr.vigente td { background: var(--verde-claro); }
   </div>
 
   <div class="capitulo">Capítulo I – Do objeto da abrangência e dos princípios</div>
-  <article class="art anot" id="art1" data-sub="DM1.1">
-    <div class="texto"><div class="cab"><span class="id">Art. 1º</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.1</span></div>
+  <article class="art anot" id="art1" data-sub="DM1 DM2">
+    <div class="texto"><div class="cab"><span class="id">Art. 1º</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.1</span><span class="tag sub">DM2.2</span></div>
       <p>Art. 1º Este Decreto institui a Política e o Programa Municipal de Governança Digital e de Dados, de observância obrigatória pelos órgãos da Administração Direta do Poder Executivo, para orientar decisões, capacidades, riscos e resultados de iniciativas digitais e de dados, no âmbito das competências previstas na legislação municipal.</p><p>§ 1º O Programa organizará a cooperação e o uso das capacidades existentes para melhorar serviços e resultados, preservadas as competências finalísticas, normativas, técnicas, de controle e de execução previstas na legislação.</p><p>§ 2º A participação das entidades da Administração Indireta observará o disposto no art. 5º deste Decreto.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.1</h4><p>Dá o alcance de "toda a prefeitura" que o DM1.1 pede e a aprovação executiva, por ser decreto do Prefeito.</p></div>
+      <div class="analise"><h4>Análise · DM1.1 e DM2.2</h4><p>Dá o alcance de toda a prefeitura e a aprovação executiva, por ser decreto do Prefeito (DM1.1). Vale só para a Administração Direta; autarquias entram por ato próprio (art. 5º). Se elas não aderirem, o inventário (DM2.2: 80% dos órgãos contribuindo) cobrirá só a Administração Direta. As fontes lidas da WWC não dizem se autarquias contam nesse percentual.</p></div>
     </aside>
   </article>
-  <article class="art igual" id="art2" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 2º</span><span class="tag dti">Texto do DTI</span></div><p>Art. 2º Para fins deste Decreto, considera-se:</p><p class="inc">I - Política: conjunto de princípios, objetivos e diretrizes permanentes;</p><p class="inc">II - Programa: instrumento de implementação da Política, organizado em eixos e ações;</p><p class="inc">III - iniciativa abrangida: programa, projeto, serviço, solução, integração ou experimento com componente digital ou de dados;</p><p class="inc">IV - órgão responsável pela iniciativa: órgão ou unidade com competência sobre sua finalidade, condução e resultados;</p><p class="inc">V - domínio de dados: conjunto de informações relacionado a objeto ou atividade, com responsabilidades funcionais definidas;</p><p class="inc">VI - ato específico: instrumento expedido pela autoridade competente para disciplinar eixo, iniciativa ou procedimento, observado o regime jurídico aplicável;</p><p class="inc">VII - autoridade responsável: titular do órgão responsável ou agente com competência legal ou regularmente delegada para decidir sobre a iniciativa;</p><p class="inc">VIII - responsável operacional: agente designado para acompanhar atividades, registros e providências, sem transferência automática de competência decisória;</p><p class="inc">IX - serviço público digital: serviço público cuja solicitação, acompanhamento ou entrega ocorra total ou parcialmente por canais digitais, com possibilidade de acesso remoto, observadas acessibilidade, inclusão e alternativas de atendimento adequadas;</p><p class="inc">X - SANDBOX regulatório: ambiente regulatório experimental com condições delimitadas para testar soluções inovadoras, mediante autorização temporária do órgão ou entidade com competência regulatória setorial, observadas a legislação específica, a duração, as normas abrangidas e as salvaguardas aplicáveis; e</p><p class="inc">XI - governo como plataforma: organização de capacidades e infraestrutura compartilhadas para uso responsável de dados de acesso público e cooperação entre agentes em inovação e serviços, respeitados os direitos dos titulares e os sigilos legais.</p></div>
+  <article class="art anot" id="art2" data-sub="DM2 DM4">
+    <div class="texto"><div class="cab"><span class="id">Art. 2º</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM2</span><span class="tag sub">DM4.2</span></div>
+      <p>Art. 2º Para fins deste Decreto, considera-se:</p><p class="inc">I - Política: conjunto de princípios, objetivos e diretrizes permanentes;</p><p class="inc">II - Programa: instrumento de implementação da Política, organizado em eixos e ações;</p><p class="inc">III - iniciativa abrangida: programa, projeto, serviço, solução, integração ou experimento com componente digital ou de dados;</p><p class="inc">IV - órgão responsável pela iniciativa: órgão ou unidade com competência sobre sua finalidade, condução e resultados;</p><p class="inc">V - domínio de dados: conjunto de informações relacionado a objeto ou atividade, com responsabilidades funcionais definidas;</p><p class="inc">VI - ato específico: instrumento expedido pela autoridade competente para disciplinar eixo, iniciativa ou procedimento, observado o regime jurídico aplicável;</p><p class="inc">VII - autoridade responsável: titular do órgão responsável ou agente com competência legal ou regularmente delegada para decidir sobre a iniciativa;</p><p class="inc">VIII - responsável operacional: agente designado para acompanhar atividades, registros e providências, sem transferência automática de competência decisória;</p><p class="inc">IX - serviço público digital: serviço público cuja solicitação, acompanhamento ou entrega ocorra total ou parcialmente por canais digitais, com possibilidade de acesso remoto, observadas acessibilidade, inclusão e alternativas de atendimento adequadas;</p><p class="inc">X - SANDBOX regulatório: ambiente regulatório experimental com condições delimitadas para testar soluções inovadoras, mediante autorização temporária do órgão ou entidade com competência regulatória setorial, observadas a legislação específica, a duração, as normas abrangidas e as salvaguardas aplicáveis; e</p><p class="inc">XI - governo como plataforma: organização de capacidades e infraestrutura compartilhadas para uso responsável de dados de acesso público e cooperação entre agentes em inovação e serviços, respeitados os direitos dos titulares e os sigilos legais.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · DM2 e DM4.2</h4><p>Definições de apoio. "Domínio de dados" com responsabilidades definidas (inciso V) é a base para ter responsáveis por conjunto de dados (DM2 e DM4.2). Não define dado aberto, inventário nem metadado: ficam para a regulamentação de dados (art. 25) e para a política de dados abertos (OD1).</p></div>
+    </aside>
   </article>
-  <article class="art anot lacuna" id="art3" data-sub="DM1.1 v03">
+  <article class="art anot lacuna" id="art3" data-sub="DM1 alt">
     <div class="texto"><div class="cab"><span class="id">Art. 3º</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.1</span><span class="tag v03">Alteração possível</span></div>
       <p>Art. 3º São objetivos da Política alinhar iniciativas às necessidades públicas, promover a cooperação e a qualidade e o uso responsável dos dados, desenvolver capacidades, gerir riscos e acompanhar benefícios e custos.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.1</h4><p>É a "declaração de objetivos" do DM1.1. Inclui "a qualidade e o uso responsável dos dados". Os objetivos são gerais: metas com prazo só vêm no Plano Executivo (art. 39, II), depois de 18/12.</p></div>
-      <div class="v03"><h4>Alteração possível</h4><p>Acrescentar objetivos próprios de dados (qualidade, inventário, abertura, uso de dados nas decisões), para o DM1.1 não depender só do Plano Executivo.</p></div>
+      <div class="analise"><h4>Análise · DM1.1</h4><p>É a "declaração de objetivos" do DM1.1 e inclui "a qualidade e o uso responsável dos dados". Os objetivos são gerais: metas e prazos só vêm no Plano Executivo (art. 39, II), depois de 18/12.</p></div>
+      <div class="v03"><h4>Alteração possível · redação proposta</h4><div class="redacao"><p>Art. 3º São objetivos da Política alinhar iniciativas às necessidades públicas, promover a cooperação e a qualidade e o uso responsável dos dados, desenvolver capacidades, gerir riscos e acompanhar benefícios e custos.</p><p><ins>Parágrafo único. Quanto aos dados, são objetivos específicos da Política:</ins></p><p><ins>I - manter inventário dos conjuntos de dados dos órgãos, atualizado no mínimo a cada 2 (dois) anos;</ins></p><p><ins>II - definir responsáveis, padrões e metadados que assegurem a qualidade e a integração dos dados entre os órgãos;</ins></p><p><ins>III - tornar mais ágil e seguro o compartilhamento de dados entre os órgãos e com parceiros;</ins></p><p><ins>IV - promover a divulgação proativa de dados em formato aberto; e</ins></p><p><ins>V - ampliar o uso de dados e evidências nas decisões, inclusive com recortes por território e por grupos da população.</ins></p></div><p><b>Por quê:</b> O DM1.1 aceita um "conjunto documentado de metas e objetivos". Com objetivos próprios de dados, o decreto basta para o DM1.1 já na publicação, sem esperar o Plano Executivo. Cada inciso aponta para um critério: I para o DM2, II para o DM4, III para o DM3, IV para o OD1 e V para o DM8. Origem: diretrizes da Portaria GM/MPO 201/2025 (Política de Governança de Dados do Ministério do Planejamento e Orçamento), art. 4º.</p></div>
     </aside>
   </article>
-  <article class="art anot lacuna" id="art4" data-sub="DM1.3 OD1 v03">
+  <article class="art anot lacuna" id="art4" data-sub="DM1 OD1 alt">
     <div class="texto"><div class="cab"><span class="id">Art. 4º</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.3</span><span class="tag sub">OD1</span><span class="tag v03">Alteração possível</span></div>
       <p>Art. 4º A Política observará legalidade, impessoalidade, transparência, proporcionalidade, acessibilidade, inclusão, segurança, proteção de dados pessoais, sustentabilidade, continuidade e geração de valor público.</p><p>§ 1º No âmbito deste Decreto, adotam-se as seguintes diretrizes de Governo Digital, alinhadas ao art. 3º da Lei Federal nº 14.129, de 2021:</p><p class="inc">I - oferta de serviços públicos digitais simples, acessíveis e centrados nas necessidades do usuário;</p><p class="inc">II - integração dos canais e interoperabilidade, com compartilhamento seguro e juridicamente permitido;</p><p class="inc">III - governo como plataforma e aproveitamento de capacidades e soluções comuns;</p><p class="inc">IV - transparência, participação social e monitoramento da qualidade dos serviços;</p><p class="inc">V - inclusão digital, linguagem clara e preservação do atendimento presencial quando necessário; e</p><p class="inc">VI - proteção de dados pessoais, segurança e uso de padrões abertos quando adequados.</p><p>§ 2º Adotam-se, para os fins e no alcance deste Decreto, as diretrizes expressamente previstas no § 1º, sem incorporação automática dos demais comandos da Lei Federal nº 14.129, de 2021, nem autorização genérica para tratamento ou compartilhamento de dados.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.3 e OD1</h4><p>Transparência, impessoalidade, inclusão, acessibilidade e valor público formam a base do DM1.3. O § 2º não adota os demais comandos da Lei 14.129, entre eles o capítulo de abertura de dados (arts. 29 a 37): o OD1 precisa de ato próprio.</p></div>
-      <div class="v03"><h4>Alteração possível</h4><p>Acrescentar "uso ético e responsável dos dados" entre os princípios: é o termo do DM1.3.</p></div>
+      <div class="analise"><h4>Análise · DM1.3 e OD1</h4><p>Princípios: transparência, impessoalidade, inclusão, acessibilidade e valor público formam a base do DM1.3, mas falta o termo "uso ético", que o DM1.3 usa. O § 2º não adota os demais comandos da Lei 14.129, entre eles o capítulo de abertura de dados (arts. 29 a 37): o OD1 precisa de ato próprio.</p></div>
+      <div class="v03"><h4>Alteração possível · redação proposta</h4><div class="redacao"><p>Art. 4º A Política observará legalidade, impessoalidade, transparência, proporcionalidade, acessibilidade, inclusão, <ins>equidade, </ins>segurança, proteção de dados pessoais, <ins>uso ético e responsável dos dados, </ins>sustentabilidade, continuidade e geração de valor público.</p><p>(…)</p></div><p><b>Por quê:</b> O DM1.3 pede uma estrutura com ênfase em "transparência, prestação de contas e uso ético dos dados, a serviço de melhores resultados para todos os moradores". "Uso ético" é o termo do critério, e "equidade" traduz o "para todos os moradores". Precedente brasileiro: Portaria GM/MPO 201/2025 (Política de Governança de Dados do Ministério do Planejamento e Orçamento), art. 3º, I ("Ética, responsabilidade e sustentabilidade").</p></div>
     </aside>
   </article>
-  <article class="art igual" id="art5" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 5º</span><span class="tag dti">Texto do DTI</span></div><p>Art. 5º A participação das entidades da Administração Indireta será formalizada por ato da autoridade competente, observados seus regimes jurídicos, suas competências e sua autonomia, com definição do alcance da participação, das responsabilidades e das condições de execução.</p><p>Parágrafo único. Este Decreto não se aplica a outros Poderes ou entes federativos, cuja eventual cooperação dependerá de instrumento próprio.</p></div>
+  <article class="art anot" id="art5" data-sub="DM2">
+    <div class="texto"><div class="cab"><span class="id">Art. 5º</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM2.2</span></div>
+      <p>Art. 5º A participação das entidades da Administração Indireta será formalizada por ato da autoridade competente, observados seus regimes jurídicos, suas competências e sua autonomia, com definição do alcance da participação, das responsabilidades e das condições de execução.</p><p>Parágrafo único. Este Decreto não se aplica a outros Poderes ou entes federativos, cuja eventual cooperação dependerá de instrumento próprio.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · DM2.2</h4><p>Autarquias participam só por ato da autoridade competente. Ver o art. 1º sobre o efeito no inventário (DM2.2).</p></div>
+    </aside>
   </article>
   <div class="capitulo">Capítulo II – Do programa e dos instrumentos específicos</div>
-  <article class="art anot" id="art6" data-sub="DM1.1">
-    <div class="texto"><div class="cab"><span class="id">Art. 6º</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.1</span></div>
+  <article class="art anot" id="art6" data-sub="DM1 DM9 CI2">
+    <div class="texto"><div class="cab"><span class="id">Art. 6º</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.1</span><span class="tag sub">DM9</span><span class="tag sub">CI2</span></div>
       <p>Art. 6º O Programa compreenderá os eixos de capacidades institucionais; planejamento e governança digital; dados e interoperabilidade; governança das aplicações de inteligência artificial; inteligência estratégica e resultados; e articulação com o ecossistema de inovação.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.1</h4><p>O eixo "dados e interoperabilidade" põe a governança de dados dentro da Política, como pede o DM1.1.</p></div>
+      <div class="analise"><h4>Análise · DM1.1 e DM9 e CI2</h4><p>Os seis eixos põem a governança de dados dentro da Política, com um eixo de dados e interoperabilidade (DM1.1). O eixo de inteligência estratégica e resultados é o lugar natural do padrão de serviços de dados (DM9) e dos serviços de análise (CI2).</p></div>
     </aside>
   </article>
-  <article class="art anot" id="art7" data-sub="OD1">
-    <div class="texto"><div class="cab"><span class="id">Art. 7º</span><span class="tag dti">Texto do DTI</span><span class="tag sub">OD1</span></div>
+  <article class="art anot lacuna" id="art7" data-sub="DM9 CI2 OD1 alt">
+    <div class="texto"><div class="cab"><span class="id">Art. 7º</span><span class="tag dti">Texto do DTI</span><span class="tag sub">OD1</span><span class="tag sub">DM9</span><span class="tag sub">CI2.1</span><span class="tag v03">Alteração possível</span></div>
       <p>Art. 7º Cada eixo será disciplinado por ato próprio que estabeleça seus requisitos comuns, responsabilidades, procedimentos, evidências e acompanhamento, aproveitados os atos existentes compatíveis.</p><p>Parágrafo único. Os atos próprios de cada eixo e iniciativa identificarão objeto, alcance, autoridades e responsabilidades, requisitos aplicáveis, procedimentos, registros, etapas, recursos, indicadores, monitoramento e revisão, observada a proporcionalidade e aproveitados os instrumentos vigentes compatíveis.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · OD1</h4><p>É o encaixe da política de dados abertos (OD1): ela pode ser o ato do eixo de dados ou parte dele.</p></div>
+      <div class="analise"><h4>Análise · OD1 e DM9 e CI2.1</h4><p>Cada eixo terá ato próprio. É o encaixe da política de dados abertos (ato do eixo de dados, OD1) e do padrão de serviços de dados (ato do eixo de inteligência estratégica, DM9), mas o artigo não diz o que esses atos devem conter.</p></div>
+      <div class="v03"><h4>Alteração possível · redação proposta</h4><div class="redacao"><p>Art. 7º Cada eixo será disciplinado por ato próprio que estabeleça seus requisitos comuns, responsabilidades, procedimentos, evidências e acompanhamento, aproveitados os atos existentes compatíveis.</p><p><del>Parágrafo único.</del><ins>§ 1º</ins> Os atos próprios de cada eixo e iniciativa identificarão objeto, alcance, autoridades e responsabilidades, requisitos aplicáveis, procedimentos, registros, etapas, recursos, indicadores, monitoramento e revisão, observada a proporcionalidade e aproveitados os instrumentos vigentes compatíveis.</p><p><ins>§ 2º O ato do eixo de inteligência estratégica e resultados incluirá padrão documentado e público para desenvolver, manter e avaliar serviços de dados e de análise, com critérios de qualidade, segurança, acessibilidade, uso ético e indicadores de desempenho.</ins></p></div><p><b>Por quê:</b> O DM9 pede um padrão documentado e público para serviços de dados e de análise, e o CI2.1 pede que os serviços sigam esse padrão. Dizer no decreto que o ato do eixo 5 terá esse conteúdo cria o compromisso sem antecipar o texto do ato.</p></div>
     </aside>
   </article>
-  <article class="art anot lacuna" id="art8" data-sub="OD1 v03">
+  <article class="art anot lacuna" id="art8" data-sub="OD1 alt">
     <div class="texto"><div class="cab"><span class="id">Art. 8º</span><span class="tag dti">Texto do DTI</span><span class="tag sub">OD1</span><span class="tag v03">Alteração possível</span></div>
       <p>Art. 8º As iniciativas abrangidas observarão os atos e procedimentos compatíveis já existentes. A edição de ato específico de instituição, organização ou execução será exigida quando necessária à sua natureza, à definição de responsabilidades ou ao atendimento de lacuna normativa, respeitadas as matérias reservadas à lei.</p><p>§ 1º Os atos específicos poderão disciplinar, entre outras iniciativas, soluções de cidade inteligente, sistemas estruturantes e especialistas, cadastros e bases de referência, integração e interoperabilidade de dados, proteção de dados pessoais, uso e padronização da inteligência artificial e ambientes regulatórios experimentais.</p><p>§ 2º A menção às iniciativas neste artigo não as institui nem altera seus atos vigentes.</p><p>§ 3º A compatibilização preservará competências, decisões e regimes dos programas especializados. Eventuais conflitos serão submetidos à autoridade competente, com manifestação jurídica quando cabível, vedada a presunção de revogação ou dispensa normativa.</p><p>§ 4º A disciplina específica poderá constar de ato vigente compatível ou de instrumento que reúna iniciativas conexas, com objeto e responsabilidades individualizados. A edição ou alteração exigirá identificação da lacuna e do instrumento competente, vedada a reprodução desnecessária de comandos aplicáveis.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · OD1</h4><p>A lista do § 1º não cita dados abertos.</p></div>
-      <div class="v03"><h4>Alteração possível</h4><p>Incluir "abertura de dados" na lista do § 1º, para amarrar a política do OD1 ao Programa.</p></div>
+      <div class="analise"><h4>Análise · OD1</h4><p>Atos específicos por iniciativa. A lista do § 1º não cita dados abertos, o que deixa a política do OD1 sem ligação expressa com o Programa.</p></div>
+      <div class="v03"><h4>Alteração possível · redação proposta</h4><div class="redacao"><p>(…)</p><p>§ 1º Os atos específicos poderão disciplinar, entre outras iniciativas, soluções de cidade inteligente, sistemas estruturantes e especialistas, cadastros e bases de referência, integração e interoperabilidade de dados, <ins>abertura de dados, </ins>proteção de dados pessoais, uso e padronização da inteligência artificial e ambientes regulatórios experimentais.</p><p>(…)</p></div><p><b>Por quê:</b> Amarra a política de dados abertos (OD1) ao Programa, como ato específico, e evita que ela pareça uma governança paralela.</p></div>
     </aside>
   </article>
-  <article class="art igual" id="art9" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 9º</span><span class="tag dti">Texto do DTI</span></div><p>Art. 9º O Programa não constitui autorização genérica para tratamento ou compartilhamento de dados, contratação, despesa, flexibilização regulatória ou criação de cargos e unidades.</p></div>
+  <article class="art anot" id="art9" data-sub="DM3 DM5">
+    <div class="texto"><div class="cab"><span class="id">Art. 9º</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM3.1</span><span class="tag sub">DM5</span></div>
+      <p>Art. 9º O Programa não constitui autorização genérica para tratamento ou compartilhamento de dados, contratação, despesa, flexibilização regulatória ou criação de cargos e unidades.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · DM3.1 e DM5</h4><p>O Programa não autoriza tratar ou compartilhar dados de forma genérica. Coerente com o DM3 e o DM5, mas não cria o processo de compartilhamento que o DM3.1 pede.</p></div>
+    </aside>
   </article>
   <div class="capitulo">Capítulo III – Da coordenação e das decisões</div>
-  <article class="art anot" id="art10" data-sub="DM1.2">
+  <article class="art anot" id="art10" data-sub="DM1">
     <div class="texto"><div class="cab"><span class="id">Art. 10</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.2</span></div>
       <p>Art. 10. A coordenação do Programa caberá à Secretaria de Administração, com apoio de unidades existentes e no exercício de suas competências legais de planejamento e coordenação, preservadas as atribuições dos demais órgãos.</p><p>Parágrafo único. Este Decreto não cria cargos, remuneração adicional ou estrutura administrativa permanente. O CGD a ser instituído por Portaria funcionará com apoio das unidades existentes, observada a legislação de organização administrativa.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.2</h4><p>Diz quem responde pela governança, parte das "responsabilidades definidas" do DM1.2.</p></div>
+      <div class="analise"><h4>Análise · DM1.2</h4><p>Coordenação pela Secretaria de Administração: diz quem responde pela governança, parte das "responsabilidades definidas" do DM1.2.</p></div>
     </aside>
   </article>
-  <article class="art anot" id="art11" data-sub="DM1.2">
-    <div class="texto"><div class="cab"><span class="id">Art. 11</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.2</span></div>
+  <article class="art anot" id="art11" data-sub="DM1 CI3">
+    <div class="texto"><div class="cab"><span class="id">Art. 11</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.2</span><span class="tag sub">CI3</span></div>
       <p>Art. 11. O Comitê de Governança Digital e de Dados - CGD será instituído por Portaria do Chefe do Poder Executivo, posterior à publicação deste Decreto, como colegiado de articulação dos órgãos e entidades participantes e de deliberação sobre matérias comuns do Programa, observadas as diretrizes deste Capítulo e as competências legalmente atribuídas aos agentes municipais.</p><p>§ 1º O CGD será composto por um representante titular e um suplente de cada secretaria e dos demais órgãos de primeiro nível da Administração Direta, bem como de cada autarquia abrangida pelo art. 1º, § 2º, observadas as seguintes condições:</p><p class="inc">I - a presidência será exercida pelo titular da Secretaria de Administração, ou por agente por ele indicado e designado na Portaria, que também identificará seu substituto e o apoio à coordenação;</p><p class="inc">II - cada órgão ou entidade terá uma representação e um voto, exercido pelo titular ou pelo suplente;</p><p class="inc">III - a relação nominal dos órgãos, entidades e representantes constará do ato de designação, com fundamento na estrutura administrativa vigente; e</p><p class="inc">IV - a instrução poderá ser organizada por tema, sem reduzir o quórum ou transferir as competências do colegiado a grupos de trabalho.</p><p>§ 2º Os representantes serão indicados pelos titulares dos órgãos ou dirigentes das entidades e designados na Portaria de instituição do CGD, observados os regimes próprios das autarquias, devendo conhecer as atividades da unidade e ter interlocução com seus dirigentes e equipes, sem que a designação implique delegação de competências decisórias reservadas.</p><p>§ 3º O Departamento de Tecnologia da Informação (DTI) prestará apoio técnico permanente, sem direito a voto adicional ao da Secretaria de Administração, observadas as seguintes disposições:</p><p class="inc">I - o Comitê Gestor de Proteção de Dados (CGPD) e o Encarregado pelo Tratamento de Dados Pessoais deverão ser ouvidos nas matérias afetas às suas atribuições; e</p><p class="inc">II - a participação dos integrantes como representantes de órgãos não alterará o regime jurídico próprio de suas funções.</p><p>§ 4º A participação da Procuradoria-Geral do Município nas deliberações não substitui parecer ou exame jurídico exigível, nem representa aprovação jurídica automática da iniciativa.</p><p>§ 5º O exercício das funções no CGD não será remunerado e o apoio administrativo será prestado pela Secretaria de Administração com os meios disponíveis.</p><p>§ 6º Poderão participar das reuniões, na qualidade de convidados e sem direito a voto, representantes do Centro de Inovação e Tecnologia (CEITEC), de instituições de ensino e pesquisa e de outros parceiros, observados a pauta, os instrumentos aplicáveis e o regime de impedimentos, conflitos de interesses, sigilo e restrições de acesso à informação.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.2</h4><p>É o "grupo com autoridade sobre a estratégia e a governança de dados" do DM1.2. Ouvir o CGPD e a Encarregada (§ 3º, I) evita duas governanças de dados.</p></div>
+      <div class="analise"><h4>Análise · DM1.2 e CI3</h4><p>Cria o CGD, com um representante de cada secretaria e o DTI como apoio técnico. É o candidato a "grupo com autoridade sobre a estratégia e a governança de dados" do DM1.2. Ouvir o CGPD e a Encarregada (§ 3º, I) evita duas governanças. Os convidados externos sem voto (§ 6º) abrem caminho para colaborar com parceiros (CI3) e para a participação da sociedade nos dados abertos (OD1).</p></div>
     </aside>
   </article>
-  <article class="art anot" id="art12" data-sub="DM1.2 DM1.3">
-    <div class="texto"><div class="cab"><span class="id">Art. 12</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.2</span><span class="tag sub">DM1.3</span></div>
+  <article class="art anot lacuna" id="art12" data-sub="DM1 OD1 alt">
+    <div class="texto"><div class="cab"><span class="id">Art. 12</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.2</span><span class="tag sub">DM1.3</span><span class="tag sub">OD1</span><span class="tag v03">Alteração possível</span></div>
       <p>Art. 12. Após sua instituição, caberá ao CGD, observadas as diretrizes deste Decreto:</p><p class="inc">I - deliberar sobre o sequenciamento de entregas e a compatibilização de dependências comuns entre órgãos, consideradas as prioridades aprovadas e a capacidade confirmada pelas áreas, sem alterar alçadas legais;</p><p class="inc">II - apreciar a proposta de Plano Executivo e suas revisões, encaminhando-as ao Chefe do Poder Executivo para aprovação;</p><p class="inc">III - deliberar sobre soluções de coordenação para divergências entre órgãos quanto ao sequenciamento, às dependências e ao acompanhamento do Programa, após instrução e tentativa de composição, e encaminhar as matérias reservadas à autoridade competente;</p><p class="inc">IV - acompanhar respostas, entregas e benefícios, identificar impedimentos e recomendar correções, padrões, capacitação e atos específicos às autoridades competentes;</p><p class="inc">V - receber e examinar propostas de órgãos, entidades e da coordenação, bem como contribuições encaminhadas pelos canais institucionais, sem reservar aos seus membros a apresentação de temas;</p><p class="inc">VI - articular a instrução das análises de viabilidade e os encaminhamentos necessários à regulamentação, contratação, implantação, operação, comunicação e capacitação, preservadas as decisões e os procedimentos próprios de cada matéria; e</p><p class="inc">VII - relacionar as entregas do Programa às ações governamentais pertinentes, aproveitando registros autorizados de ferramentas institucionais de gestão de ações do plano de governo e dos instrumentos de planejamento e orçamento, sem lhes atribuir efeito de autorização administrativa;</p><p>§ 1º O colegiado não autorizará despesas, contratações, movimentação de pessoal, compartilhamentos de dados ou flexibilizações regulatórias reservadas a outros agentes, nem substituirá competências finalísticas, pareceres exigíveis, atribuições de controle, do CGPD e do(a) Encarregado(a) de Dados.</p><p>§ 2º O CGD reunir-se-á ordinariamente a cada mês, nos primeiros 120 (cento e vinte) dias corridos contados de sua instalação e, depois, a cada 2 (dois) meses, além das reuniões extraordinárias, observadas as seguintes disposições:</p><p class="inc">I - as reuniões serão instaladas com a presença da maioria absoluta das representações com direito a voto na matéria e as deliberações serão aprovadas por maioria dos votos válidos dos presentes, não computadas as abstenções; em caso de empate, o Presidente exercerá voto de qualidade, além do voto ordinário da representação da Secretaria de Administração;</p><p class="inc">II - as reuniões poderão ser realizadas de forma presencial, remota ou híbrida.</p><p>§ 3º As reuniões e deliberações do CGD observarão as seguintes diretrizes de instrução e registro:</p><p class="inc">I - a pauta identificará o objeto, a fundamentação jurídica e técnica, as alternativas analisadas, os impactos, a capacidade confirmada e as manifestações das áreas afetadas;</p><p class="inc">II - as atas registrarão a lista de presença, a indicação de eventuais impedimentos, a fundamentação das deliberações e o resultado dos votos; e</p><p class="inc">III - cada encaminhamento conterá a indicação do destinatário, do responsável pelo retorno, do prazo, da decisão requerida e da evidência de conclusão, devendo sua divulgação observar as hipóteses legais de sigilo e restrição de acesso à informação.</p><p>§ 4º O membro declarará seu impedimento ou conflito de interesses e será substituído pelo suplente, quando este estiver desimpedido. Se ambos estiverem impedidos, a representação não participará da discussão ou votação da matéria e será excluída da base de cálculo do respectivo quórum, com registro em ata.</p><p>§ 5º A instituição, a instalação e o funcionamento do CGD observarão o seguinte cronograma e regramento:</p><p class="inc">I - a portaria de designação de seus membros e a reunião de instalação ocorrerão no prazo de até 20 (vinte) dias corridos, contados da data de entrada em vigor deste Decreto, sem prejuízo do início dos atos preparatórios pela coordenação; e</p><p class="inc">II - o regimento interno será aprovado em até 30 (trinta) dias corridos da instalação, para detalhar convocação, instrução, revisão e acompanhamento, sem ampliar competências; até sua aprovação, aplicam-se diretamente as regras deste Decreto.</p><p>§ 6º As matérias que extrapolarem as competências do CGD serão encaminhadas diretamente à autoridade competente, e, persistindo a divergência em matéria de sua competência após reapreciação, o colegiado submeterá a questão, devidamente motivada, ao Chefe do Poder Executivo, preservadas as competências e as vias de revisão previstas na legislação.</p><p>§ 7º As reuniões extraordinárias poderão ser solicitadas por ao menos 2 (dois) membros votantes ou pelo titular de órgão afetado, mediante demonstração do objeto e da urgência, cabendo ao Presidente decidir sobre a convocação, de forma motivada, no prazo de até 3 (três) dias úteis do recebimento, sem que a tramitação do pedido impeça a adoção imediata de providências urgentes pelos órgãos competentes.</p><p>§ 8º O titular do órgão diretamente afetado poderá solicitar a reconsideração da deliberação no prazo de até 5 (cinco) dias úteis, contados da sua ciência, mediante apresentação de fundamentação, proposta alternativa e demonstração de consequências, devendo o CGD apreciar o pedido em até 10 (dez) dias úteis do recebimento, ressalvada a determinação de diligência indispensável, que será motivada e comunicada com indicação de prazo, sem prejuízo dos recursos e prazos da legislação própria.</p><p>§ 9º O pedido de reconsideração não terá efeito suspensivo, podendo a autoridade competente, de forma motivada e diante da demonstração de risco, conceder a suspensão dos efeitos ou medida cautelar, sem prejuízo do cumprimento de obrigações legais e da adoção imediata de medidas urgentes de proteção e continuidade dos serviços.</p><p>§ 10. As propostas com impacto em arquitetura, integração, segurança ou continuidade de serviços serão submetidas à manifestação técnica do DTI, observando-se a matéria e os atos aplicáveis às demais manifestações especializadas, vedado ao CGD afastar impedimento legal ou condição técnica indispensável por meio de votação.</p><p>§ 11. A deliberação sobre dependências técnicas ou administrativas comuns não implica transferência de gestão, pessoal ou recursos entre órgãos, devendo sua execução observar as competências e autorizações próprias, ressalvada a ocorrência de condição superveniente que inviabilize o cumprimento do ato, a qual será motivadamente comunicada para fins de revisão pelo colegiado.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.2 e DM1.3</h4><p>Atende o DM1.2 no desenho: sete competências escritas (incisos I a VII), reunião mensal nos primeiros 120 dias e depois a cada dois meses, mais frequente que o trimestre (§ 2º), e ata com presença e fundamentação (§ 3º, II), que é a evidência pedida. A divulgação dos encaminhamentos (§ 3º, III) apoia o DM1.3. Atenção ao prazo: portaria e instalação só até 20 dias depois da vigência (§ 5º, I); com os 90 dias do art. 40, não haverá reunião do CGD antes de 18/12.</p></div>
+      <div class="analise"><h4>Análise · DM1.2 e DM1.3 e OD1</h4><p>Atende o DM1.2 na forma: sete competências escritas, reunião mensal nos primeiros 120 dias e depois a cada dois meses (§ 2º), ata com presença e fundamentação (§ 3º, II). Mas nenhuma das sete competências fala de dados: tratam de entregas, dependências e Plano Executivo. Numa revalidação, o revisor pode não ver o CGD como o grupo de governança de dados. A divulgação dos encaminhamentos (§ 3º, III) apoia o DM1.3. Atenção ao prazo: com os 90 dias do art. 40, não haverá reunião do CGD antes de 18/12.</p></div>
+      <div class="v03"><h4>Alteração possível · redação proposta</h4><div class="redacao"><p>Art. 12. Após sua instituição, caberá ao CGD, observadas as diretrizes deste Decreto:</p><p>(…)</p><p>VII - relacionar as entregas do Programa às ações governamentais pertinentes, aproveitando registros autorizados de ferramentas institucionais de gestão de ações do plano de governo e dos instrumentos de planejamento e orçamento, sem lhes atribuir efeito de autorização administrativa;</p><p><ins>VIII - acompanhar a governança dos dados no âmbito do Programa, incluindo inventário, qualidade, compartilhamento e abertura de dados, e apreciar a regulamentação do eixo de dados e interoperabilidade e a política de dados abertos;</ins></p><p>(…)</p></div><p><b>Por quê:</b> O DM1.2 pede um grupo "com autoridade sobre a estratégia e a governança de dados" que se reúna para cumprir "responsabilidades definidas". Uma competência expressa de dados deixa isso claro. A WWC também recomenda que o mesmo órgão cuide do DM1 e do OD1 (texto "Better Together", Fórum, jan/2026). Ajuste de redação: o "e" que hoje fecha o inciso VI passa para o final do inciso VII.</p></div>
     </aside>
   </article>
-  <article class="art anot" id="art13" data-sub="DM1.2">
+  <article class="art anot" id="art13" data-sub="DM1">
     <div class="texto"><div class="cab"><span class="id">Art. 13</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.2</span></div>
       <p>Art. 13. Compete aos representantes do CGD promover a interlocução com o órgão ou entidade de origem, encaminhar demandas às unidades competentes, obter manifestações e decisões e acompanhar as providências até o retorno ou a entrega verificável.</p><p>§ 1º O representante informará o andamento e os impedimentos, com indicação da providência necessária e da autoridade competente, observados os prazos pactuados e a capacidade confirmada.</p><p>§ 2º O encaminhamento da solicitação não extingue o dever de acompanhamento pela unidade responsável, cuja conclusão será formalizada mediante o registro de resposta, decisão ou comprovação de entrega, devendo eventuais hipóteses de recusa ou inviabilidade de atendimento ser motivadas pela unidade competente.</p><p>§ 3º A ausência de retorno será tratada na forma do art. 14, § 4º, sem aprovação tácita ou transferência de responsabilidade por atos de outros agentes.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.2</h4><p>Completa as responsabilidades definidas do DM1.2.</p></div>
+      <div class="analise"><h4>Análise · DM1.2</h4><p>Papel dos representantes no CGD: completa as responsabilidades definidas do DM1.2.</p></div>
     </aside>
   </article>
-  <article class="art anot" id="art14" data-sub="DM1.2 DM1.3">
-    <div class="texto"><div class="cab"><span class="id">Art. 14</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.2</span><span class="tag sub">DM1.3</span></div>
+  <article class="art anot" id="art14" data-sub="DM1 DM5">
+    <div class="texto"><div class="cab"><span class="id">Art. 14</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.2</span><span class="tag sub">DM1.3</span><span class="tag sub">DM5</span></div>
       <p>Art. 14. Compete à coordenação organizar a carteira, consolidar informações, identificar dependências, propor critérios e padrões, acompanhar indicadores e encaminhar decisões, preservadas a gestão e as alçadas finalísticas, jurídicas, de controle, proteção de dados e contratação.</p><p>§ 1º Os órgãos abrangidos fornecerão à coordenação informações estritamente necessárias sobre escopo, fase, responsáveis, dependências, riscos, recursos, decisões e resultados, aproveitados os registros existentes.</p><p>§ 2º O Plano Executivo definirá a periodicidade e o formato das atualizações, devendo as solicitações adicionais indicar a finalidade, o conteúdo e o prazo compatível com a complexidade do objeto, observadas as restrições legais de acesso.</p><p>§ 3º As informações pessoais ou protegidas por sigilo legal não serão remetidas em massa para acompanhamento gerencial, devendo-se utilizar dados agregados ou minimizados sempre que suficientes para essa finalidade.</p><p>§ 4º A ausência de resposta será registrada, devendo a solicitação ser reiterada ao titular do órgão; persistindo a omissão, o expediente será encaminhado à autoridade superior competente, sem que isso implique autorização tácita ou instituição de sanção por este Decreto.</p><p>§ 5º A coordenação manterá inventário dos atos e das instâncias do Programa e compatibilizará o acompanhamento com os registros autorizados das ferramentas institucionais de gestão de ações do plano de governo e de outros mecanismos existentes, preservadas as atribuições de seus responsáveis e identificados os vínculos, as dependências e as evidências, para evitar duplicidade.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.2 e DM1.3</h4><p>Responsabilidades definidas (DM1.2). O § 3º, que proíbe remeter dados pessoais em massa para acompanhamento, é uso ético na prática (DM1.3).</p></div>
+      <div class="analise"><h4>Análise · DM1.2 e DM1.3 e DM5</h4><p>Papel da coordenação (DM1.2). O § 3º proíbe remeter dados pessoais em massa para acompanhamento: uso ético e minimização na prática (DM1.3 e DM5). O § 5º fala de inventário dos atos e instâncias do Programa, não de dados: não serve ao DM2.</p></div>
     </aside>
   </article>
-  <article class="art igual" id="art15" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 15</span><span class="tag dti">Texto do DTI</span></div><p>Art. 15. O titular do órgão responsável pela iniciativa responderá por finalidade, escopo, benefícios, recursos, riscos e resultados no âmbito de sua competência e indicará agente das estruturas existentes para o acompanhamento operacional.</p><p>Parágrafo único. A designação do responsável operacional não afasta as competências e responsabilidades dos agentes legalmente incumbidos de decidir, executar ou fiscalizar.</p></div>
+  <article class="art anot" id="art15" data-sub="DM1">
+    <div class="texto"><div class="cab"><span class="id">Art. 15</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.3</span></div>
+      <p>Art. 15. O titular do órgão responsável pela iniciativa responderá por finalidade, escopo, benefícios, recursos, riscos e resultados no âmbito de sua competência e indicará agente das estruturas existentes para o acompanhamento operacional.</p><p>Parágrafo único. A designação do responsável operacional não afasta as competências e responsabilidades dos agentes legalmente incumbidos de decidir, executar ou fiscalizar.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · DM1.3</h4><p>Cada iniciativa tem um titular que responde por finalidade, riscos e resultados: prestação de contas (DM1.3).</p></div>
+    </aside>
   </article>
-  <article class="art igual" id="art16" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 16</span><span class="tag dti">Texto do DTI</span></div><p>Art. 16. O Chefe do Poder Executivo aprovará o Plano Executivo, após apreciação do CGD, e decidirá as matérias reservadas à sua competência e os pedidos de revisão previstos no art. 12, § 6º, admitida delegação nos limites legais.</p><p>§ 1º A coordenação promoverá tentativa de composição entre os órgãos envolvidos e, quando necessário, instruirá a submissão ao CGD com alternativas, impactos e manifestações das áreas afetadas.</p><p>§ 2º O encaminhamento ao Chefe do Poder Executivo conterá a deliberação do CGD, quando houver, a síntese da divergência, as consequências e a recomendação fundamentada, sem retardar providências urgentes das unidades competentes.</p></div>
+  <article class="art anot" id="art16" data-sub="DM1">
+    <div class="texto"><div class="cab"><span class="id">Art. 16</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.1</span></div>
+      <p>Art. 16. O Chefe do Poder Executivo aprovará o Plano Executivo, após apreciação do CGD, e decidirá as matérias reservadas à sua competência e os pedidos de revisão previstos no art. 12, § 6º, admitida delegação nos limites legais.</p><p>§ 1º A coordenação promoverá tentativa de composição entre os órgãos envolvidos e, quando necessário, instruirá a submissão ao CGD com alternativas, impactos e manifestações das áreas afetadas.</p><p>§ 2º O encaminhamento ao Chefe do Poder Executivo conterá a deliberação do CGD, quando houver, a síntese da divergência, as consequências e a recomendação fundamentada, sem retardar providências urgentes das unidades competentes.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · DM1.1</h4><p>O Chefe do Executivo aprova o Plano Executivo, onde ficam metas e prazos: completa a aprovação da alta gestão do DM1.1.</p></div>
+    </aside>
   </article>
-  <article class="art igual" id="art17" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 17</span><span class="tag dti">Texto do DTI</span></div><p>Art. 17. O Departamento de Tecnologia da Informação - DTI exercerá as avaliações e atividades técnicas de arquitetura, integração, segurança e continuidade dentro de sua competência, distinguindo liberação técnica de decisão sobre finalidade pública, contratação e compartilhamento.</p></div>
+  <article class="art anot" id="art17" data-sub="DM6">
+    <div class="texto"><div class="cab"><span class="id">Art. 17</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM6</span></div>
+      <p>Art. 17. O Departamento de Tecnologia da Informação - DTI exercerá as avaliações e atividades técnicas de arquitetura, integração, segurança e continuidade dentro de sua competência, distinguindo liberação técnica de decisão sobre finalidade pública, contratação e compartilhamento.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · DM6</h4><p>O DTI faz as avaliações de segurança e continuidade, o que se liga ao DM6.2, mas o artigo não cria plano de continuidade nem avaliação regular de riscos. Isso fica com a Política de Segurança da Informação (Decreto 22.453/2023), a analisar na ficha do DM6.</p></div>
+    </aside>
   </article>
-  <article class="art anot" id="art18" data-sub="DM1.3">
+  <article class="art anot" id="art18" data-sub="DM1">
     <div class="texto"><div class="cab"><span class="id">Art. 18</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.3</span></div>
       <p>Art. 18. A coordenação elaborará e manterá atualizada, em conjunto com os órgãos envolvidos, matriz de decisões que identifique, por matéria, quem instrui, decide, executa e deve ser consultado ou informado, com registro dos fundamentos, condições e evidências.</p><p>§ 1º A matriz será submetida à aprovação da autoridade competente para seu alcance; quando abranger decisões entre secretarias, será apreciada pelo CGD e aprovada pelo Chefe do Poder Executivo ou por autoridade com delegação suficiente.</p><p>§ 2º A matriz reproduzirá competências legais, regimentais e delegadas, sem o condão de criar, transferir ou ampliar alçadas, e organizará as decisões sobre a entrada na carteira, a viabilidade, a execução, a liberação para uso e a continuidade ou ampliação da iniciativa, conforme a sua natureza e o seu risco, aproveitando-se os processos e as aprovações existentes.</p><p>§ 3º Cada decisão identificará a autoridade competente, o fundamento, as condições, o responsável pela execução e a evidência exigida, podendo a aprovação existente atender a uma ou mais etapas, vedada a criação de autorizações adicionais sem a devida demonstração de necessidade, e sem que a ausência de manifestação implique aprovação tácita, resguardada a adoção de providências urgentes pelos fluxos vigentes.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.3</h4><p>Prestação de contas (DM1.3): cada decisão registra autoridade, fundamento e evidência.</p></div>
+      <div class="analise"><h4>Análise · DM1.3</h4><p>Matriz de decisões com autoridade, fundamento e evidência de cada decisão: prestação de contas (DM1.3).</p></div>
     </aside>
   </article>
-  <article class="art anot" id="art19" data-sub="DM1.2">
-    <div class="texto"><div class="cab"><span class="id">Art. 19</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.2</span></div>
+  <article class="art anot" id="art19" data-sub="DM1 DM5">
+    <div class="texto"><div class="cab"><span class="id">Art. 19</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.2</span><span class="tag sub">DM5</span></div>
       <p>Art. 19. A atuação do Comitê Gestor de Proteção de Dados - CGPD, da Controladoria-Geral do Município, do(a) Encarregado(a) de Dados, do DTI e das secretarias em proteção de dados observará o Decreto nº 22.963, de 5 de junho de 2025, e a legislação aplicável, preservada a condução do Programa de Proteção de Dados pelo CGPD.</p><p>Parágrafo único. O(a) Encarregado(a) de Dados conservará autonomia técnica e atribuições legais, com exame concreto de conflitos de interesses; sua orientação não substituirá decisões administrativas e execução técnica.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.2</h4><p>Separa o CGD (governança de dados) do CGPD (LGPD). Até 18/12, as atas do CGPD são a única evidência possível para o DM1.2.</p></div>
+      <div class="analise"><h4>Análise · DM1.2 e DM5</h4><p>Separa o CGD (governança de dados) do CGPD (LGPD), preservado. Até 18/12, as atas do CGPD são a única evidência possível para o DM1.2. Para o DM5, o programa de proteção de dados segue no Decreto 22.963.</p></div>
     </aside>
   </article>
-  <article class="art anot" id="art20" data-sub="DM1.3">
+  <article class="art anot" id="art20" data-sub="DM1">
     <div class="texto"><div class="cab"><span class="id">Art. 20</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.3</span></div>
       <p>Art. 20. Os registros de acompanhamento individualizarão a autoria e responsabilidade técnica, a decisão institucional, a execução pelas unidades competentes e o resultado verificado.</p><p>Parágrafo único. A participação em instância de cooperação não implica transferência de competência ou assunção automática de responsabilidade pelos atos de outros agentes.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.3</h4><p>Prestação de contas (DM1.3). O relatório do art. 35 publica esses registros.</p></div>
+      <div class="analise"><h4>Análise · DM1.3</h4><p>Os registros separam autoria técnica, decisão, execução e resultado verificado: prestação de contas (DM1.3). O relatório do art. 35 publica esses registros.</p></div>
     </aside>
   </article>
   <div class="capitulo">Capítulo IV – Da carteira da priorização e da avaliação</div>
-  <article class="art igual" id="art21" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 21</span><span class="tag dti">Texto do DTI</span></div><p>Art. 21. Cada iniciativa terá registro mínimo de finalidade, competência, responsável, fase, dados envolvidos, dependências, recursos, riscos, resultados esperados, indicadores e atos aplicáveis, aproveitados registros existentes.</p></div>
+  <article class="art anot" id="art21" data-sub="DM2">
+    <div class="texto"><div class="cab"><span class="id">Art. 21</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM2.1</span></div>
+      <p>Art. 21. Cada iniciativa terá registro mínimo de finalidade, competência, responsável, fase, dados envolvidos, dependências, recursos, riscos, resultados esperados, indicadores e atos aplicáveis, aproveitados registros existentes.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · DM2.1</h4><p>O registro mínimo de cada iniciativa inclui os "dados envolvidos". É um registro de iniciativas, não um inventário de conjuntos de dados: ajuda a montar o inventário (DM2), mas não o substitui.</p></div>
+    </aside>
   </article>
-  <article class="art igual" id="art22" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 22</span><span class="tag dti">Texto do DTI</span></div><p>Art. 22. A priorização considerará obrigações legais, risco atual, benefício público, dependências, prontidão e capacidade sustentável, com motivação e revisão periódica.</p><p>Parágrafo único. Medidas de proteção de direitos, segurança e continuidade exigíveis não serão condicionadas à pontuação de carteira ou ao início do Programa.</p></div>
+  <article class="art anot semrel" id="art22" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 22</span><span class="tag dti">Texto do DTI</span></div>
+      <p>Art. 22. A priorização considerará obrigações legais, risco atual, benefício público, dependências, prontidão e capacidade sustentável, com motivação e revisão periódica.</p><p>Parágrafo único. Medidas de proteção de direitos, segurança e continuidade exigíveis não serão condicionadas à pontuação de carteira ou ao início do Programa.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · sem relação direta</h4><p>Critérios de priorização da carteira de iniciativas. Não se relaciona diretamente com os critérios de foco: a priorização que a WWC pede (DM3.2 e OD4.2) é a de quais bases abrir, pela demanda.</p></div>
+    </aside>
   </article>
-  <article class="art igual" id="art23" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 23</span><span class="tag dti">Texto do DTI</span></div><p>Art. 23. A intensidade das avaliações será proporcional ao impacto, aos dados, à complexidade e à reversibilidade, com critérios objetivos definidos em regulamento e integração aos fluxos existentes.</p></div>
+  <article class="art anot semrel" id="art23" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 23</span><span class="tag dti">Texto do DTI</span></div>
+      <p>Art. 23. A intensidade das avaliações será proporcional ao impacto, aos dados, à complexidade e à reversibilidade, com critérios objetivos definidos em regulamento e integração aos fluxos existentes.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · sem relação direta</h4><p>Avaliações proporcionais ao risco, com critérios em regulamento. Não se relaciona diretamente com os critérios de foco.</p></div>
+    </aside>
   </article>
-  <article class="art igual" id="art24" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 24</span><span class="tag dti">Texto do DTI</span></div><p>Art. 24. Antes da implantação ou ampliação serão verificadas as condições jurídicas, finalísticas, técnicas, financeiras, de proteção de dados e sustentação pertinentes, com decisão nas alçadas próprias e critérios de reversão.</p><p>§ 1º As conclusões das avaliações distinguirão:</p><p class="inc">I - impedimento jurídico ou técnico que inviabilize legitimamente a execução nas condições propostas;</p><p class="inc">II - condição indispensável à implantação, a ser atendida e verificada antes da liberação;</p><p class="inc">III - recomendação de aperfeiçoamento que não constitua impedimento, acompanhada de tratamento ou justificativa; e</p><p class="inc">IV - risco residual, sujeito a decisão motivada da autoridade competente, com salvaguardas e monitoramento, quando juridicamente admissível.</p><p>§ 2º Os impedimentos e as condições indicarão o fundamento, o alcance, o responsável pela providência e a evidência necessária à sua superação, devendo a sua extensão limitar-se ao estritamente necessário para tratar da questão identificada.</p><p>§ 3º A aceitação de risco residual não autoriza descumprimento de obrigação legal ou dispensa de condição indispensável.</p></div>
+  <article class="art anot" id="art24" data-sub="DM5">
+    <div class="texto"><div class="cab"><span class="id">Art. 24</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM5.2</span></div>
+      <p>Art. 24. Antes da implantação ou ampliação serão verificadas as condições jurídicas, finalísticas, técnicas, financeiras, de proteção de dados e sustentação pertinentes, com decisão nas alçadas próprias e critérios de reversão.</p><p>§ 1º As conclusões das avaliações distinguirão:</p><p class="inc">I - impedimento jurídico ou técnico que inviabilize legitimamente a execução nas condições propostas;</p><p class="inc">II - condição indispensável à implantação, a ser atendida e verificada antes da liberação;</p><p class="inc">III - recomendação de aperfeiçoamento que não constitua impedimento, acompanhada de tratamento ou justificativa; e</p><p class="inc">IV - risco residual, sujeito a decisão motivada da autoridade competente, com salvaguardas e monitoramento, quando juridicamente admissível.</p><p>§ 2º Os impedimentos e as condições indicarão o fundamento, o alcance, o responsável pela providência e a evidência necessária à sua superação, devendo a sua extensão limitar-se ao estritamente necessário para tratar da questão identificada.</p><p>§ 3º A aceitação de risco residual não autoriza descumprimento de obrigação legal ou dispensa de condição indispensável.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · DM5.2</h4><p>Verificações antes de implantar ou ampliar uma solução, inclusive de proteção de dados. Vale para sistemas e soluções, não para a publicação de conjuntos de dados: não basta para o DM5.2.</p></div>
+    </aside>
   </article>
   <div class="capitulo">Capítulo V – Dos dados da interoperabilidade e da segurança</div>
-  <article class="art anot" id="art25" data-sub="DM1.1 OD1">
-    <div class="texto"><div class="cab"><span class="id">Art. 25</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.1</span><span class="tag sub">OD1</span></div>
+  <article class="art anot lacuna" id="art25" data-sub="DM1 DM2 DM3 DM4 DM5 OD1 alt">
+    <div class="texto"><div class="cab"><span class="id">Art. 25</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.1</span><span class="tag sub">DM2</span><span class="tag sub">DM3</span><span class="tag sub">DM4</span><span class="tag sub">DM5.2</span><span class="tag sub">OD1</span><span class="tag v03">Alteração possível</span></div>
       <p>Art. 25. A regulamentação de dados definirá responsabilidades funcionais por domínio, catálogo, metadados, fontes de referência, qualidade, atualização, acesso, abertura, retenção, preservação e destinação, observadas a proteção de dados pessoais, as restrições legais de acesso e a legislação arquivística, sem atribuir propriedade privada sobre dados ou autorização irrestrita de uso.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.1 e OD1</h4><p>Mostra o conteúdo da governança de dados (DM1.1) e prepara o inventário (DM2). Cita "abertura", mas não cria a política de dados abertos (OD1).</p></div>
+      <div class="analise"><h4>Análise · DM1.1 e DM2 e DM3 e DM4 e DM5.2 e OD1</h4><p>Lista o que a regulamentação de dados vai definir: responsáveis por domínio, catálogo, metadados, qualidade, acesso, abertura, retenção. É o conteúdo da governança de dados (DM1.1), mas só como tema: não diz como o inventário será feito nem com que frequência (DM2), não cria processo de compartilhamento nem de abertura (DM3) e não prevê o cuidado antes de publicar (DM5.2).</p></div>
+      <div class="v03"><h4>Alteração possível · redação proposta</h4><div class="redacao"><p>Art. 25. A regulamentação de dados definirá responsabilidades funcionais por domínio, catálogo, metadados, fontes de referência, qualidade, atualização, acesso, abertura, retenção, preservação e destinação, observadas a proteção de dados pessoais, as restrições legais de acesso e a legislação arquivística, sem atribuir propriedade privada sobre dados ou autorização irrestrita de uso.</p><p><ins>Parágrafo único. A regulamentação de que trata o caput incluirá, no mínimo:</ins></p><p><ins>I - metodologia do inventário dos conjuntos de dados, atualizado no mínimo a cada 2 (dois) anos com a contribuição de todos os órgãos, com versão de acesso interno e versão pública;</ins></p><p><ins>II - padrões comuns para campos compartilhados entre sistemas, como o endereço, e metadados mínimos de cada conjunto de dados, inclusive origem, método de coleta e limitações conhecidas;</ins></p><p><ins>III - procedimento de compartilhamento de dados entre os órgãos e com parceiros, com orientação sobre quando firmar acordo de compartilhamento e canal para receber pedidos, com prazo de resposta;</ins></p><p><ins>IV - procedimento para decidir a abertura de dados, considerando benefícios, riscos e os pedidos já recebidos; e</ins></p><p><ins>V - procedimento para evitar a divulgação indevida de dados pessoais, sensíveis ou sigilosos antes do compartilhamento ou da publicação.</ins></p></div><p><b>Por quê:</b> Cada inciso responde a subcritérios que o decreto só cita como tema: I ao DM2.1, DM2.2, DM2.3 e DM2.4; II ao DM4.2, DM4.3 e DM4.4; III ao DM3.1 e DM3.3; IV ao DM3.2; V ao DM5.2. O piloto que o DTI propõe (endereços e referências territoriais) é o exemplo da própria WWC no DM4.3. Origem: Portaria GM/MPO 201/2025 (Política de Governança de Dados do Ministério do Planejamento e Orçamento), art. 5º (catálogo, glossário e guias de padrões e de processos de dados).</p></div>
     </aside>
   </article>
-  <article class="art anot" id="art26" data-sub="DM1.3">
-    <div class="texto"><div class="cab"><span class="id">Art. 26</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.3</span></div>
+  <article class="art anot" id="art26" data-sub="DM1 DM3">
+    <div class="texto"><div class="cab"><span class="id">Art. 26</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM3.1</span><span class="tag sub">DM3.4</span><span class="tag sub">DM1.3</span></div>
       <p>Art. 26. A integração e o compartilhamento dependerão de finalidade e competência demonstradas, observância das bases jurídicas e sigilos aplicáveis, minimização, destinatários definidos, autorizações cabíveis e medidas de segurança e rastreabilidade.</p><p>Parágrafo único. Integração tecnológica, solução de sistema, gerenciamento de banco de dados ou fonte de referência não constituem, por si, fundamento jurídico para reunir indiscriminadamente registros pessoais ou substituir cadastros setoriais.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.3</h4><p>Uso ético na prática (DM1.3): proíbe reunir registros pessoais indiscriminadamente (parágrafo único).</p></div>
+      <div class="analise"><h4>Análise · DM3.1 e DM3.4 e DM1.3</h4><p>Condições para integrar e compartilhar: finalidade, base jurídica, minimização, destinatários e rastreabilidade. Dá os requisitos do compartilhamento (DM3.1) e veda reunir registros pessoais indiscriminadamente (uso ético, DM1.3). Falta o processo documentado e a orientação sobre acordos, que a alteração do art. 25 prevê.</p></div>
     </aside>
   </article>
-  <article class="art igual" id="art27" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 27</span><span class="tag dti">Texto do DTI</span></div><p>Art. 27. A arquitetura será escolhida mediante avaliação de necessidade, interoperabilidade, custo de ciclo de vida, segurança, continuidade, portabilidade e reversibilidade, sem obrigatoriedade de centralização física de todas as bases ou de adoção de produto único, preservada a integração dos canais de acesso aos serviços.</p></div>
+  <article class="art anot" id="art27" data-sub="DM3">
+    <div class="texto"><div class="cab"><span class="id">Art. 27</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM3.4</span></div>
+      <p>Art. 27. A arquitetura será escolhida mediante avaliação de necessidade, interoperabilidade, custo de ciclo de vida, segurança, continuidade, portabilidade e reversibilidade, sem obrigatoriedade de centralização física de todas as bases ou de adoção de produto único, preservada a integração dos canais de acesso aos serviços.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · DM3.4</h4><p>Arquitetura escolhida por necessidade, interoperabilidade e reversibilidade, sem centralização obrigatória. Favorece sistemas integrados entre órgãos (DM3.4), sem obrigar.</p></div>
+    </aside>
   </article>
-  <article class="art anot" id="art28" data-sub="DM1.3">
-    <div class="texto"><div class="cab"><span class="id">Art. 28</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.3</span></div>
+  <article class="art anot" id="art28" data-sub="DM5 DM6">
+    <div class="texto"><div class="cab"><span class="id">Art. 28</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM5</span><span class="tag sub">DM6</span></div>
       <p>Art. 28. A avaliação de proteção de dados e segurança ocorrerá desde a concepção e será revista conforme as alterações da iniciativa, observados a Lei Federal nº 13.709, de 14 de agosto de 2018 - Lei Geral de Proteção de Dados Pessoais - LGPD, a regulamentação da Autoridade Nacional de Proteção de Dados - ANPD, o Decreto nº 22.963, de 2025, e a Política de Segurança da Informação - PSI instituída pelo Decreto nº 22.453, de 26 de outubro de 2023.</p><p>Parágrafo único. A comunicação e resposta a incidentes seguirão competências e prazos próprios; o registro no Programa não substitui o atendimento das obrigações legais.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.3</h4><p>Apoia o DM1.3 (privacidade).</p></div>
+      <div class="analise"><h4>Análise · DM5 e DM6</h4><p>Proteção de dados e segurança desde a concepção, com remissão à LGPD, ao Decreto 22.963 e à Política de Segurança da Informação. Apoia o DM5 e o DM6. A capacitação anual que o DM5.3 e o DM6.3 pedem não está aqui: o Decreto 22.963 já manda capacitar (art. 5º, "c"), mas sem periodicidade, e é lá que caberia o ajuste.</p></div>
     </aside>
   </article>
   <div class="capitulo">Capítulo VI – Da inteligência artificial e da experimentação</div>
-  <article class="art anot" id="art29" data-sub="DM1.3">
-    <div class="texto"><div class="cab"><span class="id">Art. 29</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.3</span></div>
+  <article class="art anot" id="art29" data-sub="DM1 DM9">
+    <div class="texto"><div class="cab"><span class="id">Art. 29</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.3</span><span class="tag sub">DM9.2</span></div>
       <p>Art. 29. O uso de aplicações de inteligência artificial será disciplinado por ato próprio que estabeleça inventário, finalidades, classificação de riscos, dados permitidos, responsabilidades, supervisão humana, testes, monitoramento e encerramento.</p><p>§ 1º Até a edição do ato próprio, os órgãos informarão os usos existentes e planejados de inteligência artificial, seus responsáveis e dados envolvidos, para inventário e avaliação proporcional de riscos, conforme o plano inicial.</p><p>§ 2º Os usos existentes observarão a legislação aplicável, os controles vigentes e as medidas de mitigação determinadas pela autoridade competente, não implicando a ausência de regulamentação específica autorização para o uso irregular nem a suspensão automática de sua aplicação.</p><p>§ 3º Padrões técnicos complementares poderão detalhar ferramentas, segurança, documentação, critérios de qualidade e atualização dentro das competências legais, vedada decisão sobre direitos sem observância das garantias aplicáveis.</p><p>§ 4º Sempre que houver interação direta com o cidadão, o uso de sistemas de inteligência artificial ou atendimento automatizado será informado de forma clara e acessível, com indicação dos canais institucionais para esclarecimentos e exercício dos direitos aplicáveis. Nas decisões tomadas unicamente com base em tratamento automatizado de dados pessoais que afetem interesses do titular, serão observadas as garantias de revisão e informação previstas na LGPD.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.3</h4><p>Uso ético (DM1.3): inventário, classificação de riscos, supervisão humana, aviso ao cidadão quando interage com IA e revisão de decisão automatizada (§ 4º).</p></div>
+      <div class="analise"><h4>Análise · DM1.3 e DM9.2</h4><p>Regras para IA: inventário, classificação de riscos, supervisão humana, aviso ao cidadão quando interage com IA e revisão de decisão automatizada (§ 4º). É uso ético na prática (DM1.3) e se alinha à exigência de serviços "seguros e éticos" do DM9.2.</p></div>
     </aside>
   </article>
-  <article class="art igual" id="art30" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 30</span><span class="tag dti">Texto do DTI</span></div><p>Art. 30. As iniciativas de cidade inteligente, a sustentação da infraestrutura tecnológica, a modernização de sistemas, a melhoria de processos e a inovação digital observarão as regras de sua governança específica e os requisitos comuns deste Decreto, devendo ser identificados os respectivos projetos, responsáveis, benefícios e dependências.</p></div>
+  <article class="art anot semrel" id="art30" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 30</span><span class="tag dti">Texto do DTI</span></div>
+      <p>Art. 30. As iniciativas de cidade inteligente, a sustentação da infraestrutura tecnológica, a modernização de sistemas, a melhoria de processos e a inovação digital observarão as regras de sua governança específica e os requisitos comuns deste Decreto, devendo ser identificados os respectivos projetos, responsáveis, benefícios e dependências.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · sem relação direta</h4><p>Iniciativas de cidade inteligente e modernização seguem sua governança própria e os requisitos do decreto. É aqui que o SBC+i se encaixa; ao decreto do SBC+i fica a remissão a esta Política. Não se relaciona diretamente com os critérios de foco.</p></div>
+    </aside>
   </article>
-  <article class="art igual" id="art31" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 31</span><span class="tag dti">Texto do DTI</span></div><p>Art. 31. A experimentação regulatória observará a legislação específica e as competências do órgão regulador, sem conferir à coordenação deste Programa poder para afastar normas ou autorizar experimentos.</p><p>§ 1º Cada experimento regulatório observará plano com problema, duração, participantes, dados, limites, supervisão, critérios de interrupção, avaliação e saída, nos termos da legislação específica.</p><p>§ 2º A participação em experimento não assegura contratação ou incorporação, que dependerão de decisão competente e processo próprio.</p><p>§ 3º Pilotos administrativos e testes técnicos que não envolvam flexibilização regulatória serão tratados pelos procedimentos de avaliação e implantação deste Decreto e não serão enquadrados automaticamente como SANDBOX regulatório.</p></div>
+  <article class="art anot semrel" id="art31" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 31</span><span class="tag dti">Texto do DTI</span></div>
+      <p>Art. 31. A experimentação regulatória observará a legislação específica e as competências do órgão regulador, sem conferir à coordenação deste Programa poder para afastar normas ou autorizar experimentos.</p><p>§ 1º Cada experimento regulatório observará plano com problema, duração, participantes, dados, limites, supervisão, critérios de interrupção, avaliação e saída, nos termos da legislação específica.</p><p>§ 2º A participação em experimento não assegura contratação ou incorporação, que dependerão de decisão competente e processo próprio.</p><p>§ 3º Pilotos administrativos e testes técnicos que não envolvam flexibilização regulatória serão tratados pelos procedimentos de avaliação e implantação deste Decreto e não serão enquadrados automaticamente como SANDBOX regulatório.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · sem relação direta</h4><p>Experimentação regulatória (SBC SANDBOX). Não se relaciona com os critérios de foco.</p></div>
+    </aside>
   </article>
   <div class="capitulo">Capítulo VII – Da implementação dos resultados e da transparência</div>
-  <article class="art anot" id="art32" data-sub="DM1.1">
+  <article class="art anot" id="art32" data-sub="DM1">
     <div class="texto"><div class="cab"><span class="id">Art. 32</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.1</span></div>
       <p>Art. 32. O Plano Executivo identificará as prioridades, os responsáveis, a capacidade confirmada, os recursos, as entregas, os resultados, os indicadores, os riscos, os prazos e os critérios de revisão, devendo ser articulado ao PDTIC e aos instrumentos orçamentários e de contratações, considerados os custos pertinentes de implantação, operação, manutenção, transição e encerramento.</p><p>§ 1º Os gestores confirmarão a disponibilidade por competência e período, consideradas atividades regulares, obrigações vigentes, dependências e esforço de preparação, deliberação e acompanhamento do CGD, sem dupla contagem de recursos.</p><p>§ 2º A insuficiência de capacidade será submetida à autoridade competente acompanhada de alternativas de ajuste de escopo, de sequenciamento ou de prazo, sem que a eventual revisão do Plano altere prazos legais ou afaste a exigibilidade de obrigações vigentes.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.1</h4><p>É onde ficam as metas, os responsáveis e os prazos: completa o "conjunto documentado de metas e objetivos" do DM1.1. Atenção ao prazo: o Plano Executivo só sai até 120 dias da vigência (art. 39, II), depois de 18/12.</p></div>
+      <div class="analise"><h4>Análise · DM1.1</h4><p>O Plano Executivo traz prioridades, responsáveis, metas, indicadores e prazos: completa o "conjunto documentado de metas e objetivos" do DM1.1. Atenção ao prazo: só sai até 120 dias da vigência (art. 39, II), depois de 18/12.</p></div>
     </aside>
   </article>
-  <article class="art igual" id="art33" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 33</span><span class="tag dti">Texto do DTI</span></div><p>Art. 33. A implantação será gradual, admitidos pilotos autorizados e testes segregados, previstos em plano inicial aprovado ou no Plano Executivo consolidado, com avaliação de esforço, benefício e riscos antes de eventual ampliação.</p><p>§ 1º O plano inicial definirá, antes dos testes, objeto, responsável, capacidade, dados permitidos, controles, critérios de avaliação e interrupção, prazo e autorizações cabíveis.</p><p>§ 2º Soluções existentes terão plano de adequação por criticidade, com responsável, prazo, medidas transitórias e evidências, sem suspender obrigações legais vigentes ou interromper indevidamente os serviços e observados os contratos em vigor.</p><p>§ 3º A adequação não altera unilateralmente obrigações contratuais nem dispensa procedimentos de alteração ou contratação exigíveis.</p></div>
+  <article class="art anot" id="art33" data-sub="DM9">
+    <div class="texto"><div class="cab"><span class="id">Art. 33</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM9.1</span></div>
+      <p>Art. 33. A implantação será gradual, admitidos pilotos autorizados e testes segregados, previstos em plano inicial aprovado ou no Plano Executivo consolidado, com avaliação de esforço, benefício e riscos antes de eventual ampliação.</p><p>§ 1º O plano inicial definirá, antes dos testes, objeto, responsável, capacidade, dados permitidos, controles, critérios de avaliação e interrupção, prazo e autorizações cabíveis.</p><p>§ 2º Soluções existentes terão plano de adequação por criticidade, com responsável, prazo, medidas transitórias e evidências, sem suspender obrigações legais vigentes ou interromper indevidamente os serviços e observados os contratos em vigor.</p><p>§ 3º A adequação não altera unilateralmente obrigações contratuais nem dispensa procedimentos de alteração ou contratação exigíveis.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · DM9.1</h4><p>Implantação gradual, com pilotos avaliados antes de ampliar: a lógica de melhoria contínua que o DM9.1 pede para serviços de dados, aqui aplicada às iniciativas em geral.</p></div>
+    </aside>
   </article>
-  <article class="art anot" id="art34" data-sub="DM1.3">
-    <div class="texto"><div class="cab"><span class="id">Art. 34</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.3</span></div>
+  <article class="art anot lacuna" id="art34" data-sub="DM1 DM8 alt">
+    <div class="texto"><div class="cab"><span class="id">Art. 34</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.3</span><span class="tag sub">DM8.2</span><span class="tag v03">Alteração possível</span></div>
       <p>Art. 34. Os indicadores deverão conter a finalidade, a fórmula de cálculo, a fonte de dados, o escopo, o responsável, a periodicidade, a linha de base, quando disponível, a meta e os limites de interpretação, devendo a ausência de medição ou a inaplicabilidade do indicador ser formalmente registradas e justificadas.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.3</h4><p>Apoia a prestação de contas (DM1.3).</p></div>
+      <div class="analise"><h4>Análise · DM1.3 e DM8.2</h4><p>Indicadores com fórmula, fonte, linha de base e limites de interpretação: prestação de contas (DM1.3). Não pede desagregação por território ou por grupo da população (DM8.2).</p></div>
+      <div class="v03"><h4>Alteração possível · redação proposta</h4><div class="redacao"><p>Art. 34. Os indicadores deverão conter a finalidade, a fórmula de cálculo, a fonte de dados, o escopo, o responsável, a periodicidade, a linha de base, quando disponível, a meta e os limites de interpretação<ins> e, sempre que pertinente e preservada a privacidade, a desagregação por território e por grupos da população</ins>, devendo a ausência de medição ou a inaplicabilidade do indicador ser formalmente registradas e justificadas.</p></div><p><b>Por quê:</b> O DM8.2 pede dados separados por território e por grupos da população, compartilhados interna e externamente; o OD3.2 pede o mesmo nos dados abertos. Ajuda pouco sozinho, porque o DM8 pede também um padrão demográfico (DM8.1), mas fixa o hábito nos indicadores do Programa.</p></div>
     </aside>
   </article>
-  <article class="art anot" id="art35" data-sub="DM1.3">
-    <div class="texto"><div class="cab"><span class="id">Art. 35</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.3</span></div>
+  <article class="art anot lacuna" id="art35" data-sub="DM1 CI3 OD1 alt">
+    <div class="texto"><div class="cab"><span class="id">Art. 35</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.3</span><span class="tag sub">OD1.3</span><span class="tag sub">CI3.1</span><span class="tag v03">Alteração possível</span></div>
       <p>Art. 35. A coordenação publicará no portal oficial do Município relatório semestral acessível, com os registros previstos no art. 20, resguardados dados pessoais, sigilo e segurança. O primeiro relatório abrangerá os seis primeiros meses de vigência deste Decreto e será publicado em até 30 (trinta) dias corridos após o encerramento do período, observado o mesmo prazo para os relatórios seguintes.</p><p>Parágrafo único. O relatório distinguirá entregas de benefícios e examinará, conforme o objeto, acesso, tempo e qualidade do serviço para o cidadão; retrabalho e condições de execução para servidores; continuidade e custo total para a Administração. Ganhos estimados serão separados dos resultados verificados, com indicação dos limites e efeitos adversos identificados.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.3</h4><p>Prestação de contas pública (DM1.3), mais frequente que o relatório anual dos modelos da WWC. Atenção ao prazo: o primeiro relatório cobre os seis primeiros meses de vigência e sai em 2027.</p></div>
+      <div class="analise"><h4>Análise · DM1.3 e OD1.3 e CI3.1</h4><p>Relatório semestral público, que separa entregas de benefícios e ganhos estimados de verificados: prestação de contas pública (DM1.3), mais frequente que o relatório anual dos modelos da WWC. Levado a parceiros externos, pode apoiar o CI3.1 (compartilhar evidências duas vezes por ano). Atenção ao prazo: o primeiro relatório cobre os seis primeiros meses de vigência e sai em 2027.</p></div>
+      <div class="v03"><h4>Alteração possível · redação proposta</h4><div class="redacao"><p>Art. 35. A coordenação publicará no portal oficial do Município relatório semestral acessível, com os registros previstos no art. 20, resguardados dados pessoais, sigilo e segurança. O primeiro relatório abrangerá os seis primeiros meses de vigência deste Decreto e será publicado em até 30 (trinta) dias corridos após o encerramento do período, observado o mesmo prazo para os relatórios seguintes.</p><p><del>Parágrafo único.</del><ins>§ 1º</ins> O relatório distinguirá entregas de benefícios (…)</p><p><ins>§ 2º O relatório referente ao segundo semestre de cada ano incluirá a avaliação da governança de dados e da política de dados abertos, com as propostas de revisão dos respectivos atos, quando cabíveis.</ins></p></div><p><b>Por quê:</b> O OD1.3 pede que a política de dados abertos tenha revisão periódica do texto e da implementação, por relatório no mínimo anual. Usar o relatório do Programa evita um relatório a mais e reforça a prestação de contas do DM1.3.</p></div>
     </aside>
   </article>
-  <article class="art igual" id="art36" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 36</span><span class="tag dti">Texto do DTI</span></div><p>Art. 36. Ajustes excepcionais de formato, periodicidade ou procedimento interno de acompanhamento dependerão de decisão motivada da autoridade competente, com prazo, salvaguardas e revisão, preservados os registros mínimos e a rastreabilidade. Não poderão dispensar obrigações legais, avaliações aplicáveis, condições indispensáveis à implantação, autorizações exigíveis ou os prazos e a publicidade determinados por este Decreto.</p></div>
+  <article class="art anot semrel" id="art36" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 36</span><span class="tag dti">Texto do DTI</span></div>
+      <p>Art. 36. Ajustes excepcionais de formato, periodicidade ou procedimento interno de acompanhamento dependerão de decisão motivada da autoridade competente, com prazo, salvaguardas e revisão, preservados os registros mínimos e a rastreabilidade. Não poderão dispensar obrigações legais, avaliações aplicáveis, condições indispensáveis à implantação, autorizações exigíveis ou os prazos e a publicidade determinados por este Decreto.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · sem relação direta</h4><p>Ajustes excepcionais de formato e procedimento. Não se relaciona com os critérios de foco.</p></div>
+    </aside>
   </article>
   <div class="capitulo">Capítulo VIII – Das disposições finais</div>
-  <article class="art igual" id="art37" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 37</span><span class="tag dti">Texto do DTI</span></div><p>Art. 37. É vedado aos atos complementares criar competências ou obrigações reservadas a instrumento de hierarquia superior, devendo a sua elaboração demonstrar a compatibilidade com os atos vigentes e a necessidade de alteração expressa, quando cabível.</p></div>
+  <article class="art anot semrel" id="art37" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 37</span><span class="tag dti">Texto do DTI</span></div>
+      <p>Art. 37. É vedado aos atos complementares criar competências ou obrigações reservadas a instrumento de hierarquia superior, devendo a sua elaboração demonstrar a compatibilidade com os atos vigentes e a necessidade de alteração expressa, quando cabível.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · sem relação direta</h4><p>Limite dos atos complementares. Não se relaciona com os critérios de foco.</p></div>
+    </aside>
   </article>
-  <article class="art igual" id="art38" data-sub="">
-    <div class="texto"><div class="cab"><span class="id">Art. 38</span><span class="tag dti">Texto do DTI</span></div><p>Art. 38. As medidas que impliquem despesa observarão planejamento, disponibilidade orçamentária e autorizações exigíveis, sem criação automática de dotação ou compromisso de contratação.</p></div>
+  <article class="art anot semrel" id="art38" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 38</span><span class="tag dti">Texto do DTI</span></div>
+      <p>Art. 38. As medidas que impliquem despesa observarão planejamento, disponibilidade orçamentária e autorizações exigíveis, sem criação automática de dotação ou compromisso de contratação.</p></div>
+    <aside class="expl">
+      <div class="analise"><h4>Análise · sem relação direta</h4><p>Despesas dependem de orçamento e autorização. Não se relaciona com os critérios de foco.</p></div>
+    </aside>
   </article>
-  <article class="art anot" id="art39" data-sub="DM1.1">
+  <article class="art anot" id="art39" data-sub="DM1">
     <div class="texto"><div class="cab"><span class="id">Art. 39</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.1</span></div>
       <p>Art. 39. A implementação observará os seguintes marcos:</p><p class="inc">I - em até 30 (trinta) dias corridos da instalação do CGD, limitado a 50 (cinquenta) dias corridos da entrada em vigor deste Decreto, aprovação de plano inicial de preparação e, quando cabível, de pilotos, com os elementos previstos no art. 33, § 1º;</p><p class="inc">II - em até 120 (cento e vinte) dias corridos da entrada em vigor deste Decreto, aprovação do Plano Executivo consolidado, incorporando os resultados disponíveis da preparação e dos pilotos e o cronograma de elaboração ou adequação dos regulamentos dos seis eixos e dos atos específicos prioritários;</p><p class="inc">III - no mesmo prazo do inciso II, definição, no cronograma, dos responsáveis, prioridades, prazos de conclusão e marcos intermediários dos atos previstos, com acompanhamento trimestral e consolidação nos relatórios semestrais.</p><p>§ 1º A coordenação elaborará as propostas dos incisos I a III com os órgãos envolvidos, as submeterá à apreciação do CGD e as encaminhará ao Chefe do Poder Executivo, sem prejuízo das autorizações específicas legalmente exigidas.</p><p>§ 2º Até a edição dos regulamentos pertinentes, o plano inicial estabelecerá critérios provisórios e proporcionais de classificação e avaliação dos riscos dos pilotos, preservados os controles vigentes e as autorizações exigíveis.</p><p>§ 3º O Plano Executivo será revisto anualmente e ajustado motivadamente quando houver alteração relevante de capacidade, risco ou prioridade.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.1</h4><p>Dá prazo às metas do DM1.1, todos contados da vigência.</p></div>
+      <div class="analise"><h4>Análise · DM1.1</h4><p>Marcos: plano inicial, Plano Executivo e cronograma dos regulamentos dos eixos, todos contados da vigência. Dão prazo às metas do DM1.1, mas todos caem depois de 18/12.</p></div>
     </aside>
   </article>
-  <article class="art anot lacuna" id="art40" data-sub="DM1.1 DM1.2 DM1.3 v03">
+  <article class="art anot lacuna" id="art40" data-sub="DM1 alt">
     <div class="texto"><div class="cab"><span class="id">Art. 40</span><span class="tag dti">Texto do DTI</span><span class="tag sub">DM1.1</span><span class="tag sub">DM1.2</span><span class="tag sub">DM1.3</span><span class="tag v03">Alteração possível</span></div>
       <p>Art. 40. Este Decreto entra em vigor após decorridos 90 (noventa) dias corridos de sua publicação oficial.</p></div>
     <aside class="expl">
-      <div class="wwc"><h4>Análise · DM1.1 e DM1.2 e DM1.3</h4><p>Na data do envio (18/12), o decreto estaria, no melhor caso, publicado mas não em vigor. As fontes lidas da WWC não dizem se isso é aceito, e o DM1 é revalidado.</p></div>
-      <div class="v03"><h4>Alteração possível</h4><p>Propor vigência na publicação, ao menos dos Capítulos I e II (objetivos, princípios e eixos), mantendo os prazos de instalação do CGD.</p></div>
+      <div class="analise"><h4>Análise · DM1.1 e DM1.2 e DM1.3</h4><p>Vigência 90 dias depois da publicação. No envio (18/12), o decreto estaria, no melhor caso, publicado mas não em vigor. As fontes lidas da WWC não dizem se isso é aceito, e o DM1 é revalidado.</p></div>
+      <div class="v03"><h4>Alteração possível · redação proposta</h4><div class="redacao"><p>Art. 40. Este Decreto entra em vigor <del>após decorridos 90 (noventa) dias corridos de</del><ins>na data de</ins> sua publicação oficial.</p><p><ins>Parágrafo único. Os prazos previstos no art. 12, § 5º, e nos arts. 35 e 39 serão contados a partir do nonagésimo dia da publicação deste Decreto.</ins></p></div><p><b>Por quê:</b> Objetivos, princípios e eixos passam a valer na publicação, o que permite usá-los no envio de 18/12 (DM1.1 e DM1.3). O parágrafo mantém os 90 dias de preparação que o DTI previu para instalar o CGD, aprovar os planos e publicar o primeiro relatório.</p></div>
     </aside>
   </article>
   <div class="assinatura" data-bloco="assinatura">São Bernardo do Campo, …<br><b>[Prefeito]</b></div>
@@ -475,13 +565,14 @@ table.versoes tr.vigente td { background: var(--verde-claro); }
   <h2>Fontes</h2>
   <ul>
     <li>Processo SB 101842/2026 (interno): proposta técnica do DTI (p. 2–39), minuta de decreto (p. 40–55) e encaminhamento à Procuradoria (p. 56). Lido por inteiro em 23/10/2026.</li>
-    <li>What Works Cities, critério DM1 (v4): definição, subcritérios e evidências; texto "Better Together" do Fórum da WWC (jan/2026).</li>
-    <li>Decreto Municipal 22.963/2025 e Portaria 10.510/2026 (CGPD).</li>
+    <li>What Works Cities, critérios CI1–CI3, DM1–DM9 e OD1–OD4 (v4): definições e subcritérios, em tradução clara do original em inglês; texto "Better Together" do Fórum da WWC (jan/2026).</li>
+    <li>Portaria GM/MPO 201/2025 (Política de Governança de Dados do Ministério do Planejamento e Orçamento), lida por inteiro em 23/10/2026 (DOU de 11/07/2025, Seção 1, p. 144).</li>
+    <li>Decretos Municipais 22.963/2025 (proteção de dados e CGPD) e 22.453/2023 (Política de Segurança da Informação; o anexo não foi lido).</li>
   </ul>
 </section>
 
 </main>
-<div class="rodape">Painel WWC · SBC. Texto da minuta do DTI, sem alteração; notas de análise para a equipe. Não substitui a análise da Procuradoria.</div>
+<div class="rodape">Painel WWC · SBC. Texto da minuta do DTI, sem alteração; análise e alterações possíveis para a equipe. Não substitui a análise da Procuradoria.</div>
 
 <script>
 (function () {
