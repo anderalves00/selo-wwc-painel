@@ -542,14 +542,14 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       </summary>
       <div class="corpo">
         ${relatorioHtml(c)}
-        <div class="definicao"><b>O critério:</b> ${esc(c.definicao)}</div>
+        <div class="definicao"><b>O critério (texto oficial da WWC):</b> ${esc(c.definicao)}</div>
         ${c.resumo ? `<div class="resumo"><b>Situação de SBC:</b> ${esc(c.resumo)}</div>` : ''}
         ${(c.propostas || []).map(pr => `<a class="proposta-link" href="${esc(pr.u)}" target="_blank" rel="noopener"><b>Abrir: ${esc(pr.t)} →</b><span>${esc(pr.nota || '')}</span></a>`).join('')}
         ${pf.alerta ? `<div class="alerta"><b>Atenção:</b> ${esc(pf.alerta)}</div>` : ''}
         ${pf.nota ? `<div class="nota"><b>Na plataforma:</b> ${esc(pf.nota)}</div>` : ''}
         ${c.nota ? `<div class="nota">${esc(c.nota)}</div>` : ''}
         ${(() => { const ks = refsDoCriterio(c); return ks.length ? `<details class="nao-serve" id="refs-${c.codigo}"><summary>Normas e documentos citados neste critério (${ks.length})</summary><ul class="lista-refs">${ks.map(k => `<li>${refLink(k)}${R[k].u ? '' : ''}<div class="d">${esc(R[k].d || '')}</div></li>`).join('')}</ul></details>` : ''; })()}
-        <h3>O que precisa atender</h3><div class="sub-lista">${subsHtml}</div>
+        <h3>O que precisa atender</h3><div class="nota" style="margin:0 0 8px">Texto oficial de cada subcritério, como aparece na plataforma da WWC em português. A situação de SBC e a nota abaixo de cada um são análise nossa.</div><div class="sub-lista">${subsHtml}</div>
         <h3>Evidências a apresentar</h3><ul class="lista-simples">${c.evidencias.map(e => `<li>${esc(e)}</li>`).join('')}</ul>
         ${analise}
         <div class="acoes-card"><button class="botao copiar" data-cod="${c.codigo}">Copiar link deste critério</button><a class="botao" href="#ordem" style="text-decoration:none">Voltar à ordem de trabalho</a></div>
