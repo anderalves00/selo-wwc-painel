@@ -13,7 +13,7 @@ const LEIS = 'https://leis.org/prefeitura/sp/sao-bernardo-do-campo/lei/';
 const NM2676 = 'https://www.saobernardo.sp.gov.br/documents/10181/2361282/NM+2676+de+07.08.2026+-+Conteu%CC%81do+Integral.pdf/11eeb475-0287-4c05-e8e2-aea4d61e05fc#page=16';
 
 window.PAINEL = {
-  atualizado: '2026-10-22',
+  atualizado: '2026-10-23',
   prazos: { envio: '2026-12-18', interno: '1ª semana de dezembro de 2026' },
 
   areas: [
@@ -32,6 +32,7 @@ window.PAINEL = {
   // Histórico (regra do usuário, 2026-10-23): só o avanço de cada critério, começando pelo código ("DM1: ..."),
   // com breve contexto e o que mudou no entendimento. Ajuste de layout ou correção de link do painel não entra.
   historico: [
+    { data: '2026-10-23', texto: 'OD3: consultado o IBGE. A renda do Perfil por Bairro é do Censo 2010 porque a do Censo 2022 não tinha saído; ela saiu em 31/08/2026, nos microdados da amostra. O acesso público vai só até o estado; para chegar perto do bairro, a Prefeitura precisa do acesso controlado (gov.br e termo de confidencialidade), por Áreas de Ponderação. Novo pedido à equipe. O exemplo do catálogo passou a mostrar o texto oficial de cada subcritério e um quadro com os termos técnicos.' },
     { data: '2026-10-23', texto: 'OD3: planilhas do portal conferidas no navegador (renúncia de receita, multas de trânsito, doações e obras de anos anteriores). Elas baixam sem login, mas várias são relatórios formatados para impressão, e não tabelas limpas, o que pesa no OD3.1. O exemplo do catálogo ganhou a coluna "Ano de referência dos dados", separada da data de publicação: o Perfil por Bairro é a edição 2026, mas a renda vem do Censo 2010, e o catálogo precisa deixar isso claro para atender o OD3.3.' },
     { data: '2026-10-22', texto: 'OD3: novo exemplo visual de como a página de Dados Abertos ficaria como portal central (catálogo com links reais, contato, licença e política), com botão no cartão do OD3. Decidido manter o "Sim" na plataforma, a confirmar com a equipe; para ele se sustentar, o catálogo e as planilhas do Perfil por Bairro precisam estar publicados antes do envio.' },
     { data: '2026-10-22', texto: 'OD3: ficha aprofundada. O inventário do menu do Portal da Transparência achou dados em formato aberto em pelo menos 13 lugares (entre eles renúncia de receita, multas de trânsito, doações, obras de anos anteriores e recursos recebidos), e a página de Dados Abertos não aponta para nenhum deles. O plano passa a ter um catálogo com uma linha e um link por base. Os 26 capítulos do Perfil por Bairro seguem o mesmo modelo de 17 tabelas; a renda está num gráfico, com dados de 2010. O texto pré-preenchido na plataforma diz que o patrimônio é legível por máquina, mas ele só está em PDF. Dois pedidos novos à equipe.' },
@@ -329,7 +330,8 @@ window.PAINEL = {
         { texto: 'Se o Planejamento Urbano pode publicar as tabelas do Perfil por Bairro e do Painel Estatístico em CSV ou XLSX', status: 'a_pedir' },
         { texto: 'Se o GeoPortal pode ser apresentado como parte do portal de dados abertos, e quem responde pelas camadas', status: 'a_pedir' },
         { texto: 'Revisar, com quem publicou, as planilhas da consulta pública do PPA 2026–2029 antes de incluí-las no catálogo', status: 'a_pedir' },
-        { texto: 'Se o sistema de gastos com pessoal está funcionando e em que formato exporta; e se todos os contratos de 2025 estão no sistema de contratos', status: 'a_pedir' }
+        { texto: 'Se o sistema de gastos com pessoal está funcionando e em que formato exporta; e se todos os contratos de 2025 estão no sistema de contratos', status: 'a_pedir' },
+        { texto: 'Se o Planejamento Urbano vai pedir ao IBGE o acesso controlado aos microdados do Censo 2022 para atualizar a renda do Perfil por Bairro, hoje do Censo 2010', status: 'a_pedir' }
       ]
     },
     {

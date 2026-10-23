@@ -45,6 +45,9 @@ main { padding: 24px 32px 48px; display: grid; gap: 22px; max-width: 1200px; mar
 .perg .linha { font-size: 13.5px; border-radius: 6px; padding: 7px 10px; }
 .perg .hoje { background: #f7f9fb; }
 .perg .depois { background: var(--laranja-claro); }
+.perg .oficial { font-size: 12.5px; color: var(--texto-suave); border-left: 3px solid var(--azul); padding: 4px 8px; background: var(--azul-claro); border-radius: 0 4px 4px 0; }
+.glossario dt { font-weight: 700; color: var(--azul-esc); margin-top: 10px; }
+.glossario dd { margin: 2px 0 0; font-size: 14px; }
 .selo { display: inline-block; font: 800 11px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 5px; }
 .selo.ok { background: var(--verde-claro); color: var(--verde); }
 .selo.parcial { background: var(--laranja-claro); color: #8a4500; }
@@ -106,21 +109,25 @@ td a { font-weight: 700; }
   <section class="cartao">
     <h2>O que o OD3 pede, em três perguntas</h2>
     <p>O critério pede os três subcritérios (3 de 3). Hoje SBC atende o primeiro; o segundo e o terceiro dependem de editar a página e publicar planilhas que já existem.</p>
+    <p style="font-size:13.5px;color:var(--texto-suave)">As perguntas em azul são um resumo nosso, para facilitar a conversa. O texto oficial da WWC está logo abaixo de cada uma, em letra menor.</p>
     <div class="perguntas">
       <div class="perg">
         <h3>OD3.1 · Dá para baixar dados em planilha, de graça?</h3>
+        <div class="oficial"><b>Texto da WWC:</b> "Os dados abertos podem ser lidos por máquina, podem ser baixados e estão disponibilizados gratuitamente."</div>
         <div><span class="selo ok">Já atende</span></div>
         <div class="linha hoje"><b>Hoje:</b> contratos e obras em CSV, finanças em XLS, várias planilhas em XLSX e mapas em shapefile, sem login.</div>
         <div class="linha depois"><b>Melhora:</b> licença aberta explícita e patrimônio em planilha, não só PDF.</div>
       </div>
       <div class="perg">
         <h3>OD3.2 · Há dados separados por bairro e por grupo da população?</h3>
+        <div class="oficial"><b>Texto da WWC:</b> "Quando possível e enquanto mantém a privacidade e a confidencialidade, os dados abertos são publicados desagregados por subgrupos geográficos e demográficos."</div>
         <div><span class="selo parcial">Falta o formato</span></div>
         <div class="linha hoje"><b>Hoje:</b> o Perfil Socioeconômico por Bairro tem idade, sexo, cor ou raça e vulnerabilidade de cada bairro, mas só em PDF.</div>
         <div class="linha depois"><b>Proposta:</b> as mesmas tabelas em XLSX ou CSV, com o nome do bairro igual ao do mapa de bairros do GeoPortal.</div>
       </div>
       <div class="perg">
         <h3>OD3.3 · Existe um lugar central que explique e aponte para tudo?</h3>
+        <div class="oficial"><b>Texto da WWC:</b> "Os dados abertos são contextualizados adequadamente com linguagem clara, informações de contato, políticas e/ou relatórios e outros documentos pertinentes. Se houver algum tipo de dado em sites separados, o portal de dados abertos principal deve ser claramente vinculado a eles."</div>
         <div><span class="selo parcial">Lacuna principal</span></div>
         <div class="linha hoje"><b>Hoje:</b> a página de Dados Abertos é só texto. Diz que os dados estão "catalogados", mas não lista nenhuma base nem tem links.</div>
         <div class="linha depois"><b>Proposta:</b> catálogo com uma linha e um link por base, contato e licença (exemplo abaixo).</div>
@@ -184,7 +191,7 @@ td a { font-weight: 700; }
         <tbody>
           <tr><td>Catálogo com link para cada base, inclusive as de outros sites</td><td>OD3.3</td><td>O critério pede que o portal principal aponte claramente para os dados publicados em sites separados.</td></tr>
           <tr><td>Secretaria responsável, formato e atualização em cada linha</td><td>OD3.3</td><td>Contextualização: o modelo citado pela WWC (Corrientes, Argentina) mostra em cada base a área responsável, a frequência e a última atualização.</td></tr>
-          <tr><td>Ano de referência dos dados, separado da data de publicação</td><td>OD3.3</td><td>Evita que um dado antigo pareça atual. Exemplo: o Perfil por Bairro é a edição 2026, mas a renda vem do Censo 2010, porque a renda do Censo 2022 não estava disponível na publicação.</td></tr>
+          <tr><td>Ano de referência dos dados, separado da data de publicação</td><td>OD3.3</td><td>Evita que um dado antigo pareça atual. Exemplo: o Perfil por Bairro é a edição 2026, mas a renda vem do Censo 2010, porque a renda do Censo 2022 não estava disponível na publicação. O IBGE divulgou essa renda em 31/08/2026, nos microdados da amostra: o acesso público vai só até o estado; para chegar perto do bairro, a Prefeitura precisa pedir o acesso controlado (login gov.br e termo de confidencialidade), que desce até as Áreas de Ponderação.</td></tr>
           <tr><td>Contato da equipe</td><td>OD3.3</td><td>O critério pede "informações de contato".</td></tr>
           <tr><td>Licença aberta</td><td>OD3.1</td><td>Deixa claro que o dado é gratuito e reutilizável; hoje há só termos informais.</td></tr>
           <tr><td>Perfil por Bairro em planilha</td><td>OD3.2</td><td>É o dado desagregado por território e por grupo da população que o critério pede, em formato legível por máquina.</td></tr>
@@ -195,13 +202,26 @@ td a { font-weight: 700; }
   </section>
 
   <section class="cartao">
+    <h2>Termos usados nesta página</h2>
+    <dl class="glossario">
+      <dt>Legível por máquina</dt><dd>Arquivo que um programa consegue ler e processar sozinho, como uma planilha. Um PDF serve para pessoas lerem, mas não para um programa reaproveitar os números.</dd>
+      <dt>CSV e XLSX</dt><dd>Formatos de planilha. O XLSX é o do Excel; o CSV é um texto simples, com valores separados por vírgula ou ponto e vírgula, que qualquer programa abre.</dd>
+      <dt>Shapefile</dt><dd>Formato de arquivo de mapa. Guarda formas geográficas (limites de bairros, ruas, pontos de escolas e postos) e as informações de cada uma. Abre em programas de mapa, como o QGIS, que é gratuito.</dd>
+      <dt>Dicionário de dados</dt><dd>Documento que explica o que significa cada coluna de uma base, sua data e sua fonte. O GeoPortal já tem um para as camadas de mapa.</dd>
+      <dt>Licença aberta: Creative Commons Atribuição 4.0 (CC BY 4.0)</dt><dd>Licença padrão internacional, gratuita, que diz que qualquer pessoa pode copiar, usar e adaptar os dados, inclusive para fins comerciais, desde que cite a fonte (a Prefeitura). Pôr essa frase na página deixa claro que os dados são livres para reúso.</dd>
+      <dt>Áreas de Ponderação</dt><dd>Divisões do município usadas pelo IBGE na amostra do Censo. São maiores que um setor censitário e não coincidem com os bairros.</dd>
+    </dl>
+  </section>
+
+  <section class="cartao">
     <h2>O que a equipe precisa definir</h2>
     <ol class="passos">
       <li>Qual unidade mantém a página de Dados Abertos e pode editá-la.</li>
       <li>A secretaria responsável e a frequência de atualização de cada base.</li>
       <li>O e-mail institucional de contato.</li>
       <li>Se o Planejamento Urbano pode publicar as tabelas do Perfil por Bairro em planilha.</li>
-      <li>Se todas as bases do inventário entram no catálogo (algumas planilhas precisam de revisão antes).</li>
+      <li>Se todas as planilhas do inventário entram no catálogo. Antes, duas revisões: as planilhas da consulta pública do PPA 2026–2029 (revisar com quem publicou) e os relatórios formatados para impressão (cabeçalho, títulos e total no fim), que ficariam melhores como tabelas simples.</li>
+      <li>Se o Planejamento Urbano vai pedir ao IBGE o acesso controlado aos microdados do Censo 2022 para atualizar a renda por região (hoje é do Censo 2010).</li>
     </ol>
   </section>
 </main>

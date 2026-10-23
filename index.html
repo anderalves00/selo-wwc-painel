@@ -76,6 +76,17 @@ main { min-width: 0; display: flex; flex-direction: column; gap: 24px; }
 section.bloco { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); padding: 20px 24px; box-shadow: var(--sombra); }
 section.bloco > h2 { font-size: 19px; color: var(--azul-esc); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
 section.bloco > h2::before { content: ""; width: 5px; height: 20px; background: var(--laranja); border-radius: 3px; }
+/* Seções e áreas recolhíveis: tudo começa recolhido */
+details.bloco { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+details.bloco > summary, details.grupo-area > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+details.bloco > summary::-webkit-details-marker, details.grupo-area > summary::-webkit-details-marker { display: none; }
+details.bloco > summary { padding: 16px 24px; }
+details.bloco > summary h2 { font-size: 19px; color: var(--azul-esc); margin: 0; display: flex; align-items: center; gap: 10px; }
+details.bloco > summary h2::before { content: ""; width: 5px; height: 20px; background: var(--laranja); border-radius: 3px; }
+details.bloco > .bloco-corpo { padding: 0 24px 20px; }
+details.grupo-area > summary { padding: 12px 18px; background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); }
+details.grupo-area > summary .area-titulo { margin: 0; }
+.area-cont { font-size: 13px; color: var(--texto-suave); font-weight: 600; margin-left: auto; }
 
 /* Indicadores */
 .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
@@ -209,6 +220,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
   .barra-ferramentas, .lateral, .acoes-card { display: none !important; }
   .layout { grid-template-columns: 1fr; padding: 0; }
   details.criterio { break-inside: avoid-page; }
+  details > summary .seta { display: none; }
   body { background: #fff; }
 }
 </style>
@@ -248,27 +260,27 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       <ul class="contexto" id="contexto"></ul>
     </section>
 
-    <section class="bloco" id="ordem">
-      <h2>Ordem de trabalho</h2>
-      <div class="tabela-wrap"><table id="tabela-ordem"></table></div>
-    </section>
+    <details class="bloco" id="ordem">
+      <summary><h2>Ordem de trabalho</h2><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo"><div class="tabela-wrap"><table id="tabela-ordem"></table></div></div>
+    </details>
 
-    <section class="bloco" id="pendencias">
-      <h2>Pendências para a equipe</h2>
-      <div class="pend-grid" id="pend-grid"></div>
-    </section>
+    <details class="bloco" id="pendencias">
+      <summary><h2>Pendências para a equipe</h2><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo"><div class="pend-grid" id="pend-grid"></div></div>
+    </details>
 
     <div id="criterios"></div>
 
-    <section class="bloco" id="legenda">
-      <h2>Como ler</h2>
-      <div class="tabela-wrap"><table id="tabela-legenda"></table></div>
-    </section>
+    <details class="bloco" id="legenda">
+      <summary><h2>Como ler</h2><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo"><div class="tabela-wrap"><table id="tabela-legenda"></table></div></div>
+    </details>
 
-    <section class="bloco" id="historico">
-      <h2>Histórico de atualizações</h2>
-      <ul class="lista-simples" id="lista-historico"></ul>
-    </section>
+    <details class="bloco" id="historico">
+      <summary><h2>Histórico de atualizações</h2><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo"><ul class="lista-simples" id="lista-historico"></ul></div>
+    </details>
   </main>
 </div>
 <footer>Página de trabalho da equipe. Não indexada por buscadores. As respostas só são inseridas na plataforma depois da validação da equipe.</footer>
@@ -505,7 +517,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
     }
     if (c.ficha === 'nao_iniciada') analise += `<div class="vazio-ficha">Ficha ainda não iniciada. A análise do que SBC tem, a classificação e o plano entram aqui na vez deste critério (posição ${c.ordem} na ordem de trabalho).</div>`;
 
-    return `<details class="criterio" id="${c.codigo}" data-area="${c.area}" data-ficha="${c.ficha}" data-essencial="${c.essencial ? 1 : 0}" ${c.ficha !== 'nao_iniciada' ? 'open' : ''}>
+    return `<details class="criterio" id="${c.codigo}" data-area="${c.area}" data-ficha="${c.ficha}" data-essencial="${c.essencial ? 1 : 0}">
       <summary>
         <div class="cod-grande">${c.codigo}</div>
         <div><div class="sum-tit">${esc(c.titulo)}</div>
@@ -532,8 +544,9 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       </div>
     </details>`;
   }
-  $('#criterios').innerHTML = P.areas.map(a => `<div class="grupo-area" data-area="${a.id}"><div class="area-titulo">${a.id} · ${esc(a.nome)}</div><div style="display:flex;flex-direction:column;gap:14px;margin-top:16px">` +
-    daArea(a.id).map(cartao).join('') + '</div></div>').join('');
+  $('#criterios').innerHTML = P.areas.map(a => { const cs = daArea(a.id), feitas = cs.filter(c => c.ficha !== 'nao_iniciada').length;
+    return `<details class="grupo-area" id="area-${a.id}" data-area="${a.id}"><summary><div class="area-titulo">${a.id} · ${esc(a.nome)}</div><span class="area-cont">${cs.length} critérios · ${feitas} com ficha</span><span class="seta" aria-hidden="true">›</span></summary><div style="display:flex;flex-direction:column;gap:14px;margin-top:14px">` +
+    cs.map(cartao).join('') + '</div></details>'; }).join('');
   $('#criterios').style.cssText = 'display:flex;flex-direction:column;gap:24px';
 
   // Legenda e histórico
@@ -558,7 +571,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       d.classList.toggle('oculto', !ok);
       if (ok && q) d.open = true;
     });
-    document.querySelectorAll('.grupo-area').forEach(g => g.classList.toggle('oculto', !g.querySelector('details.criterio:not(.oculto)')));
+    document.querySelectorAll('.grupo-area').forEach(g => { const tem = !!g.querySelector('details.criterio:not(.oculto)'); g.classList.toggle('oculto', !tem); if (tem && (q || estado.area)) g.open = true; });
   }
   $('#filtro-area').addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b) return;
@@ -569,9 +582,9 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
   $('#filtro-ficha').addEventListener('change', e => { estado.ficha = e.target.value; filtrar(); });
   $('#so-essencial').addEventListener('click', e => { estado.essencial = !estado.essencial; e.currentTarget.setAttribute('aria-pressed', estado.essencial); filtrar(); });
   $('#busca').addEventListener('input', e => { estado.busca = e.target.value; filtrar(); });
-  $('#expandir').addEventListener('click', () => document.querySelectorAll('details.criterio:not(.oculto)').forEach(d => d.open = true));
-  $('#recolher').addEventListener('click', () => document.querySelectorAll('details.criterio').forEach(d => d.open = false));
-  $('#imprimir').addEventListener('click', () => { document.querySelectorAll('details.criterio').forEach(d => d.open = true); window.print(); });
+  $('#expandir').addEventListener('click', () => document.querySelectorAll('details.criterio:not(.oculto), details.grupo-area:not(.oculto), details.bloco').forEach(d => d.open = true));
+  $('#recolher').addEventListener('click', () => document.querySelectorAll('details.criterio, details.grupo-area, details.bloco').forEach(d => d.open = false));
+  $('#imprimir').addEventListener('click', () => { document.querySelectorAll('details').forEach(d => d.open = true); window.print(); });
 
   document.addEventListener('click', e => {
     const b = e.target.closest('.copiar'); if (!b) return;
@@ -582,7 +595,9 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
   // Âncoras: abre o cartão do critério (ou o que contém o alvo) antes de rolar
   function abrir(id, rolar) {
     const alvo = document.getElementById(id); if (!alvo) return;
-    const card = alvo.closest('details.criterio'); if (card) { card.classList.remove('oculto'); card.open = true; card.closest('.grupo-area').classList.remove('oculto'); }
+    if (alvo.tagName === 'DETAILS') alvo.open = true;
+    for (let d = alvo.parentElement && alvo.parentElement.closest('details'); d; d = d.parentElement && d.parentElement.closest('details')) { d.classList.remove('oculto'); d.open = true; }
+    const card = alvo.closest('details.criterio'); if (card) card.classList.remove('oculto');
     if (rolar) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
     if (location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
   }
