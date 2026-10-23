@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Catálogo de dados abertos</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f71b3'/%3E%3Crect y='26' width='32' height='6' fill='%23ff8200'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
+  --laranja: #ff8200; --laranja-claro: #fff1e3;
+  --verde: #288827; --verde-claro: #e6f4e6;
+  --vermelho: #b3261e; --vermelho-claro: #fdecea;
+  --texto: #2b2b2b; --texto-suave: #5f6368; --borda: #dde3e8;
+  --fundo: #f3f6f9; --cartao: #ffffff;
+  --raio: 10px; --sombra: 0 1px 3px rgba(15, 40, 70, .08);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 "Open Sans", Arial, sans-serif; }
+a { color: var(--azul); }
+h1, h2, h3 { margin: 0; line-height: 1.25; }
+
+.topo { background: linear-gradient(90deg, var(--azul-esc), var(--azul)); color: #fff; border-bottom: 5px solid var(--laranja); }
+.topo-int { padding: 20px 32px 18px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
+.topo .sobre { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; opacity: .85; font-weight: 600; }
+.topo h1 { font-size: 26px; font-weight: 800; margin-top: 4px; }
+.topo .subtitulo { font-size: 14px; opacity: .9; margin-top: 4px; }
+.topo .voltar { color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; background: rgba(255,255,255,.16); padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
+.topo .voltar:hover { background: rgba(255,255,255,.28); }
+
+main { padding: 24px 32px 48px; display: grid; gap: 22px; max-width: 1200px; margin: 0 auto; }
+.cartao { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); padding: 20px 22px; }
+.cartao > h2 { font-size: 19px; color: var(--azul-esc); margin-bottom: 10px; }
+.cartao p { margin: 0 0 10px; }
+.cartao p:last-child { margin-bottom: 0; }
+
+.perguntas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.perg { border: 1px solid var(--borda); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.perg h3 { font-size: 15.5px; color: var(--azul-esc); }
+.perg .linha { font-size: 13.5px; border-radius: 6px; padding: 7px 10px; }
+.perg .hoje { background: #f7f9fb; }
+.perg .depois { background: var(--laranja-claro); }
+.selo { display: inline-block; font: 800 11px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 5px; }
+.selo.ok { background: var(--verde-claro); color: var(--verde); }
+.selo.parcial { background: var(--laranja-claro); color: #8a4500; }
+
+.comparar { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 18px; align-items: start; }
+.hoje-box { border: 2px solid var(--borda); border-radius: 8px; padding: 14px 16px; background: #fafbfc; font-size: 14px; }
+.hoje-box h3 { font-size: 15px; margin-bottom: 8px; }
+.hoje-box ul { margin: 6px 0 0; padding-left: 18px; }
+
+.exemplo { border: 3px dashed var(--vermelho); border-radius: 8px; overflow: hidden; background: #fff; }
+.exemplo-faixa { background: var(--vermelho); color: #fff; font-weight: 700; font-size: 13.5px; padding: 8px 14px; }
+.exemplo-corpo { padding: 16px 18px; }
+.exemplo-corpo h3 { font-size: 18px; color: var(--azul-esc); margin-bottom: 4px; }
+.exemplo-corpo .intro { font-size: 14px; margin: 0 0 12px; }
+.tabela-rolagem { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 640px; }
+th { background: var(--azul-esc); color: #fff; text-align: left; padding: 7px 8px; font-weight: 700; }
+td { padding: 7px 8px; border-bottom: 1px solid var(--borda); vertical-align: top; }
+tr:nth-child(even) td { background: #f6f9fc; }
+tr.falta td { background: var(--vermelho-claro); }
+tr.falta .fmt { color: var(--vermelho); font-weight: 700; }
+td a { font-weight: 700; }
+.indef { color: var(--texto-suave); font-style: italic; }
+.nota-tab { font-size: 12.5px; color: var(--texto-suave); margin: 6px 0 14px; }
+.quadros { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.quadro { padding: 10px 12px; font-size: 13.5px; border-left: 4px solid; border-radius: 4px; }
+.quadro b { display: block; margin-bottom: 2px; }
+.quadro.contato { background: var(--verde-claro); border-color: var(--verde); }
+.quadro.licenca { background: var(--azul-claro); border-color: var(--azul); }
+.quadro.politica { background: var(--laranja-claro); border-color: var(--laranja); }
+
+.mapa { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 0; }
+.mapa td, .mapa th { padding: 8px 10px; }
+.mapa th { background: var(--azul-claro); color: var(--azul-esc); }
+.passos { margin: 0; padding-left: 20px; }
+.passos li { margin-bottom: 6px; }
+.rodape { font-size: 13px; color: var(--texto-suave); text-align: center; padding: 0 32px 28px; }
+
+@media (max-width: 900px) {
+  .topo-int, main { padding-left: 16px; padding-right: 16px; }
+  .perguntas, .comparar, .quadros { grid-template-columns: 1fr; }
+  .mapa { font-size: 13px; }
+}
+</style>
+</head>
+<body>
+<header class="topo">
+  <div class="topo-int">
+    <div>
+      <div class="sobre">Painel WWC · SBC · Critério OD3</div>
+      <h1>Exemplo: a página de Dados Abertos como portal central</h1>
+      <div class="subtitulo">Rascunho de indicação técnica · 22/10/2026 · Para conversa com a equipe que mantém a página</div>
+    </div>
+    <a class="voltar" href="index.html#OD3">← Voltar ao painel (OD3)</a>
+  </div>
+</header>
+
+<main>
+  <section class="cartao">
+    <h2>O que o OD3 pede, em três perguntas</h2>
+    <p>O critério pede os três subcritérios (3 de 3). Hoje SBC atende o primeiro; o segundo e o terceiro dependem de editar a página e publicar planilhas que já existem.</p>
+    <div class="perguntas">
+      <div class="perg">
+        <h3>OD3.1 · Dá para baixar dados em planilha, de graça?</h3>
+        <div><span class="selo ok">Já atende</span></div>
+        <div class="linha hoje"><b>Hoje:</b> contratos e obras em CSV, finanças em XLS, várias planilhas em XLSX e mapas em shapefile, sem login.</div>
+        <div class="linha depois"><b>Melhora:</b> licença aberta explícita e patrimônio em planilha, não só PDF.</div>
+      </div>
+      <div class="perg">
+        <h3>OD3.2 · Há dados separados por bairro e por grupo da população?</h3>
+        <div><span class="selo parcial">Falta o formato</span></div>
+        <div class="linha hoje"><b>Hoje:</b> o Perfil Socioeconômico por Bairro tem idade, sexo, cor ou raça e vulnerabilidade de cada bairro, mas só em PDF.</div>
+        <div class="linha depois"><b>Proposta:</b> as mesmas tabelas em XLSX ou CSV, com o nome do bairro igual ao do mapa de bairros do GeoPortal.</div>
+      </div>
+      <div class="perg">
+        <h3>OD3.3 · Existe um lugar central que explique e aponte para tudo?</h3>
+        <div><span class="selo parcial">Lacuna principal</span></div>
+        <div class="linha hoje"><b>Hoje:</b> a página de Dados Abertos é só texto. Diz que os dados estão "catalogados", mas não lista nenhuma base nem tem links.</div>
+        <div class="linha depois"><b>Proposta:</b> catálogo com uma linha e um link por base, contato e licença (exemplo abaixo).</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cartao">
+    <h2>Hoje e depois</h2>
+    <div class="comparar">
+      <div class="hoje-box">
+        <h3>Hoje: <a href="https://www.saobernardo.sp.gov.br/web/transparencia/dados-abertos" target="_blank" rel="noopener">página de Dados Abertos</a></h3>
+        <ul>
+          <li>texto sobre o que são dados abertos;</li>
+          <li>lista de seis temas (receitas, despesas, patrimônio, contratos, obras, emendas), <b>sem links</b>;</li>
+          <li>base legal e termos de uso informais;</li>
+          <li>sem contato próprio, sem licença, sem descrição das bases;</li>
+          <li>não cita o GeoPortal, o Perfil por Bairro nem as planilhas espalhadas pelo Portal da Transparência.</li>
+        </ul>
+      </div>
+
+      <div class="exemplo" role="figure" aria-label="Exemplo de catálogo">
+        <div class="exemplo-faixa">EXEMPLO: como o bloco novo da página poderia ficar (os links levam aos dados reais)</div>
+        <div class="exemplo-corpo">
+          <h3>Catálogo de dados abertos</h3>
+          <p class="intro">Todos os conjuntos de dados publicados pela Prefeitura, em um só lugar. Clique no nome para abrir.</p>
+          <div class="tabela-rolagem">
+            <table>
+              <thead><tr><th>Conjunto de dados</th><th>Secretaria responsável</th><th>Formato</th><th>Atualização</th></tr></thead>
+              <tbody>
+                <tr><td><a href="https://transparencia.saobernardo.sp.gov.br/contratos" target="_blank" rel="noopener">Contratos e aditamentos</a></td><td class="indef">a definir pela equipe</td><td class="fmt">CSV, Excel, PDF</td><td>Diária</td></tr>
+                <tr><td><a href="https://obras.saobernardo.sp.gov.br/transparencia/obras-em-andamento" target="_blank" rel="noopener">Obras em andamento</a></td><td class="indef">a definir pela equipe</td><td class="fmt">CSV, Excel, PDF</td><td>Diária</td></tr>
+                <tr><td><a href="https://transparencia-fiscal.saobernardo.sp.gov.br/transparencia-fiscal/municipio-sbc/inicio" target="_blank" rel="noopener">Receitas e despesas</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLS</td><td>Mensal</td></tr>
+                <tr><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/emendas-parlamentares" target="_blank" rel="noopener">Emendas parlamentares</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLSX</td><td class="indef">a informar</td></tr>
+                <tr><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/renuncia-de-receita1" target="_blank" rel="noopener">Renúncia de receita</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLSX, TXT</td><td>Mensal (2021 a 2025)</td></tr>
+                <tr><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/receitas-e-destinacao-de-multas-de-transito" target="_blank" rel="noopener">Multas de trânsito: receita e destinação</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLSX</td><td>Anual (2019 a 2024)</td></tr>
+                <tr><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/doacoes" target="_blank" rel="noopener">Doações recebidas</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLSX</td><td class="indef">a informar</td></tr>
+                <tr><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/planilha-de-obras-de-exercicios-anteriores" target="_blank" rel="noopener">Obras de exercícios anteriores</a></td><td class="indef">a definir pela equipe</td><td class="fmt">XLSX, TXT</td><td>Trimestral desde 2020 (série 2016 a mar/2026)</td></tr>
+                <tr><td><a href="https://geo.saobernardo.sp.gov.br/" target="_blank" rel="noopener">Mapas: bairros, zoneamento, equipamentos públicos e mais 10 camadas</a></td><td>Planejamento Urbano (fonte declarada no dicionário)</td><td class="fmt">Shapefile + dicionário XLSX</td><td>Anual ou conforme demanda</td></tr>
+                <tr class="falta"><td><a href="https://www.saobernardo.sp.gov.br/web/sbc/perfilsocioeconomicobairros" target="_blank" rel="noopener">Perfil socioeconômico por bairro (idade, sexo, cor ou raça, IPVS)</a></td><td>Planejamento Urbano</td><td class="fmt">Hoje só PDF → publicar em XLSX</td><td>Anual</td></tr>
+                <tr class="falta"><td><a href="https://www.saobernardo.sp.gov.br/web/transparencia/patrimonio" target="_blank" rel="noopener">Patrimônio público</a></td><td class="indef">a definir pela equipe</td><td class="fmt">Hoje só PDF → publicar em XLSX</td><td class="indef">a informar</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="nota-tab">Linhas em vermelho: o dado existe, mas ainda não está em formato aberto. A lista completa de partida está no inventário da ficha OD3.</p>
+          <div class="quadros">
+            <div class="quadro contato"><b>Fale com a equipe de dados abertos</b>E-mail institucional: <span class="indef">a definir pela equipe</span>. Peça a abertura de uma base nova.</div>
+            <div class="quadro licenca"><b>Licença</b>Os dados podem ser usados livremente, com citação da fonte: Creative Commons Atribuição 4.0 (CC BY 4.0).</div>
+            <div class="quadro politica"><b>Política de dados abertos</b>Link para o decreto, quando publicado (critério OD1).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cartao">
+    <h2>O que cada parte do exemplo atende</h2>
+    <div class="tabela-rolagem">
+      <table class="mapa">
+        <thead><tr><th>Parte do exemplo</th><th>Subcritério</th><th>Por quê</th></tr></thead>
+        <tbody>
+          <tr><td>Catálogo com link para cada base, inclusive as de outros sites</td><td>OD3.3</td><td>O critério pede que o portal principal aponte claramente para os dados publicados em sites separados.</td></tr>
+          <tr><td>Secretaria responsável, formato e atualização em cada linha</td><td>OD3.3</td><td>Contextualização: o modelo citado pela WWC (Corrientes, Argentina) mostra em cada base a área responsável, a frequência e a última atualização.</td></tr>
+          <tr><td>Contato da equipe</td><td>OD3.3</td><td>O critério pede "informações de contato".</td></tr>
+          <tr><td>Licença aberta</td><td>OD3.1</td><td>Deixa claro que o dado é gratuito e reutilizável; hoje há só termos informais.</td></tr>
+          <tr><td>Perfil por Bairro em planilha</td><td>OD3.2</td><td>É o dado desagregado por território e por grupo da população que o critério pede, em formato legível por máquina.</td></tr>
+          <tr><td>Link para a política</td><td>OD3.3 (e OD1)</td><td>O critério cita "políticas e/ou relatórios" como contexto.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="cartao">
+    <h2>O que a equipe precisa definir</h2>
+    <ol class="passos">
+      <li>Qual unidade mantém a página de Dados Abertos e pode editá-la.</li>
+      <li>A secretaria responsável e a frequência de atualização de cada base.</li>
+      <li>O e-mail institucional de contato.</li>
+      <li>Se o Planejamento Urbano pode publicar as tabelas do Perfil por Bairro em planilha.</li>
+      <li>Se todas as bases do inventário entram no catálogo (algumas planilhas precisam de revisão antes).</li>
+    </ol>
+  </section>
+</main>
+
+<div class="rodape">Exemplo preparado para o Painel WWC · SBC. Rascunho de indicação técnica; a forma final da página é decisão do município.</div>
+</body>
+</html>
