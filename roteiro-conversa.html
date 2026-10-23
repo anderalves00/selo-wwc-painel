@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Roteiro com a equipe</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
+  --laranja: #ff8200; --laranja-claro: #fff1e3;
+  --verde: #288827; --verde-claro: #e6f4e6;
+  --texto: #2b2b2b; --suave: #5f6368; --borda: #dde3e8; --fundo: #f3f6f9;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 "Open Sans", Arial, sans-serif; }
+a { color: var(--azul); }
+header { background: linear-gradient(90deg, var(--azul-esc), var(--azul)); color: #fff; border-bottom: 5px solid var(--laranja); padding: 18px 24px; }
+header .sobre { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; opacity: .85; font-weight: 700; }
+header h1 { margin: 4px 0 2px; font-size: 24px; }
+header p { margin: 0; font-size: 14px; opacity: .9; }
+main { max-width: 980px; margin: 0 auto; padding: 20px 16px 48px; display: grid; gap: 14px; }
+.ferramentas { display: flex; flex-wrap: wrap; gap: 8px; }
+.ferramentas button { border: 1px solid var(--azul); background: #fff; color: var(--azul); padding: 6px 12px; border-radius: 8px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
+details.passo { background: #fff; border: 1px solid var(--borda); border-radius: 10px; box-shadow: 0 1px 3px rgba(15,40,70,.08); }
+details.passo > summary { list-style: none; cursor: pointer; padding: 14px 18px; display: flex; align-items: center; gap: 14px; }
+details.passo > summary::-webkit-details-marker { display: none; }
+.num { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--azul); color: #fff; display: grid; place-items: center; font-weight: 800; }
+.tit { font-weight: 700; font-size: 16.5px; }
+.sub { font-size: 13px; color: var(--suave); }
+.seta { margin-left: auto; color: var(--azul); font-weight: 800; transition: transform .15s; }
+details[open] > summary .seta { transform: rotate(90deg); }
+.corpo { padding: 2px 18px 18px 66px; border-top: 1px solid var(--borda); }
+.corpo h3 { font-size: 13.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--azul-esc); margin: 16px 0 6px; }
+.corpo p { margin: 0 0 8px; }
+.corpo ul, .corpo ol { margin: 0 0 8px; padding-left: 20px; }
+.corpo li { margin: 3px 0; }
+.fala { background: var(--azul-claro); border-left: 4px solid var(--azul); padding: 10px 12px; border-radius: 0 8px 8px 0; margin: 6px 0 8px; }
+.fala::before { content: "Para dizer: "; font-weight: 700; color: var(--azul-esc); }
+.atencao { background: var(--laranja-claro); border-left: 4px solid var(--laranja); padding: 10px 12px; border-radius: 0 8px 8px 0; margin: 6px 0 8px; }
+.atencao::before { content: "Atenção: "; font-weight: 700; color: #8a4500; }
+.perguntas li { list-style: none; margin-left: -20px; }
+.perguntas label { display: flex; gap: 8px; align-items: flex-start; cursor: pointer; }
+.perguntas input { margin-top: 4px; flex: none; }
+.perguntas input:checked + span { color: var(--suave); text-decoration: line-through; }
+.mostrar a { display: inline-block; margin: 2px 6px 2px 0; padding: 5px 10px; border: 1px solid var(--azul); border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 13.5px; background: #fff; }
+.rodape { text-align: center; font-size: 12.5px; color: var(--suave); }
+@media (max-width: 640px) { .corpo { padding-left: 18px; } }
+@media print { .ferramentas { display: none; } details.passo { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="sobre">Uso pessoal · página não listada no painel</div>
+  <h1>Roteiro da conversa com a equipe</h1>
+  <p>Selo WWC · São Bernardo do Campo · situação em 23/10/2026 · um passo por critério</p>
+</header>
+
+<main>
+  <div class="ferramentas">
+    <button type="button" id="abrir">Expandir tudo</button>
+    <button type="button" id="fechar">Recolher tudo</button>
+    <button type="button" id="limpar">Desmarcar as perguntas</button>
+  </div>
+
+  <details class="passo">
+    <summary><span class="num">1</span><span><span class="tit">Abertura: onde estamos</span><br><span class="sub">2 minutos · contexto e objetivo da conversa</span></span><span class="seta">›</span></summary>
+    <div class="corpo">
+      <div class="fala">O envio na plataforma da WWC vai até 18/12. Combinamos ter as respostas prontas para vocês validarem na primeira semana de dezembro. O foco são 16 critérios, das áreas de Gestão de Dados, Dados Abertos e Impacto na Comunidade.</div>
+      <div class="fala">Até agora analisamos três: DM1 (governança de dados), OD1 (política de dados abertos) e OD3 (portal de dados abertos). Nos três, a conclusão é a mesma: dá para atender até o prazo, mas depende de ações do município. Hoje trago o que encontramos, o que recomendamos e o que preciso de vocês.</div>
+      <h3>Lembrar</h3>
+      <ul>
+        <li>Nada é inserido na plataforma sem a validação de vocês.</li>
+        <li>As recomendações sobre forma do ato, colegiado e coordenação são indicação técnica: a decisão é do município (DTI e Procuradoria).</li>
+        <li>Tudo está no painel, que pode ser aberto durante a conversa.</li>
+      </ul>
+      <div class="mostrar"><a href="https://anderalves00.github.io/selo-wwc-painel/" target="_blank" rel="noopener">Abrir o painel</a></div>
+    </div>
+  </details>
+
+  <details class="passo">
+    <summary><span class="num">2</span><span><span class="tit">DM1 · Governança de dados (essencial)</span><br><span class="sub">Sem ele não há certificação · pede 2 de 3 · revalidado</span></span><span class="seta">›</span></summary>
+    <div class="corpo">
+      <h3>O que a WWC pede</h3>
+      <p>Um grupo de governança de dados aprovado pelo prefeito, com objetivos definidos, que se reúna pelo menos a cada trimestre e que tenha princípios de transparência e uso ético de dados.</p>
+      <h3>Onde SBC está</h3>
+      <div class="fala">O Comitê Gestor de Proteção de Dados (Decreto 22.963/2025) já tem os 8 membros nomeados pela Portaria 10.510/2026, e a primeira reunião foi proposta para setembro. É o que temos de mais próximo. O limite é que o escopo dele é a LGPD, e não a governança de dados como um todo.</div>
+      <p>Também não encontramos estratégia de dados do DTI (a competência existe na Lei 7.367/2025, art. 645, XIII) nem atas do GT Cidade Inteligente.</p>
+      <h3>O que recomendamos</h3>
+      <ol>
+        <li><b>Para 18/12:</b> o Comitê se reunir com ata, pelo menos duas vezes antes do envio, com pauta de governança de dados.</li>
+        <li><b>Em paralelo:</b> aproveitar a reescrita do art. 5º do decreto do SBC+i, pedida pela Procuradoria, para incluir reunião trimestral com ata e princípios de uso ético de dados. A proposta de redação já está pronta.</li>
+      </ol>
+      <h3>Perguntas para a equipe</h3>
+      <ul class="perguntas">
+        <li><label><input type="checkbox" data-id="dm1-1"><span>O Comitê de Proteção de Dados já se reuniu? Existem atas ou pautas desde agosto?</span></label></li>
+        <li><label><input type="checkbox" data-id="dm1-2"><span>O GT Cidade Inteligente se reuniu? Onde estão os registros (o processo 65650/2026 foi arquivado sem atas)?</span></label></li>
+        <li><label><input type="checkbox" data-id="dm1-3"><span>O DTI tem algum documento de estratégia, padrões ou políticas de dados?</span></label></li>
+        <li><label><input type="checkbox" data-id="dm1-4"><span>As reuniões de coordenação do SBC+i ou do Gesgov têm registro que trate de dados?</span></label></li>
+        <li><label><input type="checkbox" data-id="dm1-5"><span>Quem leva à Secretaria de Administração a proposta de ajustes ao decreto do SBC+i, e quando?</span></label></li>
+      </ul>
+      <div class="atencao">Na plataforma o DM1 fica "Em andamento" até as atas existirem.</div>
+      <div class="mostrar"><a href="https://anderalves00.github.io/selo-wwc-painel/#DM1" target="_blank" rel="noopener">Cartão do DM1</a><a href="https://anderalves00.github.io/selo-wwc-painel/proposta-sbc-mais-i.html" target="_blank" rel="noopener">Proposta para o decreto do SBC+i</a></div>
+    </div>
+  </details>
+
+  <details class="passo">
+    <summary><span class="num">3</span><span><span class="tit">OD1 · Política de dados abertos</span><br><span class="sub">Pede 3 de 4 · sem janela de tempo</span></span><span class="seta">›</span></summary>
+    <div class="corpo">
+      <h3>O que a WWC pede</h3>
+      <p>Uma política de dados abertos escrita e publicada, com governança, escuta do público, relatório pelo menos anual e regras claras sobre o que pode ou não ser aberto.</p>
+      <h3>Onde SBC está</h3>
+      <div class="fala">SBC não tem política de dados abertos. A própria página do portal diz que a regulamentação "está em estudo". Na revisão do Raio-X, a WWC já apontou isso e rebaixou a questão para "Em andamento".</div>
+      <div class="fala">A Câmara já pediu essa política (Indicação 14.825/2025), e o Executivo só respondeu que encaminhou à secretaria. A minuta pode ser a resposta concreta.</div>
+      <p>A WWC não exige lei nem decreto: basta uma política escrita e formalizada. Recomendamos decreto porque obriga todas as secretarias.</p>
+      <h3>O que recomendamos</h3>
+      <ul>
+        <li>Um decreto curto da Política Municipal de Dados Abertos. A minuta está pronta (23 artigos), com o porquê de cada um, e cobre os quatro subcritérios.</li>
+        <li>Basta o decreto publicado antes de 18/12; não depende de reuniões.</li>
+      </ul>
+      <h3>Perguntas para a equipe</h3>
+      <ul class="perguntas">
+        <li><label><input type="checkbox" data-id="od1-1"><span>Existe minuta, estudo ou processo de regulamentação da Lei 14.129 no município?</span></label></li>
+        <li><label><input type="checkbox" data-id="od1-2"><span>Os representantes por órgão da Lei de Acesso à Informação (Decreto 18.882, art. 7º) foram nomeados? A Comissão Mista foi constituída?</span></label></li>
+        <li><label><input type="checkbox" data-id="od1-3"><span>Qual unidade mantém a página de Dados Abertos: a Controladoria ou o DTI?</span></label></li>
+        <li><label><input type="checkbox" data-id="od1-4"><span>O que é o portal de dados abertos "em desenvolvimento" citado no PPA, e quando fica pronto?</span></label></li>
+        <li><label><input type="checkbox" data-id="od1-5"><span>Quais documentos o DTI vai encaminhar à Procuradoria? Algum trata de dados abertos ou da Lei 14.129?</span></label></li>
+      </ul>
+      <div class="mostrar"><a href="https://anderalves00.github.io/selo-wwc-painel/#OD1" target="_blank" rel="noopener">Cartão do OD1</a><a href="https://anderalves00.github.io/selo-wwc-painel/proposta-od1-dados-abertos.html" target="_blank" rel="noopener">Minuta do decreto</a></div>
+    </div>
+  </details>
+
+  <details class="passo">
+    <summary><span class="num">4</span><span><span class="tit">OD3 · Portal de dados abertos</span><br><span class="sub">Pede 3 de 3 · resposta na plataforma: "Sim" (manter)</span></span><span class="seta">›</span></summary>
+    <div class="corpo">
+      <h3>O que a WWC pede</h3>
+      <p>Um lugar central na internet com os dados abertos: em planilha e de graça, separados por bairro e por grupo da população quando possível, com contato e com links para os outros sites onde houver dados.</p>
+      <h3>Onde SBC está</h3>
+      <div class="fala">SBC já tem muitos dados em planilha: contratos, obras, finanças, renúncia de receita, multas, doações e mapas no GeoPortal. O problema é que estão espalhados, e a página de Dados Abertos é só texto: não tem lista de bases nem links.</div>
+      <div class="fala">Os dados por bairro existem no Perfil Socioeconômico por Bairro, mas só em PDF.</div>
+      <h3>Decisão a confirmar</h3>
+      <div class="atencao">A plataforma já traz "Sim" no OD3, copiado da resposta de SBC no Raio-X. A ideia é manter. Mas, para o "Sim" se sustentar na revisão, três coisas precisam estar publicadas antes de 18/12: o catálogo na página de Dados Abertos, as tabelas do Perfil por Bairro em planilha e o texto da resposta corrigido (ele diz que o patrimônio é legível por máquina, mas só existe em PDF).</div>
+      <h3>O que recomendamos</h3>
+      <ol>
+        <li>Transformar a página de Dados Abertos num catálogo: uma linha por base, com link, responsável, formato e atualização, além de contato e licença.</li>
+        <li>Publicar as tabelas do Perfil por Bairro em planilha.</li>
+        <li>Corrigir o link de patrimônio e reescrever o texto da resposta.</li>
+      </ol>
+      <h3>Perguntas para a equipe</h3>
+      <ul class="perguntas">
+        <li><label><input type="checkbox" data-id="od3-1"><span>Quem mantém e pode editar a página de Dados Abertos?</span></label></li>
+        <li><label><input type="checkbox" data-id="od3-2"><span>O que é o portal "em desenvolvimento" do PPA, e se sai antes de 18/12?</span></label></li>
+        <li><label><input type="checkbox" data-id="od3-3"><span>O Planejamento Urbano pode publicar as tabelas do Perfil por Bairro e do Painel Estatístico em planilha?</span></label></li>
+        <li><label><input type="checkbox" data-id="od3-4"><span>O GeoPortal pode entrar como parte do portal? Quem responde pelas camadas?</span></label></li>
+        <li><label><input type="checkbox" data-id="od3-5"><span>As planilhas da consulta pública do PPA (bancos 08 e 09) podem ser revistas com quem publicou? Um estudo anterior registrou que elas trazem dados pessoais de moradores que participaram; isso precisa ser resolvido antes de irem para o catálogo.</span></label></li>
+        <li><label><input type="checkbox" data-id="od3-6"><span>O sistema de gastos com pessoal está funcionando? Os contratos de 2025 estão todos no sistema (são 100, contra 295 em 2024)?</span></label></li>
+        <li><label><input type="checkbox" data-id="od3-7"><span>O Planejamento Urbano vai pedir ao IBGE o acesso aos microdados do Censo 2022 para atualizar a renda (hoje é de 2010)?</span></label></li>
+      </ul>
+      <div class="mostrar"><a href="https://anderalves00.github.io/selo-wwc-painel/proposta-od3-catalogo.html" target="_blank" rel="noopener">Exemplo do catálogo</a><a href="https://www.saobernardo.sp.gov.br/web/transparencia/dados-abertos" target="_blank" rel="noopener">Página de Dados Abertos hoje</a><a href="https://anderalves00.github.io/selo-wwc-painel/#OD3" target="_blank" rel="noopener">Cartão do OD3</a></div>
+    </div>
+  </details>
+
+  <details class="passo">
+    <summary><span class="num">5</span><span><span class="tit">Fechamento: próximos passos</span><br><span class="sub">2 minutos · combinar prazos e responsáveis</span></span><span class="seta">›</span></summary>
+    <div class="corpo">
+      <div class="fala">Para fechar: preciso das respostas às perguntas de hoje para atualizar as fichas. Enquanto isso, sigo com os próximos critérios de Gestão de Dados (DM2 em diante).</div>
+      <h3>Combinar antes de sair</h3>
+      <ul class="perguntas">
+        <li><label><input type="checkbox" data-id="fim-1"><span>Quem responde cada grupo de perguntas e até quando.</span></label></li>
+        <li><label><input type="checkbox" data-id="fim-2"><span>Por onde mandar os documentos (atas, minutas, processos).</span></label></li>
+        <li><label><input type="checkbox" data-id="fim-3"><span>Data da próxima conversa.</span></label></li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="rodape">Página de uso pessoal, publicada sem link a partir do painel. A fonte fica no repositório privado (roteiro/conversa-equipe.html). As marcações das perguntas ficam salvas só neste navegador.</div>
+</main>
+<script>
+(function () {
+  var CHAVE = 'roteiro-equipe-marcas';
+  var marcas = {};
+  try { marcas = JSON.parse(localStorage.getItem(CHAVE) || '{}'); } catch (e) { marcas = {}; }
+  var caixas = document.querySelectorAll('.perguntas input[type=checkbox]');
+  caixas.forEach(function (c) {
+    c.checked = !!marcas[c.dataset.id];
+    c.addEventListener('change', function () {
+      marcas[c.dataset.id] = c.checked;
+      try { localStorage.setItem(CHAVE, JSON.stringify(marcas)); } catch (e) {}
+    });
+  });
+  document.getElementById('abrir').onclick = function () { document.querySelectorAll('details.passo').forEach(function (d) { d.open = true; }); };
+  document.getElementById('fechar').onclick = function () { document.querySelectorAll('details.passo').forEach(function (d) { d.open = false; }); };
+  document.getElementById('limpar').onclick = function () {
+    caixas.forEach(function (c) { c.checked = false; });
+    marcas = {};
+    try { localStorage.removeItem(CHAVE); } catch (e) {}
+  };
+})();
+</script>
+</body>
+</html>
