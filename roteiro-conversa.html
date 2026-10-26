@@ -6,11 +6,13 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Roteiro com a equipe</title>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<!-- Gerado por .claude/scripts/roteiro.py: não editar à mão. -->
 <style>
 :root {
   --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
   --laranja: #ff8200; --laranja-claro: #fff1e3;
   --verde: #288827; --verde-claro: #e6f4e6;
+  --roxo: #5a3d8a; --roxo-claro: #ece6f6;
   --texto: #2b2b2b; --suave: #5f6368; --borda: #dde3e8; --fundo: #f3f6f9;
   color-scheme: light;
 }
@@ -22,8 +24,9 @@ header .sobre { font-size: 12px; text-transform: uppercase; letter-spacing: .05e
 header h1 { margin: 4px 0 2px; font-size: 24px; }
 header p { margin: 0; font-size: 14px; opacity: .9; }
 main { max-width: 980px; margin: 0 auto; padding: 20px 16px 48px; display: grid; gap: 14px; }
-.ferramentas { display: flex; flex-wrap: wrap; gap: 8px; }
+.ferramentas { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .ferramentas button { border: 1px solid var(--azul); background: #fff; color: var(--azul); padding: 6px 12px; border-radius: 8px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
+.ferramentas .dica-uso { font-size: 13px; color: var(--suave); }
 details.passo { background: #fff; border: 1px solid var(--borda); border-radius: 10px; box-shadow: 0 1px 3px rgba(15,40,70,.08); }
 details.passo > summary { list-style: none; cursor: pointer; padding: 14px 18px; display: flex; align-items: center; gap: 14px; }
 details.passo > summary::-webkit-details-marker { display: none; }
@@ -41,21 +44,41 @@ details[open] > summary .seta { transform: rotate(90deg); }
 .fala::before { content: "Para dizer: "; font-weight: 700; color: var(--azul-esc); }
 .atencao { background: var(--laranja-claro); border-left: 4px solid var(--laranja); padding: 10px 12px; border-radius: 0 8px 8px 0; margin: 6px 0 8px; }
 .atencao::before { content: "Atenção: "; font-weight: 700; color: #8a4500; }
+.nota { font-size: 13.5px; color: var(--suave); }
 .perguntas li { list-style: none; margin-left: -20px; }
 .perguntas label { display: flex; gap: 8px; align-items: flex-start; cursor: pointer; }
 .perguntas input { margin-top: 4px; flex: none; }
 .perguntas input:checked + span { color: var(--suave); text-decoration: line-through; }
 .mostrar a { display: inline-block; margin: 2px 6px 2px 0; padding: 5px 10px; border: 1px solid var(--azul); border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 13.5px; background: #fff; }
 .rodape { text-align: center; font-size: 12.5px; color: var(--suave); }
+
+/* Citações: negrito e sublinhado; o trecho aparece ao passar o mouse, focar com o teclado ou tocar */
+.cit { font-weight: 700; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 2px; text-decoration-color: var(--azul); cursor: help; border-radius: 3px; }
+.cit:hover, .cit:focus, .cit.ativa { background: #fff6c9; outline: none; }
+#dica { position: absolute; z-index: 50; max-width: min(520px, calc(100vw - 24px)); background: #fff; border: 1px solid #c9d3dc; border-radius: 10px; box-shadow: 0 8px 24px rgba(15,40,70,.18); padding: 12px 14px; font-size: 13.5px; line-height: 1.5; display: none; }
+#dica.visivel { display: block; }
+#dica .cab { display: flex; gap: 8px; align-items: flex-start; justify-content: space-between; margin-bottom: 6px; }
+#dica .rot { font-weight: 800; color: var(--azul-esc); }
+#dica .fechar { border: 0; background: none; font-size: 18px; line-height: 1; cursor: pointer; color: var(--suave); padding: 0 2px; }
+#dica .tipo { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: 2px 7px; border-radius: 999px; margin-bottom: 6px; }
+#dica .tipo.texto { background: var(--verde-claro); color: var(--verde); }
+#dica .tipo.nota { background: var(--laranja-claro); color: #8a4500; }
+#dica .tipo.proposta { background: var(--roxo-claro); color: var(--roxo); }
+#dica .trecho p { margin: 0 0 6px; }
+#dica .trecho.texto { border-left: 3px solid var(--verde); padding-left: 9px; font-family: Georgia, "Times New Roman", serif; font-size: 14px; }
+#dica .trecho.proposta { border-left: 3px solid var(--roxo); padding-left: 9px; font-family: Georgia, "Times New Roman", serif; font-size: 14px; }
+#dica .fonte { margin-top: 6px; font-size: 12.5px; color: var(--suave); }
+#dica .abrir { display: inline-block; margin-top: 6px; font-weight: 700; font-size: 12.5px; }
+
 @media (max-width: 640px) { .corpo { padding-left: 18px; } }
-@media print { .ferramentas { display: none; } details.passo { break-inside: avoid; } }
+@media print { .ferramentas, #dica { display: none !important; } details.passo { break-inside: avoid; } .cit { background: none; } }
 </style>
 </head>
 <body>
 <header>
   <div class="sobre">Uso pessoal · página não listada no painel</div>
   <h1>Roteiro da conversa com a equipe</h1>
-  <p>Selo WWC · São Bernardo do Campo · situação em 23/10/2026 · um passo por critério</p>
+  <p>Selo WWC · São Bernardo do Campo · situação em 26/10/2026 · um passo por critério</p>
 </header>
 
 <main>
@@ -63,122 +86,196 @@ details[open] > summary .seta { transform: rotate(90deg); }
     <button type="button" id="abrir">Expandir tudo</button>
     <button type="button" id="fechar">Recolher tudo</button>
     <button type="button" id="limpar">Desmarcar as perguntas</button>
+    <span class="dica-uso">Passe o mouse (ou toque) nos trechos em <span class="cit" tabindex="-1" style="cursor:default">destaque</span> para ver o texto citado.</span>
   </div>
 
   <details class="passo">
     <summary><span class="num">1</span><span><span class="tit">Abertura: onde estamos</span><br><span class="sub">2 minutos · contexto e objetivo da conversa</span></span><span class="seta">›</span></summary>
     <div class="corpo">
-      <div class="fala">O envio na plataforma da WWC vai até 18/12. Combinamos ter as respostas prontas para vocês validarem na primeira semana de dezembro. O foco são 16 critérios, das áreas de Gestão de Dados, Dados Abertos e Impacto na Comunidade.</div>
-      <div class="fala">Até agora analisamos três: DM1 (governança de dados), OD1 (política de dados abertos) e OD3 (portal de dados abertos). Nos três, a conclusão é a mesma: dá para atender até o prazo, mas depende de ações do município. Hoje trago o que encontramos, o que recomendamos e o que preciso de vocês.</div>
-      <h3>Lembrar</h3>
-      <ul>
-        <li>Nada é inserido na plataforma sem a validação de vocês.</li>
-        <li>As recomendações sobre forma do ato, colegiado e coordenação são indicação técnica: a decisão é do município (DTI e Procuradoria).</li>
-        <li>Tudo está no painel, que pode ser aberto durante a conversa.</li>
-      </ul>
-      <div class="mostrar"><a href="https://anderalves00.github.io/selo-wwc-painel/" target="_blank" rel="noopener">Abrir o painel</a></div>
+  <div class="fala">O envio na plataforma da WWC vai até 18/12. Combinamos ter as respostas prontas para vocês validarem na primeira semana de dezembro. O foco são 16 critérios, das áreas de Gestão de Dados, Dados Abertos e Impacto na Comunidade.</div>
+  <div class="fala">Até agora analisamos três: DM1 (governança de dados), OD1 (política de dados abertos) e OD3 (portal de dados abertos). Nos três, dá para atender até o prazo, mas depende de ações do município. Desde a última conversa recebemos o decreto de governança digital e de dados do DTI (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sb101842">SB 101842/2026</span>), que mudou a recomendação do DM1 e do OD1.</div>
+  <h3>Lembrar</h3>
+  <ul>
+    <li>Nada é inserido na plataforma sem a validação de vocês.</li>
+    <li>As recomendações sobre forma do ato, colegiado e coordenação são indicação técnica: a decisão é do município (DTI e Procuradoria).</li>
+    <li>As recomendações de texto têm versões que não se apagam. Hoje levo a v02 do DM1 e a v02 do OD1 para vocês aprovarem ou ajustarem.</li>
+  </ul>
+  <div class="mostrar"><a href="https://anderalves00.github.io/selo-wwc-painel/" target="_blank" rel="noopener">Abrir o painel</a></div>
     </div>
   </details>
 
   <details class="passo">
     <summary><span class="num">2</span><span><span class="tit">DM1 · Governança de dados (essencial)</span><br><span class="sub">Sem ele não há certificação · pede 2 de 3 · revalidado</span></span><span class="seta">›</span></summary>
     <div class="corpo">
-      <h3>O que a WWC pede</h3>
-      <p>Um grupo de governança de dados aprovado pelo prefeito, com objetivos definidos, que se reúna pelo menos a cada trimestre e que tenha princípios de transparência e uso ético de dados.</p>
-      <h3>Onde SBC está</h3>
-      <div class="fala">O Comitê Gestor de Proteção de Dados (Decreto 22.963/2025) já tem os 8 membros nomeados pela Portaria 10.510/2026, e a primeira reunião foi proposta para setembro. É o que temos de mais próximo. O limite é que o escopo dele é a LGPD, e não a governança de dados como um todo.</div>
-      <p>Também não encontramos estratégia de dados do DTI (a competência existe na Lei 7.367/2025, art. 645, XIII) nem atas do GT Cidade Inteligente.</p>
-      <h3>O que recomendamos</h3>
-      <ol>
-        <li><b>Para 18/12:</b> o Comitê se reunir com ata, pelo menos duas vezes antes do envio, com pauta de governança de dados.</li>
-        <li><b>Em paralelo:</b> aproveitar a reescrita do art. 5º do decreto do SBC+i, pedida pela Procuradoria, para incluir reunião trimestral com ata e princípios de uso ético de dados. A proposta de redação já está pronta.</li>
-      </ol>
-      <h3>Perguntas para a equipe</h3>
-      <ul class="perguntas">
-        <li><label><input type="checkbox" data-id="dm1-1"><span>O Comitê de Proteção de Dados já se reuniu? Existem atas ou pautas desde agosto?</span></label></li>
-        <li><label><input type="checkbox" data-id="dm1-2"><span>O GT Cidade Inteligente se reuniu? Onde estão os registros (o processo 65650/2026 foi arquivado sem atas)?</span></label></li>
-        <li><label><input type="checkbox" data-id="dm1-3"><span>O DTI tem algum documento de estratégia, padrões ou políticas de dados?</span></label></li>
-        <li><label><input type="checkbox" data-id="dm1-4"><span>As reuniões de coordenação do SBC+i ou do Gesgov têm registro que trate de dados?</span></label></li>
-        <li><label><input type="checkbox" data-id="dm1-5"><span>Quem leva à Secretaria de Administração a proposta de ajustes ao decreto do SBC+i, e quando?</span></label></li>
-      </ul>
-      <div class="atencao">Na plataforma o DM1 fica "Em andamento" até as atas existirem.</div>
-      <div class="mostrar"><a href="https://anderalves00.github.io/selo-wwc-painel/#DM1" target="_blank" rel="noopener">Cartão do DM1</a><a href="https://anderalves00.github.io/selo-wwc-painel/proposta-sbc-mais-i.html" target="_blank" rel="noopener">Proposta para o decreto do SBC+i</a></div>
+  <h3>O que a WWC pede</h3>
+  <p>Um grupo de governança de dados aprovado pelo prefeito, com objetivos definidos, que se reúna pelo menos a cada trimestre e que tenha princípios de transparência e uso ético de dados.</p>
+  <h3>Onde SBC está</h3>
+  <div class="fala">O DTI mandou à Procuradoria, em 23/10, a minuta do decreto da Política e do Programa Municipal de Governança Digital e de Dados (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sb101842">SB 101842/2026</span>). Publicado antes de 18/12, ele atende dois dos três pontos do DM1: objetivos aprovados pelo prefeito e princípios com prestação de contas pública (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sb_art35">relatório semestral, art. 35</span>).</div>
+  <div class="fala">O terceiro ponto pede reuniões ao menos a cada trimestre. O decreto cria o comitê que faria isso, o CGD (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sb_art11">art. 11</span>), com reuniões mensais e depois a cada dois meses (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sb_art12_2">art. 12, § 2º</span>). Mas o decreto só vale 90 dias depois de publicado (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sb_art40">art. 40</span>). Até 18/12, o que temos é o Comitê Gestor de Proteção de Dados (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="dec22963_art3">Decreto 22.963/2025, art. 3º</span>), com os membros nomeados pela <span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="port10510">Portaria 10.510/2026</span>. Se ele se reunir com ata, cobre essa parte.</div>
+  <p>Não encontramos estratégia de dados do DTI (a tarefa está na <span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="lei7367_645">Lei 7.367/2025, art. 645, XIII</span>) nem atas do GT Cidade Inteligente (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="proc65650">processo 65650/2026</span>).</p>
+  <div class="atencao">A proposta técnica do decreto trata como projeto o PL 25/2026, que já é a <span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="lei7564">Lei 7.564/2026</span>. Não muda nada para a governança de dados, mas vale avisar o DTI.</div>
+  <h3>O que recomendamos</h3>
+  <ol>
+    <li><b>Para 18/12:</b> o Comitê de Proteção de Dados se reunir com ata, pelo menos duas vezes antes do envio, com pauta de governança de dados.</li>
+    <li><b>Enquanto o decreto está na Procuradoria:</b> levar à Secretaria de Administração as 9 alterações possíveis da DM1 v02. As principais: vigência na data da publicação (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sb_art40">art. 40</span>); "uso ético" e "equidade" entre os princípios (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sb_art4">art. 4º</span>), o que também segue a estratégia federal (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="engd">recomendações 5.1 e 5.4</span>); objetivos de dados (art. 3º); competência de dados do CGD (art. 12); e o conteúdo mínimo da regulamentação de dados (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sb_art25">art. 25</span>).</li>
+    <li><b>Decreto do SBC+i:</b> a proposta de ajustes foi arquivada, porque o decreto do DTI já cobre tudo. Fica só um artigo que remeta à nova Política (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sbcmaisi_remissao">texto sugerido</span>). A reescrita do <span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sbcmaisi_art5">art. 5º</span>, pedida pela Procuradoria, continua com a Secretaria de Administração.</li>
+  </ol>
+  <h3>Perguntas para a equipe</h3>
+  <ul class="perguntas">
+    <li><label><input type="checkbox" data-id="dm1-1"><span>O Comitê de Proteção de Dados já se reuniu? Existem atas ou pautas desde agosto?</span></label></li>
+    <li><label><input type="checkbox" data-id="dm1-2"><span>O GT Cidade Inteligente se reuniu? Onde estão os registros (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="proc65650">o processo foi arquivado sem atas</span>)?</span></label></li>
+    <li><label><input type="checkbox" data-id="dm1-3"><span>O DTI tem algum documento de estratégia, padrões ou políticas de dados (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="lei7367_645">art. 645, XIII</span>)?</span></label></li>
+    <li><label><input type="checkbox" data-id="dm1-4"><span>As reuniões de coordenação do SBC+i ou do <span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="gesgov">Gesgov</span> têm registro que trate de dados?</span></label></li>
+    <li><label><input type="checkbox" data-id="dm1-6"><span>Quando a Procuradoria deve analisar o decreto e quando ele sai? A Secretaria de Administração aceita ajustes no texto enquanto ele está lá?</span></label></li>
+  </ul>
+  <div class="atencao">Na plataforma o DM1 fica "Em andamento" até as atas existirem.</div>
+  <div class="mostrar"><a href="https://anderalves00.github.io/selo-wwc-painel/#DM1" target="_blank" rel="noopener">Cartão do DM1</a><a href="https://anderalves00.github.io/selo-wwc-painel/dm1-v02-governanca-digital.html" target="_blank" rel="noopener">DM1 v02: o decreto com as alterações possíveis</a></div>
     </div>
   </details>
 
   <details class="passo">
     <summary><span class="num">3</span><span><span class="tit">OD1 · Política de dados abertos</span><br><span class="sub">Pede 3 de 4 · sem janela de tempo</span></span><span class="seta">›</span></summary>
     <div class="corpo">
-      <h3>O que a WWC pede</h3>
-      <p>Uma política de dados abertos escrita e publicada, com governança, escuta do público, relatório pelo menos anual e regras claras sobre o que pode ou não ser aberto.</p>
-      <h3>Onde SBC está</h3>
-      <div class="fala">SBC não tem política de dados abertos. A própria página do portal diz que a regulamentação "está em estudo". Na revisão do Raio-X, a WWC já apontou isso e rebaixou a questão para "Em andamento".</div>
-      <div class="fala">A Câmara já pediu essa política (Indicação 14.825/2025), e o Executivo só respondeu que encaminhou à secretaria. A minuta pode ser a resposta concreta.</div>
-      <p>A WWC não exige lei nem decreto: basta uma política escrita e formalizada. Recomendamos decreto porque obriga todas as secretarias.</p>
-      <h3>O que recomendamos</h3>
-      <ul>
-        <li>Um decreto curto da Política Municipal de Dados Abertos. A minuta está pronta (23 artigos), com o porquê de cada um, e cobre os quatro subcritérios.</li>
-        <li>Basta o decreto publicado antes de 18/12; não depende de reuniões.</li>
-      </ul>
-      <h3>Perguntas para a equipe</h3>
-      <ul class="perguntas">
-        <li><label><input type="checkbox" data-id="od1-1"><span>Existe minuta, estudo ou processo de regulamentação da Lei 14.129 no município?</span></label></li>
-        <li><label><input type="checkbox" data-id="od1-2"><span>Os representantes por órgão da Lei de Acesso à Informação (Decreto 18.882, art. 7º) foram nomeados? A Comissão Mista foi constituída?</span></label></li>
-        <li><label><input type="checkbox" data-id="od1-3"><span>Qual unidade mantém a página de Dados Abertos: a Controladoria ou o DTI?</span></label></li>
-        <li><label><input type="checkbox" data-id="od1-4"><span>O que é o portal de dados abertos "em desenvolvimento" citado no PPA, e quando fica pronto?</span></label></li>
-        <li><label><input type="checkbox" data-id="od1-5"><span>Quais documentos o DTI vai encaminhar à Procuradoria? Algum trata de dados abertos ou da Lei 14.129?</span></label></li>
-      </ul>
-      <div class="mostrar"><a href="https://anderalves00.github.io/selo-wwc-painel/#OD1" target="_blank" rel="noopener">Cartão do OD1</a><a href="https://anderalves00.github.io/selo-wwc-painel/proposta-od1-dados-abertos.html" target="_blank" rel="noopener">Minuta do decreto</a></div>
+  <h3>O que a WWC pede</h3>
+  <p>Uma política de dados abertos escrita e publicada, com governança, escuta do público, relatório pelo menos anual e regras claras sobre o que pode ou não ser aberto.</p>
+  <h3>Onde SBC está</h3>
+  <div class="fala">SBC não tem política de dados abertos. A própria página do portal diz que o município "<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="pag_estuda">estuda fazer a regulamentação</span>" da Lei do Governo Digital. Na revisão do Raio-X, a WWC rebaixou a questão para "Em andamento" e pediu uma política formal (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="raiox06">comentário do revisor</span>).</div>
+  <div class="fala">A Câmara já pediu essa política (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="indicacao14825">Indicação 14.825/2025</span>), e o Executivo só respondeu que encaminhou à secretaria (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="oficio4027">Ofício 4027/2025</span>). A minuta pode ser a resposta concreta.</div>
+  <div class="fala">O decreto de governança digital do DTI não cria a política de dados abertos: adota só diretrizes gerais da Lei do Governo Digital (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sb_art4_2">art. 4º, § 2º</span>) e deixa a abertura de dados para regulamentação própria (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sb_art25">art. 25</span>).</div>
+  <h3>O que recomendamos (OD1 v02)</h3>
+  <ul>
+    <li>Um decreto curto da Política Municipal de Dados Abertos, como o ato próprio de abertura de dados do Programa de Governança Digital. A minuta tem 23 artigos, cada um explicado, e cobre os quatro pontos. Ela adota a parte de abertura de dados da <span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="lei14129_art2">Lei 14.129/2021</span>.</li>
+    <li>Quem aprova o plano e o relatório é o comitê do novo decreto (CGD). Até ele existir, quem faz isso é o Comitê de Proteção de Dados (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="dec22963_art4">Decreto 22.963/2025, art. 4º</span>), que também é ouvido sempre que houver dado pessoal, como diz a proposta técnica do DTI (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sb_cgpd">papel do CGPD</span>).</li>
+    <li>Coordenação da Controladoria (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="lei7367_35">Lei 7.367/2025, art. 35</span>) com o DTI, ligada à Secretaria de Administração, que coordena o Programa.</li>
+    <li>Pontos do modelo de São Paulo, que o DTI cita (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sp63463">Decreto paulistano 63.463/2024</span>), e consulta pública com devolutiva, como recomenda a estratégia federal (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="engd9">recomendações 9.1 e 9.3</span>).</li>
+    <li>Basta o decreto publicado antes de 18/12; não depende de reuniões nem do decreto do DTI estar em vigor.</li>
+  </ul>
+  <h3>Perguntas para a equipe</h3>
+  <ul class="perguntas">
+    <li><label><input type="checkbox" data-id="od1-1"><span>Existe minuta, estudo ou processo de regulamentação da Lei 14.129 no município?</span></label></li>
+    <li><label><input type="checkbox" data-id="od1-2"><span>Os representantes por órgão da Lei de Acesso à Informação (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="dec18882_art7">Decreto 18.882, art. 7º</span>) foram nomeados? A Comissão Mista (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="dec18882_art21">art. 21</span>) foi constituída?</span></label></li>
+    <li><label><input type="checkbox" data-id="od1-3"><span>Qual unidade mantém a página de Dados Abertos: a Controladoria ou o DTI?</span></label></li>
+    <li><label><input type="checkbox" data-id="od1-4"><span>O que é o portal de dados abertos "em desenvolvimento" citado no PPA (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="ppa720">resposta à sugestão 720</span>), e quando fica pronto?</span></label></li>
+    <li><label><input type="checkbox" data-id="od1-6"><span>Podem nos passar o <span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="proc72089">Diagnóstico de Exposição de Dados Pessoais</span> (processo 72089/2019), com acesso restrito se tiver dado pessoal?</span></label></li>
+  </ul>
+  <div class="mostrar"><a href="https://anderalves00.github.io/selo-wwc-painel/#OD1" target="_blank" rel="noopener">Cartão do OD1</a><a href="https://anderalves00.github.io/selo-wwc-painel/od1-v02-dados-abertos.html" target="_blank" rel="noopener">OD1 v02: a minuta com as mudanças marcadas</a></div>
     </div>
   </details>
 
   <details class="passo">
     <summary><span class="num">4</span><span><span class="tit">OD3 · Portal de dados abertos</span><br><span class="sub">Pede 3 de 3 · resposta na plataforma: "Sim" (manter)</span></span><span class="seta">›</span></summary>
     <div class="corpo">
-      <h3>O que a WWC pede</h3>
-      <p>Um lugar central na internet com os dados abertos: em planilha e de graça, separados por bairro e por grupo da população quando possível, com contato e com links para os outros sites onde houver dados.</p>
-      <h3>Onde SBC está</h3>
-      <div class="fala">SBC já tem muitos dados em planilha: contratos, obras, finanças, renúncia de receita, multas, doações e mapas no GeoPortal. O problema é que estão espalhados, e a página de Dados Abertos é só texto: não tem lista de bases nem links.</div>
-      <div class="fala">Os dados por bairro existem no Perfil Socioeconômico por Bairro, mas só em PDF.</div>
-      <h3>Decisão a confirmar</h3>
-      <div class="atencao">A plataforma já traz "Sim" no OD3, copiado da resposta de SBC no Raio-X. A ideia é manter. Mas, para o "Sim" se sustentar na revisão, três coisas precisam estar publicadas antes de 18/12: o catálogo na página de Dados Abertos, as tabelas do Perfil por Bairro em planilha e o texto da resposta corrigido (ele diz que o patrimônio é legível por máquina, mas só existe em PDF).</div>
-      <h3>O que recomendamos</h3>
-      <ol>
-        <li>Transformar a página de Dados Abertos num catálogo: uma linha por base, com link, responsável, formato e atualização, além de contato e licença.</li>
-        <li>Publicar as tabelas do Perfil por Bairro em planilha.</li>
-        <li>Corrigir o link de patrimônio e reescrever o texto da resposta.</li>
-      </ol>
-      <h3>Perguntas para a equipe</h3>
-      <ul class="perguntas">
-        <li><label><input type="checkbox" data-id="od3-1"><span>Quem mantém e pode editar a página de Dados Abertos?</span></label></li>
-        <li><label><input type="checkbox" data-id="od3-2"><span>O que é o portal "em desenvolvimento" do PPA, e se sai antes de 18/12?</span></label></li>
-        <li><label><input type="checkbox" data-id="od3-3"><span>O Planejamento Urbano pode publicar as tabelas do Perfil por Bairro e do Painel Estatístico em planilha?</span></label></li>
-        <li><label><input type="checkbox" data-id="od3-4"><span>O GeoPortal pode entrar como parte do portal? Quem responde pelas camadas?</span></label></li>
-        <li><label><input type="checkbox" data-id="od3-5"><span>As planilhas da consulta pública do PPA (bancos 08 e 09) podem ser revistas com quem publicou? Um estudo anterior registrou que elas trazem dados pessoais de moradores que participaram; isso precisa ser resolvido antes de irem para o catálogo.</span></label></li>
-        <li><label><input type="checkbox" data-id="od3-6"><span>O sistema de gastos com pessoal está funcionando? Os contratos de 2025 estão todos no sistema (são 100, contra 295 em 2024)?</span></label></li>
-        <li><label><input type="checkbox" data-id="od3-7"><span>O Planejamento Urbano vai pedir ao IBGE o acesso aos microdados do Censo 2022 para atualizar a renda (hoje é de 2010)?</span></label></li>
-      </ul>
-      <div class="mostrar"><a href="https://anderalves00.github.io/selo-wwc-painel/proposta-od3-catalogo.html" target="_blank" rel="noopener">Exemplo do catálogo</a><a href="https://www.saobernardo.sp.gov.br/web/transparencia/dados-abertos" target="_blank" rel="noopener">Página de Dados Abertos hoje</a><a href="https://anderalves00.github.io/selo-wwc-painel/#OD3" target="_blank" rel="noopener">Cartão do OD3</a></div>
+  <h3>O que a WWC pede</h3>
+  <p>Um lugar central na internet com os dados abertos: em planilha e de graça, separados por bairro e por grupo da população quando possível, com contato e com links para os outros sites onde houver dados.</p>
+  <h3>Onde SBC está</h3>
+  <div class="fala">SBC já tem muitos dados em planilha: contratos, obras, finanças, recursos recebidos, renúncia de receita, multas, doações e mapas no GeoPortal. O problema é que estão espalhados, e a página de Dados Abertos é só texto. Ela diz que "<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="pag_catalogo">todos os conjuntos de dados estão organizados e catalogados</span>", mas não tem lista de bases nem links.</div>
+  <div class="fala">Os dados por bairro existem no <span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="perfil_bairros">Perfil Socioeconômico por Bairro</span>, mas só em PDF. O GeoPortal tem os equipamentos públicos por bairro (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="geo_equip">1.177 registros</span>).</div>
+  <div class="fala">Conferimos as bases uma a uma em 26/10. Duas coisas chamaram a atenção: o sistema de contratos tem 100 contratos de 2025, e o município publicou 1.347 no portal nacional de contratações no mesmo ano (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="contratos_pncp">comparação</span>); e a exportação do mural de licitações não funciona (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="compras_mural">teste</span>).</div>
+  <h3>Decisão a confirmar</h3>
+  <div class="atencao">A plataforma já traz "Sim" no OD3, copiado da resposta de SBC no Raio-X. A ideia é manter. Mas, para o "Sim" se sustentar na revisão, três coisas precisam estar publicadas antes de 18/12: o catálogo na página de Dados Abertos, as tabelas do Perfil por Bairro em planilha e o texto da resposta corrigido (ele diz que o patrimônio é legível por máquina, mas só existe em PDF).</div>
+  <h3>O que recomendamos</h3>
+  <ol>
+    <li>Transformar a página de Dados Abertos num catálogo: uma linha por base, com link, responsável, formato e atualização, além de contato e licença.</li>
+    <li>Publicar as tabelas do Perfil por Bairro em planilha.</li>
+    <li>Corrigir o link de patrimônio e reescrever o texto da resposta.</li>
+    <li>Publicar também a <span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="atende_bem">planilha do Atende Bem</span>, que já existe e não tem dado pessoal.</li>
+  </ol>
+  <h3>Perguntas para a equipe</h3>
+  <ul class="perguntas">
+    <li><label><input type="checkbox" data-id="od3-1"><span>Quem mantém e pode editar a página de Dados Abertos?</span></label></li>
+    <li><label><input type="checkbox" data-id="od3-2"><span>O que é o portal "em desenvolvimento" do PPA (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="ppa720">resposta à sugestão 720</span>), e se sai antes de 18/12?</span></label></li>
+    <li><label><input type="checkbox" data-id="od3-3"><span>O Planejamento Urbano pode publicar as tabelas do Perfil por Bairro e do Painel Estatístico em planilha?</span></label></li>
+    <li><label><input type="checkbox" data-id="od3-4"><span>O GeoPortal pode entrar como parte do portal? Quem responde pelas camadas?</span></label></li>
+    <li><label><input type="checkbox" data-id="od3-5"><span>As planilhas da consulta pública do PPA (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="ppa_bancos">bancos 08 e 09</span>) podem ser revistas com quem publicou? Elas trazem dados pessoais de moradores e precisam ser resolvidas antes de irem para o catálogo.</span></label></li>
+    <li><label><input type="checkbox" data-id="od3-6b"><span>Por que o sistema de contratos tem 100 contratos de 2025, se o município publicou 1.347 no portal nacional (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="contratos_pncp">comparação</span>)? Quem completa o sistema?</span></label></li>
+    <li><label><input type="checkbox" data-id="od3-7"><span>O Planejamento Urbano vai pedir ao IBGE o acesso aos microdados do Censo 2022 para atualizar a renda (hoje é de 2010)?</span></label></li>
+    <li><label><input type="checkbox" data-id="od3-8"><span>Quem mantém o sistema de compras pode consertar a exportação do mural de licitações (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="compras_mural">teste</span>)?</span></label></li>
+    <li><label><input type="checkbox" data-id="od3-9"><span>O Atende Bem pode publicar, em planilha, os atendimentos por unidade e por mês (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="atende_bem">planilha interna</span>)?</span></label></li>
+    <li><label><input type="checkbox" data-id="od3-10"><span>O Geoprocessamento pode padronizar os nomes de bairro da camada de equipamentos (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="geo_equip">diferenças</span>)?</span></label></li>
+  </ul>
+  <p class="nota">Já conferido, não precisa perguntar: o sistema de gastos com pessoal funciona, mas não exporta em formato aberto (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="gcp">teste</span>).</p>
+  <div class="mostrar"><a href="https://anderalves00.github.io/selo-wwc-painel/proposta-od3-catalogo.html" target="_blank" rel="noopener">Exemplo do catálogo</a><a href="https://www.saobernardo.sp.gov.br/web/transparencia/dados-abertos" target="_blank" rel="noopener">Página de Dados Abertos hoje</a><a href="https://anderalves00.github.io/selo-wwc-painel/#OD3" target="_blank" rel="noopener">Cartão do OD3</a></div>
     </div>
   </details>
 
   <details class="passo">
     <summary><span class="num">5</span><span><span class="tit">Fechamento: próximos passos</span><br><span class="sub">2 minutos · combinar prazos e responsáveis</span></span><span class="seta">›</span></summary>
     <div class="corpo">
-      <div class="fala">Para fechar: preciso das respostas às perguntas de hoje para atualizar as fichas. Enquanto isso, sigo com os próximos critérios de Gestão de Dados (DM2 em diante).</div>
-      <h3>Combinar antes de sair</h3>
-      <ul class="perguntas">
-        <li><label><input type="checkbox" data-id="fim-1"><span>Quem responde cada grupo de perguntas e até quando.</span></label></li>
-        <li><label><input type="checkbox" data-id="fim-2"><span>Por onde mandar os documentos (atas, minutas, processos).</span></label></li>
-        <li><label><input type="checkbox" data-id="fim-3"><span>Data da próxima conversa.</span></label></li>
-      </ul>
+  <div class="fala">Para fechar: preciso das respostas às perguntas de hoje para atualizar as fichas. Enquanto isso, sigo com os próximos critérios de Gestão de Dados (DM2 em diante).</div>
+  <h3>Combinar antes de sair</h3>
+  <ul class="perguntas">
+    <li><label><input type="checkbox" data-id="fim-4"><span>As 9 alterações da DM1 v02: quais vocês aprovam para levar à Secretaria de Administração (as aprovadas viram a v03).</span></label></li>
+    <li><label><input type="checkbox" data-id="fim-5"><span>A OD1 v02: aprovam como base para a Procuradoria, ou o que ajustar (vira a v03).</span></label></li>
+    <li><label><input type="checkbox" data-id="fim-1"><span>Quem responde cada grupo de perguntas e até quando.</span></label></li>
+    <li><label><input type="checkbox" data-id="fim-2"><span>Por onde mandar os documentos (atas, minutas, processos).</span></label></li>
+    <li><label><input type="checkbox" data-id="fim-3"><span>Data da próxima conversa.</span></label></li>
+  </ul>
     </div>
   </details>
 
-  <div class="rodape">Página de uso pessoal, publicada sem link a partir do painel. A fonte fica no repositório privado (roteiro/conversa-equipe.html). As marcações das perguntas ficam salvas só neste navegador.</div>
+  <div class="rodape">Página de uso pessoal, publicada sem link a partir do painel. Gerada por .claude/scripts/roteiro.py no repositório privado. As marcações das perguntas ficam salvas só neste navegador. Nos destaques, "Trecho do documento" é cópia literal, conferida no arquivo de origem; "Nota do projeto" é resumo nosso.</div>
 </main>
+
+<div id="dica" role="dialog" aria-live="polite"></div>
+
 <script>
 (function () {
+  var CIT = {"sb101842": {"tipo": "nota", "rot": "Processo SB 101842/2026 (DTI)", "p": ["Proposta técnica e minuta de decreto (40 artigos) da Política e do Programa Municipal de Governança Digital e de Dados, enviadas pelo DTI à Procuradoria em 23/10/2026.", "Cria o Comitê de Governança Digital e de Dados (CGD), com um representante de cada secretaria, e prevê um ato próprio para cada eixo do Programa, entre eles o de dados e interoperabilidade.", "A análise dos 40 artigos frente aos 16 critérios e as 9 alterações possíveis estão na página da DM1 v02."], "fonte": "", "url": "https://anderalves00.github.io/selo-wwc-painel/dm1-v02-governanca-digital.html"}, "sb_art4": {"tipo": "texto", "rot": "Decreto do SB 101842/2026, art. 4º, caput", "p": ["Art. 4º A Política observará legalidade, impessoalidade, transparência, proporcionalidade, acessibilidade, inclusão, segurança, proteção de dados pessoais, sustentabilidade, continuidade e geração de valor público."], "fonte": "Minuta do decreto da Política e do Programa Municipal de Governança Digital e de Dados (processo SB 101842/2026, do DTI, enviado à Procuradoria em 23/10/2026)", "url": ""}, "sb_art4_2": {"tipo": "texto", "rot": "Decreto do SB 101842/2026, art. 4º, § 2º", "p": ["§ 2º Adotam-se, para os fins e no alcance deste Decreto, as diretrizes expressamente previstas no § 1º, sem incorporação automática dos demais comandos da Lei Federal nº 14.129, de 2021, nem autorização genérica para tratamento ou compartilhamento de dados."], "fonte": "Minuta do decreto da Política e do Programa Municipal de Governança Digital e de Dados (processo SB 101842/2026, do DTI, enviado à Procuradoria em 23/10/2026)", "url": ""}, "sb_art11": {"tipo": "texto", "rot": "Decreto do SB 101842/2026, art. 11, caput", "p": ["Art. 11. O Comitê de Governança Digital e de Dados - CGD será instituído por Portaria do Chefe do Poder Executivo, posterior à publicação deste Decreto, como colegiado de articulação dos órgãos e entidades participantes e de deliberação sobre matérias comuns do Programa, observadas as diretrizes deste Capítulo e as competências legalmente atribuídas aos agentes municipais."], "fonte": "Minuta do decreto da Política e do Programa Municipal de Governança Digital e de Dados (processo SB 101842/2026, do DTI, enviado à Procuradoria em 23/10/2026)", "url": ""}, "sb_art12_2": {"tipo": "texto", "rot": "Decreto do SB 101842/2026, art. 12, § 2º", "p": ["§ 2º O CGD reunir-se-á ordinariamente a cada mês, nos primeiros 120 (cento e vinte) dias corridos contados de sua instalação e, depois, a cada 2 (dois) meses, além das reuniões extraordinárias, observadas as seguintes disposições:"], "fonte": "Minuta do decreto da Política e do Programa Municipal de Governança Digital e de Dados (processo SB 101842/2026, do DTI, enviado à Procuradoria em 23/10/2026)", "url": ""}, "sb_art25": {"tipo": "texto", "rot": "Decreto do SB 101842/2026, art. 25", "p": ["Art. 25. A regulamentação de dados definirá responsabilidades funcionais por domínio, catálogo, metadados, fontes de referência, qualidade, atualização, acesso, abertura, retenção, preservação e destinação, observadas a proteção de dados pessoais, as restrições legais de acesso e a legislação arquivística, sem atribuir propriedade privada sobre dados ou autorização irrestrita de uso."], "fonte": "Minuta do decreto da Política e do Programa Municipal de Governança Digital e de Dados (processo SB 101842/2026, do DTI, enviado à Procuradoria em 23/10/2026)", "url": ""}, "sb_art35": {"tipo": "texto", "rot": "Decreto do SB 101842/2026, art. 35, caput", "p": ["Art. 35. A coordenação publicará no portal oficial do Município relatório semestral acessível, com os registros previstos no art. 20, resguardados dados pessoais, sigilo e segurança. O primeiro relatório abrangerá os seis primeiros meses de vigência deste Decreto e será publicado em até 30 (trinta) dias corridos após o encerramento do período, observado o mesmo prazo para os relatórios seguintes."], "fonte": "Minuta do decreto da Política e do Programa Municipal de Governança Digital e de Dados (processo SB 101842/2026, do DTI, enviado à Procuradoria em 23/10/2026)", "url": ""}, "sb_art40": {"tipo": "texto", "rot": "Decreto do SB 101842/2026, art. 40", "p": ["Art. 40. Este Decreto entra em vigor após decorridos 90 (noventa) dias corridos de sua publicação oficial."], "fonte": "Minuta do decreto da Política e do Programa Municipal de Governança Digital e de Dados (processo SB 101842/2026, do DTI, enviado à Procuradoria em 23/10/2026)", "url": ""}, "sb_cgpd": {"tipo": "texto", "rot": "Proposta técnica do DTI (SB 101842/2026), quadro de papéis", "p": ["\"O CGPD não absorve automaticamente a governança de todos os dados.\""], "fonte": "Proposta técnica que acompanha a minuta, no processo SB 101842/2026. O texto está num quadro; a frase foi conferida no arquivo do processo.", "url": ""}, "lei7367_645": {"tipo": "texto", "rot": "Lei nº 7.367/2025, art. 645, caput e inciso XIII", "p": ["Art. 645. O Departamento de Tecnologia da Informação (SA-3) tem as seguintes atribuições:", "(…)", "XIII - definir a estratégia de dados do Município, estabelecendo princípios, padrões e políticas para a gestão de dados."], "fonte": "Lei nº 7.367, de 15/01/2025 (estrutura administrativa), texto consolidado. Não alterado pela Lei 7.564/2026.", "url": "https://leis.org/prefeitura/sp/sao-bernardo-do-campo/lei/lei-ordinaria/2025/7367/lei-ordinaria-n-7367-2025-dispoe-sobre-a-estrutura-administrativa-do-municipio-de-sao-bernardo-do-campo-alteracao-das-leis-municipais-n-s-2240-de-13-de-agosto-de-1976-e-6745-de-7-de-fevereiro-de-2019-e-da-outras/#:~:text=Art.%20645."}, "lei7367_35": {"tipo": "texto", "rot": "Lei nº 7.367/2025, art. 35, caput e incisos II e IV", "p": ["Art. 35. A Seção de Transparência (CG-001) tem as seguintes atribuições:", "(…)", "II - coordenar, gerenciar e monitorar o Portal da Transparência, visando a divulgação de todas as informações da execução da despesa e a realização da receita dos órgãos do Poder Executivo Municipal;", "(…)", "IV - coordenar o desenvolvimento de agentes públicos municipais e da sociedade civil nos assuntos relacionados à transparência, acesso à informação pública, controle social, dados abertos e temas correlatos; e"], "fonte": "Lei nº 7.367, de 15/01/2025 (estrutura administrativa), texto consolidado.", "url": "https://leis.org/prefeitura/sp/sao-bernardo-do-campo/lei/lei-ordinaria/2025/7367/lei-ordinaria-n-7367-2025-dispoe-sobre-a-estrutura-administrativa-do-municipio-de-sao-bernardo-do-campo-alteracao-das-leis-municipais-n-s-2240-de-13-de-agosto-de-1976-e-6745-de-7-de-fevereiro-de-2019-e-da-outras/#:~:text=Art.%2035."}, "lei7564": {"tipo": "nota", "rot": "PL 25/2026 = Lei nº 7.564/2026", "p": ["O PL 25/2026, do Executivo, foi aprovado por acordo na Câmara e virou a Lei nº 7.564, de 26/02/2026 (página do PL no site da Câmara, consultada em 26/10/2026).", "Reorganiza só a Secretaria da Fazenda e não altera os arts. 35 (Controladoria) e 645 (DTI) da Lei 7.367/2025.", "A proposta técnica do SB 101842 ainda a trata como projeto: \"O projeto de lei não será tratado como alteração vigente.\""], "fonte": "", "url": ""}, "dec22963_art3": {"tipo": "texto", "rot": "Decreto nº 22.963/2025, art. 3º, caput e § 1º", "p": ["Art. 3º Fica criado o Comitê Gestor de Proteção de Dados - CGPD, vinculado à Controladoria-Geral do Município, órgão destinado a atuar como responsável pela avaliação dos mecanismos de tratamento e proteção de dados existentes na Administração Pública Municipal e pela deliberação de ações voltadas à obtenção da conformidade ao previsto na Lei Federal nº 13.709, de 14 de agosto de 2018 - Lei Geral de Proteção de Dados Pessoais (LGPD).", "§ 1º O Comitê Gestor de Proteção de Dados - CGPD será coordenado pelo Controlador-Geral do Município e formado pelo Encarregado de Proteção de Dados Pessoais e representantes nomeados pelo Chefe do Executivo por meio de portarias, sendo estes indicados pelas Secretarias Municipais, dentre servidores preferencialmente efetivos com conhecimentos das bases de dados, digitais e não digitais, bem como acesso ao nível estratégico do órgão."], "fonte": "Decreto nº 22.963, de 05/06/2025 (Programa de Proteção de Dados).", "url": "https://leis.org/2cax4#:~:text=Art.%203%C2%BA"}, "dec22963_art4": {"tipo": "texto", "rot": "Decreto nº 22.963/2025, art. 4º", "p": ["Art. 4º Cabe ao Comitê Gestor de Proteção de Dados - CGPD:", "I - conduzir e promover a gestão do Programa de Proteção de Dados Municipal;", "II - avaliar as práticas de proteção de dados nos órgãos e Secretarias Municipais, estabelecendo planos de ação para mitigação de riscos e não conformidades;", "III - promover a integração das áreas envolvidas, para garantir a adoção uniforme das políticas de proteção de dados no âmbito do Poder Executivo Municipal; e", "IV - supervisionar a implementação das medidas de conformidade com a Lei Geral de Proteção de Dados Pessoais - LGPD e realizar auditorias internas de proteção de dados, quando necessário."], "fonte": "Decreto nº 22.963, de 05/06/2025 (Programa de Proteção de Dados).", "url": "https://leis.org/2cax4#:~:text=Art.%203%C2%BA"}, "port10510": {"tipo": "nota", "rot": "Portaria nº 10.510/2026", "p": ["Publicada no Notícias do Município nº 2676, de 07/08/2026, p. 16. Nomeia os 8 membros do CGPD: 3 da Controladoria, 4 da Secretaria de Administração (entre eles a Encarregada de Proteção de Dados, que também dirige o DTI) e 1 da Procuradoria.", "Depois da publicação, a Controladoria propôs a 1ª reunião para setembro de 2026 (processo 72089/2019, p. 146). Não localizamos ata de reunião."], "fonte": "", "url": "https://www.saobernardo.sp.gov.br/documents/10181/2361282/NM+2676+de+07.08.2026+-+Conteu%CC%81do+Integral.pdf/11eeb475-0287-4c05-e8e2-aea4d61e05fc#page=16"}, "proc65650": {"tipo": "nota", "rot": "Processo SB 65650/2026 (GT Cidade Inteligente)", "p": ["Processo de 8 páginas, aberto depois de reunião com o Prefeito. Contém só a minuta e a publicação da Portaria 10.500/2026, que designa os 5 secretários do Grupo de Trabalho de Cidade Inteligente (coordenação da Secretaria de Administração).", "Arquivado em 29/07/2026, sem atas. Se o GT se reuniu, os registros estão em outro lugar."], "fonte": "", "url": ""}, "gesgov": {"tipo": "nota", "rot": "Gesgov", "p": ["Plataforma de acompanhamento das metas do Plano de Governo. Não encontramos ato, contrato nem página oficial (Estudo 02). A primeira menção num documento administrativo é a proposta técnica do SB 101842, que a descreve como \"ferramenta utilizada para a gestão e o acompanhamento das ações do Plano de Governo\"."], "fonte": "", "url": ""}, "sbcmaisi_art5": {"tipo": "texto", "rot": "Minuta do decreto do SBC+i, art. 5º (texto original)", "p": ["Art. 5º A articulação estratégica intersecretarial do Programa SBC+i contará com o Grupo de Trabalho já instituído pela Portaria nº 10.500, de 7 de julho de 2026, preservadas sua composição e sua coordenação pela Secretaria de Administração."], "fonte": "Minuta do decreto do Programa SBC+i (processo SB 100144/2026). A Procuradoria recomendou reescrever este artigo, porque citar a portaria no decreto \"cria uma inversão imprópria\".", "url": ""}, "sbcmaisi_remissao": {"tipo": "proposta", "rot": "Artigo sugerido para o decreto do SBC+i", "p": ["Art. X. A governança do Programa SBC+i observará a Política e o Programa Municipal de Governança Digital e de Dados, instituídos pelo Decreto nº ___, de ___, cabendo ao Grupo de Trabalho de que trata o art. 5º articular-se com o Comitê de Governança Digital e de Dados nas matérias de dados, interoperabilidade e inteligência artificial."], "fonte": "Sugestão do projeto (DM1 v02). Número e posição a definir pela Procuradoria.", "url": ""}, "dec18882_art7": {"tipo": "texto", "rot": "Decreto nº 18.882/2014, art. 7º, parágrafo único", "p": ["Parágrafo Único - Os órgãos da Administração Pública Municipal, serão representados pelos Secretários Adjuntos e mais um servidor nomeado, com respectivo suplente e, as entidades, pelos respectivos Diretores e servidores nomeados, com respectivo suplente, para centralizar a gestão da informação, no âmbito da unidade administrativa."], "fonte": "Decreto nº 18.882, de 28/04/2014 (regulamenta a Lei de Acesso à Informação no município).", "url": "https://leis.org/prefeitura/sp/sao-bernardo-do-campo/lei/decreto/2014/18882/decreto-n-18882-2014-regulamenta-o-procedimento-de-acesso-a-informacoes-publicas-garantido-no-inciso-xxxiii-do-art-5-no-inciso-ii-do-art-37-e-no-2-do-art-216-da-constituicao-federal-regulamentados-pela-lei-federal-n-12527-de-18-de-novembro-de-2011-e-da-outras/"}, "dec18882_art21": {"tipo": "texto", "rot": "Decreto nº 18.882/2014, art. 21", "p": ["Art. 21. Na hipótese da negativa de acesso à informação fundamentada no sigilo, nos termos do art.17 deste Decreto, apresentado o recurso, este será encaminhado à Comissão Mista de Reavaliação, que emitirá parecer prévio à decisão da autoridade competente, no prazo de 5 (cinco) dias, podendo sugerir desclassificação ou a reclassificação da informação.", "Parágrafo Único - A Comissão Mista de Reavaliação será composta por representantes das Secretarias, designados por Portaria do Chefe do Executivo, observado o mandato de 2 (dois) anos para seus integrantes."], "fonte": "Decreto nº 18.882, de 28/04/2014 (regulamenta a Lei de Acesso à Informação no município).", "url": "https://leis.org/prefeitura/sp/sao-bernardo-do-campo/lei/decreto/2014/18882/decreto-n-18882-2014-regulamenta-o-procedimento-de-acesso-a-informacoes-publicas-garantido-no-inciso-xxxiii-do-art-5-no-inciso-ii-do-art-37-e-no-2-do-art-216-da-constituicao-federal-regulamentados-pela-lei-federal-n-12527-de-18-de-novembro-de-2011-e-da-outras/"}, "indicacao14825": {"tipo": "nota", "rot": "Indicação nº 14.825/2025, da Câmara", "p": ["Indicação de 10/10/2025 que propôs ao Executivo estudos para criar a Política Municipal de Dados Abertos e Interoperabilidade, com base na Lei 14.129/2021 e no Decreto federal 8.777/2016. O texto da indicação não foi guardado no projeto; a resposta do Executivo está no Ofício 4027/2025."], "fonte": "", "url": "https://www.camarasbc.sp.gov.br/documento/indicacao-no-14825-2025-547418"}, "oficio4027": {"tipo": "texto", "rot": "Ofício nº 4027/2025-SG-011, resposta à Indicação 14.825", "p": ["\"(…) agradecemos as considerações encaminhadas e informamos que as sugestões foram encaminhadas à Secretaria competente para conhecimento, conforme as atribuições legais do Poder Executivo.\""], "fonte": "Ofício da Secretaria de Governo à Câmara, de 30/12/2025, juntado como Resposta nº 33/2026.", "url": ""}, "proc72089": {"tipo": "nota", "rot": "Diagnóstico Preliminar de Exposição de Dados Pessoais (processo 72089/2019)", "p": ["Citado na proposta técnica do SB 101842 (p. 6–7): encontrou dados pessoais acessíveis em relatórios ambientais, atos de pessoal, listas de cursos, convocações e documentos históricos.", "Não está na nossa cópia do processo, que é anterior. Serve à regra de triagem de dados pessoais antes de abrir uma base (OD1.4 e DM5.2)."], "fonte": "", "url": ""}, "lei14129_art2": {"tipo": "texto", "rot": "Lei Federal nº 14.129/2021, art. 2º, inciso III", "p": ["Art. 2º Esta Lei aplica-se:", "(…)", "III - às administrações diretas e indiretas dos demais entes federados, nos termos dos incisos I e II do caput deste artigo, desde que adotem os comandos desta Lei por meio de atos normativos próprios."], "fonte": "Lei do Governo Digital. A parte de abertura de dados fica nos arts. 29 a 37 e só vale no município que a adotar por ato próprio.", "url": "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14129.htm#art29"}, "engd": {"tipo": "texto", "rot": "Portaria SGD/MGI nº 5.395/2026 (Estratégia Nacional de Governo Digital), recomendações 5.1 e 5.4", "p": ["5.1. Elaborar, publicar e implementar um programa de governança de dados.", "5.4. Estimular o uso responsável de análise de dados na tomada de decisão de políticas públicas e na personalização de serviços, observadas a finalidade pública, a ética, a transparência, a proteção de dados pessoais, a prevenção de vieses discriminatórios e a avaliação de resultados."], "fonte": "Portaria SGD/MGI nº 5.395, de 1º/07/2026 (DOU). Recomendações aos entes federados.", "url": "https://www.in.gov.br/web/dou/-/portaria-sgd/mgi-n-5.395-de-1-de-julho-de-2026-716377346"}, "engd9": {"tipo": "texto", "rot": "Portaria SGD/MGI nº 5.395/2026, recomendações 9.1 e 9.3", "p": ["9.1. Implementar instrumentos de participação social e cocriação que permitam ao cidadão contribuir para a melhoria contínua dos serviços públicos e das políticas de governo digital, com mecanismos de devolutiva sobre as contribuições recebidas.", "9.3. Promover a transparência, o acesso à informação e o uso de dados abertos pelos cidadãos."], "fonte": "Portaria SGD/MGI nº 5.395, de 1º/07/2026 (DOU). Recomendações aos entes federados.", "url": "https://www.in.gov.br/web/dou/-/portaria-sgd/mgi-n-5.395-de-1-de-julho-de-2026-716377346"}, "sp63463": {"tipo": "nota", "rot": "Decreto paulistano nº 63.463/2024", "p": ["Regulamenta a Lei paulistana 17.901/2023 (Política Municipal de Dados Abertos e Transparência Ativa). O DTI o cita como referência para a regulamentação de dados abertos.", "Vieram dele para a OD1 v02: catálogo de bases atualizado todo ano, com histórico e indicação de dados pessoais; o titular de cada órgão responde pelas metas; nota quando não houver formato aberto; devolutiva da consulta pública."], "fonte": "", "url": "https://legislacao.prefeitura.sp.gov.br/leis/decreto-63463-de-29-de-maio-de-2024"}, "raiox06": {"tipo": "texto", "rot": "Revisão do Raio-X pela WWC (Dados Abertos)", "p": ["A resposta foi mudada a Em Andamento. Agradecemos o envio das informações sobre o Portal de Dados Abertos e Transparência Fiscal de São Bernardo do Campo. Apesar de o portal disponibilizar bases de dados para download em formatos legíveis por máquina, a iniciativa atual está majoritariamente voltada ao cumprimento de obrigações legais de transparência e prestação de contas. Para avançar nos critérios do programa, a gestão municipal precisa consolidar uma política e uma estratégia formal de Dados Abertos. O objetivo principal deve ser a disponibilização proativa de dados públicos em formatos amigáveis, priorizando o reuso das informações e o atendimento direto às demandas da comunidade e dos cidadãos."], "fonte": "Comentário do revisor da WWC na revisão do Raio-X, plataforma de certificação.", "url": ""}, "pag_estuda": {"tipo": "texto", "rot": "Página \"Dados abertos\" do Portal da Transparência", "p": ["O município estuda fazer a regulamentação da Lei Federal n° 14.129/2021 (Lei do Governo Digital) em âmbito local, visando consolidar ainda mais as práticas de governo digital e abertura de dados."], "fonte": "Página \"Dados abertos\" do Portal da Transparência de SBC (copiada em 22/10/2026).", "url": "https://www.saobernardo.sp.gov.br/web/transparencia/dados-abertos"}, "pag_catalogo": {"tipo": "texto", "rot": "Página \"Dados abertos\" do Portal da Transparência", "p": ["Todos os conjuntos de dados estão organizados e catalogados de forma intuitiva, facilitando a localização e a solicitação das informações desejadas."], "fonte": "Página \"Dados abertos\" do Portal da Transparência de SBC (copiada em 22/10/2026). A página não tem lista de bases nem links para elas.", "url": "https://www.saobernardo.sp.gov.br/web/transparencia/dados-abertos"}, "ppa720": {"tipo": "texto", "rot": "PPA 2026–2029, Anexo V, sugestão nº 720", "p": ["\"apresenta mérito [...] porém não foi considerada pertinente ao PPA por já existir iniciativa semelhante em desenvolvimento no âmbito da modernização digital do município, contemplada por outra ação estruturante\""], "fonte": "Resposta oficial à sugestão de um \"Portal de Dados Abertos Municipal\" na consulta do PPA (citada no Estudo 01; o anexo não foi copiado por trazer dados pessoais).", "url": "https://www.saobernardo.sp.gov.br/web/transparencia/ppa"}, "ppa_bancos": {"tipo": "nota", "rot": "PPA 2026–2029: bancos 08 e 09", "p": ["Duas planilhas da consulta pública do PPA (contribuições e consulta on-line), publicadas na página do PPA com dados pessoais de moradores que participaram (Estudo 01). Não foram copiadas para o projeto."], "fonte": "", "url": "https://www.saobernardo.sp.gov.br/web/transparencia/ppa"}, "perfil_bairros": {"tipo": "nota", "rot": "Perfil Socioeconômico por Bairro 2026", "p": ["Publicação da Divisão de Indicadores Sociais (Planejamento Urbano), ano-base 2025: introdução e 26 capítulos, cada um com 17 tabelas por bairro (população, faixa etária, sexo, cor ou raça, IPVS, matrículas, equipamentos e outras).", "É o recorte por território e grupo da população que o OD3.2 pede, mas está só em PDF. A renda ainda é do Censo 2010."], "fonte": "", "url": "https://www.saobernardo.sp.gov.br/web/sbc/perfilsocioeconomicobairros"}, "geo_equip": {"tipo": "nota", "rot": "GeoPortal: camadas de bairros e de equipamentos", "p": ["Conferido em 26/10/2026: a camada de equipamentos e serviços públicos tem 1.177 registros (esfera, setor, nome, endereço, bairro e tipo; dezembro de 2025). A de bairros tem 34 bairros (24 urbanos e 10 rurais).", "Os nomes de bairro não batem entre as duas: \"BUTUJURU\" (por \"BOTUJURU\"), \"Dos Casa\" e \"NÃO SE APLICA\" só aparecem nos equipamentos. Isso impede cruzar as camadas sem correção."], "fonte": "", "url": "https://geo.saobernardo.sp.gov.br/"}, "contratos_pncp": {"tipo": "nota", "rot": "Contratos: sistema municipal × PNCP", "p": ["Sistema de contratos do Portal da Transparência: 295 contratos de 2024, 100 de 2025 e 153 de 2026 (contados em 22/10/2026).", "Portal Nacional de Contratações Públicas (PNCP), CNPJ do município, por data de publicação: 864 em 2024 e 1.347 em 2025 (contados em 26/10/2026).", "A data de publicação no PNCP não é a de assinatura, mas a diferença é grande demais para vir só daí."], "fonte": "", "url": "https://pncp.gov.br/app/contratos"}, "compras_mural": {"tipo": "nota", "rot": "Mural de licitações (Compras/SBC)", "p": ["Testado em 26/10/2026: os botões \"Salvar XLS\" e \"Salvar ODS\" não baixam nada. Com a entidade \"Todos\", o script da página quebra; com \"Município\", o serviço que busca os departamentos devolve erro 500."], "fonte": "", "url": "https://compras.saobernardo.sp.gov.br/portal/Mural.aspx"}, "atende_bem": {"tipo": "nota", "rot": "Planilha do Atende Bem", "p": ["Planilha interna recebida pelo projeto: atendimentos, serviços e tempos médios por unidade (Assunção, Alvarenga, Poupatempo, Riacho Grande, Rudge Ramos, Taboão, Sala do Empreendedor e 156), por mês, de setembro de 2010 a setembro de 2026.", "Números agregados, sem dados pessoais. Não está publicada."], "fonte": "", "url": ""}, "gcp": {"tipo": "nota", "rot": "Sistema de Gastos com Pessoal", "p": ["Conferido em 26/10/2026: funciona, com competências até setembro de 2026, mas é consulta por filtro e por nome, só com opção de imprimir. Não exporta em formato aberto."], "fonte": "", "url": "https://gcp.saobernardo.sp.gov.br/gastos-com-pessoal/"}};
+  var ROT = { texto: 'Trecho do documento', nota: 'Nota do projeto, não é texto oficial', proposta: 'Redação sugerida pelo projeto' };
+  var dica = document.getElementById('dica');
+  var atual = null, fixa = false, timer = null;
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function montar(c) {
+    var h = '<div class="cab"><span class="rot">' + esc(c.rot) + '</span><button type="button" class="fechar" aria-label="Fechar">×</button></div>';
+    h += '<span class="tipo ' + c.tipo + '">' + ROT[c.tipo] + '</span>';
+    h += '<div class="trecho ' + c.tipo + '">' + c.p.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') + '</div>';
+    if (c.fonte) h += '<div class="fonte">' + esc(c.fonte) + '</div>';
+    if (c.url) h += '<a class="abrir" href="' + esc(c.url) + '" target="_blank" rel="noopener noreferrer">Abrir a fonte ↗</a>';
+    return h;
+  }
+  function posicionar(el) {
+    var r = el.getBoundingClientRect(), sx = window.scrollX, sy = window.scrollY;
+    dica.style.left = '0px'; dica.style.top = '0px';
+    var w = dica.offsetWidth, h = dica.offsetHeight, vw = document.documentElement.clientWidth;
+    var left = Math.min(Math.max(8, r.left), vw - w - 8);
+    var top = r.bottom + 8;
+    if (top + h > window.innerHeight && r.top - h - 8 > 0) top = r.top - h - 8;
+    dica.style.left = (left + sx) + 'px'; dica.style.top = (top + sy) + 'px';
+  }
+  function mostrar(el, fixar) {
+    clearTimeout(timer);
+    if (atual && atual !== el) atual.classList.remove('ativa');
+    atual = el; fixa = !!fixar;
+    el.classList.add('ativa');
+    dica.innerHTML = montar(CIT[el.dataset.ref]);
+    dica.classList.add('visivel');
+    posicionar(el);
+  }
+  function esconder() {
+    clearTimeout(timer);
+    dica.classList.remove('visivel');
+    if (atual) atual.classList.remove('ativa');
+    atual = null; fixa = false;
+  }
+  function adiar() { if (!fixa) { clearTimeout(timer); timer = setTimeout(esconder, 250); } }
+  document.querySelectorAll('.cit[data-ref]').forEach(function (el) {
+    el.addEventListener('mouseenter', function () { if (!fixa) mostrar(el, false); });
+    el.addEventListener('mouseleave', adiar);
+    el.addEventListener('focus', function () { if (!fixa) mostrar(el, false); });
+    el.addEventListener('blur', function () { setTimeout(function () { if (!dica.contains(document.activeElement)) adiar(); }, 0); });
+    el.addEventListener('click', function (ev) {
+      ev.preventDefault(); ev.stopPropagation();
+      if (atual === el && fixa) esconder(); else mostrar(el, true);
+    });
+    el.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); el.click(); } });
+  });
+  dica.addEventListener('mouseenter', function () { clearTimeout(timer); });
+  dica.addEventListener('mouseleave', adiar);
+  dica.addEventListener('click', function (ev) { if (ev.target.classList.contains('fechar')) { var a = atual; esconder(); if (a) a.focus(); } ev.stopPropagation(); });
+  document.addEventListener('click', function () { if (fixa) esconder(); });
+  document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && atual) { var a = atual; esconder(); a.focus(); } });
+  window.addEventListener('resize', function () { if (atual) posicionar(atual); });
+
   var CHAVE = 'roteiro-equipe-marcas';
   var marcas = {};
   try { marcas = JSON.parse(localStorage.getItem(CHAVE) || '{}'); } catch (e) { marcas = {}; }
