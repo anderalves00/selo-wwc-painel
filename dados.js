@@ -44,11 +44,13 @@ window.REFS = {
   compras_mural: { t: 'Mural de licitações (Compras/SBC)', d: 'Lista as licitações, com botões "Salvar XLS" e "Salvar ODS". Testados em 26/10/2026: não baixam (erro no script da página e erro 500 no serviço de departamentos).', u: 'https://compras.saobernardo.sp.gov.br/portal/Mural.aspx' },
   atende_bem_planilha: { t: 'Planilha do Atende Bem (quantitativo dos serviços)', d: 'Planilha interna recebida pelo projeto: atendimentos, serviços e tempos médios por unidade (Assunção, Alvarenga, Poupatempo, Riacho Grande, Rudge Ramos, Taboão, Sala do Empreendedor, 156), por mês, de set/2010 a set/2026. Números agregados, sem dados pessoais. Não está publicada.', u: '' },
   geoportal: { t: 'GeoPortal (aba Downloads)', d: '13 camadas de mapa em shapefile e o dicionário de dados, sem cadastro.', u: 'https://geo.saobernardo.sp.gov.br/' },
-  painel_estatistico: { t: 'Painel Estatístico (Secretaria de Planejamento Urbano)', d: 'Estatísticas do município de 2019 a 2025, só em PDF.', u: 'https://www.saobernardo.sp.gov.br/web/sbc/painel-estatistico' }
+  painel_estatistico: { t: 'Painel Estatístico (Secretaria de Planejamento Urbano)', d: 'Estatísticas do município de 2019 a 2025, só em PDF.', u: 'https://www.saobernardo.sp.gov.br/web/sbc/painel-estatistico' },
+  lei7367_17: { t: 'Lei nº 7.367/2025, art. 17', d: 'Lista as 25 unidades de primeiro nível da Administração Direta (24 secretarias e a Procuradoria) e as 2 entidades da Administração Indireta. É o denominador dos 80% do DM2.2.', u: L7367 + '#:~:text=Art.%2017.' },
+  proc72089: { t: 'Processo SB nº 72089/2019 (interno, sem link público)', d: 'Processo da LGPD na Prefeitura: modelo de planilha "Inventário de Dados" de 2022, atas do grupo de trabalho de 2022, Plano de Ação Emergencial de 2025 (que prevê o inventário de dados pessoais em 2026) e Decreto nº 22.963/2025.' }
 };
 
 window.PAINEL = {
-  atualizado: '2026-10-23',
+  atualizado: '2026-10-28',
   prazos: { envio: '2026-12-18', interno: '1ª semana de dezembro de 2026' },
 
   areas: [
@@ -67,6 +69,7 @@ window.PAINEL = {
   // Histórico (regra do usuário, 2026-10-23): só o avanço de cada critério, começando pelo código ("DM1: ..."),
   // com breve contexto e o que mudou no entendimento. Ajuste de layout ou correção de link do painel não entra.
   historico: [
+    { data: '2026-10-28', texto: 'DM2: ficha aberta. SBC não tem inventário de conjuntos de dados, mas há peças aproveitáveis: um modelo de planilha de 2022 (só de dados pessoais), o inventário de dados pessoais previsto para 2026 no plano da LGPD, a lista de sistemas do PDTIC, o dicionário do GeoPortal e o Painel Estatístico, que já reúne tabelas de pelo menos 17 das 25 secretarias. As minutas do DM1 e do OD1 já trazem o inventário no texto, mas não estarão em vigor em 18/12. Classificação: dá para criar até o prazo, com uma nota técnica do DTI e uma planilha pré-preenchida; o DM2.1, o DM2.3 e o DM2.4 bastam (3 de 4), sem depender de chegar a 80% das secretarias. 6 pedidos à equipe.' },
     { data: '2026-10-26', texto: 'OD3: conferidas no navegador as bases que faltavam. Funcionam: obras paralisadas (CSV) e recursos recebidos (XLS). Não funcionam ou não são abertas: a exportação do mural de licitações (erro no sistema), a dívida ativa (sem resposta), os gastos com pessoal (só consulta e impressão) e os relatórios da Educação (só PDF). O sistema de contratos tem 100 contratos de 2025, contra 1.347 publicados pelo município no Portal Nacional de Contratações Públicas no mesmo ano: o sistema parece incompleto, e isso entrou nos pedidos à equipe. A camada de equipamentos do GeoPortal tem bairro em cada registro, mas com nomes que não batem com a camada de bairros. A classificação não muda: o "Sim" do OD3 continua dependendo do catálogo e das correções antes de 18/12.' },
     { data: '2026-10-23', texto: 'OD1: concluída a v02 da minuta da Política Municipal de Dados Abertos. Ela passa a ser o ato específico de abertura de dados do Programa de Governança Digital e de Dados (SB 101842/2026): o comitê desse decreto (CGD) aprova o plano e o relatório, com o CGPD até o CGD ser instalado, e o catálogo de bases passa a ser um só. Lido também o modelo de São Paulo, que o DTI cita (Lei 17.901/2023 e Decreto 63.463/2024): dele vieram o catálogo atualizado todo ano, a devolutiva da consulta pública e a responsabilidade do titular de cada órgão pelas metas. A classificação não muda: dá para criar até o prazo, com o decreto publicado antes de 18/12.' },
     { data: '2026-10-23', texto: 'DM1: concluído o estudo da v02. Os 40 artigos do decreto de governança digital e de dados foram analisados frente aos 16 critérios de foco, e não só o DM1, porque o decreto toca também inventário, compartilhamento, qualidade, privacidade e o padrão de serviços de dados. São 9 alterações possíveis, cada uma com a redação proposta ao lado do artigo, para a equipe aprovar. As aprovadas formam a v03. Sozinho, o decreto atende só o DM1; as alterações dos arts. 7º e 25 são as que mais o aproximam dos demais critérios.' },
@@ -401,14 +404,66 @@ window.PAINEL = {
       codigo: 'DM2', area: 'DM', ordem: 4,
       titulo: 'Mantendo um inventário de dados abrangente',
       definicao: 'A prefeitura mantém um inventário de dados detalhado, que torna seus dados, e os dados relevantes de terceiros, mais fáceis de encontrar, mais acessíveis e mais bem cuidados.',
-      regra: { min: 3, total: 4 }, janela: '24 meses', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
-      subcriterios: [
-        { cod: 'DM2.1', texto: 'A prefeitura segue uma metodologia documentada para levantar e atualizar o inventário de dados com regularidade, no mínimo a cada 24 meses, e cumpre essa metodologia.' },
-        { cod: 'DM2.2', texto: 'Pelo menos 80% das secretarias e órgãos da prefeitura contribuem com conjuntos de dados para o inventário.' },
-        { cod: 'DM2.3', texto: 'O inventário de dados está disponível internamente para os servidores da prefeitura.' },
-        { cod: 'DM2.4', texto: 'Uma versão do inventário de dados está disponível para o público e publicada na internet.' }
+      regra: { min: 3, total: 4 }, janela: '24 meses', plataforma: { resposta: 'Vazio' },
+      ficha: 'rascunho', classificacao: 'criar',
+      propostas: [
+        { t: 'Decreto de Governança Digital e de Dados (DM1 v02): arts. 3º e 25', u: 'dm1-v02-governanca-digital.html', nota: 'As alterações possíveis põem no decreto o inventário a cada 2 anos, com todos os órgãos, versão interna e versão pública. Vale para depois de 18/12: o decreto vigora 90 dias após a publicação.' },
+        { t: 'Política Municipal de Dados Abertos (OD1 v02): arts. 7º, 9º e 10', u: 'od1-v02-dados-abertos.html', nota: 'Coordenador por órgão que mantém a lista de bases e o Catálogo Municipal de Bases de Dados, público e atualizado todo ano com todos os órgãos. É a versão pública do inventário.' }
       ],
-      evidencias: ['Cópia do inventário de dados.', 'Processo documentado para coletar e atualizar o inventário.']
+      resumo: 'SBC não tem inventário de conjuntos de dados. Há peças aproveitáveis: um modelo de planilha de 2022 (só de dados pessoais, nunca preenchido), o inventário de dados pessoais que o plano da LGPD prevê para 2026 com todas as secretarias, a lista de sistemas do PDTIC 2022–2025, o dicionário de dados do GeoPortal e o Painel Estatístico, que já reúne todo ano tabelas de pelo menos 17 das 25 secretarias. O texto normativo já está nas minutas do DM1 e do OD1, mas não estará em vigor em 18/12. Caminho até o prazo: uma nota técnica do DTI com a metodologia, uma planilha pré-preenchida que cada secretaria confere e completa, a versão interna e a versão pública. Assim o DM2.1, o DM2.3 e o DM2.4 (3 de 4) não dependem de chegar a 80% das secretarias.',
+      subcriterios: [
+        { cod: 'DM2.1', texto: 'A prefeitura segue uma metodologia documentada para levantar e atualizar o inventário de dados com regularidade, no mínimo a cada 24 meses, e cumpre essa metodologia.', situacao: 'nao_tem', classificacao: 'criar',
+          nota: 'Não há metodologia. O modelo de 2022 é de dados pessoais, sem periodicidade, e não foi aplicado. Uma nota técnica do DTI basta, sem esperar o decreto: foi o que a WWC aceitou de Niterói (um guia de mapeamento de dados). Para "cumprir", o primeiro ciclo precisa terminar antes do envio.', refs: ['proc72089', 'lei7367_645'] },
+        { cod: 'DM2.2', texto: 'Pelo menos 80% das secretarias e órgãos da prefeitura contribuem com conjuntos de dados para o inventário.', situacao: 'nao_tem', classificacao: 'criar_risco',
+          nota: 'A Administração Direta tem 25 unidades de primeiro nível (Lei 7.367/2025, art. 17): 80% são 20. Depende da adesão até a 1ª semana de dezembro, o que não dá para prever daqui. Melhora muito se o inventário de dados pessoais de 2026 já estiver percorrendo as secretarias. As fontes da WWC não dizem se Controladoria, Ouvidoria e Defesa Civil (ligadas ao Gabinete) ou as autarquias entram na conta.', refs: ['lei7367_17', 'proc72089', 'painel_estatistico'] },
+        { cod: 'DM2.3', texto: 'O inventário de dados está disponível internamente para os servidores da prefeitura.', situacao: 'nao_tem', classificacao: 'criar',
+          nota: 'Basta a planilha completa numa pasta de rede, na intranet ou no PRODIGI, acessível aos servidores.' },
+        { cod: 'DM2.4', texto: 'Uma versão do inventário de dados está disponível para o público e publicada na internet.', situacao: 'parcial', classificacao: 'criar',
+          nota: 'O dicionário de dados do GeoPortal é público e é o mesmo tipo de documento que a WWC aceitou de Niterói, mas cobre 13 camadas de 2 secretarias. A versão pública do inventário, sem a parte restrita, vai para a página de Dados Abertos e é a mesma lista que o OD3.3 pede.', refs: ['geoportal', 'pag_dados_abertos'] }
+      ],
+      evidencias: ['Cópia do inventário de dados.', 'Processo documentado para coletar e atualizar o inventário.'],
+      sbc: {
+        tem: [
+          { titulo: 'Coleta anual com a maioria das secretarias: o Painel Estatístico', texto: 'A Secretaria de Planejamento Urbano publica todo ano, desde 2019, tabelas com a fonte de cada uma. Na edição 2025 aparecem como fonte pelo menos 17 das 25 unidades da Administração Direta, além de dados de terceiros (IBGE, SEADE, INEP, RAIS, CETESB). Não é inventário, mas mostra um caminho que já funciona.', links: [{ t: 'Painel Estatístico', u: 'https://www.saobernardo.sp.gov.br/web/sbc/painel-estatistico' }] },
+          { titulo: 'Dicionário de dados do GeoPortal', texto: '13 camadas de mapa, cada uma com título, descrição, data, escala, formato, fonte e a descrição de cada campo. Público, em XLSX (abr/2026).', links: [{ t: 'GeoPortal (aba Downloads)', u: 'https://geo.saobernardo.sp.gov.br/' }] }
+        ],
+        incompleto: [
+          { titulo: 'Modelo de planilha "Inventário de Dados" (2022, processo interno da LGPD)', texto: 'Proposto pela Secretaria de Administração e pelo DTI em jan/2022: 29 colunas sobre cada dado pessoal (titular, finalidade, armazenamento, retenção, compartilhamento, base legal, controles).', falta: 'É um registro de dados pessoais (LGPD, art. 37), não um inventário de conjuntos de dados: não tem formato, periodicidade nem situação de abertura, e deixa de fora os dados não pessoais. Não há registro de que tenha sido preenchido.' },
+          { titulo: 'Inventário de dados pessoais previsto para 2026 (Plano de Ação LGPD)', texto: 'O plano de abr/2025 prevê para 2026 o levantamento de todos os dados pessoais tratados pelas secretarias e órgãos.', falta: 'Não se sabe se começou. Se estiver em curso, com quatro ou cinco colunas a mais (formato, sistema, periodicidade, abertura) ele vira o inventário do DM2.' },
+          { titulo: 'Lista de sistemas do PDTIC 2022–2025 (Anexos)', texto: 'Nome, descrição e banco de dados de cada sistema, e um questionário respondido unidade a unidade.', falta: 'Lista sistemas, não conjuntos de dados, sem a secretaria responsável por linha, e é de 2021–2022, fora da janela de 24 meses.', links: [{ t: 'PDTIC', u: 'https://www.saobernardo.sp.gov.br/web/sbc/pd-tic' }] },
+          { titulo: 'Minutas do decreto de governança (SB 101842/2026) e da política de dados abertos (OD1 v02)', texto: 'O decreto prevê um catálogo com parte pública e parte restrita (art. 25 e proposta técnica); as alterações da DM1 v02 e a OD1 v02 põem no texto o inventário com todos os órgãos e a versão pública.', falta: 'São minutas. O decreto vigora 90 dias após a publicação, depois de 18/12, e o piloto do DTI cataloga só dois conjuntos.' }
+        ],
+        naoTem: [
+          { titulo: 'Inventário de conjuntos de dados', texto: 'Nenhuma lista dos dados que cada secretaria mantém, com formato e responsável (DM2.2 e DM2.3).' },
+          { titulo: 'Metodologia de inventário', texto: 'Nenhum documento que diga como e com que frequência o inventário é feito (DM2.1).' }
+        ],
+        naoServe: [
+          { titulo: 'Inventários de bens e documentos da Lei 7.367/2025', texto: 'Patrimônio, acervo documental e equipamentos de TI. Não são inventários de dados.' }
+        ]
+      },
+      modelos: [
+        { nome: 'Niterói (RJ): planilha de metadados no portal SIGEO', cobre: ['DM2.1', 'DM2.2', 'DM2.3', 'DM2.4'], texto: 'Exemplo do pacote do Fórum: um guia de mapeamento de dados, um inventário novo com 87% das secretarias e uma planilha pública com uma linha por camada de mapa (resumo, responsável, periodicidade, data, formatos e campos). Atendeu sob a versão anterior do padrão.', u: 'https://www.sigeo.niteroi.rj.gov.br/pages/dados-abertos' },
+        { nome: 'Guia de inventário de dados (GovEx)', cobre: ['DM2.1'], texto: 'Cinco passos: quem supervisiona, escopo e plano, catalogação, conferência de qualidade e priorização da abertura.', u: 'http://labs.centerforgov.org/data-governance/data-inventory/' },
+        { nome: 'Inventário de dados de Filadélfia', cobre: ['DM2.4'], texto: 'Mais de 400 conjuntos de dados, publicado e usado para priorizar a abertura.', u: 'http://cityofphiladelphia.github.io/slash-data/inventory/' }
+      ],
+      plano: [
+        { texto: 'Levantar o que SBC já tem', feito: true },
+        { texto: 'Validar a análise internamente', feito: false },
+        { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM2' },
+        { texto: 'Nota técnica do DTI com a metodologia do inventário (escopo, planilha, prazo, contato por secretaria, conferência, periodicidade anual, parte pública e restrita)', feito: false },
+        { texto: 'Planilha-modelo pré-preenchida com o que já se sabe (bases do Portal, camadas do GeoPortal, sistemas do PDTIC, tabelas do Painel Estatístico)', feito: false },
+        { texto: 'Cada secretaria confere e completa a sua parte (meta: 20 das 25)', feito: false },
+        { texto: 'Versão interna para os servidores e versão pública na página de Dados Abertos (a mesma do catálogo do OD3)', feito: false },
+        { texto: 'Reunir as evidências e preparar a resposta', feito: false }
+      ],
+      pedidos: [
+        { texto: 'Se o inventário de dados pessoais previsto para 2026 no Plano de Ação LGPD começou: com quais secretarias, com que planilha e quem conduz', refs: ['proc72089'], status: 'a_pedir' },
+        { texto: 'Se o modelo "Inventário de Dados" de 2022 (processo da LGPD, p. 52–54) chegou a ser preenchido por alguma área', refs: ['proc72089'], status: 'a_pedir' },
+        { texto: 'A lista de sistemas atualizada, com a secretaria responsável por sistema (a do PDTIC 2022–2025 ou a do diagnóstico do PDTIC 2026–2029)', refs: ['pdtic'], status: 'a_pedir' },
+        { texto: 'Quem compila o Painel Estatístico e se o contato com as secretarias pode ser usado para o inventário', refs: ['painel_estatistico'], status: 'a_pedir' },
+        { texto: 'Se o DTI aceita emitir a nota técnica de metodologia antes do decreto, e quem a assina', refs: ['lei7367_645', 'proc101842'], status: 'a_pedir' },
+        { texto: 'Onde ficaria a versão interna do inventário (pasta de rede, intranet ou PRODIGI)', status: 'a_pedir' }
+      ]
     },
     {
       codigo: 'DM3', area: 'DM', ordem: 5,
