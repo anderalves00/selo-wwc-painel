@@ -495,7 +495,7 @@ window.PAINEL = {
         { cod: 'DM3.3', texto: 'A prefeitura tem uma forma fácil de receber pedidos internos e externos de compartilhamento de dados e exige que as áreas responsáveis pelos dados respondam em prazo adequado.', situacao: 'parcial', classificacao: 'criar',
           nota: 'O canal externo existe: pedido pela LAI por internet, presencial ou telefone, com resposta em até 20 dias, prorrogáveis por 10 (Decreto 18.882/2014, arts. 9º a 12). Em 2025, o tempo médio foi de 28,9 dias, com 61% de prorrogações. Falta um formulário para pedidos internos (uma secretaria pedindo dados a outra) e de parceiros que precisam de dado restrito, com prazo de resposta.', refs: ['dec18882'] },
         { cod: 'DM3.4', texto: 'A prefeitura contribui com sistemas de dados compartilhados ou integrados, e os utiliza, entre secretarias, com outras esferas de governo ou com parceiros externos, para apoiar decisões e melhorar serviços e resultados.', situacao: 'tem', classificacao: 'juntando',
-          nota: 'Melhor exemplo: a Operação São Bernardo Protege decide os níveis de alerta pela chuva medida pelo CIM e pelo CEMADEN (federal), com vistorias num sistema ligado ao do Estado, e aciona 14 secretarias e a Defesa Civil. Outros: o centro integrado de emergências (SAMU, Trânsito, Defesa Civil e GCM), os dados de uso que as operadoras de patinetes entregam à Secretaria de Transporte e a REDESIM. Falta juntar a prova de uso, como o relatório da última operação.', refs: ['dec23103', 'dec23119', 'dec22602'] }
+          nota: 'Melhor exemplo: a Operação São Bernardo Protege decide os níveis de alerta pela chuva medida pelo CIM e pelo CEMADEN (federal), com vistorias num sistema ligado ao do Estado, e aciona 14 secretarias e a Defesa Civil. Outros: o centro integrado de emergências (SAMU, Trânsito, Defesa Civil e GCM), os dados de uso que as operadoras de patinetes entregam à Secretaria de Transporte e a REDESIM. Falta juntar a prova de uso, como o relatório da última operação. Os dados de chuva do CEMADEN e do Estado são públicos nos sites deles; os da rede própria do CIM não estão publicados, embora o decreto mande.', refs: ['dec23103', 'dec23119', 'dec22602'] }
       ],
       evidencias: ['Link de canal on-line para pedir ou compartilhar dados.', 'Políticas ou processos de compartilhamento e de abertura de dados.', 'Inventário ou cópia de um acordo de compartilhamento de dados vigente.'],
       sbc: {
@@ -514,7 +514,7 @@ window.PAINEL = {
           { titulo: 'Canal para pedidos internos', texto: 'Não há forma nem prazo para uma secretaria pedir dados a outra (DM3.3).' }
         ],
         naoServe: [
-          { titulo: 'Muralha Paulista (reconhecimento facial)', texto: 'É compartilhamento de dados com o Estado, mas é o maior risco apontado no Estudo 01 (sem norma municipal), e os guias que a WWC indica desaconselham ligar dados de segurança pública e biometria. Não usar como evidência.' }
+          { titulo: 'Muralha Paulista (reconhecimento facial)', texto: 'É compartilhamento de dados com o Estado, mas é o maior risco apontado no Estudo 01 (sem norma municipal), Um dos recursos que a WWC indica no DM3 (o kit da AISP, Universidade da Pensilvânia) desaconselha ligar dados da polícia, usar dados para fiscalizar o cidadão e usar reconhecimento facial. Não usar como evidência.' }
         ]
       },
       modelos: [
@@ -538,7 +538,7 @@ window.PAINEL = {
       pedidos: [
         { texto: 'Cópias ou lista dos acordos, convênios, termos de adesão e credenciamentos vigentes que envolvem troca de dados (ex.: REDESIM, PRODESP/Poupatempo, CEMADEN, operadoras de patinetes, cooperação com a UFABC no Plano de Redução de Riscos)', refs: ['dec22602', 'dec23119'], status: 'a_pedir' },
         { texto: 'Se as operadoras de bicicletas e patinetes já entregam os dados de uso do art. 7º, VII, e como a Secretaria de Transporte os usa', refs: ['dec23119'], status: 'a_pedir' },
-        { texto: 'O relatório da Operação São Bernardo Protege 2025–2026 (art. 6º) e se a planilha de chuva do art. 3º, § 1º, I, é publicada', refs: ['dec23103'], status: 'a_pedir' },
+        { texto: 'O relatório da Operação São Bernardo Protege 2025–2026 (art. 6º) e onde estão os dados dos pluviômetros do CIM: a planilha do art. 3º, § 1º, I, não está na página da Defesa Civil, que só remete ao CEMADEN e ao DAEE', refs: ['dec23103'], status: 'a_pedir' },
         { texto: 'Quais sistemas o centro integrado de emergências (CIMGE) reúne e se há relatório de uso dos dados', status: 'a_pedir' },
         { texto: 'Como uma secretaria pede hoje dados a outra (PRODIGI, e-mail, ofício), se há prazo, e um exemplo recente', status: 'a_pedir' },
         { texto: 'Se o DTI e o CGPD aceitam aprovar o procedimento de compartilhamento e de pedidos antes do decreto, e quem o assina (mesma pergunta do DM2)', refs: ['cgpd', 'proc101842'], status: 'a_pedir' }
