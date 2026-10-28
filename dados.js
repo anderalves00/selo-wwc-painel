@@ -46,7 +46,11 @@ window.REFS = {
   geoportal: { t: 'GeoPortal (aba Downloads)', d: '13 camadas de mapa em shapefile e o dicionário de dados, sem cadastro.', u: 'https://geo.saobernardo.sp.gov.br/' },
   painel_estatistico: { t: 'Painel Estatístico (Secretaria de Planejamento Urbano)', d: 'Estatísticas do município de 2019 a 2025, só em PDF.', u: 'https://www.saobernardo.sp.gov.br/web/sbc/painel-estatistico' },
   lei7367_17: { t: 'Lei nº 7.367/2025, art. 17', d: 'Lista as 25 unidades de primeiro nível da Administração Direta (24 secretarias e a Procuradoria) e as 2 entidades da Administração Indireta. É o denominador dos 80% do DM2.2.', u: L7367 + '#:~:text=Art.%2017.' },
-  proc72089: { t: 'Processo SB nº 72089/2019 (interno, sem link público)', d: 'Processo da LGPD na Prefeitura: modelo de planilha "Inventário de Dados" de 2022, atas do grupo de trabalho de 2022, Plano de Ação Emergencial de 2025 (que prevê o inventário de dados pessoais em 2026) e Decreto nº 22.963/2025.' }
+  proc72089: { t: 'Processo SB nº 72089/2019 (interno, sem link público)', d: 'Processo da LGPD na Prefeitura: modelo de planilha "Inventário de Dados" de 2022, atas do grupo de trabalho de 2022, Plano de Ação Emergencial de 2025 (que prevê o inventário de dados pessoais em 2026) e Decreto nº 22.963/2025.' },
+  dec23103: { t: 'Decreto nº 23.103/2025 (Operação São Bernardo Protege)', d: 'Plano anual de chuvas: níveis de alerta decididos por gatilhos de chuva medidos pelo CIM e pelo CEMADEN (federal), vistorias num sistema integrado ao banco de dados da Defesa Civil e do SIBH (estadual), grupo de 14 secretarias e a Defesa Civil (art. 5º) e relatório ao fim de cada operação.', u: 'https://leis.org/2wzxp' },
+  dec23119: { t: 'Decreto nº 23.119/2025, art. 7º, VII (bicicletas e patinetes compartilhados)', d: 'As operadoras credenciadas entregam à Secretaria de Transporte dados diários anonimizados de uso (trajetos, horários, viagens, usuários, quilometragem) para as políticas de mobilidade.', u: 'https://leis.org/2xm90' },
+  dec22602: { t: 'Decreto nº 22.602/2024 (Facilita SP / REDESIM)', d: 'Adesão ao programa estadual Facilita SP e à rede nacional de registro e licenciamento de empresas (REDESIM), com termo de adesão.', u: 'https://leis.org/1afpo' },
+  dec10046: { t: 'Decreto federal nº 10.046/2019', d: 'Governança no compartilhamento de dados na administração federal: três níveis (amplo, restrito, específico), compartilhamento entre órgãos sem convênio, prazo de 30 dias e publicidade do compartilhamento de dados pessoais. Modelo, não vale para o município.', u: 'https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2019/decreto/d10046.htm' },
 };
 
 window.PAINEL = {
@@ -70,6 +74,7 @@ window.PAINEL = {
   // com breve contexto e o que mudou no entendimento. Ajuste de layout ou correção de link do painel não entra.
   // Conferência interna de critério já fechado que não muda nada também não entra (usuário, 2026-10-28: não gerar incerteza na equipe).
   historico: [
+    { data: '2026-10-28', texto: 'DM3: ficha aberta, ainda em análise (faltam dois recursos da WWC que só abrem com login na plataforma). SBC não tem processo escrito de compartilhamento nem de abertura de dados; o canal externo já existe (pedidos pela LAI, com prazo de 20 + 10 dias). Já há sistemas de dados compartilhados entre esferas de governo usados para decidir: a Operação São Bernardo Protege aciona 14 secretarias a partir da chuva medida pelo CIM e pelo CEMADEN. Caminho até o prazo: um procedimento curto do DTI, com o CGPD, que diga quando firmar acordo, como pedir dados com prazo de resposta e como decidir o que abrir, como a WWC aceitou de San Antonio.' },
     { data: '2026-10-28', texto: 'DM2: lidos os recursos que a WWC indica para o critério (GovEx, São Francisco, Bloomberg Cities, Kansas City; o de Filadélfia não abre). Dois pontos mudam o plano: as bases com dado pessoal ou sigiloso também entram no inventário, com o motivo da restrição, e o formulário deve trazer perguntas que ajudem a secretaria a lembrar das próprias bases. Kansas City planejou 7 secretarias em 60 dias e teve de adaptar, o que confirma o risco de prazo.' },
     { data: '2026-10-28', texto: 'DM2: montada a lista pré-preenchida do inventário com o que já se conhece (Painel Estatístico, sistemas do PDTIC, GeoPortal e Portal da Transparência): 387 indícios de base. 18 das 25 secretarias já podem receber o formulário com bases atribuídas a elas pela própria fonte; 6 não têm nenhum indício. Para 20 de 25, as 18 precisam confirmar e mais 2 precisam começar do zero. Dos 143 sistemas do PDTIC, 130 estão sem secretaria responsável, por isso o pedido do cadastro de aplicações do DTI.' },
     { data: '2026-10-28', texto: 'DM2: aprofundado. O caso de Niterói, lido por inteiro, mostra que a metodologia aceita foi um manual com um formulário por base de dados, validado pelo secretário, e que a coleta levou de 9 a 11 semanas. SBC tem cerca de 5 até a 1ª semana de dezembro, por isso a classificação passa de "dá para criar até o prazo" para "dá para criar, com risco". O Painel Estatístico foi conferido fonte a fonte: suas tabelas vêm de 17 das 25 secretarias, um canal de coleta que já funciona (aparecer no Painel não conta como contribuição ao inventário). O pedido da lista de sistemas passa a citar o cadastro de aplicações do DTI.' },
@@ -475,14 +480,69 @@ window.PAINEL = {
       codigo: 'DM3', area: 'DM', ordem: 5,
       titulo: 'Compartilhando dados',
       definicao: 'A prefeitura tem processos documentados e fáceis de usar para agilizar o compartilhamento de dados, inclusive de dados protegidos, tanto entre secretarias quanto com parceiros externos.',
-      regra: { min: 3, total: 4 }, janela: 'Sem janela', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
-      subcriterios: [
-        { cod: 'DM3.1', texto: 'A prefeitura tem um processo documentado para compartilhar dados internamente e com parceiros externos, com orientações sobre quando firmar acordos de compartilhamento de dados.' },
-        { cod: 'DM3.2', texto: 'A prefeitura tem um processo documentado para decidir quando e como abrir dados, que inclui avaliar as possíveis oportunidades e danos e considerar os pedidos de dados já recebidos para priorizar quais bases publicar.' },
-        { cod: 'DM3.3', texto: 'A prefeitura tem uma forma fácil de receber pedidos internos e externos de compartilhamento de dados e exige que as áreas responsáveis pelos dados respondam em prazo adequado.' },
-        { cod: 'DM3.4', texto: 'A prefeitura contribui com sistemas de dados compartilhados ou integrados, e os utiliza, entre secretarias, com outras esferas de governo ou com parceiros externos, para apoiar decisões e melhorar serviços e resultados.' }
+      regra: { min: 3, total: 4 }, janela: 'Sem janela', plataforma: { resposta: 'Vazio' },
+      ficha: 'em_analise', classificacao: 'criar',
+      propostas: [
+        { t: 'Decreto de Governança Digital e de Dados (DM1 v02): art. 25, parágrafo único, III e IV', u: 'dm1-v02-governanca-digital.html', nota: 'As alterações possíveis põem no decreto o procedimento de compartilhamento, com orientação sobre quando firmar acordo e canal de pedidos com prazo (DM3.1 e DM3.3), e o procedimento de abertura com benefícios, riscos e pedidos recebidos (DM3.2). Vale para depois de 18/12: o decreto vigora 90 dias após a publicação.' },
+        { t: 'Política Municipal de Dados Abertos (OD1 v02): arts. 9º, 12, 14 e 15', u: 'od1-v02-dados-abertos.html', nota: 'Matriz de priorização publicada, canal para pedir abertura e uso dos pedidos da LAI para priorizar. Falta a avaliação de danos que o DM3.2 pede.' }
       ],
-      evidencias: ['Link de canal on-line para pedir ou compartilhar dados.', 'Políticas ou processos de compartilhamento e de abertura de dados.', 'Inventário ou cópia de um acordo de compartilhamento de dados vigente.']
+      resumo: 'SBC não tem processo escrito para compartilhar dados entre secretarias ou com parceiros, nem para decidir o que abrir. O canal externo existe: os pedidos pela Lei de Acesso à Informação, com prazo de 20 dias, prorrogáveis por 10. Já há sistemas de dados compartilhados usados para decidir: a Operação São Bernardo Protege aciona 14 secretarias a partir da chuva medida pelo CIM e pelo CEMADEN (federal), e as operadoras de patinetes entregam dados de uso à Secretaria de Transporte. O texto normativo está nas minutas do DM1 e do OD1, mas não estará em vigor em 18/12. Caminho até o prazo: um procedimento curto do DTI, aprovado com o CGPD, que diga quando firmar acordo, como pedir dados com prazo de resposta e como decidir o que abrir. A WWC aceitou um texto assim de San Antonio. Ficha ainda em análise: faltam dois recursos da WWC que só abrem com login.',
+      subcriterios: [
+        { cod: 'DM3.1', texto: 'A prefeitura tem um processo documentado para compartilhar dados internamente e com parceiros externos, com orientações sobre quando firmar acordos de compartilhamento de dados.', situacao: 'nao_tem', classificacao: 'criar',
+          nota: 'Não há processo. A minuta do SB 101842/2026 dá as condições (art. 26: finalidade, base jurídica, mínimo necessário, rastreabilidade), não o caminho. Um procedimento curto basta: entre secretarias, sem convênio, só o pedido registrado e um termo de responsabilidade; com outro ente público, acordo de cooperação ou termo de adesão; com empresa ou universidade, termo de uso com os 12 elementos que a WWC indica. O Decreto federal 10.046/2019 é o modelo brasileiro.', refs: ['proc101842', 'dec10046', 'cgpd'] },
+        { cod: 'DM3.2', texto: 'A prefeitura tem um processo documentado para decidir quando e como abrir dados, que inclui avaliar as possíveis oportunidades e danos e considerar os pedidos de dados já recebidos para priorizar quais bases publicar.', situacao: 'nao_tem', classificacao: 'criar',
+          nota: 'Nada em vigor. A minuta da OD1 v02 traz a matriz de priorização e o uso dos pedidos da LAI, mas não a avaliação de danos; ajuste previsto para a próxima versão. O mesmo procedimento do DM3.1 pode trazer a seção de abertura antes de a política ser publicada.', refs: ['dec18882'] },
+        { cod: 'DM3.3', texto: 'A prefeitura tem uma forma fácil de receber pedidos internos e externos de compartilhamento de dados e exige que as áreas responsáveis pelos dados respondam em prazo adequado.', situacao: 'parcial', classificacao: 'criar',
+          nota: 'O canal externo existe: pedido pela LAI por internet, presencial ou telefone, com resposta em até 20 dias, prorrogáveis por 10 (Decreto 18.882/2014, arts. 9º a 12). Em 2025, o tempo médio foi de 28,9 dias, com 61% de prorrogações. Falta um formulário para pedidos internos (uma secretaria pedindo dados a outra) e de parceiros que precisam de dado restrito, com prazo de resposta.', refs: ['dec18882'] },
+        { cod: 'DM3.4', texto: 'A prefeitura contribui com sistemas de dados compartilhados ou integrados, e os utiliza, entre secretarias, com outras esferas de governo ou com parceiros externos, para apoiar decisões e melhorar serviços e resultados.', situacao: 'tem', classificacao: 'juntando',
+          nota: 'Melhor exemplo: a Operação São Bernardo Protege decide os níveis de alerta pela chuva medida pelo CIM e pelo CEMADEN (federal), com vistorias num sistema ligado ao do Estado, e aciona 14 secretarias e a Defesa Civil. Outros: o centro integrado de emergências (SAMU, Trânsito, Defesa Civil e GCM), os dados de uso que as operadoras de patinetes entregam à Secretaria de Transporte e a REDESIM. Falta juntar a prova de uso, como o relatório da última operação.', refs: ['dec23103', 'dec23119', 'dec22602'] }
+      ],
+      evidencias: ['Link de canal on-line para pedir ou compartilhar dados.', 'Políticas ou processos de compartilhamento e de abertura de dados.', 'Inventário ou cópia de um acordo de compartilhamento de dados vigente.'],
+      sbc: {
+        tem: [
+          { titulo: 'Pedidos de acesso à informação (LAI), com prazo', texto: 'Pedido pela internet, presencial ou por telefone; a secretaria responde em até 20 dias, prorrogáveis por 10, com recurso ao secretário. Cobre os pedidos externos do DM3.3.', links: [{ t: 'Decreto 18.882/2014', u: 'https://leis.org/btsig' }] },
+          { titulo: 'Operação São Bernardo Protege', texto: 'Níveis de alerta decididos por gatilhos de chuva medidos pelo CIM e pelo CEMADEN (federal), com vistorias num sistema integrado ao da Defesa Civil e ao do Estado (SIBH). Coordena 14 secretarias e a Defesa Civil e manda fazer um relatório ao fim de cada operação.', links: [{ t: 'Decreto 23.103/2025', u: 'https://leis.org/2wzxp' }] },
+          { titulo: 'Dados das operadoras de bicicletas e patinetes', texto: 'O credenciamento obriga as operadoras a entregar à Secretaria de Transporte dados diários anonimizados de uso, para a política de mobilidade. É um acordo de compartilhamento com parceiro privado já em vigor.', links: [{ t: 'Decreto 23.119/2025', u: 'https://leis.org/2xm90' }] }
+        ],
+        incompleto: [
+          { titulo: 'Minutas do decreto de governança (SB 101842/2026) e da política de dados abertos (OD1 v02)', texto: 'O decreto dá as condições para compartilhar (art. 26); as alterações da DM1 v02 e a OD1 v02 põem no texto o procedimento de compartilhamento, o canal de pedidos com prazo e a priorização da abertura.', falta: 'São minutas e não estarão em vigor em 18/12. A OD1 v02 não pede a avaliação de danos.' },
+          { titulo: 'Centro Integrado de Monitoramento e Gerenciamento de Emergências (CIMGE)', texto: 'SAMU, Trânsito, Defesa Civil e GCM na mesma sala e no mesmo rádio, desde dez/2024.', falta: 'Não há registro público de como os dados são usados; o "Observatório de Segurança" não publica nada.' }
+        ],
+        naoTem: [
+          { titulo: 'Processo de compartilhamento de dados', texto: 'Nenhum documento diz como uma secretaria pede dados a outra, quando é preciso acordo com parceiro externo, nem lista os acordos vigentes (DM3.1).' },
+          { titulo: 'Processo de abertura de dados', texto: 'Nenhum documento em vigor diz como se decide o que abrir, com benefícios, riscos e pedidos recebidos (DM3.2).' },
+          { titulo: 'Canal para pedidos internos', texto: 'Não há forma nem prazo para uma secretaria pedir dados a outra (DM3.3).' }
+        ],
+        naoServe: [
+          { titulo: 'Muralha Paulista (reconhecimento facial)', texto: 'É compartilhamento de dados com o Estado, mas é o maior risco apontado no Estudo 01 (sem norma municipal), e os guias que a WWC indica desaconselham ligar dados de segurança pública e biometria. Não usar como evidência.' }
+        ]
+      },
+      modelos: [
+        { nome: 'San Antonio (EUA): Diretiva de Governança de Dados', cobre: ['DM3.1', 'DM3.3'], texto: 'Exemplo do pacote do Fórum. A parte de compartilhamento é uma seção de uma página: entre departamentos por uma plataforma interna; com parceiros externos por um acordo-padrão aprovado pelo Conselho, com protocolo de pedido, papéis e proteções; com o público pelo portal de dados abertos, que tem formulário para pedir bases novas.' },
+        { nome: 'Introdução ao compartilhamento e integração de dados (AISP, Universidade da Pensilvânia)', cobre: ['DM3.1', 'DM3.4'], texto: 'Guia do pacote do Fórum. Três classes de acesso (aberto, restrito, indisponível) e o instrumento conforme a finalidade: dado agregado para indicadores pede acordo simples ou nenhum; análise e avaliação pedem acordo e termo de uso; atendimento com dado identificado pede consentimento e acesso por perfil.', u: 'https://aisp.upenn.edu/wp-content/uploads/2020/06/AISP-Intro-.pdf' },
+        { nome: 'Elementos de um acordo de compartilhamento (NNIP / Urban Institute)', cobre: ['DM3.1'], texto: 'Doze itens: finalidade, prazo, campos, frequência, segurança, responsáveis, usos permitidos, custos, qualidade, responsabilidade, revisão antes de publicar e destino dos dados no fim. Roteiro do termo-modelo.', u: 'https://neighborhoodindicators.org/library/guides/key-elements-data-sharing-agreements.html' },
+        { nome: 'Kit de equidade na integração de dados (AISP): pedidos de dados no KYSTATS (Kentucky)', cobre: ['DM3.2', 'DM3.3'], texto: 'Política de acesso publicada, fluxograma do pedido com prazo de resposta, formulários on-line e dicionário de dados público. O kit também pede que a decisão de abrir pese benefícios e riscos para os grupos mais expostos.', u: 'https://aisp.upenn.edu/wp-content/uploads/2022/07/AISP-Toolkit_5.27.20.pdf' },
+        { nome: 'Decreto federal 10.046/2019', cobre: ['DM3.1', 'DM3.3'], texto: 'Modelo brasileiro: três níveis de compartilhamento, sem convênio entre órgãos, pedido formal com finalidade e mínimo necessário, resposta em 30 dias e publicidade do compartilhamento de dados pessoais.', u: 'https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2019/decreto/d10046.htm' }
+      ],
+      plano: [
+        { texto: 'Levantar o que SBC já tem', feito: true },
+        { texto: 'Ler os recursos que a WWC indica (faltam dois, que só abrem com login na plataforma)', feito: false },
+        { texto: 'Validar a análise internamente', feito: false },
+        { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM3' },
+        { texto: 'Procedimento do DTI, com o CGPD, de compartilhamento, pedidos e abertura de dados: classes de acesso, quem decide, quando firmar acordo, formulário com prazo de resposta, matriz de abertura com benefícios, riscos e pedidos', feito: false },
+        { texto: 'Formulário de pedido de dados (interno e de parceiros), com o link na página de Dados Abertos', feito: false },
+        { texto: 'Lista dos acordos vigentes e termo-modelo', feito: false },
+        { texto: 'Dossiê do DM3.4: São Bernardo Protege, dados das operadoras de patinetes e, se houver, o CIMGE', feito: false },
+        { texto: 'Reunir as evidências e preparar a resposta', feito: false }
+      ],
+      pedidos: [
+        { texto: 'Cópias ou lista dos acordos, convênios, termos de adesão e credenciamentos vigentes que envolvem troca de dados (ex.: REDESIM, PRODESP/Poupatempo, CEMADEN, operadoras de patinetes, cooperação com a UFABC no Plano de Redução de Riscos)', refs: ['dec22602', 'dec23119'], status: 'a_pedir' },
+        { texto: 'Se as operadoras de bicicletas e patinetes já entregam os dados de uso do art. 7º, VII, e como a Secretaria de Transporte os usa', refs: ['dec23119'], status: 'a_pedir' },
+        { texto: 'O relatório da Operação São Bernardo Protege 2025–2026 (art. 6º) e se a planilha de chuva do art. 3º, § 1º, I, é publicada', refs: ['dec23103'], status: 'a_pedir' },
+        { texto: 'Quais sistemas o centro integrado de emergências (CIMGE) reúne e se há relatório de uso dos dados', status: 'a_pedir' },
+        { texto: 'Como uma secretaria pede hoje dados a outra (PRODIGI, e-mail, ofício), se há prazo, e um exemplo recente', status: 'a_pedir' },
+        { texto: 'Se o DTI e o CGPD aceitam aprovar o procedimento de compartilhamento e de pedidos antes do decreto, e quem o assina (mesma pergunta do DM2)', refs: ['cgpd', 'proc101842'], status: 'a_pedir' }
+      ]
     },
     {
       codigo: 'DM4', area: 'DM', ordem: 6,
