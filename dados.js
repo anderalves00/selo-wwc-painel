@@ -68,6 +68,7 @@ window.PAINEL = {
 
   // Histórico (regra do usuário, 2026-10-23): só o avanço de cada critério, começando pelo código ("DM1: ..."),
   // com breve contexto e o que mudou no entendimento. Ajuste de layout ou correção de link do painel não entra.
+  // Conferência interna de critério já fechado que não muda nada também não entra (usuário, 2026-10-28: não gerar incerteza na equipe).
   historico: [
     { data: '2026-10-28', texto: 'DM2: lidos os recursos que a WWC indica para o critério (GovEx, São Francisco, Bloomberg Cities, Kansas City; o de Filadélfia não abre). Dois pontos mudam o plano: as bases com dado pessoal ou sigiloso também entram no inventário, com o motivo da restrição, e o formulário deve trazer perguntas que ajudem a secretaria a lembrar das próprias bases. Kansas City planejou 7 secretarias em 60 dias e teve de adaptar, o que confirma o risco de prazo.' },
     { data: '2026-10-28', texto: 'DM2: montada a lista pré-preenchida do inventário com o que já se conhece (Painel Estatístico, sistemas do PDTIC, GeoPortal e Portal da Transparência): 387 indícios de base. 18 das 25 secretarias já podem receber o formulário com bases atribuídas a elas pela própria fonte; 6 não têm nenhum indício. Para 20 de 25, as 18 precisam confirmar e mais 2 precisam começar do zero. Dos 143 sistemas do PDTIC, 130 estão sem secretaria responsável, por isso o pedido do cadastro de aplicações do DTI.' },
