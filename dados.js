@@ -482,7 +482,14 @@ window.PAINEL = {
       definicao: 'A prefeitura tem processos documentados e fáceis de usar para agilizar o compartilhamento de dados, inclusive de dados protegidos, tanto entre secretarias quanto com parceiros externos.',
       regra: { min: 3, total: 4 }, janela: 'Sem janela', plataforma: { resposta: 'Vazio' },
       ficha: 'em_analise', classificacao: 'criar',
+      versoes: [
+        { v: 'v01', data: '28/10/2026', situacao: 'vigente', t: 'Procedimento de compartilhamento, pedidos e abertura de dados', u: 'dm3-v01-compartilhamento.html',
+          d: 'Rascunho de indicação técnica: 21 artigos e 4 anexos (termo de uso, formulário de pedido, guia de decisão e registro), cada um explicado. Três perguntas: pode compartilhar (classes de acesso), de que forma (a escada, do resultado ao dado identificado) e como formalizar (sem convênio entre secretarias; termo-padrão e formulário por pedido com parceiros). Pedidos com prazo de 20 + 10 dias e matriz de abertura com benefícios e riscos de dano. Feito para sair antes do decreto de governança, como ato do DTI aprovado pelo CGPD.' },
+        { v: 'v02', data: '—', situacao: 'aguarda', t: 'Procedimento com os ajustes da equipe e da Procuradoria',
+          d: 'Só é criada depois de a equipe analisar a v01.' }
+      ],
       propostas: [
+        { t: 'Procedimento de compartilhamento, pedidos e abertura de dados (v01)', u: 'dm3-v01-compartilhamento.html', nota: 'Rascunho de indicação técnica: 21 artigos e 4 anexos, cada um explicado. Cobre o DM3.1, o DM3.2 e o DM3.3; o DM3.4 depende da prova de uso. A decisão é do município.' },
         { t: 'Decreto de Governança Digital e de Dados (DM1 v02): art. 25, parágrafo único, III e IV', u: 'dm1-v02-governanca-digital.html', nota: 'As alterações possíveis põem no decreto o procedimento de compartilhamento, com orientação sobre quando firmar acordo e canal de pedidos com prazo (DM3.1 e DM3.3), e o procedimento de abertura com benefícios, riscos e pedidos recebidos (DM3.2). Vale para depois de 18/12: o decreto vigora 90 dias após a publicação.' },
         { t: 'Política Municipal de Dados Abertos (OD1 v02): arts. 9º, 12, 14 e 15', u: 'od1-v02-dados-abertos.html', nota: 'Matriz de priorização publicada, canal para pedir abertura e uso dos pedidos da LAI para priorizar. Falta a avaliação de danos que o DM3.2 pede.' }
       ],
@@ -530,9 +537,10 @@ window.PAINEL = {
         { texto: 'Ler os recursos que a WWC indica', feito: true },
         { texto: 'Validar a análise internamente', feito: false },
         { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM3' },
-        { texto: 'Procedimento do DTI, com o CGPD, de compartilhamento, pedidos e abertura de dados: classes de acesso, quem decide, quando firmar acordo, formulário com prazo de resposta, matriz de abertura com benefícios, riscos e pedidos', feito: false },
-        { texto: 'Formulário de pedido de dados (interno e de parceiros), com o link na página de Dados Abertos', feito: false },
-        { texto: 'Lista dos acordos vigentes e termo-modelo', feito: false },
+        { texto: 'Redigir o procedimento de compartilhamento, pedidos e abertura de dados, com termo de uso, formulário, guia de decisão e registro (v01)', feito: true },
+        { texto: 'Aprovar o procedimento (DTI e CGPD, ou o instrumento que a equipe escolher) e publicá-lo', feito: false },
+        { texto: 'Formulário de pedido de dados (interno e de parceiros) no ar, com o link na página de Dados Abertos', feito: false },
+        { texto: 'Lista dos acordos vigentes (registro, parte A)', feito: false },
         { texto: 'Dossiê do DM3.4: São Bernardo Protege, dados das operadoras de patinetes e, se houver, o CIMGE', feito: false },
         { texto: 'Reunir as evidências e preparar a resposta', feito: false }
       ],
