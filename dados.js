@@ -482,7 +482,7 @@ window.PAINEL = {
       titulo: 'Compartilhando dados',
       definicao: 'A prefeitura tem processos documentados e fáceis de usar para agilizar o compartilhamento de dados, inclusive de dados protegidos, tanto entre secretarias quanto com parceiros externos.',
       regra: { min: 3, total: 4 }, janela: 'Sem janela', plataforma: { resposta: 'Vazio' },
-      ficha: 'em_analise', classificacao: 'criar',
+      ficha: 'rascunho', classificacao: 'criar',
       versoes: [
         { v: 'v01', data: '28/10/2026', situacao: 'vigente', t: 'Procedimento de compartilhamento, pedidos e abertura de dados', u: 'dm3-v01-compartilhamento.html',
           d: 'Rascunho de indicação técnica: 21 artigos e 4 anexos (termo de uso, formulário de pedido, guia de decisão e registro), cada um explicado. Três perguntas: pode compartilhar (classes de acesso), de que forma (a escada, do resultado ao dado identificado) e como formalizar (sem convênio entre secretarias; termo-padrão e formulário por pedido com parceiros). Pedidos com prazo de 20 + 10 dias e matriz de abertura com benefícios e riscos de dano. Feito para sair antes do decreto de governança, como ato do DTI aprovado pelo CGPD.' },
@@ -536,7 +536,7 @@ window.PAINEL = {
       plano: [
         { texto: 'Levantar o que SBC já tem', feito: true },
         { texto: 'Ler os recursos que a WWC indica', feito: true },
-        { texto: 'Validar a análise internamente', feito: false },
+        { texto: 'Validar a análise internamente', feito: true },
         { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM3' },
         { texto: 'Redigir o procedimento de compartilhamento, pedidos e abertura de dados, com termo de uso, formulário, guia de decisão e registro (v01)', feito: true },
         { texto: 'Aprovar o procedimento (DTI e CGPD, ou o instrumento que a equipe escolher) e publicá-lo', feito: false },
