@@ -115,6 +115,7 @@ details.grupo-area > summary .area-titulo { margin: 0; }
 #tabela-mapa th:nth-child(1) { width: 7%; } #tabela-mapa th:nth-child(2) { width: 20%; } #tabela-mapa th:nth-child(3) { width: 27%; }
 #tabela-mapa .mapa-proc { white-space: nowrap; }
 #tabela-mapa .mapa-base { margin-top: 4px; font-size: 13px; color: var(--texto-suave); }
+#tabela-mapa .mapa-prop { margin-top: 4px; font-size: 13px; font-weight: 600; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
 th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--texto-suave); font-weight: 700; padding: 8px 10px; border-bottom: 2px solid var(--borda); white-space: nowrap; }
 td { padding: 9px 10px; border-bottom: 1px solid var(--borda); vertical-align: top; }
@@ -305,7 +306,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
 </div>
 <footer>Página de trabalho da equipe. Não indexada por buscadores. As respostas só são inseridas na plataforma depois da validação da equipe.</footer>
 
-<script src="dados.js?v=DA14BFA34B"></script>
+<script src="dados.js?v=4939C7E4D0"></script>
 <script>
 (function () {
   const P = window.PAINEL;
@@ -428,8 +429,8 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       P.mapa.linhas.map(l => `<tr>
         <td><a href="#${l.criterio}" class="interno"><strong>${esc(l.criterio)}</strong></a></td>
         <td>${esc(l.assunto)}</td>
-        <td>${esc(l.documento)}${l.u ? ` ${ext(l.u, 'Abrir a proposta')}` : ''}</td>
-        <td>${tag(l.acao === 'Atualizar' ? { r: 'Atualizar', c: 't-laranja' } : { r: 'Criar', c: 't-azul' })} ${esc(l.detalhe || '')}${(l.refs || []).length ? `<div class="mapa-base">Base: ${l.refs.map(k => RM[k] && RM[k].u ? ext(RM[k].u, RM[k].t) : esc((RM[k] || {}).t || k)).join('; ')}</div>` : ''}</td>
+        <td>${esc(l.documento)}</td>
+        <td>${tag(l.acao === 'Atualizar' ? { r: 'Atualizar', c: 't-laranja' } : { r: 'Criar', c: 't-azul' })} ${esc(l.detalhe || '')}${l.prop ? `<div class="mapa-prop">Proposta: ${l.prop.u ? ext(l.prop.u, l.prop.t) : esc(l.prop.t)}</div>` : ''}${(l.refs || []).length ? `<div class="mapa-base">Base: ${l.refs.map(k => RM[k] && RM[k].u ? ext(RM[k].u, RM[k].t) : esc((RM[k] || {}).t || k)).join('; ')}</div>` : ''}</td>
         <td class="mapa-proc">${esc(l.processo)}</td>
       </tr>`).join('') + '</tbody>';
   } else { $('#mapa').remove(); }
