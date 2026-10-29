@@ -75,7 +75,7 @@ window.PAINEL = {
       { criterio: 'OD3', assunto: 'Portal de dados abertos', documento: 'Página de Dados Abertos como catálogo, tabelas do Perfil por Bairro em planilha, planilha do Atende Bem e texto da resposta na plataforma', acao: 'Atualizar', detalhe: 'a página e a publicação de dados; não é norma', prop: { t: 'exemplo da página de Dados Abertos como catálogo', u: 'proposta-od3-catalogo.html' }, refs: ['pag_dados_abertos'], processo: 'Sem processo' },
       { criterio: 'DM2', assunto: 'Quais dados existem (inventário)', documento: 'Nota técnica do DTI com o método do inventário e a planilha-modelo', acao: 'Criar', detalhe: 'ato do DTI, sem decreto', prop: { t: 'ainda não redigida (depende da resposta à DM2-5)' }, refs: ['lei7367_645'], processo: 'Sem processo' },
       { criterio: 'DM3', assunto: 'Como os dados circulam (compartilhamento, pedidos e abertura)', documento: 'Procedimento do DTI, aprovado pelo Comitê de Proteção de Dados (DM3 v01), e formulário de pedido', acao: 'Criar', detalhe: 'ato do DTI, sem decreto; modelo brasileiro: o decreto federal de compartilhamento', prop: { t: 'DM3 v01, o procedimento com 21 artigos e 4 anexos', u: 'dm3-v01-compartilhamento.html' }, refs: ['lei7367_645', 'dec10046'], processo: 'Sem processo' },
-      { criterio: 'DM4', assunto: 'Como garantir que os dados estão certos (qualidade e padrões)', documento: 'Guia de Qualidade e Padrões de Dados do DTI, com padrões de campos comuns e formulário de metadados, e formulário "aponte um erro nos dados"', acao: 'Criar', detalhe: 'ato do DTI, sem decreto', prop: { t: 'ainda não redigida (a v01 é o próximo passo)' }, refs: ['lei7367_645', 'cambridge_dm4'], processo: 'Sem processo' },
+      { criterio: 'DM4', assunto: 'Como garantir que os dados estão certos (qualidade e padrões)', documento: 'Guia de Qualidade e Padrões de Dados do DTI, com padrões de campos comuns e formulário de metadados, e formulário "aponte um erro nos dados"', acao: 'Criar', detalhe: 'ato do DTI, sem decreto', prop: { t: 'DM4 v01, o guia com 24 artigos e 5 anexos', u: 'dm4-v01-qualidade.html' }, refs: ['lei7367_645', 'cambridge_dm4'], processo: 'Sem processo' },
       { criterio: 'DM4', assunto: 'Dados das operadoras de patinetes num padrão aberto (GBFS)', documento: 'Decreto 23.119/2025 (credenciamento de bicicletas e patinetes)', acao: 'Atualizar', detalhe: 'só se a Secretaria de Transporte aceitar', prop: { t: 'sem texto; depende da Secretaria de Transporte (DM4-2)' }, refs: ['dec23119'], processo: 'SB 101678/2025' }
     ]
   },
@@ -599,7 +599,14 @@ window.PAINEL = {
           nota: 'Não há busca ativa de opinião sobre a qualidade dos dados. A minuta da política de dados abertos (OD1 v02) prevê um canal para apontar erros (art. 12, III) e uma consulta pública anual sobre a qualidade dos dados (art. 13), mas é minuta. Dá para antecipar: um formulário "aponte um erro nos dados" na página de Dados Abertos e no GeoPortal, com divulgação e registro das respostas. Precisa de alguém que responda.', refs: ['pag_dados_abertos'] }
       ],
       evidencias: ['Documentos sobre como a qualidade é avaliada e corrigida.', 'Link de um conjunto aberto que segue padrão cívico, com o nome do padrão.', 'Orientações internas de metadados e padrões.', 'Evidência de retorno contínuo da comunidade sobre a qualidade.'],
+      versoes: [
+        { v: 'v01', data: '29/10/2026', situacao: 'vigente', t: 'Guia de Qualidade e Padrões de Dados', u: 'dm4-v01-qualidade.html',
+          d: 'Rascunho de indicação técnica: 24 artigos e 5 anexos (ficha de regras da base, padrões dos campos comuns, monitoramento e roteiro de auditoria, Registro de Qualidade e formulário de metadados), cada um explicado. Cinco perguntas: quem cuida de cada base, o que é dado bom, como se confere (rotinas e auditoria anual por amostra), como a população aponta erros (formulário com prazo e consulta anual) e como se escrevem e se descrevem os dados (endereço pelo código do logradouro, metadados em três níveis, GTFS e GBFS). Feito para sair antes do decreto de governança, como instrução do DTI.' },
+        { v: 'v02', data: '—', situacao: 'aguarda', t: 'Guia com os ajustes da equipe e da Procuradoria',
+          d: 'Só é criada depois de a equipe analisar a v01.' }
+      ],
       propostas: [
+        { t: 'Guia de Qualidade e Padrões de Dados (v01)', u: 'dm4-v01-qualidade.html', nota: 'Rascunho de indicação técnica: 24 artigos e 5 anexos, cada um explicado. Cobre os cinco subcritérios no texto; o DM4.1 depende de publicar uma base no padrão, e o DM4.4, do inventário (DM2). A decisão é do município.' },
         { t: 'Política Municipal de Dados Abertos (OD1 v02): arts. 3º, VI, 8º, 12, III, 13 e 21', u: 'od1-v02-dados-abertos.html', nota: 'Definição de metadados, responsabilidade do órgão pela qualidade, canal para apontar erros, consulta anual sobre a qualidade dos dados e normas complementares de formato e metadados. Cobre o DM4.5 e parte do DM4.4 no texto, depois de publicada.' }
       ],
       sbc: {
@@ -637,7 +644,7 @@ window.PAINEL = {
         { texto: 'Ler os recursos que a WWC indica', feito: true },
         { texto: 'Validar a análise internamente', feito: true },
         { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM4' },
-        { texto: 'Redigir o guia de qualidade e padrões de dados, com os apêndices de padrões de campos comuns e de metadados (v01)', feito: false },
+        { texto: 'Redigir o guia de qualidade e padrões de dados, com os apêndices de padrões de campos comuns e de metadados (v01)', feito: true },
         { texto: 'Aprovar o guia (DTI e comitê de dados, ou o instrumento que a equipe escolher) e publicá-lo', feito: false },
         { texto: 'Primeiro ciclo de auditoria registrado: GeoPortal e mais uma base de outra secretaria', feito: false },
         { texto: 'Formulário "aponte um erro nos dados" no ar, na página de Dados Abertos e no GeoPortal', feito: false },

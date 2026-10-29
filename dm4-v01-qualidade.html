@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Guia de qualidade DM4 v01</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f71b3'/%3E%3Crect y='26' width='32' height='6' fill='%23ff8200'/%3E%3Cpath d='M8 20l5-6 4 4 7-9' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
+  --laranja: #ff8200; --laranja-esc: #b35b00; --laranja-claro: #fff1e3;
+  --verde: #288827; --verde-claro: #e6f4e6;
+  --texto: #2b2b2b; --texto-suave: #5f6368; --borda: #dde3e8;
+  --fundo: #f3f6f9; --cartao: #ffffff;
+  --raio: 10px; --sombra: 0 1px 3px rgba(15, 40, 70, .08);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 "Open Sans", Arial, sans-serif; }
+a { color: var(--azul); }
+h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
+
+.topo { background: linear-gradient(90deg, var(--azul-esc), var(--azul)); color: #fff; border-bottom: 5px solid var(--laranja); }
+.topo-int { padding: 20px 32px 18px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
+.topo .sobre { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; opacity: .85; font-weight: 600; }
+.topo h1 { font-size: 26px; font-weight: 800; margin-top: 4px; }
+.topo .subtitulo { font-size: 14px; opacity: .9; margin-top: 4px; }
+.topo .voltar { color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; background: rgba(255,255,255,.16); padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
+.topo .voltar:hover { background: rgba(255,255,255,.28); }
+
+.barra { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
+.barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.barra .rot { font-size: 13px; font-weight: 700; color: var(--texto-suave); }
+.grupo { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { border: 1px solid var(--borda); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
+.chip[aria-pressed=true] { background: var(--azul); border-color: var(--azul); color: #fff; }
+.contagem { font-size: 13px; color: var(--texto-suave); margin-left: auto; }
+
+main { padding: 24px 32px 48px; display: grid; gap: 22px; }
+.cartao { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); padding: 20px 22px; }
+.cartao > h2 { font-size: 19px; color: var(--azul-esc); margin-bottom: 10px; }
+.cartao p { margin: 0 0 10px; }
+.cartao p:last-child { margin-bottom: 0; }
+
+.legenda { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 12px; font-size: 14px; }
+.legenda span { display: inline-flex; align-items: center; gap: 8px; }
+.tag { display: inline-block; font: 800 11px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 5px; }
+.tag.novo { background: var(--laranja); color: #fff; }
+.tag.alterado { background: var(--azul); color: #fff; }
+.tag.igual { background: #eef1f4; color: var(--texto-suave); }
+.tag.sub { background: var(--verde-claro); color: var(--verde); }
+
+.subs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 6px; }
+.sub-card { border: 1px solid var(--borda); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.sub-card h3 { font-size: 16px; color: var(--azul-esc); }
+.sub-card .pede { font-size: 14px; }
+.sub-card .linha { font-size: 13.5px; border-radius: 6px; padding: 7px 10px; }
+.sub-card .hoje { background: #f7f9fb; }
+.sub-card .depois { background: var(--laranja-claro); }
+.sub-card .arts { display: flex; flex-wrap: wrap; gap: 6px; }
+.sub-card .arts a { font-size: 13px; font-weight: 700; text-decoration: none; background: var(--azul-claro); padding: 2px 9px; border-radius: 6px; }
+
+.decreto { padding: 0; overflow: hidden; }
+.decreto-cab { padding: 18px 22px; border-bottom: 1px solid var(--borda); background: #fafbfc; }
+.decreto-cab h2 { font-size: 19px; color: var(--azul-esc); }
+.decreto-cab .nota { font-size: 13.5px; color: var(--texto-suave); margin-top: 4px; }
+.ementa { padding: 18px 22px 6px; font-size: 14.5px; }
+.ementa .num { font-weight: 800; }
+.ementa .em { margin: 8px 0 12px auto; max-width: 520px; font-style: italic; }
+.ementa p { margin: 0 0 8px; }
+.capitulo { padding: 14px 22px 6px; font-weight: 800; color: var(--azul-esc); letter-spacing: .03em; text-transform: uppercase; font-size: 13.5px; border-top: 1px solid var(--borda); background: #fafbfc; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+.art { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); border-top: 1px solid var(--borda); }
+.art .texto { padding: 14px 22px; font-size: 14.5px; }
+.art .texto p { margin: 0 0 7px; }
+.art .texto p:last-child { margin-bottom: 0; }
+.art.igual { grid-template-columns: 1fr; }
+.art.igual .texto { color: #555b61; }
+.art .cab { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+.art .cab .id { font-weight: 800; font-size: 13px; color: var(--texto-suave); }
+.art .cab .antigo { font-size: 12.5px; color: var(--texto-suave); }
+.art.novo .texto { background: var(--laranja-claro); border-left: 5px solid var(--laranja); }
+.art.alterado .texto { background: var(--azul-claro); border-left: 5px solid var(--azul); }
+mark.novo { background: #ffd8ad; color: inherit; padding: 1px 3px; border-radius: 3px; }
+del.sup { text-decoration: line-through; text-decoration-thickness: 1.5px; color: #8a2a22; background: #fbe9e7; padding: 1px 3px; border-radius: 3px; }
+.rotulo-red { font: 800 11.5px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; margin: 10px 0 4px; }
+.rotulo-red.sup { color: #8a2a22; margin-top: 0; }
+.rotulo-red.nova { color: var(--laranja-esc); }
+.obs-red { font-size: 13.5px; color: var(--texto-suave); border-top: 1px dashed var(--borda); padding-top: 8px; margin-top: 10px !important; }
+.inc { padding-left: 18px; }
+
+.expl { padding: 14px 20px; background: #fff; border-left: 1px solid var(--borda); display: grid; gap: 10px; align-content: start; font-size: 14px; }
+.expl h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); margin-bottom: 2px; }
+.expl .wwc { background: var(--verde-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .wwc h4 { color: var(--verde); }
+.expl p { margin: 0; }
+
+.assinatura { padding: 14px 22px 20px; border-top: 1px solid var(--borda); font-size: 14.5px; }
+.vazio { padding: 20px 22px; color: var(--texto-suave); display: none; border-top: 1px solid var(--borda); }
+
+.obs ol { margin: 0; padding-left: 20px; display: grid; gap: 10px; }
+.destaque { background: var(--verde-claro); border-left: 5px solid var(--verde); border-radius: 6px; padding: 10px 14px; }
+.fontes ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14px; }
+.rodape { font-size: 13px; color: var(--texto-suave); text-align: center; padding: 0 32px 28px; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 1000px) { .subs { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .topo-int, .barra-int, main { padding-left: 16px; padding-right: 16px; }
+  .barra { position: static; }
+  .art { grid-template-columns: 1fr; }
+  .expl { border-left: 0; border-top: 1px dashed var(--borda); }
+  .art .texto, .expl, .capitulo, .ementa, .assinatura, .decreto-cab { padding-left: 16px; padding-right: 16px; }
+  .contagem { margin-left: 0; width: 100%; }
+}
+@media print {
+  .barra, .topo .voltar { display: none; }
+  body { background: #fff; }
+  .art { break-inside: avoid; }
+}
+.tag.escolha { background: #fde7c4; color: #8a4b00; }
+.aviso { background: var(--laranja-claro); border-left: 5px solid var(--laranja); border-radius: 6px; padding: 12px 16px; }
+.expl .origem { background: var(--azul-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .origem h4 { color: var(--azul-esc); }
+table.anexo { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.anexo td, table.anexo th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+table.anexo td.vaz { color: var(--texto-suave); font-style: italic; }
+main > *, .art .texto, .art .expl { min-width: 0; }
+.rolavel { overflow-x: auto; }
+.rolavel > table { min-width: 520px; }
+table.tabinicio { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.tabinicio td, table.tabinicio th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+.inicio h3 { font-size: 16px; color: var(--azul-esc); margin: 16px 0 6px; }
+details.cartao > summary { list-style: none; cursor: pointer; }
+details.cartao > summary::-webkit-details-marker { display: none; }
+details.cartao > summary h2 { font-size: 19px; color: var(--azul-esc); margin: 0; }
+details.cartao[open] > summary h2 { margin-bottom: 10px; }
+details.cartao.decreto > summary h2 { margin-bottom: 0; }
+details.cartao > summary h2::before { content: "\25B8"; display: inline-block; width: 1.1em; color: var(--azul); transition: transform .15s; }
+details.cartao[open] > summary h2::before { transform: rotate(90deg); }
+details.cartao > summary:focus-visible { outline: 2px solid var(--azul); outline-offset: 4px; border-radius: 4px; }
+.acoes { margin-left: auto; display: flex; gap: 6px; }
+.acoes.solta { margin: 0 0 -8px; justify-content: flex-end; }
+@media (max-width: 600px) { main { padding: 16px 16px 32px; } .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; } .cartao { padding: 16px; } .art .texto { padding: 12px 14px; } }
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-int">
+    <div>
+      <div class="sobre">Painel WWC · SBC · Critério DM4 · Versão v01</div>
+      <h1>Guia de Qualidade e Padrões de Dados</h1>
+      <div class="subtitulo">Rascunho de indicação técnica · 29/10/2026 · Para análise da equipe, das secretarias e da Procuradoria</div>
+    </div>
+    <a class="voltar" href="index.html#DM4" onclick="if (history.length === 1) { window.close(); return false; }">← Voltar ao painel (DM4)</a>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-int">
+    <span class="rot">Subcritério WWC:</span>
+    <div class="grupo" data-filtro="sub">
+      <button class="chip" type="button" data-v="todos" aria-pressed="true">Todos</button>
+      <button class="chip" type="button" data-v="DM4.1" aria-pressed="false">DM4.1</button>
+      <button class="chip" type="button" data-v="DM4.2" aria-pressed="false">DM4.2</button>
+      <button class="chip" type="button" data-v="DM4.3" aria-pressed="false">DM4.3</button>
+      <button class="chip" type="button" data-v="DM4.4" aria-pressed="false">DM4.4</button>
+      <button class="chip" type="button" data-v="DM4.5" aria-pressed="false">DM4.5</button>
+      <button class="chip" type="button" data-v="escolha" aria-pressed="false">Só pontos de escolha</button>
+    </div>
+    <span class="contagem" id="contagem"></span>
+    <div class="acoes"><button class="chip" type="button" id="abrir-tudo">Expandir tudo</button><button class="chip" type="button" id="fechar-tudo">Recolher tudo</button></div>
+  </div>
+</div>
+
+<main>
+
+<details class="cartao inicio" open>
+  <summary><h2>O que é esta página</h2></summary>
+  <div class="aviso"><p><b>Rascunho de indicação técnica, não decisão.</b> Este guia reúne o que os modelos indicados pela WWC fazem para atender ao critério DM4 (qualidade dos dados). Instrumento, prazos e listas de referência cabem ao município (DTI, secretarias e Procuradoria).</p></div>
+  <h3>O que é este documento</h3>
+  <p>Não é lei nem decreto. É um <b>ato normativo interno</b>: uma instrução do Departamento de Tecnologia da Informação (DTI). Não cria direito nem dever novo para o cidadão: organiza como as secretarias cuidam da qualidade das próprias bases de dados.</p>
+  <p><b>Para que serve:</b> dizer quem cuida de cada base, o que é um dado de qualidade, como se confere, como a população pode apontar erros, como se escrevem os campos comuns (endereço, bairro, data) e como se descreve cada base. É também o conjunto de "políticas ou práticas documentadas" que o critério DM4 da What Works Cities pede.</p>
+  <h3>Em que normas se apoia</h3>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Norma</th><th>O que dá a este ato</th></tr></thead><tbody><tr><td><b>Lei Municipal 7.367/2025, art. 645, XIII</b></td><td>Dá ao DTI a competência de "definir a estratégia de dados do Município, estabelecendo princípios, padrões e políticas para a gestão de dados". É o que permite ao DTI editar o guia.</td></tr><tr><td><b>Lei Federal 12.527/2011 (LAI), arts. 6º, II, e 8º, § 3º, IV a VI</b></td><td>Obriga a garantir a autenticidade e a integridade da informação, divulgar os formatos usados para estruturá-la e mantê-la atualizada. O guia diz como fazer isso nas bases de dados.</td></tr><tr><td><b>Lei Federal 13.709/2018 (LGPD), art. 6º, V</b></td><td>Princípio da qualidade dos dados pessoais: "exatidão, clareza, relevância e atualização". Vale para as bases com dado pessoal.</td></tr><tr><td><b>Decreto de governança digital e de dados (processo SB 101842/2026, na Procuradoria)</b></td><td>Ainda não publicado. Prevê uma regulamentação de dados sobre "metadados, fontes de referência, qualidade" (art. 25). Quando sair, este ato passa a fazer parte dela (art. 23).</td></tr></tbody></table></div>
+  <p>Ressalva: para obrigar as demais secretarias a indicar responsáveis, auditar e responder no prazo, a equipe e a Procuradoria podem preferir portaria do Secretário de Administração ou decreto (observação 2, no fim da página).</p>
+  <h3>Por que agora</h3>
+  <p>SBC não tem documento que diga quem cuida da qualidade de cada base, como registrar problemas, como auditar ou como escrever campos comuns como o endereço. Há peças soltas: o dicionário de dados do GeoPortal, as notas de fonte do Painel Estatístico e a auditoria mensal das internações na Saúde. As listas de referência existem (logradouros com código e 34 bairros oficiais), mas nem as camadas do GeoPortal guardam o código do logradouro. O DM4 pede <b>4 de 5 subcritérios</b>, sem janela temporal; como o DM4.2 pede processo <b>aplicado</b>, além de publicar o guia é preciso registrar um primeiro ciclo de auditoria antes do envio (18/12/2026).</p>
+  <h3>De onde vem cada parte</h3>
+  <p>Nada aqui foi inventado do zero: cada parte adapta um modelo já usado por outra cidade, uma norma ou um recurso recomendado pela WWC; o quadro abaixo diz qual. O que é escolha nossa (prazos, limiar de 95% e tamanho padrão da amostra) está na observação 6.</p>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Modelo</th><th>Por que conta</th><th>O que veio dele</th><th>Onde está neste texto</th></tr></thead><tbody><tr><td><b>Cambridge (EUA), Guia de Qualidade de Dados</b></td><td>Exemplo que a WWC aceitou para o DM4 (pacote do Fórum, 2024)</td><td>Um guia só para qualidade, metadados e formatos; limiar de 95% para publicar; publicar com defeito documentado; auditoria periódica por amostra; formulário para apontar erro</td><td>Arts. 1º, 8º, 9º, 11 e 13; Anexos II e V</td></tr><tr><td><b>São Francisco (EUA): manual de padrões, padrão de metadados e guia de qualidade (DataSF)</b></td><td>Recursos indicados pela WWC no DM4, e o guia achado na mesma página</td><td>Papéis por base; seis dimensões de qualidade; formatos de campos e listas de referência com órgão declarado; "como a base é criada" e "cuidados" nos metadados</td><td>Arts. 3º a 6º, 15, 16 e 18; Anexos II e V</td></tr><tr><td><b>S. Singer, guia de qualidade de dados para governos (Knight Foundation, 2016)</b></td><td>Base do guia de qualidade de São Francisco</td><td>Regras de negócio em duas linguagens; quatro rotinas de monitoramento; não alterar a base durante a avaliação</td><td>Arts. 7º, 10 e 11; Anexos I e III</td></tr><tr><td><b>Johns Hopkins, "problemas e soluções de qualidade dos dados"</b></td><td>Recurso indicado pela WWC no DM4</td><td>Qualidade é adequação ao uso, campo a campo; validação na entrada; para endereço, um identificador em vez do texto</td><td>Arts. 6º, 15 e 17</td></tr><tr><td><b>GovEx, guia de metadados e diretório de padrões</b></td><td>Recursos indicados pela WWC no DM4</td><td>Metadados de base e de coluna; nível de acesso com o motivo, para as bases protegidas; GTFS e GBFS como padrões cívicos</td><td>Arts. 18 e 20; Anexos II e V</td></tr><tr><td><b>Singapura, guia de qualidade de dados tabulares e especificação de metadados (data.gov.sg, 2016)</b></td><td>Citado pelo manual de padrões de São Francisco</td><td>Requisitos antes de publicar; códigos para valor ausente e suprimido; nomes de coluna reservados; metadados em três níveis com o que é obrigatório marcado</td><td>Arts. 9º, 18 e 19; Anexos II e V</td></tr><tr><td><b>São Paulo (capital), Decreto 60.663/2021 e Resolução 3/2022 do comitê de dados</b></td><td>Modelo brasileiro citado pela minuta do decreto de governança de SBC</td><td>Ficha por campo com origem e data; validação do endereço contra as bases de referência na entrada; regra de prevalência entre registros divergentes</td><td>Arts. 7º, 16 e 17; Anexo I</td></tr><tr><td><b>Minuta do decreto de governança digital e de dados (SB 101842/2026)</b></td><td>Proposta do próprio DTI, na Procuradoria</td><td>Qualidade medida nos campos do serviço; o responsável pelo domínio corrige na origem; amostras documentadas; fonte de referência sem substituir cadastros setoriais</td><td>Arts. 3º, 5º, 6º, 11, 15 e 23</td></tr></tbody></table></div>
+  <h3>Como ler</h3>
+  <p>O guia responde a cinco perguntas: <b>quem cuida?</b> (papéis, arts. 3º a 5º deste guia), <b>o que é dado bom?</b> (regras, arts. 6º a 9º), <b>como se confere?</b> (monitoramento e auditoria, arts. 10 a 12), <b>como a população ajuda?</b> (arts. 13 e 14) e <b>como se escreve e se descreve?</b> (padrões, metadados e padrões cívicos, arts. 15 a 20). Os artigos citados nesta página são os do texto abaixo, salvo quando outra norma é nomeada. Cada artigo e cada anexo traz ao lado por que foi incluído, a intenção, a origem e a relação com a WWC.</p>
+  <div class="legenda">
+    <span><span class="tag novo">Novo</span> texto proposto</span>
+    <span><span class="tag escolha">Ponto de escolha do município</span> recomendação que o município pode trocar</span>
+    <span><span class="tag sub">DM4.x</span> subcritério da WWC atendido</span>
+  </div>
+</details>
+
+<details class="cartao">
+  <summary><h2>Versões desta recomendação</h2></summary>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Versão</th><th>Data</th><th>O que é</th><th>Situação</th></tr></thead><tbody><tr><td><b>v01</b></td><td>29/10/2026</td><td>Guia de Qualidade e Padrões de Dados: 24 artigos e 5 anexos (ficha de regras, padrões dos campos comuns, monitoramento e auditoria, Registro de Qualidade e formulário de metadados).</td><td>Vigente</td></tr><tr><td><b>v02</b></td><td>—</td><td>Guia com os ajustes da equipe e da Procuradoria.</td><td>Aguarda a equipe</td></tr></tbody></table></div>
+</details>
+
+<details class="cartao">
+  <summary><h2>O que a WWC pede e onde o guia responde</h2></summary>
+  <div class="subs">
+    <div class="sub-card">
+      <h3>DM4.1 · Padrão cívico publicado</h3>
+      <div class="pede">A prefeitura adotou e publicou conjuntos de dados que seguem pelo menos um padrão de dados cívicos (por exemplo, o GTFS), para facilitar a integração com sistemas externos.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Nenhuma base publicada segue padrão cívico. O GTFS dos ônibus provavelmente existe com a concessionária, mas não é publicado.</div>
+      <div class="linha depois"><b>No guia:</b> Publicar no padrão quando ele existir (GTFS, GBFS) e pedir o padrão nos contratos e credenciamentos. O subcritério depende da publicação, não do texto.</div>
+      <div class="arts"><a href="#art20">Art. 20</a><a href="#anx2">Anexo II</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM4.2 · Processo de qualidade aplicado</h3>
+      <div class="pede">A prefeitura aplica processos para documentar a origem, o método de coleta e os problemas de qualidade conhecidos de cada conjunto de dados, e para corrigir os problemas identificados (por exemplo, com auditorias regulares ou canais de retorno).</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Origem documentada em parte (GeoPortal, Painel Estatístico) e uma auditoria regular num setor (internações, na Saúde). Nenhum processo geral.</div>
+      <div class="linha depois"><b>No guia:</b> Papéis por base, ficha de regras, limitações registradas, rotinas de monitoramento, auditoria anual por amostra com resultado publicado e correção na origem.</div>
+      <div class="arts"><a href="#art3">Art. 3º</a><a href="#art4">Art. 4º</a><a href="#art5">Art. 5º</a><a href="#art6">Art. 6º</a><a href="#art7">Art. 7º</a><a href="#art8">Art. 8º</a><a href="#art9">Art. 9º</a><a href="#art10">Art. 10</a><a href="#art11">Art. 11</a><a href="#art12">Art. 12</a><a href="#art13">Art. 13</a><a href="#art18">Art. 18</a><a href="#anx1">Anexo I</a><a href="#anx3">Anexo III</a><a href="#anx4">Anexo IV</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM4.3 · Padrões dos campos comuns</h3>
+      <div class="pede">A prefeitura documenta padrões para os dados internos, de modo que campos comuns (como o endereço) sejam registrados da mesma forma em todos os órgãos.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> As listas existem (logradouros com código, 34 bairros), mas nada manda usá-las; as camadas do GeoPortal guardam o endereço só como texto.</div>
+      <div class="linha depois"><b>No guia:</b> Padrão de cada campo comum e quem mantém cada lista (Anexo II), validação na entrada e código guardado nos sistemas novos, e regra para divergências.</div>
+      <div class="arts"><a href="#art5">Art. 5º</a><a href="#art7">Art. 7º</a><a href="#art15">Art. 15</a><a href="#art16">Art. 16</a><a href="#art17">Art. 17</a><a href="#anx1">Anexo I</a><a href="#anx2">Anexo II</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM4.4 · Metadados de bases abertas e protegidas</h3>
+      <div class="pede">A prefeitura produz metadados completos e de alta qualidade tanto para os conjuntos de dados protegidos quanto para os publicados.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Metadados completos só nas 13 camadas do GeoPortal.</div>
+      <div class="linha depois"><b>No guia:</b> Formulário único em três níveis para toda base do inventário, publicada ou não, com o nível de acesso e o motivo da restrição. Depende do inventário (DM2).</div>
+      <div class="arts"><a href="#art4">Art. 4º</a><a href="#art18">Art. 18</a><a href="#art19">Art. 19</a><a href="#art22">Art. 22</a><a href="#anx5">Anexo V</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM4.5 · Opinião da comunidade</h3>
+      <div class="pede">A prefeitura busca ativamente a opinião da comunidade para identificar problemas de qualidade e melhorar os conjuntos de dados imprecisos, incompletos ou com limitações ou vieses.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Não há canal nem consulta sobre a qualidade dos dados.</div>
+      <div class="linha depois"><b>No guia:</b> Formulário "aponte um erro" com prazo e resposta publicada, convite aos usuários a cada publicação e consulta anual com devolutiva.</div>
+      <div class="arts"><a href="#art13">Art. 13</a><a href="#art14">Art. 14</a><a href="#anx4">Anexo IV</a></div>
+    </div>
+  </div>
+</details>
+
+<details class="cartao decreto" id="decreto">
+  <summary class="decreto-cab">
+    <h2>Texto do guia</h2>
+    <div class="nota">Use os filtros acima para ver só os artigos de um subcritério ou só os pontos de escolha do município.</div>
+  </summary>
+
+  <div class="ementa" data-bloco="preambulo">
+    <p class="num">INSTRUÇÃO Nº …………… (instrumento a definir)</p>
+    <p class="em">Institui o Guia de Qualidade e Padrões de Dados da Administração Direta do Poder Executivo Municipal e aprova os modelos de ficha de regras, padrões dos campos comuns, roteiro de auditoria, Registro de Qualidade e formulário de metadados.</p>
+    <p>O(A) DIRETOR(A) DO DEPARTAMENTO DE TECNOLOGIA DA INFORMAÇÃO DA SECRETARIA DE ADMINISTRAÇÃO, no uso de suas atribuições, considerando o que consta do processo administrativo nº ……………;</p>
+    <p>Considerando o inciso XIII do art. 645 da Lei Municipal nº 7.367, de 15 de janeiro de 2025, que atribui ao Departamento definir a estratégia de dados do Município, estabelecendo princípios, padrões e políticas para a gestão de dados;</p>
+    <p>Considerando a Lei Federal nº 12.527, de 18 de novembro de 2011, que exige do poder público garantir a disponibilidade, a autenticidade e a integridade da informação (art. 6º, II), divulgar os formatos usados para estruturá-la e mantê-la atualizada (art. 8º, § 3º, IV a VI);</p>
+    <p>Considerando o princípio da qualidade dos dados da Lei Federal nº 13.709, de 14 de agosto de 2018 (art. 6º, V); e</p>
+    <p>Considerando a necessidade de que os dados usados pela Prefeitura nos serviços e nas decisões sejam confiáveis, registrados da mesma forma entre os órgãos e descritos de modo que qualquer pessoa entenda seus limites,</p>
+    <p>RESOLVE:</p>
+  </div>
+
+  <div class="capitulo">Capítulo I – Do objeto e das definições</div>
+  <article class="art novo" id="art1" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 1º</span><span class="tag novo">Novo</span></div>
+      <p>Art. 1º Este ato institui o Guia de Qualidade e Padrões de Dados dos órgãos da Administração Direta do Poder Executivo Municipal, que estabelece:</p><p class="inc">I - os papéis na gestão da qualidade de cada base de dados;</p><p class="inc">II - as regras de qualidade e o registro dos problemas conhecidos;</p><p class="inc">III - o monitoramento e a auditoria periódica por amostra;</p><p class="inc">IV - o canal para apontar erros nos dados e a busca da opinião da população sobre sua qualidade;</p><p class="inc">V - os padrões dos campos comuns e as listas de referência;</p><p class="inc">VI - os metadados das bases de dados, publicadas ou não; e</p><p class="inc">VII - o uso de padrões de dados cívicos na publicação de dados.</p><p>Parágrafo único. Este ato não altera as regras de acesso, compartilhamento e abertura de dados nem as de proteção de dados pessoais, que seguem normas próprias.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM4 pede "políticas ou práticas documentadas para melhorar a qualidade dos dados". Um ato só, com os cinco temas dos subcritérios, é o formato do exemplo aceito pela WWC (Cambridge).</p></div>
+      <div><h4>Intenção</h4><p>Cada inciso corresponde a uma parte do guia e a um subcritério: II e III ao DM4.2, IV ao DM4.5, V ao DM4.3, VI ao DM4.4 e VII ao DM4.1. O parágrafo único evita sobrepor o guia ao compartilhamento (DM3) e à LGPD.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Cambridge, Guia de Qualidade de Dados (exemplo aceito pela WWC no pacote do Fórum, 2024): um guia só para qualidade, metadados e formatos de campos comuns; critério DM4 da WWC (v4).</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Delimita o guia pelos cinco subcritérios do DM4.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art2" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 2º</span><span class="tag novo">Novo</span></div>
+      <p>Art. 2º Para os fins deste ato, considera-se:</p><p class="inc">I - base de dados: conjunto organizado de dados mantido por órgão da Administração Direta, em sistema, planilha ou camada geográfica;</p><p class="inc">II - base essencial: base de dados usada na prestação de serviço ao cidadão, em decisão de política pública ou por mais de um órgão, ou publicada como dado aberto, assim indicada pela secretaria dona;</p><p class="inc">III - secretaria dona: órgão que produz ou custodia a base de dados e responde por seu conteúdo, sua origem, sua qualidade e sua atualização;</p><p class="inc">IV - responsável pela base: servidor indicado pela secretaria dona para cuidar, no dia a dia, da qualidade de uma base essencial;</p><p class="inc">V - campo comum: campo que aparece em bases de mais de um órgão com o mesmo significado, como endereço, bairro, data e unidade administrativa;</p><p class="inc">VI - lista de referência: relação oficial dos valores aceitos para um campo comum, de preferência com código, mantida por órgão declarado no Anexo II;</p><p class="inc">VII - limitação conhecida: problema de qualidade identificado e ainda não corrigido, ou característica da base que restringe seu uso, como período sem dados, campo pouco preenchido ou mudança de método de coleta;</p><p class="inc">VIII - auditoria por amostra: verificação planejada, com data marcada e seleção aleatória de registros, que estima a proporção de problemas de uma base;</p><p class="inc">IX - metadados: informações que descrevem uma base de dados, nos termos do Anexo V; e</p><p class="inc">X - padrão de dados cívicos: especificação pública, mantida por comunidade ou organização reconhecida, para disponibilizar certo tipo de dado, como o GTFS, para o transporte coletivo, e o GBFS, para bicicletas e patinetes compartilhados.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Os papéis e os termos técnicos precisam de nome para que o resto do texto diga quem faz o quê.</p></div>
+      <div><h4>Intenção</h4><p>"Base essencial" limita as obrigações mais pesadas (ficha, auditoria) às bases que importam, como em Cambridge. "Secretaria dona" tem o mesmo sentido da OD1 v02 (art. 8º) e da DM3 v01 (art. 2º, I). A auditoria por amostra segue a definição do glossário da WWC, com data marcada e sorteio, e não só quando surge um problema.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Glossário da plataforma da WWC (auditoria de qualidade de dados: estima a presença de problemas "por amostragem", de preferência com agenda e seleção aleatória; normas de dados cívicos); Cambridge (bases essenciais); DataSF, guia "como garantir a qualidade dos dados" (papéis por base); OD1 v02, arts. 3º, V e VI, e 8º; DM3 v01, art. 2º, I.</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio. Usa o vocabulário do glossário da plataforma.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo II – Dos papéis</div>
+  <article class="art novo" id="art3" data-tipo="novo" data-sub="DM4.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 3º</span><span class="tag novo">Novo</span><span class="tag sub">DM4.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 3º Compete à secretaria dona:</p><p class="inc">I - indicar ao DTI as suas bases essenciais e, para cada uma, um responsável pela base e um substituto;</p><p class="inc">II - aprovar a ficha de regras de cada base essencial (art. 7º);</p><p class="inc">III - corrigir na origem os problemas de qualidade identificados ou registrá-los como limitação conhecida (art. 8º); e</p><p class="inc">IV - responder aos apontamentos de erro sobre suas bases (art. 13).</p><p>Parágrafo único. A indicação do inciso I será feita em até 60 (sessenta) dias da publicação deste ato e atualizada sempre que houver mudança.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Sem dono declarado, o erro de uma base não é de ninguém: a TI guarda o sistema, mas não sabe se o dado está certo.</p></div>
+      <div><h4>Intenção</h4><p>A palavra final sobre o conteúdo fica com quem produz o dado, como a OD1 v02 (art. 8º) e a minuta do decreto de governança já dizem. O prazo de 60 dias é escolha do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Minuta do decreto de governança digital e de dados (processo SB 101842/2026), proposta técnica, §12.1 ("O responsável pelo domínio definirá regras e promoverá correções na origem"); DataSF, guia de qualidade (dono do negócio aprova os requisitos); OD1 v02, art. 8º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.2</h4><p>Diz quem aplica o processo do DM4.2 e quem "corrige os problemas identificados".</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art4" data-tipo="novo" data-sub="DM4.2 DM4.4">
+    <div class="texto"><div class="cab"><span class="id">Art. 4º</span><span class="tag novo">Novo</span><span class="tag sub">DM4.2</span><span class="tag sub">DM4.4</span></div>
+      <p>Art. 4º Compete ao responsável pela base:</p><p class="inc">I - manter a ficha de regras (Anexo I) e os metadados (Anexo V) da base;</p><p class="inc">II - executar as rotinas de monitoramento (Anexo III, parte A) e a auditoria por amostra (art. 11);</p><p class="inc">III - registrar as limitações conhecidas e os resultados das auditorias no Registro de Qualidade (Anexo IV); e</p><p class="inc">IV - responder às dúvidas sobre a base, inclusive as dos usuários de dados abertos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Alguém precisa fazer o trabalho de todo dia: conferir, registrar, responder. Em todos os modelos lidos, essa pessoa tem nome.</p></div>
+      <div><h4>Intenção</h4><p>O responsável pela base é o "data steward" de São Francisco: não precisa ser da TI, precisa conhecer o dado.</p></div>
+      <div class="origem"><h4>Origem</h4><p>DataSF, guia de qualidade (responsável pelos dados: gestão diária, mede a qualidade, cria metadados, responde a dúvidas); padrão de metadados do DataSF (responsável pelos dados com contato); Cambridge (coordenadores de dados).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.2 e DM4.4</h4><p>Põe nome em quem documenta origem e problemas conhecidos (DM4.2) e mantém os metadados (DM4.4).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art5" data-tipo="novo" data-sub="DM4.2 DM4.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 5º</span><span class="tag novo">Novo</span><span class="tag sub">DM4.2</span><span class="tag sub">DM4.3</span></div>
+      <p>Art. 5º Compete ao Departamento de Tecnologia da Informação (DTI) da Secretaria de Administração:</p><p class="inc">I - manter o Registro de Qualidade (Anexo IV) e publicar as suas partes públicas na página de Dados Abertos;</p><p class="inc">II - manter o canal de apontamento de erros (art. 13) e encaminhar cada apontamento à secretaria dona;</p><p class="inc">III - apoiar as secretarias nas auditorias, na validação dos dados na entrada dos sistemas e na adoção dos padrões, inclusive com ferramentas para conferir bases contra as listas de referência;</p><p class="inc">IV - cuidar da custódia técnica das bases sob sua guarda, sem decidir sobre o conteúdo;</p><p class="inc">V - verificar a adoção dos padrões do Anexo II nas contratações e nas mudanças de sistemas de que participe; e</p><p class="inc">VI - publicar, uma vez por ano, relatório com as auditorias feitas, os problemas encontrados e corrigidos e os apontamentos recebidos, com os prazos de resposta, e propor a revisão deste ato.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DTI tem a competência de definir padrões de dados (Lei 7.367/2025, art. 645, XIII) e já guarda boa parte dos sistemas. É quem pode dar ferramenta e acompanhar o conjunto.</p></div>
+      <div><h4>Intenção</h4><p>O DTI faz a parte de apoio, registro e acompanhamento, sem decidir pelo dono, como a minuta do decreto de governança divide ("a DTI acompanhará falhas de integração e versões técnicas"; "DTI assegura custódia técnica"). O relatório anual (VI) é a prova de que o processo é aplicado.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Lei Municipal 7.367/2025, art. 645, XIII; minuta do decreto de governança (SB 101842/2026), proposta técnica, §12 (tabela dos grupos de dados) e §12.1; Cambridge (equipe central e Comitê de Governança de Dados); S. Singer, guia de qualidade para governos (planilha de seleção de ferramentas).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.2 e DM4.3</h4><p>O relatório anual mostra o processo do DM4.2 "aplicado"; a verificação nas contratações faz o padrão do DM4.3 chegar aos sistemas.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo III – Das regras de qualidade</div>
+  <article class="art novo" id="art6" data-tipo="novo" data-sub="DM4.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 6º</span><span class="tag novo">Novo</span><span class="tag sub">DM4.2</span></div>
+      <p>Art. 6º A qualidade de uma base é avaliada em relação ao uso pretendido, campo a campo, nas seguintes dimensões:</p><p class="inc">I - completude: os campos obrigatórios estão preenchidos e não faltam registros;</p><p class="inc">II - validade: os valores respeitam o formato, a faixa e a lista de valores aceitos;</p><p class="inc">III - unicidade: não há registros indevidamente duplicados;</p><p class="inc">IV - consistência: o mesmo campo tem o mesmo significado e o mesmo formato dentro da base e entre bases;</p><p class="inc">V - atualidade: a base é atualizada na periodicidade declarada; e</p><p class="inc">VI - exatidão: os valores correspondem à realidade que descrevem.</p><p>Parágrafo único. Nas bases essenciais, a avaliação considera ao menos os campos necessários ao serviço ou à decisão que a base sustenta.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>"Dado de qualidade" precisa de definição verificável. Sem dimensões, cada secretaria entende uma coisa.</p></div>
+      <div><h4>Intenção</h4><p>As seis dimensões do guia de São Francisco, que incluem as quatro da minuta do decreto de governança (completude, duplicidades, validade, atualização). A ideia de que qualidade é adequação ao uso, campo a campo, é da Johns Hopkins, e evita exigir perfeição em campos que ninguém usa.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Johns Hopkins, "problemas e soluções de qualidade dos dados" (recurso da WWC no DM4): qualidade é adequação ao uso, avaliada campo a campo; DataSF, guia de qualidade (completude, validade, atualidade, unicidade, consistência e exatidão); Cambridge (precisão, completude, atualidade, consistência); minuta do SB 101842/2026, §12.1 ("A qualidade será medida nos campos necessários ao serviço: completude, duplicidades indevidas, validade e atualização, conforme o uso").</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.2</h4><p>Dá ao processo do DM4.2 o que medir.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art7" data-tipo="novo" data-sub="DM4.2 DM4.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 7º</span><span class="tag novo">Novo</span><span class="tag sub">DM4.2</span><span class="tag sub">DM4.3</span></div>
+      <p>Art. 7º Cada base essencial terá ficha de regras, no modelo do Anexo I, que indicará, para cada campo necessário ao serviço:</p><p class="inc">I - se é obrigatório e em que condição;</p><p class="inc">II - a regra de validação: formato, faixa de valores ou lista de referência;</p><p class="inc">III - o que fazer quando o valor não passar na regra: recusar a entrada, aceitar com marca de pendência ou corrigir depois;</p><p class="inc">IV - a origem do valor: declarado pelo cidadão, registrado pelo servidor ou recebido de outro sistema ou de outro ente; e</p><p class="inc">V - se o sistema guarda a data da última atualização do valor.</p><p>§ 1º A ficha trará também as regras que ligam campos entre si, escritas em linguagem simples e na forma em que o sistema as aplica.</p><p>§ 2º Sempre que o sistema permitir, a regra será aplicada na entrada do dado.</p><p>§ 3º Os valores aceitos com marca de pendência serão conferidos e resolvidos pelo responsável pela base.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Corrigir depois é caro. A forma mais barata de ter dado bom é não aceitar o dado errado na entrada, e para isso a regra de cada campo precisa estar escrita.</p></div>
+      <div><h4>Intenção</h4><p>A ficha por campo segue o formato dos anexos da Resolução 3/2022 do comitê de dados da capital paulista (obrigatoriedade, regra de validação, o que fazer se inválido, origem e data de cada campo). As regras entre campos, em duas linguagens (§ 1º), vêm da planilha de S. Singer. A marca de pendência (§ 3º) é a "quarentena" paulistana: não trava o atendimento e não deixa o erro passar despercebido.</p></div>
+      <div class="origem"><h4>Origem</h4><p>São Paulo (capital), Resolução SGM/CCGD 3/2022, Anexos I a VI (ficha por campo; controle de origem e data por campo; quarentena), comitê criado pelo Decreto 60.663/2021, citado pela minuta do SB 101842/2026; S. Singer, guia de qualidade para governos (Knight Foundation, 2016), planilha de regras de negócio; Johns Hopkins (validação na entrada); DataSF, guia de qualidade (valores válidos e regras de negócio na coleta).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.2 e DM4.3</h4><p>A ficha documenta "o método de coleta" (DM4.2) e aplica as listas de referência campo a campo (DM4.3).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art8" data-tipo="novo" data-sub="DM4.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 8º</span><span class="tag novo">Novo</span><span class="tag sub">DM4.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 8º A secretaria dona registrará as limitações conhecidas de cada base no Registro de Qualidade (Anexo IV) e nos metadados (Anexo V), em linguagem simples.</p><p>§ 1º A base publicada traz junto as suas limitações conhecidas.</p><p>§ 2º A limitação documentada não impede a publicação nem o uso da base: registrar o problema é a conduta esperada, e não falha a esconder.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM4.2 pede que se documentem "os problemas de qualidade conhecidos" de cada base. Se registrar um problema expõe quem registrou, ninguém registra.</p></div>
+      <div><h4>Intenção</h4><p>Tornar o registro do problema uma obrigação e, ao mesmo tempo, algo seguro de fazer. Cambridge vai além e diz que ninguém "será responsabilizado por deficiências, desde que documentadas"; uma instrução do DTI não pode afastar responsabilidade, por isso o § 2º só diz que documentar é a conduta esperada. O alcance desse parágrafo é escolha do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Cambridge (publicar com deficiência documentada é permitido; ninguém é responsabilizado por deficiência documentada na revisão); padrão de metadados do DataSF (seção "como usar", com os cuidados); guia de metadados do GovEx (a descrição da coluna trata das "preocupações de qualidade").</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.2</h4><p>É a parte "problemas de qualidade conhecidos" do DM4.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art9" data-tipo="novo" data-sub="DM4.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 9º</span><span class="tag novo">Novo</span><span class="tag sub">DM4.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 9º Antes de publicar uma base como dado aberto, o responsável pela base conferirá a completude e a validade dos campos publicados.</p><p>§ 1º Recomenda-se publicar quando ao menos 95% (noventa e cinco por cento) dos valores conferidos estiverem preenchidos e válidos; abaixo disso, a base pode ser publicada com a proporção informada como limitação conhecida.</p><p>§ 2º Os valores ausentes ou suprimidos serão representados da forma uniforme prevista no Anexo II e explicados nos metadados.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Publicar é o momento em que o erro sai de casa. Uma conferência mínima antes evita que a página de Dados Abertos espalhe dado ruim.</p></div>
+      <div><h4>Intenção</h4><p>O limiar de 95% é o de Cambridge, mas aqui como recomendação: abaixo dele não se proíbe a publicação, informa-se a proporção, coerente com o art. 8º. O tratamento uniforme dos vazios (§ 2º) vem de Singapura e de Cambridge.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Cambridge (base aceita para publicação se menos de 5% dos valores estiverem errados, ausentes ou desatualizados; todo valor ausente é preenchido, marcado como NA ou explicado); data.gov.sg, guia de qualidade de dados tabulares (Singapura, 2016): requisitos cumpridos "antes da publicação" e códigos para valor ausente e suprimido.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.2</h4><p>Aplica o processo do DM4.2 no momento da publicação.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo IV – Do monitoramento e da auditoria</div>
+  <article class="art novo" id="art10" data-tipo="novo" data-sub="DM4.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 10</span><span class="tag novo">Novo</span><span class="tag sub">DM4.2</span></div>
+      <p>Art. 10. As bases essenciais serão acompanhadas pelas rotinas do Anexo III, parte A, com a frequência e o responsável indicados na ficha de cada base:</p><p class="inc">I - acompanhamento de uma amostra de registros do início ao fim do fluxo;</p><p class="inc">II - conciliação com bases relacionadas, com a fonte original e com versões anteriores;</p><p class="inc">III - validação pelas regras da ficha (art. 7º); e</p><p class="inc">IV - uso do retorno de quem usa os dados, inclusive dos apontamentos do art. 13.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A auditoria anual mostra o problema depois que ele aconteceu. As rotinas de todo mês pegam o problema cedo.</p></div>
+      <div><h4>Intenção</h4><p>As quatro rotinas são as da planilha de monitoramento de S. Singer, cada uma com frequência e responsável. São leves e podem ser feitas por quem já opera a base.</p></div>
+      <div class="origem"><h4>Origem</h4><p>S. Singer, guia de qualidade para governos, planilha de monitoramento da qualidade ("Data Tracking", "Reconciliation", "Validation", "Feedback"), base do guia de qualidade do DataSF.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.2</h4><p>É o "processo aplicado" do DM4.2 no dia a dia; o retorno dos usuários (IV) é o "canal de retorno" que o DM4.2 cita como exemplo.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art11" data-tipo="novo" data-sub="DM4.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 11</span><span class="tag novo">Novo</span><span class="tag sub">DM4.2</span></div>
+      <p>Art. 11. Cada base essencial passará, ao menos uma vez por ano, por auditoria por amostra, conforme o roteiro do Anexo III, parte B, que registrará:</p><p class="inc">I - os campos e as dimensões verificados;</p><p class="inc">II - o tamanho da amostra e o modo do sorteio dos registros;</p><p class="inc">III - o método de verificação e a fonte usada para comparar;</p><p class="inc">IV - a proporção de problemas encontrada em cada campo; e</p><p class="inc">V - as correções feitas na origem, as pendentes e as causas identificadas.</p><p>§ 1º O DTI publicará, no início de cada ano, o calendário das auditorias.</p><p>§ 2º A base não será alterada durante a verificação; as correções vêm depois e são registradas.</p><p>§ 3º O resultado será registrado no Anexo IV e publicado na parte pública, sem dados pessoais.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM4.2 dá como exemplo "auditorias regulares de qualidade", e o glossário da WWC define auditoria como verificação por amostra, de preferência com agenda e seleção aleatória. A minuta do decreto de governança já diz que "critérios, amostras e quantidade de registros avaliados serão documentados".</p></div>
+      <div><h4>Intenção</h4><p>Pôr no papel o que fazer, com que frequência e o que registrar, de modo que duas auditorias da mesma base possam ser comparadas. O calendário (§ 1º) é a "agenda" do glossário. Não mexer na base durante a verificação (§ 2º) vem de S. Singer, para que o resultado meça o estado real.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Glossário da plataforma da WWC (auditoria de qualidade de dados); Cambridge (auditorias periódicas por amostra de todas as bases essenciais); DataSF, guia de qualidade (exatidão medida por amostra aleatória anual); S. Singer, planilha de avaliação de exatidão ("não atualizar a base durante a avaliação"); minuta do SB 101842/2026, §12.1.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.2</h4><p>É a "auditoria regular de qualidade" do DM4.2. O resultado publicado é a evidência sugerida ("como a qualidade é avaliada e documentada").</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art12" data-tipo="novo" data-sub="DM4.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 12</span><span class="tag novo">Novo</span><span class="tag sub">DM4.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 12. O primeiro ciclo de auditoria será feito em até 60 (sessenta) dias da publicação deste ato e incluirá, no mínimo:</p><p class="inc">I - as camadas do GeoPortal com bairro ou endereço, conferidas contra as listas de bairros e de logradouros; e</p><p class="inc">II - uma base essencial de outra secretaria, escolhida pelo DTI com a secretaria dona.</p><p>Parágrafo único. As auditorias que as secretarias já fazem por norma própria, como a auditoria mensal das autorizações de internação hospitalar pela Secretaria de Saúde, serão registradas no Anexo IV e valem como auditoria deste ato quando atenderem ao art. 11.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM4.2 pede processo "aplicado". Guia publicado sem nenhuma auditoria feita não prova aplicação.</p></div>
+      <div><h4>Intenção</h4><p>Começar por onde já se sabe que há o que medir: as camadas do GeoPortal, em que a conferência feita para esta proposta achou endereço só em texto e bairro fora da lista oficial (Anexo III). O parágrafo único aproveita o que a Saúde já faz todo mês, em vez de duplicar. O prazo é escolha do município; para servir à certificação, o primeiro ciclo precisa estar registrado antes do envio (observação 4).</p></div>
+      <div class="origem"><h4>Origem</h4><p>Conferência de bairro e endereço nas camadas do GeoPortal feita pelo projeto em 29/10/2026 (ficha DM4, §3); auditoria mensal das autorizações de internação hospitalar (Seção de Auditoria em Saúde; relatórios mensais publicados no Portal da Saúde); minuta do SB 101842/2026, §12 (primeiro piloto de dados em "endereços e referências territoriais").</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.2</h4><p>Produz a primeira evidência de processo aplicado do DM4.2.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo V – Da participação da população</div>
+  <article class="art novo" id="art13" data-tipo="novo" data-sub="DM4.5 DM4.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 13</span><span class="tag novo">Novo</span><span class="tag sub">DM4.5</span><span class="tag sub">DM4.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 13. O DTI manterá, na página de Dados Abertos e no GeoPortal, formulário para qualquer pessoa apontar erro, falta ou desatualização nos dados publicados, com a indicação da base e, se possível, do registro.</p><p>§ 1º O apontamento recebe número e data e é encaminhado à secretaria dona em até 2 (dois) dias úteis.</p><p>§ 2º A secretaria dona responderá em até 20 (vinte) dias, informando se o dado foi corrigido, se será corrigido e quando, ou por que não será.</p><p>§ 3º Os apontamentos, as respostas e as correções serão publicados no Registro de Qualidade (Anexo IV, parte C), sem identificar quem apontou.</p><p>§ 4º Publicada a Política Municipal de Dados Abertos, este formulário integrará o canal permanente nela previsto.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Quem usa os dados é quem mais acha erro. Sem um lugar para avisar, o erro achado se perde.</p></div>
+      <div><h4>Intenção</h4><p>Um formulário curto, com prazo e resposta publicada. Os prazos são os mesmos da DM3 v01 (2 dias úteis para encaminhar) e da Lei de Acesso à Informação (20 dias), que as secretarias já conhecem. O § 4º evita dois canais quando a política de dados abertos (OD1 v02, art. 12, III) for publicada.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Cambridge ("Formulário de Acompanhamento de Dados" para apontar bases com erro ou falta); OD1 v02, art. 12, III (canal para "apontar erros, inconsistências ou desatualizações"); Civic Analytics Network, "Lições dos principais CDOs" (Harvard, 2017), p. 14 e 22: em Connecticut, o uso público dos dados identificou irregularidades que foram corrigidas; Decreto Municipal 18.882/2014, art. 12 (20 dias); DM3 v01, art. 12, § 1º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.5 e DM4.2</h4><p>É a forma de receber a opinião da comunidade do DM4.5 e o "canal de retorno de quem usa os dados" do DM4.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art14" data-tipo="novo" data-sub="DM4.5">
+    <div class="texto"><div class="cab"><span class="id">Art. 14</span><span class="tag novo">Novo</span><span class="tag sub">DM4.5</span></div>
+      <p>Art. 14. Para buscar ativamente a opinião da população sobre a qualidade dos dados, o DTI, com as secretarias donas:</p><p class="inc">I - divulgará cada publicação ou atualização de base essencial com convite a apontar problemas, dirigido também aos órgãos, pesquisadores e organizações que usam aquela base;</p><p class="inc">II - incluirá perguntas sobre a qualidade dos dados na consulta pública anual sobre dados abertos, quando houver, ou fará consulta própria uma vez por ano; e</p><p class="inc">III - publicará o que foi recebido e o que foi feito, com a resposta da Administração.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM4.5 pede que a prefeitura "busque ativamente" a opinião da comunidade. Um formulário sozinho é passivo: depende de alguém procurar.</p></div>
+      <div><h4>Intenção</h4><p>Dois movimentos ativos, um a cada publicação e um por ano, e a devolutiva publicada. A consulta anual é a que a OD1 v02 já prevê sobre "a qualidade e a utilidade dos dados publicados" (art. 13); até lá, o próprio DTI faz a consulta.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Critério DM4.5 da WWC; OD1 v02, art. 13 (consulta anual com devolutiva), que segue São Paulo, Decreto 63.463/2024, art. 18, III; S. Singer, planilha de pesquisa de percepção (o que os usuários elogiam, reclamam e desejam).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.5</h4><p>É a "busca ativa" do DM4.5, com a evidência sugerida pela WWC: registro do retorno contínuo da comunidade.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo VI – Dos padrões dos campos comuns</div>
+  <article class="art novo" id="art15" data-tipo="novo" data-sub="DM4.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 15</span><span class="tag novo">Novo</span><span class="tag sub">DM4.3</span></div>
+      <p>Art. 15. Os campos comuns serão registrados conforme os padrões do Anexo II.</p><p>§ 1º O padrão é obrigatório na criação de base ou sistema, na mudança de sistema que altere o campo e na publicação como dado aberto.</p><p>§ 2º Nas bases existentes, até a próxima mudança do sistema, o padrão será adotado por conversão na exportação para outros órgãos e na publicação.</p><p>§ 3º O padrão não obriga a substituir cadastros setoriais: cada base mantém o seu cadastro e acrescenta ao campo comum o código da lista de referência.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM4.3 pede padrões documentados "de modo que campos comuns (como o endereço) sejam registrados da mesma forma em todos os órgãos". Hoje cada base escreve o endereço do seu jeito: nos equipamentos do GeoPortal, só 627 de 1.177 endereços estão escritos exatamente como o nome oficial do logradouro.</p></div>
+      <div><h4>Intenção</h4><p>Exigir o padrão onde ele custa pouco (sistema novo, mudança, publicação) e converter no meio do caminho nas bases antigas, sem obrigar a refazer sistemas. O § 3º respeita a minuta do decreto de governança, que preserva os cadastros setoriais e não admite usar fonte de referência para "substituir cadastros setoriais".</p></div>
+      <div class="origem"><h4>Origem</h4><p>DataSF, manual de padrões de dados (recurso da WWC no DM4): formatos e dados de referência; Johns Hopkins (para endereço, usar um identificador em vez do texto); Cambridge, Apêndice C (formatos padrão de campos comuns); minuta do SB 101842/2026, art. 26, parágrafo único, e §12.1 ("A fonte de referência será definida por atributo e contexto, preservados os cadastros setoriais"); conferência do GeoPortal de 29/10/2026.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.3</h4><p>É o DM4.3: padrão documentado para os campos comuns, com o endereço à frente.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art16" data-tipo="novo" data-sub="DM4.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 16</span><span class="tag novo">Novo</span><span class="tag sub">DM4.3</span></div>
+      <p>Art. 16. Cada lista de referência tem um órgão mantenedor, indicado no Anexo II, que:</p><p class="inc">I - publica a lista atualizada, com o código, o nome e a data de vigência de cada valor, e mantém o histórico;</p><p class="inc">II - comunica ao DTI e aos órgãos usuários as mudanças, como logradouro novo, renomeado ou extinto; e</p><p class="inc">III - resolve as divergências apontadas pelos órgãos.</p><p>Parágrafo único. Quando duas bases divergirem sobre o mesmo campo comum, prevalece, para esse campo, o valor da lista de referência, e a base divergente será corrigida na origem.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Padrão sem dono envelhece: um logradouro novo que não entra na lista faz todos os sistemas recusarem o endereço certo.</p></div>
+      <div><h4>Intenção</h4><p>Dar a cada lista um dono declarado, como em São Francisco, e uma regra simples para divergências, como em São Paulo. A regra de prevalência vale só para o campo comum: não decide qual cadastro setorial "vence" no resto.</p></div>
+      <div class="origem"><h4>Origem</h4><p>DataSF, manual de padrões (cada dado de referência com a autoridade que o produz); "Lições dos principais CDOs", p. 40 (Washington, D.C.: o sistema de endereços é a fonte oficial, com uma pessoa responsável pela integridade); São Paulo (capital), Decreto 60.663/2021, art. 6º, V ("regras de prevalência entre eventuais registros administrativos conflitantes"); S. Singer, guia (regras de negócio: atualizar os logradouros em todo o governo quando surge quarteirão novo).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.3</h4><p>Completa o DM4.3: quem mantém cada padrão e o que fazer quando as bases discordam.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art17" data-tipo="novo" data-sub="DM4.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 17</span><span class="tag novo">Novo</span><span class="tag sub">DM4.3</span></div>
+      <p>Art. 17. Os sistemas novos e as mudanças de sistema que registrem campo comum:</p><p class="inc">I - validarão o valor contra a lista de referência no momento da entrada, recusando ou marcando como pendente o que não conferir; e</p><p class="inc">II - guardarão o código da lista de referência, além do texto.</p><p>Parágrafo único. Os termos de referência para a contratação de sistemas incluirão as exigências deste artigo.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Escrever o padrão não basta se o sistema continua aceitando texto livre. A conferência do GeoPortal mostrou que nenhuma das camadas de equipamentos, praças e endereços guarda o código do logradouro.</p></div>
+      <div><h4>Intenção</h4><p>Fazer o padrão chegar aos sistemas pela porta de entrada: a validação na hora do cadastro, como no cadastro de contatos da capital paulista, em que CEP e logradouro são conferidos contra as bases de referência e o sistema recusa o que não confere.</p></div>
+      <div class="origem"><h4>Origem</h4><p>São Paulo (capital), Resolução SGM/CCGD 3/2022, Anexo IV (CEP e logradouro validados contra a base de CEPs e a de logradouros, com recusa da entrada; subprefeitura e distrito derivados do CEP); Johns Hopkins (validar ou autocompletar na entrada); DataSF, manual de padrões (endereço validado na entrada quando possível).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.3</h4><p>Faz o padrão do DM4.3 valer na prática, nos sistemas.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo VII – Dos metadados</div>
+  <article class="art novo" id="art18" data-tipo="novo" data-sub="DM4.4 DM4.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 18</span><span class="tag novo">Novo</span><span class="tag sub">DM4.4</span><span class="tag sub">DM4.2</span></div>
+      <p>Art. 18. Toda base registrada no inventário de bases de dados da Prefeitura, publicada ou não, terá metadados no modelo do Anexo V, em três níveis: a base, cada arquivo ou tabela e cada campo.</p><p>§ 1º Nas bases não publicadas, os metadados indicam o nível de acesso e o motivo da restrição, sem revelar conteúdo protegido.</p><p>§ 2º Os campos marcados como obrigatórios no Anexo V serão preenchidos antes da publicação ou do registro no inventário.</p><p>§ 3º Os metadados descrevem como a base é criada e suas limitações conhecidas (art. 8º).</p><p>§ 4º Os metadados serão revistos sempre que a base mudar de estrutura e, no mínimo, uma vez por ano.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM4.4 pede metadados "completos e de alta qualidade" para as bases protegidas e para as publicadas. Hoje só as 13 camadas do GeoPortal têm metadados completos.</p></div>
+      <div><h4>Intenção</h4><p>Um formulário só para as duas situações. O campo "nível de acesso", com o motivo, é o que permite descrever uma base protegida sem expor o conteúdo. Os três níveis e a marcação do que é obrigatório vêm de Singapura; "como a base é criada" e "limitações" vêm de São Francisco e de Cambridge e são também o que o DM4.2 pede.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Guia de metadados do GovEx (recurso da WWC no DM4): nível da base e da coluna; esquema federal dos EUA com "nível de acesso" e "direitos"; padrão de metadados do DataSF (seções "como a base é criada" e "como usar", obrigatórias); data.gov.sg, especificação de metadados (2016): três níveis, campos obrigatórios, obrigatórios em certos casos e opcionais; Cambridge, Apêndice B (campo "Limitações"); OD1 v02, art. 3º, VI.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.4 e DM4.2</h4><p>É o DM4.4 para bases abertas e protegidas. As seções "como a base é criada" e "limitações" documentam origem, método e problemas conhecidos (DM4.2).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art19" data-tipo="novo" data-sub="DM4.4">
+    <div class="texto"><div class="cab"><span class="id">Art. 19</span><span class="tag novo">Novo</span><span class="tag sub">DM4.4</span></div>
+      <p>Art. 19. A base publicada como dado aberto trará, junto com os dados, os metadados e o dicionário de dados, com a descrição de cada campo, os códigos usados e o significado dos valores ausentes ou suprimidos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Metadado que fica num sistema interno não ajuda quem baixou o arquivo.</p></div>
+      <div><h4>Intenção</h4><p>O arquivo publicado leva consigo a explicação, como o "pacote de dados" de Singapura (dados mais metadados no mesmo download) e o dicionário que o GeoPortal já publica.</p></div>
+      <div class="origem"><h4>Origem</h4><p>data.gov.sg, guia de qualidade (pacote de dados: arquivo de metadados junto com os dados); guia de metadados do GovEx (descrição da coluna explica os códigos); dicionário de dados do GeoPortal de SBC (2026); OD1 v02, art. 11, § 1º, II.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.4</h4><p>Metadados completos nas bases publicadas (DM4.4).</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo VIII – Dos padrões de dados cívicos</div>
+  <article class="art novo" id="art20" data-tipo="novo" data-sub="DM4.1 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 20</span><span class="tag novo">Novo</span><span class="tag sub">DM4.1</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 20. Na publicação de dados para os quais exista padrão de dados cívicos de uso amplo, como o GTFS para o transporte coletivo e o GBFS para bicicletas e patinetes compartilhados, a publicação seguirá esse padrão, sem prejuízo de outros formatos.</p><p>§ 1º Os instrumentos que obriguem terceiros a entregar dados ao Município, como contratos de concessão, permissões e credenciamentos, preverão, sempre que possível, a entrega no padrão aplicável e a autorização para publicar os dados que não forem pessoais nem sigilosos.</p><p>§ 2º O Anexo II, parte B, relaciona os padrões de dados cívicos adotados e os que estão em estudo.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM4.1 pede bases publicadas que sigam "pelo menos um padrão de dados cívicos", com o GTFS como exemplo. SBC não publica nenhuma, mas os dados existem com terceiros: o GTFS dos ônibus provavelmente com a concessionária (em 2021, a Prefeitura mandou um pedido de LAI desse arquivo procurar a concessionária), e os dados dos patinetes com as operadoras, que o Decreto 23.119/2025 já obriga a entregar, sem dizer o formato.</p></div>
+      <div><h4>Intenção</h4><p>Dizer que, quando houver padrão, publica-se nele, e fazer os próximos contratos e credenciamentos pedirem o padrão e a licença para publicar. A escolha dos padrões e dos instrumentos é do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Critério DM4.1 da WWC (GTFS como exemplo); GovEx, diretório de padrões de dados abertos (recurso da WWC no DM4: GTFS, GBFS, OCDS, Open311, CAP, HSDS); Decreto Municipal 23.119/2025, art. 7º, VII (dados diários das operadoras de bicicletas e patinetes à Secretaria de Transporte); relatórios da LAI de 2023 e 2024 (pedido do GTFS em 2021, processo SB.124665/2021).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.1</h4><p>Prepara o DM4.1. O subcritério só é atendido com uma base publicada no padrão, e não pelo texto.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo IX – Das disposições finais</div>
+  <article class="art novo" id="art21" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 21</span><span class="tag novo">Novo</span></div>
+      <p>Art. 21. Integram este ato os seguintes anexos:</p><p class="inc">I - Anexo I – Ficha de regras da base;</p><p class="inc">II - Anexo II – Padrões dos campos comuns e listas de referência;</p><p class="inc">III - Anexo III – Monitoramento e roteiro da auditoria por amostra;</p><p class="inc">IV - Anexo IV – Registro de Qualidade; e</p><p class="inc">V - Anexo V – Formulário de metadados.</p><p>Parágrafo único. O DTI poderá atualizar os anexos, publicando a nova versão com a data e o que mudou.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Os anexos são a parte prática. Aprovados junto com o ato, viram norma e contam como evidência.</p></div>
+      <div><h4>Intenção</h4><p>Deixar os modelos com quem os opera (DTI), com histórico das versões.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decisão de 28/10/2026 para o DM3 (um documento com anexos, para que o guia não fique como manual solto), mantida aqui.</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art22" data-tipo="novo" data-sub="DM4.4">
+    <div class="texto"><div class="cab"><span class="id">Art. 22</span><span class="tag novo">Novo</span><span class="tag sub">DM4.4</span></div>
+      <p>Art. 22. Os metadados e as informações de qualidade previstos neste ato alimentarão o inventário de bases de dados da Prefeitura, o Catálogo Municipal de Bases de Dados e o registro de compartilhamentos, quando instituídos, sem duplicar registros.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Inventário, catálogo, registro de compartilhamentos e metadados descrevem as mesmas bases. Se cada um pedir as informações de novo, as secretarias respondem quatro vezes e as respostas divergem.</p></div>
+      <div><h4>Intenção</h4><p>Um preenchimento, vários usos: o nível da base do Anexo V usa os campos da planilha do inventário proposta no DM2, e as limitações conhecidas são as que o termo de uso da DM3 v01 manda informar a quem recebe os dados (cláusula 9).</p></div>
+      <div class="origem"><h4>Origem</h4><p>Ficha DM2, §5 (planilha do inventário); OD1 v02, art. 10 (Catálogo Municipal de Bases de Dados); DM3 v01, art. 7º, § 3º, Anexo I, cláusula 9, e Anexo IV; S. Singer, planilha de inventário (modelo do DataSF, com o campo "preocupações com a qualidade desta base").</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.4</h4><p>Liga o DM4.4 ao inventário do DM2, de que depende.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art23" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 23</span><span class="tag novo">Novo</span></div>
+      <p>Art. 23. Este ato será incorporado à regulamentação de dados prevista no decreto que instituir a Política e o Programa Municipal de Governança Digital e de Dados, quando editada, e as suas revisões passarão a ser aprovadas pelo comitê de governança de dados nele previsto.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A minuta do decreto de governança, ainda na Procuradoria, prevê uma regulamentação de dados que trate de "catálogo, metadados, fontes de referência, qualidade" (art. 25).</p></div>
+      <div><h4>Intenção</h4><p>Não esperar o decreto, que só vigora 90 dias depois de publicado, e não criar regra paralela: quando a regulamentação vier, este ato passa a fazer parte dela, e o comitê de dados passa a revisá-lo, como em Cambridge.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Minuta do SB 101842/2026, arts. 25 e 40; Cambridge (o guia é atualizado pelo Comitê de Governança de Dados); DM3 v01, art. 20.</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio. Liga o DM4 ao DM1.</p></div>
+    </aside>
+  </article>
+  <article class="art igual" id="art24" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 24</span></div><p>Art. 24. Este ato entra em vigor na data de sua publicação.</p></div>
+  </article>
+  <div class="assinatura" data-bloco="assinatura">São Bernardo do Campo, ………..<br><b>Diretor(a) do Departamento de Tecnologia da Informação</b></div>
+  <div class="capitulo">Anexos</div>
+  <article class="art novo" id="anx1" data-tipo="novo" data-sub="DM4.2 DM4.3">
+    <div class="texto"><div class="cab"><span class="id">Anexo I</span><span class="tag novo">Novo</span><span class="tag sub">DM4.2</span><span class="tag sub">DM4.3</span></div>
+      <p><b>Anexo I – Ficha de regras da base (modelo)</b></p><p>Uma ficha por base essencial, preenchida pelo responsável pela base e aprovada pela secretaria dona. Cabeçalho: base, secretaria dona, responsável e substituto, sistema de origem, data da ficha.</p><p>Parte A – Regras de cada campo. Uma linha por campo necessário ao serviço.</p><div class="rolavel"><table class="anexo"><thead><tr><th>Campo</th><th>Obrigatório?</th><th>Regra de validação</th><th>Se não passar</th><th>Origem do valor</th><th>Guarda data de atualização?</th></tr></thead><tbody><tr><td>bairro (nome do bairro)</td><td>Sim</td><td>Um dos 34 bairros da lista de bairros (Anexo II)</td><td>Recusar na entrada; nas bases existentes, marcar como pendente</td><td>Registrado pelo servidor</td><td>Não; a base tem só o ano (ano_ref)</td></tr><tr><td>endereco (logradouro)</td><td>Sim</td><td>Código da lista de logradouros; o nome vem da lista</td><td>Recusar na entrada</td><td>Registrado pelo servidor</td><td>Não</td></tr><tr><td>numero (número predial)</td><td>Sim, salvo imóvel sem número</td><td>Números e letras (ex.: 58A); "S/N" quando não houver. Hoje o campo é numérico, o que impede essas formas</td><td>Aceitar e marcar como pendente</td><td>Registrado pelo servidor</td><td>Não</td></tr><tr><td>setor</td><td>Sim</td><td>Lista fechada (educação, saúde, lazer, esporte...)</td><td>Recusar na entrada</td><td>Registrado pelo servidor</td><td>Não</td></tr></tbody></table></div><p>Parte B – Regras entre campos.</p><div class="rolavel"><table class="anexo"><thead><tr><th>Regra em linguagem simples</th><th>Regra como o sistema a aplica</th><th>Onde aplicar</th></tr></thead><tbody><tr><td>O bairro informado é o bairro onde o ponto do equipamento está</td><td>bairro = nome do polígono da camada de bairros que contém o ponto</td><td>Na entrada, quando o sistema tiver mapa; senão, na auditoria</td></tr><tr><td>O ano de atualização não pode ser futuro</td><td>ano_ref &lt;= ano corrente</td><td>Na entrada</td></tr></tbody></table></div><p>Parte C – Rotinas de monitoramento desta base (Anexo III, parte A): para cada uma das quatro rotinas, a frequência e quem faz.</p><p>Exemplo ilustrativo, montado com os campos reais da camada de equipamentos do GeoPortal (dicionário de dados de 2026); as regras são sugestões a validar pela secretaria dona.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A ficha é o lugar onde as regras do art. 7º ficam escritas, base por base.</p></div>
+      <div><h4>Intenção</h4><p>Uma tabela por campo, no formato dos anexos paulistanos, e uma de regras entre campos, no formato de S. Singer. O exemplo usa os campos reais de uma camada que a Prefeitura já publica, para a equipe ver o que muda: o número predial, hoje numérico, não aceita "58A" nem "S/N".</p></div>
+      <div class="origem"><h4>Origem</h4><p>São Paulo (capital), Resolução SGM/CCGD 3/2022, Anexos I a VI (obrigatoriedade, regra de validação, resultado, ação, temporalidade); S. Singer, planilhas de regras de negócio e de monitoramento; dicionário de dados do GeoPortal (camada de equipamentos, 2026).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.2 e DM4.3</h4><p>Modelo do processo documentado do DM4.2 e da aplicação dos padrões do DM4.3.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx2" data-tipo="novo" data-sub="DM4.3 DM4.1">
+    <div class="texto"><div class="cab"><span class="id">Anexo II</span><span class="tag novo">Novo</span><span class="tag sub">DM4.3</span><span class="tag sub">DM4.1</span></div>
+      <p><b>Anexo II – Padrões dos campos comuns e listas de referência</b></p><p>Parte A – Campos comuns. Os mantenedores marcados "a confirmar" dependem da resposta da equipe; a fonte indicada é a que o GeoPortal declara.</p><div class="rolavel"><table class="anexo"><thead><tr><th>Campo</th><th>Padrão</th><th>Lista de referência</th><th>Mantenedor</th></tr></thead><tbody><tr><td>Logradouro</td><td>Código do logradouro, mais tipo e nome como estão na lista</td><td>Camada de logradouros do GeoPortal (código numérico)</td><td>A confirmar; fonte declarada: Secretaria de Planejamento Urbano</td></tr><tr><td>Número predial</td><td>Texto: números e letras (58, 58A); "S/N" quando não houver</td><td>—</td><td>—</td></tr><tr><td>Complemento</td><td>Campo próprio, separado do número</td><td>—</td><td>—</td></tr><tr><td>Bairro</td><td>Nome oficial, grafado exatamente como na lista (a lista não tem código; o mantenedor pode criá-lo)</td><td>Camada de bairros do GeoPortal (34 bairros)</td><td>A confirmar; fonte declarada: Secretaria de Planejamento Urbano</td></tr><tr><td>CEP</td><td>Campo próprio, 8 dígitos, sem hífen</td><td>Base de CEPs dos Correios</td><td>Correios</td></tr><tr><td>Lote</td><td>Identificador do lote do cadastro imobiliário</td><td>Camada de lotes do GeoPortal</td><td>A confirmar; fonte declarada: Secretaria da Fazenda</td></tr><tr><td>Coordenadas</td><td>Duas colunas; SIRGAS 2000, com o sistema declarado nos metadados (UTM 23S, como no GeoPortal, ou latitude e longitude em graus decimais)</td><td>—</td><td>—</td></tr><tr><td>Data</td><td>AAAA-MM-DD (ISO 8601); mês AAAA-MM; ano AAAA; data e hora AAAA-MM-DDThh:mm, no horário de Brasília salvo indicação</td><td>—</td><td>—</td></tr><tr><td>Órgão ou unidade</td><td>Código da unidade no sistema financeiro, mais o nome</td><td>Tabela de unidades do sistema financeiro</td><td>A confirmar</td></tr><tr><td>Números</td><td>Sem separador de milhar e sem unidade no valor; unidade e separador decimal declarados nos metadados</td><td>—</td><td>—</td></tr><tr><td>Texto</td><td>UTF-8, sem quebra de linha dentro do campo</td><td>—</td><td>—</td></tr><tr><td>Valor ausente</td><td>Vazio quando não informado; "na" quando não disponível ou não se aplica; "s" quando suprimido para proteger pessoa; o motivo vai nos metadados</td><td>—</td><td>—</td></tr><tr><td>Nome de coluna (em dados abertos)</td><td>Minúsculas, sem acento, palavras ligadas por sublinhado, até 30 caracteres, sem repetir; nomes reservados: data, mes, ano, latitude, longitude, cep, cod_logradouro, bairro</td><td>—</td><td>DTI</td></tr></tbody></table></div><p>Parte B – Padrões de dados cívicos.</p><div class="rolavel"><table class="anexo"><thead><tr><th>Padrão</th><th>Para quê</th><th>Situação em SBC</th></tr></thead><tbody><tr><td>GTFS e GTFS Realtime</td><td>Linhas, horários e pontos do transporte coletivo; posição dos ônibus</td><td>Em estudo: o arquivo provavelmente existe com a concessionária (pergunta à equipe)</td></tr><tr><td>GBFS</td><td>Bicicletas e patinetes compartilhados: estações e disponibilidade</td><td>Em estudo: depende de as operadoras oferecerem o padrão (pergunta à equipe)</td></tr><tr><td>OCDS</td><td>Contratações públicas</td><td>Em estudo</td></tr><tr><td>Open311</td><td>Pedidos de serviço do cidadão (buraco, lâmpada)</td><td>Em estudo</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O padrão precisa ser concreto: que campo, que formato, que lista e quem cuida dela.</p></div>
+      <div><h4>Intenção</h4><p>Uma linha por campo comum. As listas são as que SBC já tem (logradouros com código, 34 bairros, lotes), e não novas. Os formatos seguem São Francisco e Singapura, com dois pontos que só Singapura traz: códigos para valor ausente e suprimido e nomes de coluna reservados. Os mantenedores ficam "a confirmar" porque o GeoPortal diz a fonte, mas não quem mantém a lista no dia a dia.</p></div>
+      <div class="origem"><h4>Origem</h4><p>DataSF, manual de padrões de dados (formatos e dados de referência com autoridade declarada; nomes de coluna até 30 caracteres); data.gov.sg, guia de qualidade (datas ISO 8601 com nomes reservados, números sem separador, endereço e código postal em colunas próprias, códigos "na", "-" e "s"); Cambridge, Apêndice C; dicionário de dados do GeoPortal (2026: fontes de cada camada; SIRGAS 2000 / UTM 23S); GovEx, diretório de padrões.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.3 e DM4.1</h4><p>É o "padrão documentado" do DM4.3 e a lista de padrões cívicos do DM4.1.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx3" data-tipo="novo" data-sub="DM4.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo III</span><span class="tag novo">Novo</span><span class="tag sub">DM4.2</span></div>
+      <p><b>Anexo III – Monitoramento e roteiro da auditoria por amostra</b></p><p>Parte A – Rotinas de monitoramento (art. 10). As frequências são sugestões; a de cada base fica na ficha.</p><div class="rolavel"><table class="anexo"><thead><tr><th>Rotina</th><th>O que é</th><th>Frequência sugerida</th><th>Quem faz</th></tr></thead><tbody><tr><td>Acompanhar uma amostra</td><td>Seguir alguns registros da entrada até o relatório ou a publicação e conferir se foram tratados corretamente</td><td>Trimestral</td><td>Responsável pela base</td></tr><tr><td>Conciliar</td><td>Comparar com bases relacionadas, com a fonte original e com a versão anterior, e explicar as diferenças</td><td>A cada atualização</td><td>Responsável pela base</td></tr><tr><td>Validar</td><td>Aplicar as regras da ficha a toda a base e contar o que não passa</td><td>A cada carga ou mensal</td><td>Responsável pela base, com apoio do DTI</td></tr><tr><td>Usar o retorno</td><td>Ler os apontamentos e as dúvidas recebidos e ver se indicam problema que se repete</td><td>Mensal</td><td>Responsável pela base</td></tr></tbody></table></div><p>Parte B – Roteiro da auditoria por amostra (art. 11).</p><p>1. Escolher os campos e as dimensões a verificar, a partir da ficha de regras.</p><p>2. Definir o tamanho da amostra e sortear os registros. Na falta de outro critério, 100 registros sorteados, ou todos, se a base tiver menos; o DTI orienta outro tamanho quando a base pedir mais precisão.</p><p>3. Verificar cada registro sorteado contra a fonte (documento, sistema de origem, lista de referência ou visita), sem alterar a base.</p><p>4. Calcular, para cada campo, a proporção de registros com problema.</p><p>5. Procurar a causa de cada tipo de problema: entrada, sistema, falta de regra, mudança na realidade não registrada.</p><p>6. Corrigir na origem, registrar o que ficou pendente e propor mudança na ficha de regras, se for o caso.</p><p>7. Registrar no Anexo IV, parte B, e publicar o resumo.</p><p>Exemplo de conferência contra as listas de referência (feita para esta proposta em 29/10/2026, nas camadas públicas do GeoPortal, com todos os registros, sem amostra): dos 1.177 equipamentos, 2 têm bairro fora da lista oficial ("BUTUJURU", por "BOTUJURU", e "NÃO SE APLICA"); só 627 têm o endereço escrito exatamente como o nome oficial do logradouro; nenhuma das camadas de equipamentos, praças e endereços guarda o código do logradouro; na camada de logradouros, 332 dos 5.903 trechos estão sem código e 19 códigos aparecem com mais de um nome. Os números foram conferidos por dois métodos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O roteiro faz duas auditorias da mesma base serem comparáveis, que é o que a minuta do decreto de governança pede.</p></div>
+      <div><h4>Intenção</h4><p>Sete passos curtos, que uma secretaria faz sem estatístico. O tamanho de 100 registros é escolha nossa, simples de aplicar; o DTI pode orientar outro. O exemplo mostra, com dados da própria Prefeitura, o que uma conferência encontra e por que o código do logradouro importa.</p></div>
+      <div class="origem"><h4>Origem</h4><p>S. Singer, planilhas de monitoramento, de avaliação de exatidão e de correção; DataSF, guia de qualidade (métricas, amostra aleatória anual); Johns Hopkins (seis problemas comuns e suas soluções); minuta do SB 101842/2026, §12.1; conferência do GeoPortal de 29/10/2026 (ficha DM4, §3).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.2</h4><p>É o processo aplicado do DM4.2: as rotinas e a auditoria regular.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx4" data-tipo="novo" data-sub="DM4.2 DM4.5">
+    <div class="texto"><div class="cab"><span class="id">Anexo IV</span><span class="tag novo">Novo</span><span class="tag sub">DM4.2</span><span class="tag sub">DM4.5</span></div>
+      <p><b>Anexo IV – Registro de Qualidade</b></p><p>O Registro é uma planilha com quatro partes. As partes A, B e C são publicadas na página de Dados Abertos (art. 5º, I); a parte D é interna. A parte A vem com os problemas achados na conferência do GeoPortal, a confirmar pela secretaria dona.</p><p><b>Parte A – Limitações conhecidas (pública)</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Base</th><th>Secretaria dona</th><th>Limitação</th><th>Desde</th><th>Previsão de correção</th></tr></thead><tbody><tr><td>Camadas de equipamentos, praças e endereços do GeoPortal</td><td>A confirmar</td><td>O endereço é guardado só como texto, sem o código do logradouro</td><td>Conferência de 29/10/2026</td><td>A definir</td></tr><tr><td>Camada de equipamentos do GeoPortal</td><td>A confirmar</td><td>2 de 1.177 registros com bairro fora da lista oficial</td><td>Conferência de 29/10/2026</td><td>A definir</td></tr><tr><td>Camada de logradouros do GeoPortal</td><td>A confirmar</td><td>332 de 5.903 trechos sem código; 19 códigos com mais de um nome</td><td>Conferência de 29/10/2026</td><td>A definir</td></tr></tbody></table></div><p><b>Parte B – Auditorias (pública)</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Base</th><th>Data</th><th>Campos e dimensões</th><th>Amostra (tamanho e sorteio)</th><th>Resultado por campo</th><th>Correções</th><th>Pendências e causas</th></tr></thead><tbody><tr><td colspan="7" class="vaz">Preenchido a cada registro.</td></tr></tbody></table></div><p><b>Parte C – Apontamentos de erro (pública)</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Nº e data</th><th>Base</th><th>O que foi apontado</th><th>Secretaria dona</th><th>Prazo</th><th>Respondido em</th><th>Resposta e correção</th></tr></thead><tbody><tr><td colspan="7" class="vaz">Preenchido a cada registro.</td></tr></tbody></table></div><p><b>Parte D – Bases essenciais e responsáveis (interna)</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Base</th><th>Secretaria dona</th><th>Responsável e substituto</th><th>Ficha de regras</th><th>Última auditoria</th></tr></thead><tbody><tr><td colspan="5" class="vaz">Preenchido a cada registro.</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Sem registro não há prova de que o processo funciona.</p></div>
+      <div><h4>Intenção</h4><p>Uma planilha de quatro abas, no mesmo formato do registro da DM3 v01. Publicar as limitações, as auditorias e os apontamentos com resposta é a evidência que a WWC sugere para o DM4.2 e para o DM4.5.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Evidência sugerida pela WWC no DM4 (documentos sobre como a qualidade é avaliada e documentada; registro do retorno da comunidade); Cambridge (estatísticas e revisão documentadas); DM3 v01, Anexo IV (mesmo formato); conferência do GeoPortal de 29/10/2026.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.2 e DM4.5</h4><p>As partes A e B são a evidência do DM4.2; a parte C, a do DM4.5.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx5" data-tipo="novo" data-sub="DM4.4">
+    <div class="texto"><div class="cab"><span class="id">Anexo V</span><span class="tag novo">Novo</span><span class="tag sub">DM4.4</span></div>
+      <p><b>Anexo V – Formulário de metadados</b></p><p>Três níveis. Obrigatório: "Sim" sempre; "Se aplicável" quando o caso existir; "Não" é opcional. Os níveis 2 e 3 saem quase prontos da ficha de regras (Anexo I), quando ela existir.</p><p><b>Nível 1 – A base</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Campo</th><th>O que se informa</th><th>Obrigatório?</th></tr></thead><tbody><tr><td>Identificador</td><td>Número da base no inventário</td><td>Sim</td></tr><tr><td>Título</td><td>Nome em linguagem simples</td><td>Sim</td></tr><tr><td>Descrição</td><td>O que a base contém e o que cada linha representa</td><td>Sim</td></tr><tr><td>Secretaria dona e responsável pela base</td><td>Órgão, nome e contato institucional</td><td>Sim</td></tr><tr><td>Como a base é criada</td><td>Origem, método de coleta e sistema de origem</td><td>Sim</td></tr><tr><td>Limitações conhecidas</td><td>Problemas e cuidados de uso (art. 8º); "nenhuma conhecida", se for o caso</td><td>Sim</td></tr><tr><td>Periodicidade</td><td>Diária, semanal, mensal, trimestral, semestral, anual ou eventual</td><td>Sim</td></tr><tr><td>Data da última atualização</td><td>AAAA-MM-DD</td><td>Sim</td></tr><tr><td>Período coberto</td><td>De AAAA-MM-DD a AAAA-MM-DD</td><td>Sim</td></tr><tr><td>Nível de acesso</td><td>Aberta, restrita ou indisponível</td><td>Sim</td></tr><tr><td>Motivo da restrição</td><td>Fundamento legal ou técnico, sem revelar o conteúdo</td><td>Se aplicável</td></tr><tr><td>Contém dado pessoal</td><td>Sim ou não</td><td>Sim</td></tr><tr><td>Área e menor unidade territorial</td><td>Município, bairro, lote, endereço...</td><td>Se aplicável</td></tr><tr><td>Padrão seguido</td><td>Padrão de dados cívicos ou do Anexo II</td><td>Se aplicável</td></tr><tr><td>Licença</td><td>Licença dos dados abertos</td><td>Se aplicável</td></tr><tr><td>Palavras-chave e bases relacionadas</td><td>Para busca e uso conjunto</td><td>Não</td></tr></tbody></table></div><p><b>Nível 2 – Cada arquivo ou tabela</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Campo</th><th>O que se informa</th><th>Obrigatório?</th></tr></thead><tbody><tr><td>Nome e título</td><td>Nome do arquivo ou tabela e título legível</td><td>Sim</td></tr><tr><td>Formato</td><td>CSV, SHP, XLSX...</td><td>Sim</td></tr><tr><td>Chave única</td><td>Campo ou campos que identificam cada linha</td><td>Sim</td></tr><tr><td>Data da última atualização</td><td>AAAA-MM-DD</td><td>Sim</td></tr></tbody></table></div><p><b>Nível 3 – Cada campo</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Campo</th><th>O que se informa</th><th>Obrigatório?</th></tr></thead><tbody><tr><td>Nome e nome legível</td><td>Nome de máquina e nome para leitura</td><td>Sim</td></tr><tr><td>Descrição</td><td>O que o valor significa, como é criado, códigos usados e cuidados de qualidade</td><td>Sim</td></tr><tr><td>Tipo</td><td>Texto, número, data, código ou coordenada</td><td>Sim</td></tr><tr><td>Obrigatório?</td><td>Se o campo pode ficar vazio</td><td>Sim</td></tr><tr><td>Unidade de medida</td><td>Para números</td><td>Se aplicável</td></tr><tr><td>Lista de referência ou padrão</td><td>Do Anexo II</td><td>Se aplicável</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O formulário é o que torna os metadados "completos" de forma verificável: dá para contar quantos campos obrigatórios estão preenchidos.</p></div>
+      <div><h4>Intenção</h4><p>Os campos do nível 1 incluem os da planilha do inventário proposta no DM2 e os metadados mínimos da OD1 v02 (art. 3º, VI), mais "como a base é criada", "limitações" e o nível de acesso com o motivo. As classes de acesso são as da DM3 v01 (art. 7º). A marcação do que é obrigatório vem de Singapura.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Guia de metadados do GovEx (base e coluna; nível de acesso e direitos); padrão de metadados do DataSF (seções fixas; chave única; responsável pelos dados); data.gov.sg, especificação de metadados (três níveis; obrigatório, obrigatório em certos casos, opcional; periodicidade em lista fechada); Cambridge, Apêndice B; OD1 v02, art. 3º, VI; DM3 v01, art. 7º; ficha DM2, §5.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM4.4</h4><p>É o modelo de "metadados completos e de alta qualidade" do DM4.4, igual para bases abertas e protegidas.</p></div>
+    </aside>
+  </article>
+  <div class="vazio" id="vazio">Nenhum item corresponde ao filtro escolhido.</div>
+</details>
+
+<details class="cartao obs">
+  <summary><h2>Observações para quem for decidir</h2></summary>
+  <ol>
+    <li><b>Natureza deste texto.</b> É um rascunho de indicação técnica, para servir de base à equipe e à Procuradoria. A decisão cabe ao município.</li>
+    <li class="destaque"><b>Instrumento (ponto de escolha).</b> O texto está escrito como instrução do DTI, com base na Lei 7.367/2025, art. 645, XIII, que dá ao DTI a definição de "padrões e políticas para a gestão de dados". Para obrigar as demais secretarias (indicar bases e responsáveis, responder a apontamentos, auditar), uma instrução só do DTI pode não bastar; a alternativa é portaria do Secretário de Administração ou decreto. Quem assina é pergunta à equipe (ficha DM4, pedido DM4-5), a mesma do DM2 e do DM3.</li>
+    <li><b>Por que um documento próprio.</b> Escrito separado, por decisão de 29/10/2026: cada critério tem documento próprio na plataforma, e um documento travado não segura os outros. O procedimento de compartilhamento (DM3), a metodologia do inventário (DM2) e este guia são atos do DTI sobre o mesmo assunto e podem virar um só, se a equipe preferir; os capítulos estão prontos para isso.</li>
+    <li><b>Prazo da certificação (18/12/2026).</b> O DM4 não tem janela temporal e pede 4 de 5. O conjunto mais seguro é DM4.2, DM4.3 e DM4.5, mais o DM4.4 ou o DM4.1. Para o DM4.2 contar como processo "aplicado", o primeiro ciclo de auditoria (art. 12) precisa estar registrado antes do envio, independentemente do prazo do artigo. O DM4.5 pede o formulário no ar e um convite feito. O DM4.4 depende do inventário (DM2); o DM4.1, de existir o GTFS (pedido DM4-1) ou de as operadoras de patinetes oferecerem o GBFS (DM4-2).</li>
+    <li><b>Encaixe nas outras propostas.</b> A minuta do decreto de governança (SB 101842/2026) põe "metadados, fontes de referência, qualidade" na regulamentação de dados (art. 25); este ato passa a fazer parte dela (art. 23). O art. 15, § 3º, respeita a regra da mesma minuta de que fonte de referência não substitui cadastros setoriais (art. 26, parágrafo único). Da OD1 v02, o formulário de erros é o canal do art. 12, III, e a consulta anual é a do art. 13; e este guia pode servir como as "normas complementares" de formato e metadados do art. 21. Da DM3 v01, os metadados usam as classes de acesso do art. 7º.</li>
+    <li><b>Números escolhidos aqui.</b> São propostas, não medidas: 60 dias para indicar as bases essenciais e para o primeiro ciclo de auditoria; 2 dias úteis para o DTI encaminhar e 20 dias para a secretaria responder a um apontamento (os mesmos da DM3 v01 e da Lei de Acesso à Informação); auditoria anual (São Francisco); 95% para publicar, como recomendação (Cambridge); amostra padrão de 100 registros (escolha nossa, para ser simples); nomes de coluna até 30 caracteres (São Francisco; Singapura usa 25).</li>
+    <li><b>O que ficou de fora.</b> Metas de qualidade iguais para todas as bases: Cambridge deixa o limiar das bases internas caso a caso, e aqui também. Ferramenta de software: o DTI escolhe (art. 5º, III). Um cadastro central único, como os de São Paulo: a escala é outra, e a minuta do decreto de governança veda fundir bases sem justificativa (art. 26, parágrafo único). Os níveis de confiança do login de São Paulo (Anexo VII da Resolução 3/2022) são tema de identidade e acesso, não de qualidade.</li>
+    <li><b>Anexos pré-preenchidos.</b> No Anexo II, as listas são as que o GeoPortal já publica, e os mantenedores estão "a confirmar" (pedido DM4-3). No Anexo IV, a parte A traz os problemas achados na conferência do GeoPortal feita para esta proposta em 29/10/2026, a confirmar pela secretaria dona; não é auditoria da Prefeitura e por isso não entra na parte B.</li>
+  </ol>
+</details>
+
+<details class="cartao fontes">
+  <summary><h2>Fontes</h2></summary>
+  <ul>
+    <li>What Works Cities, critério DM4 (v4): definição, subcritérios, evidência sugerida e glossário; pacote do Fórum (Cambridge, Guia de Qualidade de Dados, versão em português).</li>
+    <li>Recursos indicados pela WWC no DM4: DataSF (São Francisco), manual de padrões de dados e padrão de metadados; Johns Hopkins, "problemas e soluções de qualidade dos dados"; Civic Analytics Network, "Lições dos principais CDOs" (Ash Center, Harvard, 2017); GovEx, guia de metadados de dados abertos e diretório de padrões de dados abertos.</li>
+    <li>Lidos a partir dos recursos: DataSF, guia "como garantir a qualidade dos dados"; S. Singer, guia de qualidade de dados para governos (Knight Foundation, 2016) e suas 36 planilhas-modelo; data.gov.sg (Singapura), guia de qualidade de dados tabulares e especificação de metadados (2016).</li>
+    <li>São Paulo (capital): Decreto 60.663/2021 e Resolução SGM/CCGD 3/2022, com os anexos.</li>
+    <li>Lei Federal 12.527/2011, arts. 6º e 8º; Lei Federal 13.709/2018, art. 6º, V.</li>
+    <li>São Bernardo do Campo: Lei 7.367/2025, art. 645, XIII; Decreto 18.882/2014, art. 12; Decreto 23.119/2025, art. 7º, VII; relatórios da LAI de 2023 e 2024; dicionário de dados e camadas do GeoPortal (2026); relatórios de auditoria das internações (Saúde); minuta do decreto de governança digital e de dados (processo SB 101842/2026), arts. 25, 26 e 40 e proposta técnica, §12.</li>
+    <li>Recomendações deste projeto: OD1 v02 (`versoes/OD1-v02.md`), DM3 v01 (`versoes/DM3-v01.md`), ficha DM2 e ficha DM4 (`fichas/`); conferência do GeoPortal (`dm4-auditoria-geoportal.md`).</li>
+  </ul>
+</details>
+
+</main>
+<div class="rodape">Guia preparado para o Painel WWC · SBC. Rascunho de indicação técnica; não substitui a análise da Procuradoria.</div>
+
+<script>
+(function () {
+  var estado = { sub: 'todos' };
+  var arts = Array.prototype.slice.call(document.querySelectorAll('.art'));
+  var caps = Array.prototype.slice.call(document.querySelectorAll('.capitulo'));
+  var blocos = Array.prototype.slice.call(document.querySelectorAll('[data-bloco]'));
+  function aplicar() {
+    var visiveis = 0;
+    arts.forEach(function (a) {
+      var subs = (a.getAttribute('data-sub') || '').split(' ');
+      var ok = estado.sub === 'todos' || subs.indexOf(estado.sub) >= 0;
+      a.hidden = !ok; if (ok) visiveis++;
+    });
+    caps.forEach(function (c) {
+      var el = c.nextElementSibling, algum = false;
+      while (el && el.classList.contains('art')) { if (!el.hidden) algum = true; el = el.nextElementSibling; }
+      c.hidden = !algum;
+    });
+    blocos.forEach(function (b) { b.hidden = estado.sub !== 'todos'; });
+    document.getElementById('vazio').style.display = visiveis ? 'none' : 'block';
+    document.getElementById('contagem').textContent = visiveis + ' de ' + arts.length + ' itens';
+  }
+  document.querySelectorAll('[data-filtro]').forEach(function (g) {
+    g.addEventListener('click', function (ev) {
+      var b = ev.target.closest('button'); if (!b) return;
+      estado.sub = b.getAttribute('data-v');
+      g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      aplicar();
+    });
+  });
+  document.querySelectorAll('.sub-card .arts a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var alvo = document.querySelector(a.getAttribute('href'));
+      if (alvo && alvo.hidden) {
+        estado.sub = 'todos';
+        document.querySelectorAll('[data-filtro] button').forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-v') === 'todos' ? 'true' : 'false'); });
+        aplicar();
+      }
+    });
+  });
+  aplicar();
+})();
+</script>
+<script>
+(function () {
+  var quadros = Array.prototype.slice.call(document.querySelectorAll('details.cartao'));
+  function abrirAte(el) { var d = el && el.closest('details'); while (d) { d.open = true; d = d.parentElement.closest('details'); } }
+  function irPara(hash) { var alvo = hash && hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1))); if (alvo) { abrirAte(alvo); alvo.scrollIntoView(); } }
+  var a = document.getElementById('abrir-tudo'), f = document.getElementById('fechar-tudo');
+  if (a) a.addEventListener('click', function () { quadros.forEach(function (d) { d.open = true; }); });
+  if (f) f.addEventListener('click', function () { quadros.forEach(function (d) { d.open = false; }); });
+  var antes = [];
+  window.addEventListener('beforeprint', function () { antes = quadros.map(function (d) { return d.open; }); quadros.forEach(function (d) { d.open = true; }); });
+  window.addEventListener('afterprint', function () { quadros.forEach(function (d, i) { d.open = antes[i]; }); });
+  document.querySelectorAll('[data-filtro] button').forEach(function (b) { b.addEventListener('click', function () { var d = document.getElementById('decreto'); if (d) d.open = true; }); });
+  document.querySelectorAll('a[href^="#"]').forEach(function (l) { l.addEventListener('click', function () { var h = l.getAttribute('href'); if (h.length > 1) abrirAte(document.getElementById(h.slice(1))); }); });
+  window.addEventListener('hashchange', function () { irPara(location.hash); });
+  irPara(location.hash);
+})();
+</script>
+</body>
+</html>
