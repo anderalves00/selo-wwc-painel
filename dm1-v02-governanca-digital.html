@@ -147,6 +147,23 @@ table.tab td.cod { white-space: nowrap; font-weight: 800; }
 table.tab .arts a { display: inline-block; font-size: 12.5px; font-weight: 700; text-decoration: none; background: var(--azul-claro); padding: 1px 7px; border-radius: 6px; margin: 1px 2px; }
 .lista-alt li { margin-bottom: 8px; }
 @media (max-width: 760px) { table.tab.crit td:nth-child(2) { display: none; } table.tab.crit th:nth-child(2) { display: none; } }
+main > *, .art .texto, .art .expl { min-width: 0; }
+.rolavel { overflow-x: auto; }
+.rolavel > table { min-width: 520px; }
+table.tabinicio { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.tabinicio td, table.tabinicio th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+.inicio h3 { font-size: 16px; color: var(--azul-esc); margin: 16px 0 6px; }
+details.cartao > summary { list-style: none; cursor: pointer; }
+details.cartao > summary::-webkit-details-marker { display: none; }
+details.cartao > summary h2 { font-size: 19px; color: var(--azul-esc); margin: 0; }
+details.cartao[open] > summary h2 { margin-bottom: 10px; }
+details.cartao.decreto > summary h2 { margin-bottom: 0; }
+details.cartao > summary h2::before { content: "\25B8"; display: inline-block; width: 1.1em; color: var(--azul); transition: transform .15s; }
+details.cartao[open] > summary h2::before { transform: rotate(90deg); }
+details.cartao > summary:focus-visible { outline: 2px solid var(--azul); outline-offset: 4px; border-radius: 4px; }
+.acoes { margin-left: auto; display: flex; gap: 6px; }
+.acoes.solta { margin: 0 0 -8px; justify-content: flex-end; }
+@media (max-width: 600px) { main { padding: 16px 16px 32px; } .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; } .cartao { padding: 16px; } .art .texto { padding: 12px 14px; } }
 </style>
 </head>
 <body>
@@ -181,36 +198,49 @@ table.tab .arts a { display: inline-block; font-size: 12.5px; font-weight: 700; 
       <button class="chip" type="button" data-v="OD1" aria-pressed="false">OD1</button>
     </div>
     <span class="contagem" id="contagem"></span>
+    <div class="acoes"><button class="chip" type="button" id="abrir-tudo">Expandir tudo</button><button class="chip" type="button" id="fechar-tudo">Recolher tudo</button></div>
   </div>
 </div>
 
 <main>
 
-<section class="cartao">
-  <h2>O que é esta página</h2>
-  <div class="aviso"><p><b>Versão v02.</b> O texto do decreto é o da minuta do DTI, sem alteração; ainda não passou pela Procuradoria. Ao lado de cada artigo está a nossa <b>análise</b> frente aos 16 critérios de foco da certificação What Works Cities (o que atende e o que falta) e, quando houver, a <b>alteração possível</b>, já com a redação proposta. As alterações são sugestões: as que a equipe aprovar entram no texto da v03.</p><p>O nome do Prefeito foi substituído por [Prefeito], pela regra do painel.</p></div>
-  <p style="margin-top:12px"><b>Conclusão para o DM1:</b> publicado antes de 18/12/2026, o decreto atende o DM1.1 e o DM1.3 (2 de 3). O comitê que ele cria (CGD) atende o DM1.2 na forma, mas só será instalado depois de 18/12, porque o decreto entra em vigor 90 dias após a publicação; até lá, o DM1.2 depende das atas do Comitê Gestor de Proteção de Dados (CGPD). <b>Para os demais critérios,</b> o decreto prepara o terreno, mas sozinho não atende nenhum: as alterações dos arts. 7º e 25 são as que mais aproximam o texto do que a WWC pede (DM2, DM3, DM4, DM5.2 e DM9).</p>
+<details class="cartao inicio" open>
+  <summary><h2>O que é esta página</h2></summary>
+  <div class="aviso"><p><b>Versão v02.</b> O texto do decreto é o da minuta do DTI, sem alteração; ainda não passou pela Procuradoria. Ao lado de cada artigo está a nossa <b>análise</b> frente aos 16 critérios de foco da certificação What Works Cities (o que atende e o que falta) e, quando houver, a <b>alteração possível</b>, já com a redação proposta. As alterações são sugestões: as que a equipe aprovar entram no texto da v03.</p></div>
+  <h3>O que é este documento</h3>
+  <p>É a minuta de um <b>decreto do Prefeito</b>, o ato que organiza a Administração e vale para todas as secretarias da Administração Direta (art. 1º). O texto é do DTI (processo SB 101842/2026) e está na Procuradoria; aqui ele aparece sem alteração. A <b>análise</b> e as <b>alterações possíveis</b> ao lado de cada artigo são nossas.</p>
+  <p><b>Para que serve:</b> instituir a Política e o Programa Municipal de Governança Digital e de Dados, com um comitê (CGD), planos e relatório público. Para a What Works Cities, é o veículo do critério DM1 (estratégia e governança de dados) e prepara o terreno para os demais critérios de dados.</p>
+  <h3>Em que normas se apoia</h3>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Norma</th><th>O que dá a este documento</th></tr></thead><tbody><tr><td><b>Lei Orgânica do Município</b></td><td>Fonte das atribuições do Prefeito invocadas no preâmbulo (a minuta não indica o artigo).</td></tr><tr><td><b>Lei Federal 14.129/2021 (Governo Digital), art. 2º, III</b></td><td>A lei só vale no município que a adota por ato próprio. O decreto adota seis diretrizes dela, sem incorporar os demais comandos (art. 4º, § 2º).</td></tr><tr><td><b>Lei Federal 13.709/2018 (LGPD)</b></td><td>Limites para tratar e compartilhar dados pessoais, que o decreto reafirma (arts. 9º, 26 e 28).</td></tr><tr><td><b>Lei Federal 12.527/2011 (LAI)</b></td><td>Citada no preâmbulo. O decreto prevê divulgar os encaminhamentos do comitê e um relatório público (arts. 12 e 35).</td></tr><tr><td><b>Decreto Municipal 22.963/2025 (Programa de Proteção de Dados e CGPD)</b></td><td>O decreto preserva o CGPD e o Encarregado, que são ouvidos quando houver dado pessoal (arts. 11, § 3º, I, e 19).</td></tr><tr><td><b>Decreto Municipal 22.453/2023 (Política de Segurança da Informação)</b></td><td>O decreto remete a ela as avaliações de segurança e continuidade (art. 17).</td></tr></tbody></table></div>
+  <h3>Por que agora</h3>
+  <p>Hoje SBC não tem um ato de governança de dados; o colegiado mais próximo é o CGPD, voltado à LGPD (Decreto 22.963/2025). O DM1 pede objetivos de dados aprovados pela alta gestão, um grupo que se reúna com responsabilidades definidas e uma estrutura de uso ético e transparente dos dados. <b>Conclusão para o DM1:</b> publicado antes de 18/12/2026, o decreto atende o DM1.1 e o DM1.3 (2 de 3). O comitê que ele cria (CGD) atende o DM1.2 na forma, mas só será instalado depois de 18/12, porque o decreto entra em vigor 90 dias após a publicação; até lá, o DM1.2 depende das atas do CGPD. <b>Para os demais critérios,</b> o decreto prepara o terreno, mas sozinho não atende nenhum: as alterações dos arts. 7º e 25 são as que mais aproximam o texto do que a WWC pede (DM2, DM3, DM4, DM5.2 e DM9).</p>
+  <h3>De onde vem cada parte</h3>
+  <p>Nada aqui foi inventado do zero: cada parte adapta um modelo já usado por outra cidade, uma norma ou um recurso recomendado pela WWC; o quadro abaixo diz qual. As alterações possíveis são sugestões: só entram no texto (v03) as que a equipe aprovar. A alteração do art. 40 (objetivos e princípios valendo já na publicação) responde ao prazo de 18/12, não a um modelo.</p>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Modelo</th><th>Por que conta</th><th>O que veio dele</th><th>Onde está neste texto</th></tr></thead><tbody><tr><td><b>Minuta do DTI (processo SB 101842/2026)</b></td><td>É o texto que o município vai publicar</td><td>Todo o texto do decreto, reproduzido sem alteração</td><td>Todos os artigos</td></tr><tr><td><b>Critérios da What Works Cities (v4), em tradução clara do original em inglês</b></td><td>É o que a certificação avalia</td><td>A análise de cada artigo e os termos das alterações ("uso ético", padrão de serviços de dados, dados por território e por grupo)</td><td>Análise de todos os artigos; alterações dos arts. 4º, 7º e 34</td></tr><tr><td><b>Portaria GM/MPO 201/2025 (Política de Governança de Dados do Ministério do Planejamento e Orçamento)</b></td><td>Norma federal recente de governança de dados, lida por inteiro</td><td>Objetivos próprios de dados, o princípio de ética e o conteúdo mínimo da regulamentação de dados (catálogo, padrões e processos)</td><td>Alterações dos arts. 3º, 4º e 25</td></tr><tr><td><b>Texto "Better Together", do Fórum da WWC (jan/2026)</b></td><td>Orientação da própria WWC</td><td>O mesmo comitê deve cuidar da governança de dados (DM1) e dos dados abertos (OD1)</td><td>Alteração do art. 12</td></tr><tr><td><b>Recomendações deste projeto: OD1 v02 (dados abertos) e DM3 v01 (compartilhamento)</b></td><td>Textos preparados para os critérios OD1 e DM3</td><td>Os dados abertos como ato específico do Programa e o conteúdo dos procedimentos de compartilhamento e de abertura</td><td>Alterações dos arts. 8º, 25 e 35</td></tr></tbody></table></div>
+  <h3>Como ler</h3>
+  <p>À esquerda, o texto do DTI, sem alteração. À direita, a análise frente aos 16 critérios de foco e, quando houver, a alteração possível, com o texto incluído <ins>marcado assim</ins> e o retirado <del>assim</del>. Os artigos citados nesta página são os do decreto, salvo quando outra norma é nomeada. O nome do Prefeito foi substituído por [Prefeito], pela regra do painel.</p>
   <div class="legenda">
     <span><span class="tag dti">Texto do DTI</span> sem alteração</span>
     <span><span class="tag sub">DM1.x</span> critério ou subcritério a que o artigo se liga</span>
     <span><span class="tag v03">Alteração possível</span> sugestão, com redação proposta</span>
     <span><ins>texto incluído</ins> · <del>texto retirado</del></span>
   </div>
-</section>
 
-<section class="cartao">
-  <h2>Versões</h2>
+</details>
+
+<details class="cartao">
+  <summary><h2>Versões</h2></summary>
   <p class="nota">Cada versão registra a recomendação numa data, com a base documental daquele momento. Nenhuma é apagada: quando uma nova surge, a anterior fica como registro, com o motivo da troca.</p>
-  <table class="tab"><thead><tr><th>Versão</th><th>Data</th><th>O que é</th><th>Situação</th></tr></thead><tbody>
+  <div class="rolavel"><table class="tab"><thead><tr><th>Versão</th><th>Data</th><th>O que é</th><th>Situação</th></tr></thead><tbody>
     <tr class=""><td><b>v01</b></td><td>21/10/2026</td><td><a href="proposta-sbc-mais-i.html">Ajustes ao decreto do SBC+i</a><br><span style="color:var(--texto-suave)">Base: minuta do decreto do SBC+i (SB 100144/2026). Acrescentava ao GT do SBC+i competências de dados, reunião trimestral com ata, objetivos, princípios e relatório anual.</span></td><td>Substituída em 23/10/2026</td></tr>
     <tr class="vigente"><td><b>v02</b></td><td>23/10/2026</td><td><b>Decreto de Governança Digital e de Dados, como o DTI redigiu</b> (esta página)<br><span style="color:var(--texto-suave)">Base: SB 101842/2026. Inteiro teor sem alteração, com a análise de cada artigo contra os 16 critérios de foco e as alterações possíveis, com redação proposta. Ao SBC+i fica só uma remissão à nova Política.</span></td><td>Vigente</td></tr>
     <tr class=""><td><b>v03</b></td><td>—</td><td>Decreto de Governança Digital e de Dados com as alterações aprovadas<br><span style="color:var(--texto-suave)">O texto da v02 com as alterações possíveis que a equipe aprovar, cada uma marcada e explicada.</span></td><td>Aguarda aprovação da equipe</td></tr>
-  </tbody></table>
-</section>
+  </tbody></table></div>
+</details>
 
-<section class="cartao">
-  <h2>O decreto frente aos 16 critérios de foco</h2>
-  <table class="tab crit"><thead><tr><th>Critério</th><th>O que o decreto traz</th><th>Avaliação</th><th>Artigos</th></tr></thead><tbody>
+<details class="cartao">
+  <summary><h2>O decreto frente aos 16 critérios de foco</h2></summary>
+  <div class="rolavel"><table class="tab crit"><thead><tr><th>Critério</th><th>O que o decreto traz</th><th>Avaliação</th><th>Artigos</th></tr></thead><tbody>
     <tr><td class="cod">DM1<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Estratégia e governança de dados</span></td><td>Política com objetivos e princípios, comitê (CGD) com reunião mensal e depois bimestral e ata, relatório semestral público, regras de IA.</td><td>Atende o DM1.1 e o DM1.3 quando publicado (2 de 3). O DM1.2 está no desenho, mas o CGD só se instala depois de 18/12. As alterações dos arts. 3º, 4º, 12 e 40 reforçam os três.</td><td class="arts"><a href="#art1">1</a><a href="#art3">3</a><a href="#art4">4</a><a href="#art6">6</a><a href="#art10">10</a><a href="#art11">11</a><a href="#art12">12</a><a href="#art13">13</a><a href="#art14">14</a><a href="#art15">15</a><a href="#art16">16</a><a href="#art18">18</a><a href="#art19">19</a><a href="#art20">20</a><a href="#art25">25</a><a href="#art26">26</a><a href="#art29">29</a><a href="#art32">32</a><a href="#art34">34</a><a href="#art35">35</a><a href="#art39">39</a><a href="#art40">40</a></td></tr>
     <tr><td class="cod">DM2<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Inventário de dados</span></td><td>Só como tema da futura regulamentação de dados: catálogo e metadados (art. 25).</td><td>Não atende sozinho. A alteração do art. 25 põe no decreto a metodologia, a atualização a cada 2 anos, a contribuição de todos os órgãos e a versão pública que o DM2 pede.</td><td class="arts"><a href="#art1">1</a><a href="#art2">2</a><a href="#art5">5</a><a href="#art21">21</a><a href="#art25">25</a></td></tr>
     <tr><td class="cod">DM3<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Compartilhamento de dados</span></td><td>Condições para integrar e compartilhar: finalidade, minimização, destinatários (art. 26); arquitetura sem centralização obrigatória (art. 27).</td><td>Não atende sozinho: faltam o processo documentado, a orientação sobre acordos, o canal de pedidos com prazo e o processo de abertura. A alteração do art. 25 os prevê.</td><td class="arts"><a href="#art9">9</a><a href="#art25">25</a><a href="#art26">26</a><a href="#art27">27</a></td></tr>
@@ -227,11 +257,11 @@ table.tab .arts a { display: inline-block; font-size: 12.5px; font-weight: 700; 
     <tr><td class="cod">OD2<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Orientações ao usuário de dados</span></td><td>Nada.</td><td>Não trata.</td><td class="arts">—</td></tr>
     <tr><td class="cod">OD3<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Portal de dados abertos</span></td><td>Nada; o catálogo previsto pelo DTI terá parte pública (proposta técnica, p. 28).</td><td>Não trata.</td><td class="arts">—</td></tr>
     <tr><td class="cod">OD4<br><span style="font-weight:400;color:var(--texto-suave);white-space:normal">Conhecer quem usa os dados</span></td><td>Nada.</td><td>Não trata.</td><td class="arts">—</td></tr>
-  </tbody></table>
-</section>
+  </tbody></table></div>
+</details>
 
-<section class="cartao">
-  <h2>Alterações possíveis, para aprovação da equipe</h2>
+<details class="cartao">
+  <summary><h2>Alterações possíveis, para aprovação da equipe</h2></summary>
   <ul class="lista-alt">
     <li><a href="#art3"><b>Art. 3º</b></a>: O DM1.1 aceita um "conjunto documentado de metas e objetivos". Com objetivos próprios de dados, o decreto basta para o DM1.1 já na publicação, sem esperar o Plano Executivo. Cada inciso aponta para um critério: I para o DM2, II para o DM4, III para o DM3, IV para o OD1 e V para o DM8. Origem: diretrizes da Portaria GM/MPO 201/2025 (Política de Governança de Dados do Ministério do Planejamento e Orçamento), art. 4º.</li>
     <li><a href="#art4"><b>Art. 4º</b></a>: O DM1.3 pede uma estrutura com ênfase em "transparência, prestação de contas e uso ético dos dados, a serviço de melhores resultados para todos os moradores". "Uso ético" é o termo do critério, e "equidade" traduz o "para todos os moradores". Precedente brasileiro: Portaria GM/MPO 201/2025 (Política de Governança de Dados do Ministério do Planejamento e Orçamento), art. 3º, I ("Ética, responsabilidade e sustentabilidade").</li>
@@ -244,13 +274,13 @@ table.tab .arts a { display: inline-block; font-size: 12.5px; font-weight: 700; 
     <li><a href="#art40"><b>Art. 40</b></a>: Objetivos, princípios e eixos passam a valer na publicação, o que permite usá-los no envio de 18/12 (DM1.1 e DM1.3). O parágrafo mantém os 90 dias de preparação que o DTI previu para instalar o CGD, aprovar os planos e publicar o primeiro relatório.</li>
   </ul>
   <p class="nota">São sugestões, não alterações feitas. A redação proposta de cada uma está no quadro à direita do artigo. As aprovadas entram no texto da v03, marcadas e explicadas.</p>
-</section>
+</details>
 
-<section class="cartao decreto" id="decreto">
-  <div class="decreto-cab">
+<details class="cartao decreto" id="decreto">
+  <summary class="decreto-cab">
     <h2>Texto do decreto, com análise</h2>
     <div class="nota">Use os filtros acima para ver só os artigos ligados a um critério ou só os que têm alteração possível.</div>
-  </div>
+  </summary>
   <div class="ementa" data-bloco="preambulo">
     <p class="num">DECRETO Nº ……………</p>
     <p class="em">Institui a Política e o Programa Municipal de Governança Digital e de Dados no âmbito do Poder Executivo de São Bernardo do Campo e estabelece diretrizes para sua execução e regulamentação específica.</p>
@@ -559,17 +589,17 @@ table.tab .arts a { display: inline-block; font-size: 12.5px; font-weight: 700; 
   </article>
   <div class="assinatura" data-bloco="assinatura">São Bernardo do Campo, …<br><b>[Prefeito]</b></div>
   <div class="vazio" id="vazio">Nenhum artigo corresponde ao filtro escolhido.</div>
-</section>
+</details>
 
-<section class="cartao fontes">
-  <h2>Fontes</h2>
+<details class="cartao fontes">
+  <summary><h2>Fontes</h2></summary>
   <ul>
     <li>Processo SB 101842/2026 (interno): proposta técnica do DTI (p. 2–39), minuta de decreto (p. 40–55) e encaminhamento à Procuradoria (p. 56). Lido por inteiro em 23/10/2026.</li>
     <li>What Works Cities, critérios CI1–CI3, DM1–DM9 e OD1–OD4 (v4): definições e subcritérios, em tradução clara do original em inglês; texto "Better Together" do Fórum da WWC (jan/2026).</li>
     <li>Portaria GM/MPO 201/2025 (Política de Governança de Dados do Ministério do Planejamento e Orçamento), lida por inteiro em 23/10/2026 (DOU de 11/07/2025, Seção 1, p. 144).</li>
     <li>Decretos Municipais 22.963/2025 (proteção de dados e CGPD) e 22.453/2023 (Política de Segurança da Informação; o anexo não foi lido).</li>
   </ul>
-</section>
+</details>
 
 </main>
 <div class="rodape">Painel WWC · SBC. Texto da minuta do DTI, sem alteração; análise e alterações possíveis para a equipe. Não substitui a análise da Procuradoria.</div>
@@ -597,6 +627,23 @@ table.tab .arts a { display: inline-block; font-size: 12.5px; font-weight: 700; 
       if (alvo && alvo.hidden) { estado = 'todos'; document.querySelectorAll('[data-filtro] button').forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-v') === 'todos' ? 'true' : 'false'); }); aplicar(); } });
   });
   aplicar();
+})();
+</script>
+<script>
+(function () {
+  var quadros = Array.prototype.slice.call(document.querySelectorAll('details.cartao'));
+  function abrirAte(el) { var d = el && el.closest('details'); while (d) { d.open = true; d = d.parentElement.closest('details'); } }
+  function irPara(hash) { var alvo = hash && hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1))); if (alvo) { abrirAte(alvo); alvo.scrollIntoView(); } }
+  var a = document.getElementById('abrir-tudo'), f = document.getElementById('fechar-tudo');
+  if (a) a.addEventListener('click', function () { quadros.forEach(function (d) { d.open = true; }); });
+  if (f) f.addEventListener('click', function () { quadros.forEach(function (d) { d.open = false; }); });
+  var antes = [];
+  window.addEventListener('beforeprint', function () { antes = quadros.map(function (d) { return d.open; }); quadros.forEach(function (d) { d.open = true; }); });
+  window.addEventListener('afterprint', function () { quadros.forEach(function (d, i) { d.open = antes[i]; }); });
+  document.querySelectorAll('[data-filtro] button').forEach(function (b) { b.addEventListener('click', function () { var d = document.getElementById('decreto'); if (d) d.open = true; }); });
+  document.querySelectorAll('a[href^="#"]').forEach(function (l) { l.addEventListener('click', function () { var h = l.getAttribute('href'); if (h.length > 1) abrirAte(document.getElementById(h.slice(1))); }); });
+  window.addEventListener('hashchange', function () { irPara(location.hash); });
+  irPara(location.hash);
 })();
 </script>
 </body>

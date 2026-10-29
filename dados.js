@@ -174,6 +174,7 @@ window.PAINEL = {
       },
       decisao: {
         titulo: 'Qual instrumento usar para o DM1 (indicação técnica; a decisão é do município)',
+        tomada: 'O DTI seguiu a opção A: a minuta do decreto da Política e do Programa Municipal de Governança Digital e de Dados (SB 101842/2026) foi enviada à Procuradoria em 23/10/2026.',
         recomendada: 'A',
         opcoes: [
           { id: 'A', nome: 'Decreto novo de política de governança de dados', descricao: 'Um decreto novo com objetivos, princípios e um comitê que se reúna no mínimo a cada trimestre. O comitê ficaria com o Departamento de Tecnologia da Informação (DTI), que tem a competência legal para definir a estratégia de dados (Lei nº 7.367/2025, art. 645, XIII), e teria a Controladoria e a Encarregada de Proteção de Dados como membros.', refs: ['lei7367_645', 'dec23236'],

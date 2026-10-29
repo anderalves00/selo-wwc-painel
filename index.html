@@ -297,7 +297,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
 </div>
 <footer>Página de trabalho da equipe. Não indexada por buscadores. As respostas só são inseridas na plataforma depois da validação da equipe.</footer>
 
-<script src="dados.js?v=39F79446DC"></script>
+<script src="dados.js?v=DF464B85C5"></script>
 <script>
 (function () {
   const P = window.PAINEL;
@@ -370,7 +370,8 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
   const total = P.criterios.length;
   const porFicha = k => P.criterios.filter(c => c.ficha === k).length;
   const comFicha = P.criterios.filter(c => c.ficha !== 'nao_iniciada').length;
-  const decisoes = P.criterios.filter(c => c.decisao).length;
+  const emAberto = c => c.decisao && !c.decisao.tomada;
+  const decisoes = P.criterios.filter(emAberto).length;
   const pedidosAbertos = P.criterios.flatMap(c => c.pedidos || []).filter(p => !pedidoConcluido(p)).length;
   const subs = P.criterios.flatMap(c => c.subcriterios || []);
   const subsAvaliados = subs.filter(s => s.situacao).length;
@@ -412,7 +413,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
 
   // Pendências
   const pend = [];
-  P.criterios.filter(c => c.decisao).forEach(c => pend.push(`<div class="pend"><h3>Decisão · ${c.codigo}</h3>
+  P.criterios.filter(emAberto).forEach(c => pend.push(`<div class="pend"><h3>Decisão · ${c.codigo}</h3>
     <div>${esc(c.decisao.titulo)}. Recomendação: opção ${esc(c.decisao.recomendada)}.</div>
     <div class="links"><a href="#decisao-${c.codigo}" style="background:var(--laranja-claro)">Ver opções</a></div></div>`));
   P.criterios.filter(c => c.pedidos && c.pedidos.length).forEach(c => pend.push(`<div class="pend" style="border-left-color:var(--azul)"><h3>Documentos a obter · ${c.codigo}</h3>
@@ -515,7 +516,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
     }
     if (c.decisao) {
       const d = c.decisao;
-      analise += `<h3 id="decisao-${c.codigo}">Decisão em aberto: ${esc(d.titulo)}</h3><div class="opcoes">${d.opcoes.map(o => `<div class="opcao ${o.id === d.recomendada ? 'rec' : ''}">
+      analise += `<h3 id="decisao-${c.codigo}">${d.tomada ? 'Decisão tomada' : 'Decisão em aberto'}: ${esc(d.titulo)}</h3>${d.tomada ? `<div class="resumo">${esc(d.tomada)}</div>` : ''}<div class="opcoes">${d.opcoes.map(o => `<div class="opcao ${o.id === d.recomendada ? 'rec' : ''}">
         <h4>${o.id} · ${esc(o.nome)} ${o.id === d.recomendada ? '<span class="tag t-verde">Recomendada</span>' : ''}</h4>
         <p>${esc(o.descricao)}</p>${refsHtml(o.refs)}<p class="pro"><b>A favor:</b> ${esc(o.pros)}</p><p class="contra"><b>Contra:</b> ${esc(o.contras)}</p></div>`).join('')}</div>
         ${d.nota ? `<div class="nota">${esc(d.nota)}</div>` : ''}${linksHtml(d.links)}`;

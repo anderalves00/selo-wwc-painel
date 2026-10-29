@@ -91,6 +91,27 @@ td a { font-weight: 700; }
   .perguntas, .comparar, .quadros { grid-template-columns: 1fr; }
   .mapa { font-size: 13px; }
 }
+.chip { font: inherit; font-size: 13.5px; font-weight: 700; border: 1px solid var(--borda); background: #fff; color: var(--texto); border-radius: 999px; padding: 6px 13px; cursor: pointer; }
+.chip:hover { border-color: var(--azul); }
+.aviso { background: var(--azul-claro); border-left: 5px solid var(--azul); border-radius: 6px; padding: 12px 16px; }
+table.tabinicio th { background: none; color: var(--texto); }
+main > *, .art .texto, .art .expl { min-width: 0; }
+.rolavel { overflow-x: auto; }
+.rolavel > table { min-width: 520px; }
+table.tabinicio { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.tabinicio td, table.tabinicio th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+.inicio h3 { font-size: 16px; color: var(--azul-esc); margin: 16px 0 6px; }
+details.cartao > summary { list-style: none; cursor: pointer; }
+details.cartao > summary::-webkit-details-marker { display: none; }
+details.cartao > summary h2 { font-size: 19px; color: var(--azul-esc); margin: 0; }
+details.cartao[open] > summary h2 { margin-bottom: 10px; }
+details.cartao.decreto > summary h2 { margin-bottom: 0; }
+details.cartao > summary h2::before { content: "\25B8"; display: inline-block; width: 1.1em; color: var(--azul); transition: transform .15s; }
+details.cartao[open] > summary h2::before { transform: rotate(90deg); }
+details.cartao > summary:focus-visible { outline: 2px solid var(--azul); outline-offset: 4px; border-radius: 4px; }
+.acoes { margin-left: auto; display: flex; gap: 6px; }
+.acoes.solta { margin: 0 0 -8px; justify-content: flex-end; }
+@media (max-width: 600px) { main { padding: 16px 16px 32px; } .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; } .cartao { padding: 16px; } .art .texto { padding: 12px 14px; } }
 </style>
 </head>
 <body>
@@ -106,8 +127,25 @@ td a { font-weight: 700; }
 </header>
 
 <main>
-  <section class="cartao">
-    <h2>O que o OD3 pede, em três perguntas</h2>
+<div class="acoes solta"><button class="chip" type="button" id="abrir-tudo">Expandir tudo</button><button class="chip" type="button" id="fechar-tudo">Recolher tudo</button></div>
+<details class="cartao inicio" open>
+  <summary><h2>O que é esta página</h2></summary>
+  <div class="aviso"><p><b>Exemplo para conversa, não decisão.</b> Esta página mostra como a página de Dados Abertos do Portal da Transparência poderia ficar para atender ao critério OD3 da What Works Cities. A forma final da página é decisão do município.</p></div>
+  <h3>O que é este documento</h3>
+  <p>Não é norma nem minuta: é um <b>exemplo de página</b>. Mostra um bloco novo para a página de Dados Abertos que já existe no Portal da Transparência: um catálogo com uma linha e um link para cada base, contato, licença e o link para a política de dados abertos. Os links do exemplo levam aos dados reais que SBC já publica.</p>
+  <p><b>Para que serve:</b> conversar com a equipe que mantém a página sobre o que mudar. Quase tudo é edição da página e publicação em planilha de dados que já existem; não precisa de ato novo.</p>
+  <h3>Em que normas se apoia</h3>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Norma</th><th>O que pede</th></tr></thead><tbody><tr><td><b>Lei Federal 12.527/2011 (LAI), art. 8º, § 3º</b></td><td>Os sites oficiais devem permitir baixar relatórios em formatos abertos, como planilhas (II), oferecer acesso automatizado em formatos abertos e legíveis por máquina (III), informar os formatos usados (IV), manter os dados atualizados (VI) e indicar como falar com o órgão (VII). O catálogo do exemplo cumpre esses pontos.</td></tr><tr><td><b>Decreto Municipal 18.882/2014</b></td><td>Regulamenta a LAI em SBC; já é citado na página de Dados Abertos de hoje.</td></tr><tr><td><b>Lei Federal 13.709/2018 (LGPD)</b></td><td>Dado aberto não pode identificar pessoas. Por isso as planilhas da consulta do PPA precisam ser revistas antes de entrar no catálogo (último quadro).</td></tr><tr><td><b>Política Municipal de Dados Abertos (minuta OD1 v02, ainda não publicada)</b></td><td>Quando publicada, o portal passa a ter regras próprias (art. 11 da minuta) e o link para a política entra no catálogo.</td></tr></tbody></table></div>
+  <h3>Por que agora</h3>
+  <p>Hoje a página de Dados Abertos é só texto: diz que os dados estão "catalogados", mas não lista nenhuma base nem tem links, e os dados estão espalhados em 17 páginas e sistemas que ela não cita. O OD3 pede os <b>3 subcritérios</b>: SBC já atende o primeiro, e os outros dois dependem de editar a página e de publicar em planilha dados que já existem.</p>
+  <h3>De onde vem cada parte</h3>
+  <p>Nada aqui foi inventado do zero: cada parte adapta um modelo já usado por outra cidade, uma norma ou um recurso recomendado pela WWC; o quadro abaixo diz qual. O que é escolha nossa: a licença CC BY 4.0 é uma sugestão, e a secretaria responsável por base e o e-mail de contato ficam para a equipe definir (último quadro).</p>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Modelo</th><th>Por que conta</th><th>O que veio dele</th><th>Onde está no exemplo</th></tr></thead><tbody><tr><td><b>Corrientes (Argentina), portal de dados abertos</b></td><td>Exemplo dos recursos da WWC no OD3</td><td>Em cada base, a área responsável, a frequência de atualização e a data; contato e links para outros sites; dados de saúde por faixa etária e sexo</td><td>Colunas do catálogo; contato; Perfil por Bairro em planilha</td></tr><tr><td><b>Buenos Aires (Argentina), BA Data</b></td><td>Recurso da WWC no OD3</td><td>Responsável, licença aberta CC BY, frequência e canal de ajuda em cada base</td><td>Licença; contato</td></tr><tr><td><b>Baton Rouge (EUA), portal de dados abertos</b></td><td>Recurso da WWC no OD3</td><td>Uma página central que aponta para os outros sites da cidade</td><td>Catálogo com links também para o GeoPortal e outros sites</td></tr><tr><td><b>Porto Alegre (RS), portal de dados abertos</b></td><td>Recurso da WWC no OD3</td><td>Contato e dicionário de dados por base</td><td>Contato; dicionário de dados (o GeoPortal já tem um)</td></tr><tr><td><b>Creative Commons Atribuição 4.0 (CC BY 4.0)</b></td><td>Licença aberta padrão internacional, a mesma do BA Data</td><td>O texto da licença</td><td>Licença</td></tr><tr><td><b>Inventário do Portal da Transparência (ficha OD3)</b></td><td>Levantamento nosso das 53 páginas do menu do portal, em 22/10/2026</td><td>A lista de bases, com formato, atualização e ano de referência</td><td>Linhas do catálogo</td></tr></tbody></table></div>
+  <h3>Como ler</h3>
+  <p>As três perguntas em azul, no quadro seguinte, são um resumo nosso de cada subcritério; o texto completo, traduzido do inglês, vem logo abaixo de cada uma. No exemplo, as linhas em vermelho são dados que existem, mas ainda não estão em formato aberto.</p>
+</details>
+  <details class="cartao">
+    <summary><h2>O que o OD3 pede, em três perguntas</h2></summary>
     <p>O critério pede os três subcritérios (3 de 3). Hoje SBC atende o primeiro; o segundo e o terceiro dependem de editar a página e publicar planilhas que já existem.</p>
     <p style="font-size:14px;background:var(--laranja-claro);border-left:4px solid var(--laranja);padding:8px 12px;border-radius:0 6px 6px 0"><b>Aviso:</b> as três perguntas em azul são um resumo nosso, escrito para facilitar a conversa; não são texto da WWC. O texto completo de cada subcritério, traduzido do original em inglês, está logo abaixo da pergunta, no quadro "Subcritério".</p>
     <div class="perguntas">
@@ -133,10 +171,10 @@ td a { font-weight: 700; }
         <div class="linha depois"><b>Proposta:</b> catálogo com uma linha e um link por base, contato e licença (exemplo abaixo).</div>
       </div>
     </div>
-  </section>
+  </details>
 
-  <section class="cartao">
-    <h2>Hoje e depois</h2>
+  <details class="cartao">
+    <summary><h2>Hoje e depois</h2></summary>
     <div class="comparar">
       <div class="hoje-box">
         <h3>Hoje: <a href="https://www.saobernardo.sp.gov.br/web/transparencia/dados-abertos" target="_blank" rel="noopener">página de Dados Abertos</a></h3>
@@ -181,10 +219,10 @@ td a { font-weight: 700; }
         </div>
       </div>
     </div>
-  </section>
+  </details>
 
-  <section class="cartao">
-    <h2>O que cada parte do exemplo atende</h2>
+  <details class="cartao">
+    <summary><h2>O que cada parte do exemplo atende</h2></summary>
     <div class="tabela-rolagem">
       <table class="mapa">
         <thead><tr><th>Parte do exemplo</th><th>Subcritério</th><th>Por quê</th></tr></thead>
@@ -199,10 +237,10 @@ td a { font-weight: 700; }
         </tbody>
       </table>
     </div>
-  </section>
+  </details>
 
-  <section class="cartao">
-    <h2>Termos usados nesta página</h2>
+  <details class="cartao">
+    <summary><h2>Termos usados nesta página</h2></summary>
     <dl class="glossario">
       <dt>Legível por máquina</dt><dd>Arquivo que um programa consegue ler e processar sozinho, como uma planilha. Um PDF serve para pessoas lerem, mas não para um programa reaproveitar os números.</dd>
       <dt>CSV e XLSX</dt><dd>Formatos de planilha. O XLSX é o do Excel; o CSV é um texto simples, com valores separados por vírgula ou ponto e vírgula, que qualquer programa abre.</dd>
@@ -211,10 +249,10 @@ td a { font-weight: 700; }
       <dt>Licença aberta: Creative Commons Atribuição 4.0 (CC BY 4.0)</dt><dd>Licença padrão internacional, gratuita, que diz que qualquer pessoa pode copiar, usar e adaptar os dados, inclusive para fins comerciais, desde que cite a fonte (a Prefeitura). Pôr essa frase na página deixa claro que os dados são livres para reúso.</dd>
       <dt>Áreas de Ponderação</dt><dd>Divisões do município usadas pelo IBGE na amostra do Censo. São maiores que um setor censitário e não coincidem com os bairros.</dd>
     </dl>
-  </section>
+  </details>
 
-  <section class="cartao">
-    <h2>O que a equipe precisa definir</h2>
+  <details class="cartao">
+    <summary><h2>O que a equipe precisa definir</h2></summary>
     <ol class="passos">
       <li>Qual unidade mantém a página de Dados Abertos e pode editá-la.</li>
       <li>A secretaria responsável e a frequência de atualização de cada base.</li>
@@ -223,9 +261,26 @@ td a { font-weight: 700; }
       <li>Se todas as planilhas que já estão no portal entram no catálogo. Antes de incluí-las, duas verificações:<ul style="margin-top:4px"><li><b>Consulta pública do PPA 2026–2029:</b> as planilhas com as respostas dos moradores (bancos 08 e 09 da página do PPA) devem ser revistas com quem as publicou, para conferir se não há informação pessoal de quem participou. Dado aberto não pode identificar pessoas.</li><li><b>Planilhas em formato de relatório:</b> algumas, como a de renúncia de receita, foram feitas para impressão, com cabeçalho, títulos e total no fim. Elas funcionam, mas o ideal em dados abertos é uma tabela simples: uma linha por registro e uma coluna por informação, para que qualquer programa leia direto.</li></ul></li>
       <li>Se o Planejamento Urbano vai pedir ao IBGE o acesso controlado aos microdados do Censo 2022 para atualizar a renda por região (hoje é do Censo 2010).</li>
     </ol>
-  </section>
+  </details>
 </main>
 
 <div class="rodape">Exemplo preparado para o Painel WWC · SBC. Rascunho de indicação técnica; a forma final da página é decisão do município.</div>
+<script>
+(function () {
+  var quadros = Array.prototype.slice.call(document.querySelectorAll('details.cartao'));
+  function abrirAte(el) { var d = el && el.closest('details'); while (d) { d.open = true; d = d.parentElement.closest('details'); } }
+  function irPara(hash) { var alvo = hash && hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1))); if (alvo) { abrirAte(alvo); alvo.scrollIntoView(); } }
+  var a = document.getElementById('abrir-tudo'), f = document.getElementById('fechar-tudo');
+  if (a) a.addEventListener('click', function () { quadros.forEach(function (d) { d.open = true; }); });
+  if (f) f.addEventListener('click', function () { quadros.forEach(function (d) { d.open = false; }); });
+  var antes = [];
+  window.addEventListener('beforeprint', function () { antes = quadros.map(function (d) { return d.open; }); quadros.forEach(function (d) { d.open = true; }); });
+  window.addEventListener('afterprint', function () { quadros.forEach(function (d, i) { d.open = antes[i]; }); });
+  document.querySelectorAll('[data-filtro] button').forEach(function (b) { b.addEventListener('click', function () { var d = document.getElementById('decreto'); if (d) d.open = true; }); });
+  document.querySelectorAll('a[href^="#"]').forEach(function (l) { l.addEventListener('click', function () { var h = l.getAttribute('href'); if (h.length > 1) abrirAte(document.getElementById(h.slice(1))); }); });
+  window.addEventListener('hashchange', function () { irPara(location.hash); });
+  irPara(location.hash);
+})();
+</script>
 </body>
 </html>

@@ -135,6 +135,23 @@ table.anexo td, table.anexo th { border-top: 1px solid var(--borda); padding: 7p
 .expl .mudou h4 { color: #5a3d8a; }
 ins { background: #d9f2d9; text-decoration: none; border-bottom: 2px solid var(--verde); }
 del { background: #fbe0de; color: #8a1f17; }
+main > *, .art .texto, .art .expl { min-width: 0; }
+.rolavel { overflow-x: auto; }
+.rolavel > table { min-width: 520px; }
+table.tabinicio { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.tabinicio td, table.tabinicio th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+.inicio h3 { font-size: 16px; color: var(--azul-esc); margin: 16px 0 6px; }
+details.cartao > summary { list-style: none; cursor: pointer; }
+details.cartao > summary::-webkit-details-marker { display: none; }
+details.cartao > summary h2 { font-size: 19px; color: var(--azul-esc); margin: 0; }
+details.cartao[open] > summary h2 { margin-bottom: 10px; }
+details.cartao.decreto > summary h2 { margin-bottom: 0; }
+details.cartao > summary h2::before { content: "\25B8"; display: inline-block; width: 1.1em; color: var(--azul); transition: transform .15s; }
+details.cartao[open] > summary h2::before { transform: rotate(90deg); }
+details.cartao > summary:focus-visible { outline: 2px solid var(--azul); outline-offset: 4px; border-radius: 4px; }
+.acoes { margin-left: auto; display: flex; gap: 6px; }
+.acoes.solta { margin: 0 0 -8px; justify-content: flex-end; }
+@media (max-width: 600px) { main { padding: 16px 16px 32px; } .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; } .cartao { padding: 16px; } .art .texto { padding: 12px 14px; } }
 </style>
 </head>
 <body>
@@ -163,16 +180,27 @@ del { background: #fbe0de; color: #8a1f17; }
       <button class="chip" type="button" data-v="mudou" aria-pressed="false">Só o que mudou na v02</button>
     </div>
     <span class="contagem" id="contagem"></span>
+    <div class="acoes"><button class="chip" type="button" id="abrir-tudo">Expandir tudo</button><button class="chip" type="button" id="fechar-tudo">Recolher tudo</button></div>
   </div>
 </div>
 
 <main>
 
-<section class="cartao">
-  <h2>O que é esta página</h2>
+<details class="cartao inicio" open>
+  <summary><h2>O que é esta página</h2></summary>
   <div class="aviso"><p><b>Rascunho de indicação técnica, não decisão.</b> Esta minuta reúne o que os modelos de outras cidades fazem para atender ao critério OD1 da certificação What Works Cities. As escolhas de forma, colegiado, coordenação e prazos cabem ao município (DTI e Procuradoria).</p><p><b>Versão v02.</b> A v01 (22/10/2026) foi escrita antes de conhecermos o decreto de governança digital e de dados que o DTI enviou à Procuradoria em 23/10/2026 (processo SB 101842/2026). Esse decreto não cobre o OD1, mas cria o comitê que deve cuidar dos dados (CGD) e prevê atos próprios para cada eixo. A v02 encaixa a política nele e traz pontos do modelo de São Paulo, que o próprio DTI cita.</p></div>
-  <p style="margin-top:12px">SBC não tem política de dados abertos. O que existe é a regulamentação da Lei de Acesso à Informação (Decreto 18.882/2014), que cobre só parte do que o critério pede. O OD1 pede <b>3 de 4 subcritérios</b> e não tem janela temporal: basta o ato publicado antes do envio (18/12/2026).</p>
-  <p>O decreto é todo novo. Cada artigo traz ao lado <b>por que</b> foi incluído, <b>qual a intenção</b> da redação, <b>de qual modelo veio</b> e <b>qual a relação com a WWC</b>. Os artigos que mudaram em relação à v01 trazem também o motivo da mudança.</p>
+  <h3>O que é este documento</h3>
+  <p>É a minuta de um <b>decreto do Prefeito</b> que institui a Política Municipal de Dados Abertos, escrita por nós como indicação técnica. Vale para as secretarias da Administração Direta (art. 1º) e se encaixa como ato específico do Programa de Governança Digital e de Dados, do decreto do SB 101842/2026.</p>
+  <p><b>Para que serve:</b> dar a SBC uma política de dados abertos formal e pública: quem coordena, o plano de abertura, o catálogo das bases, a escuta da população e o relatório anual. É o que o critério OD1 da What Works Cities pede; hoje existe só a regulamentação da Lei de Acesso à Informação (Decreto 18.882/2014).</p>
+  <h3>Em que normas se apoia</h3>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Norma</th><th>O que dá a este documento</th></tr></thead><tbody><tr><td><b>Lei Federal 12.527/2011 (LAI), art. 8º, § 3º, III, e art. 9º, II</b></td><td>Manda oferecer acesso automatizado em formatos abertos e legíveis por máquina e prevê audiências e consultas públicas. É a base da publicação proativa e da consulta anual (arts. 11 e 13).</td></tr><tr><td><b>Decreto Municipal 18.882/2014</b></td><td>Regulamenta a LAI em SBC. Seus prazos valem para os pedidos de abertura (art. 2º, parágrafo único), e seus representantes nas secretarias podem ser os coordenadores de dados abertos (art. 7º).</td></tr><tr><td><b>Lei Federal 14.129/2021 (Governo Digital), art. 2º, III</b></td><td>Só vale no município que a adota por ato próprio. A minuta adota o capítulo de abertura de dados, arts. 29 a 37 (art. 2º).</td></tr><tr><td><b>Lei Federal 13.709/2018 (LGPD) e Decreto Municipal 22.963/2025</b></td><td>Limites para não publicar dado pessoal. O CGPD e o Encarregado são ouvidos quando a base tiver dado pessoal (arts. 6º e 16).</td></tr><tr><td><b>Lei Municipal 7.367/2025, arts. 35 e 645, XIII</b></td><td>Competências que a minuta junta na coordenação (art. 5º): a Controladoria, pela Seção de Transparência, cuida do portal e da capacitação em dados abertos; o DTI define a estratégia de dados.</td></tr><tr><td><b>Decreto de governança digital e de dados (processo SB 101842/2026, na Procuradoria)</b></td><td>Prevê atos próprios por eixo e iniciativa, inclusive sobre abertura de dados (arts. 7º, 8º e 25). Esta política é esse ato, e o comitê que aprova o plano é o CGD criado por ele (art. 6º).</td></tr><tr><td><b>Indicação nº 14.825/2025, da Câmara Municipal</b></td><td>Não é norma: é o pedido da Câmara para que o Executivo estude esta política. A minuta pode ser a resposta.</td></tr></tbody></table></div>
+  <h3>Por que agora</h3>
+  <p>SBC não tem política de dados abertos. O que existe é a regulamentação da Lei de Acesso à Informação (Decreto 18.882/2014), que cobre só parte do que o critério pede, e o revisor do Raio-X rebaixou Dados Abertos por falta de uma política voltada ao reúso e às demandas da comunidade. O OD1 pede <b>3 de 4 subcritérios</b> e não tem janela temporal: basta o decreto publicado antes do envio (18/12/2026).</p>
+  <h3>De onde vem cada parte</h3>
+  <p>Nada aqui foi inventado do zero: cada parte adapta um modelo já usado por outra cidade, uma norma ou um recurso recomendado pela WWC; o quadro abaixo diz qual. O que é escolha nossa, e pode ser trocado pelo município, está marcado como ponto de escolha nos arts. 5º, 6º e 18. A coluna "Onde está" é tirada do campo "Origem" de cada artigo.</p>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Modelo</th><th>Por que conta</th><th>O que veio dele</th><th>Onde está neste texto</th></tr></thead><tbody><tr><td><b>Baton Rouge (EUA), Resolução 53275/2017 e relatórios anuais</b></td><td>Modelo indicado pela WWC no OD1; cidade certificada Prata (2021) e Ouro (2024)</td><td>Abertura por padrão, coordenador por secretaria, inventário publicado, pedidos como sinal de demanda, relatório anual e cláusula de dados nos contratos</td><td>Arts. 4º, 6º, 7º, 10, 11, 13, 14, 15, 16, 18, 19, 20</td></tr><tr><td><b>Aracruz (ES), Decretos 51.612 e 51.613/2026</b></td><td>Decreto municipal brasileiro recente; o único dos lidos com relatório anual</td><td>Comissão com Controladoria, Encarregado e Transformação Digital, catálogo, categorias de abertura, subsídios trimestrais e relatório anual</td><td>Arts. 1º, 3º, 5º, 6º, 7º, 8º, 9º, 10, 11, 14, 15, 16, 18, 19, 21, 22</td></tr><tr><td><b>São Paulo (SP), Lei 17.901/2023 e Decreto 63.463/2024</b></td><td>Citados pelo DTI como referência para regulamentar a abertura de dados (proposta técnica, p. 18)</td><td>Catálogo anual com histórico, devolutiva da consulta pública, responsabilidade do titular pelas metas, nota quando não há formato aberto e capacitação</td><td>Arts. 5º, 8º, 10, 11, 13, 14</td></tr><tr><td><b>Decreto federal 8.777/2016 (Política de Dados Abertos do Poder Executivo federal)</b></td><td>Norma brasileira de referência, seguida por vários municípios</td><td>Definições, princípios, plano de dados abertos e abertura automática</td><td>Arts. 1º, 3º, 4º, 9º, 12, 16, 17, 21</td></tr><tr><td><b>Lei Federal 14.129/2021, arts. 29 a 37</b></td><td>Lei de Governo Digital, adotada na parte de dados abertos</td><td>Pedido de abertura por qualquer pessoa, publicação dos pedidos e das respostas e negativa por inteiro</td><td>Arts. 2º, 4º, 12, 15, 16, 17</td></tr><tr><td><b>Porto Alegre (RS), Decreto 20.315/2019</b></td><td>Decreto municipal brasileiro; o portal de Porto Alegre está entre os recursos da WWC no OD3</td><td>Definições, coordenação pela Controladoria, portal dentro do Portal da Transparência, canal de pedidos, prazos e anexo de hipóteses de restrição</td><td>Arts. 3º, 5º, 7º, 9º, 11, 12, 17, 21, 22</td></tr><tr><td><b>Fortaleza (CE), Decreto 15.358/2022</b></td><td>Decreto municipal brasileiro</td><td>Controladoria com o órgão de tecnologia na coordenação, consulta e prazo de implantação</td><td>Arts. 3º, 5º, 13, 22</td></tr><tr><td><b>Teresópolis (RJ), Decreto 5.921/2023 e Instrução Normativa 2/2023</b></td><td>Decreto municipal brasileiro</td><td>Todos os portais como instrumentos da política, encontros e consultas, relatório de acompanhamento e cláusula nos contratos</td><td>Arts. 11, 13, 18, 20</td></tr><tr><td><b>Osasco (SP), Decreto 13.655/2023</b></td><td>Decreto municipal brasileiro</td><td>Consulta pública para priorizar a abertura</td><td>Art. 13</td></tr><tr><td><b>Sunlight Foundation (EUA), diretrizes e guia de políticas de dados abertos</b></td><td>Recurso indicado pela WWC no OD1</td><td>Download em lote, API, acesso permanente e extensão da política aos contratados</td><td>Arts. 11, 20</td></tr><tr><td><b>GovEx (Universidade Johns Hopkins), guia de dados abertos</b></td><td>Recurso indicado pela WWC no OD1</td><td>Participação da comunidade no comitê e revisão das compras de sistemas</td><td>Arts. 6º, 20</td></tr><tr><td><b>Seattle (EUA), caso de dados abertos</b></td><td>Recurso indicado pela WWC no OD1</td><td>Revisão do efeito mosaico antes de publicar</td><td>Art. 16</td></tr><tr><td><b>Texto "Better Together", do Fórum da WWC (jan/2026)</b></td><td>Orientação da própria WWC</td><td>O mesmo comitê cuida do DM1 e do OD1, com pauta trimestral</td><td>Art. 6º</td></tr><tr><td><b>Decreto de governança digital e de dados (SB 101842/2026)</b></td><td>Decreto do DTI em que a política se encaixa</td><td>O comitê (CGD), a coordenação do Programa e o catálogo único</td><td>Arts. 5º, 6º, 10</td></tr></tbody></table></div>
+  <h3>Como ler</h3>
+  <p>Os artigos citados nesta página são os da minuta, salvo quando outra norma é nomeada. Cada artigo traz ao lado por que foi incluído, a intenção, de qual modelo veio e a relação com a WWC; os que mudaram em relação à v01 trazem também o motivo da mudança, com o texto incluído <ins>marcado assim</ins> e o retirado <del>assim</del>.</p>
   <div class="legenda">
     <span><span class="tag novo">Novo</span> artigo da minuta</span>
     <span><span class="tag escolha">Ponto de escolha do município</span> recomendação que o município pode trocar</span>
@@ -180,22 +208,22 @@ del { background: #fbe0de; color: #8a1f17; }
     <span><span class="tag alt">Alterado na v02</span> texto mudou em relação à v01</span>
     <span><ins>texto incluído</ins> · <del>texto retirado</del></span>
   </div>
-</section>
+</details>
 
-<section class="cartao">
-  <h2>Versões desta recomendação</h2>
-  <table class="anexo"><thead><tr><th>Versão</th><th>Data</th><th>O que é</th><th>Situação</th></tr></thead><tbody><tr><td><b>v01</b></td><td>22/10/2026</td><td>Minuta de decreto próprio: 23 artigos e um anexo. O CGPD aprova o plano e o relatório.</td><td>Substituída em 23/10/2026</td></tr><tr><td><b>v02</b></td><td>23/10/2026</td><td>Minuta alinhada ao decreto de governança digital e de dados (SB 101842/2026): a política vira o ato específico de abertura de dados do Programa, o CGD aprova o plano e o relatório (o CGPD até a instalação) e o catálogo passa a ser um só. Incorpora pontos do modelo de São Paulo (Lei 17.901/2023 e Decreto 63.463/2024).</td><td>Vigente</td></tr><tr><td><b>v03</b></td><td>—</td><td>Minuta com o que a equipe e a Procuradoria ajustarem na v02.</td><td>Aguarda a equipe</td></tr></tbody></table>
+<details class="cartao">
+  <summary><h2>Versões desta recomendação</h2></summary>
+  <div class="rolavel"><table class="anexo"><thead><tr><th>Versão</th><th>Data</th><th>O que é</th><th>Situação</th></tr></thead><tbody><tr><td><b>v01</b></td><td>22/10/2026</td><td>Minuta de decreto próprio: 23 artigos e um anexo. O CGPD aprova o plano e o relatório.</td><td>Substituída em 23/10/2026</td></tr><tr><td><b>v02</b></td><td>23/10/2026</td><td>Minuta alinhada ao decreto de governança digital e de dados (SB 101842/2026): a política vira o ato específico de abertura de dados do Programa, o CGD aprova o plano e o relatório (o CGPD até a instalação) e o catálogo passa a ser um só. Incorpora pontos do modelo de São Paulo (Lei 17.901/2023 e Decreto 63.463/2024).</td><td>Vigente</td></tr><tr><td><b>v03</b></td><td>—</td><td>Minuta com o que a equipe e a Procuradoria ajustarem na v02.</td><td>Aguarda a equipe</td></tr></tbody></table></div>
   <p style="margin-top:10px">A <a href="proposta-od1-dados-abertos.html">v01</a> continua disponível como registro.</p>
-</section>
+</details>
 
-<section class="cartao">
-  <h2>O que mudou da v01 para a v02</h2>
-  <table class="anexo"><thead><tr><th>Mudança</th><th>Onde</th><th>Por quê</th></tr></thead><tbody><tr><td>A política passa a ser o ato específico de abertura de dados do Programa de Governança Digital e de Dados</td><td>Ementa, preâmbulo, Art. 1º, § 1º</td><td>O decreto do SB prevê ato próprio por eixo e iniciativa (arts. 7º, 8º e 25). Sem a ligação, seriam duas governanças de dados.</td></tr><tr><td>A adoção do capítulo de abertura de dados da Lei 14.129 passa a complementar o decreto do SB</td><td>Art. 2º</td><td>O decreto do SB adota só seis diretrizes da Lei 14.129 (art. 4º, § 2º). A remissão mostra que esta é a adoção específica que ele deixou para depois.</td></tr><tr><td>Alcance igual ao do Programa: Administração Direta; autarquias por ato próprio</td><td>Art. 1º, caput e § 2º</td><td>Mesma regra do decreto do SB (arts. 1º e 5º).</td></tr><tr><td>O colegiado passa do CGPD ao CGD; o CGPD e o Encarregado são ouvidos quando houver dados pessoais</td><td>Arts. 6º, 9º, 15, 18 e 19</td><td>A proposta técnica do DTI reserva o CGPD à LGPD (p. 24). Com o CGD, o mesmo comitê cuida do DM1 e do OD1, como recomenda a WWC.</td></tr><tr><td>Transição: o CGPD exerce as competências até o CGD ser instalado</td><td>Art. 22, parágrafo único</td><td>O decreto do SB vigora 90 dias após a publicação, e o CGD depende de Portaria posterior.</td></tr><tr><td>Catálogo único: o Catálogo Municipal é a versão pública do catálogo do decreto do SB</td><td>Art. 10, § 3º</td><td>Evita dois catálogos (art. 25 do SB).</td></tr><tr><td>Coordenação articulada com a Secretaria de Administração</td><td>Art. 5º, § 3º</td><td>A Secretaria de Administração coordena o Programa (art. 10 do SB); a Controladoria e o DTI continuam com a política.</td></tr><tr><td>O relatório anual pode sair dentro do relatório do Programa</td><td>Art. 18, parágrafo único</td><td>Evita um relatório a mais (art. 35 do SB). A data de 31/03 fica, porque os semestres do Programa contam da vigência do decreto, e não do ano civil.</td></tr><tr><td>Catálogo atualizado todo ano, com histórico e indicação das bases com dados pessoais</td><td>Art. 10, IV e § 2º</td><td>São Paulo, Decreto 63.463/2024, arts. 10 e 11. Também ajuda o DM2 e o DM5.2.</td></tr><tr><td>O titular de cada órgão responde pelas metas do plano</td><td>Art. 8º, parágrafo único</td><td>São Paulo, Decreto 63.463/2024, art. 15, parágrafo único.</td></tr><tr><td>Nota explicando a escolha quando não houver formato aberto</td><td>Art. 11, § 3º</td><td>São Paulo, Decreto 63.463/2024, art. 5º, parágrafo único.</td></tr><tr><td>A consulta pública passa a ter devolutiva</td><td>Art. 13, § 2º</td><td>São Paulo, Decreto 63.463/2024, art. 18, III.</td></tr><tr><td>Capacitação de servidores e da população entre as tarefas da coordenação</td><td>Art. 5º, § 1º, VIII</td><td>Lei 7.367/2025, art. 35 (já é tarefa da Seção de Transparência); São Paulo, Decreto 63.463/2024, art. 23, III.</td></tr><tr><td>Correção de redação: "e" sobrando</td><td>Art. 11, § 1º, III</td><td>—</td></tr></tbody></table>
+<details class="cartao">
+  <summary><h2>O que mudou da v01 para a v02</h2></summary>
+  <div class="rolavel"><table class="anexo"><thead><tr><th>Mudança</th><th>Onde</th><th>Por quê</th></tr></thead><tbody><tr><td>A política passa a ser o ato específico de abertura de dados do Programa de Governança Digital e de Dados</td><td>Ementa, preâmbulo, Art. 1º, § 1º</td><td>O decreto do SB prevê ato próprio por eixo e iniciativa (arts. 7º, 8º e 25). Sem a ligação, seriam duas governanças de dados.</td></tr><tr><td>A adoção do capítulo de abertura de dados da Lei 14.129 passa a complementar o decreto do SB</td><td>Art. 2º</td><td>O decreto do SB adota só seis diretrizes da Lei 14.129 (art. 4º, § 2º). A remissão mostra que esta é a adoção específica que ele deixou para depois.</td></tr><tr><td>Alcance igual ao do Programa: Administração Direta; autarquias por ato próprio</td><td>Art. 1º, caput e § 2º</td><td>Mesma regra do decreto do SB (arts. 1º e 5º).</td></tr><tr><td>O colegiado passa do CGPD ao CGD; o CGPD e o Encarregado são ouvidos quando houver dados pessoais</td><td>Arts. 6º, 9º, 15, 18 e 19</td><td>A proposta técnica do DTI reserva o CGPD à LGPD (p. 24). Com o CGD, o mesmo comitê cuida do DM1 e do OD1, como recomenda a WWC.</td></tr><tr><td>Transição: o CGPD exerce as competências até o CGD ser instalado</td><td>Art. 22, parágrafo único</td><td>O decreto do SB vigora 90 dias após a publicação, e o CGD depende de Portaria posterior.</td></tr><tr><td>Catálogo único: o Catálogo Municipal é a versão pública do catálogo do decreto do SB</td><td>Art. 10, § 3º</td><td>Evita dois catálogos (art. 25 do SB).</td></tr><tr><td>Coordenação articulada com a Secretaria de Administração</td><td>Art. 5º, § 3º</td><td>A Secretaria de Administração coordena o Programa (art. 10 do SB); a Controladoria e o DTI continuam com a política.</td></tr><tr><td>O relatório anual pode sair dentro do relatório do Programa</td><td>Art. 18, parágrafo único</td><td>Evita um relatório a mais (art. 35 do SB). A data de 31/03 fica, porque os semestres do Programa contam da vigência do decreto, e não do ano civil.</td></tr><tr><td>Catálogo atualizado todo ano, com histórico e indicação das bases com dados pessoais</td><td>Art. 10, IV e § 2º</td><td>São Paulo, Decreto 63.463/2024, arts. 10 e 11. Também ajuda o DM2 e o DM5.2.</td></tr><tr><td>O titular de cada órgão responde pelas metas do plano</td><td>Art. 8º, parágrafo único</td><td>São Paulo, Decreto 63.463/2024, art. 15, parágrafo único.</td></tr><tr><td>Nota explicando a escolha quando não houver formato aberto</td><td>Art. 11, § 3º</td><td>São Paulo, Decreto 63.463/2024, art. 5º, parágrafo único.</td></tr><tr><td>A consulta pública passa a ter devolutiva</td><td>Art. 13, § 2º</td><td>São Paulo, Decreto 63.463/2024, art. 18, III.</td></tr><tr><td>Capacitação de servidores e da população entre as tarefas da coordenação</td><td>Art. 5º, § 1º, VIII</td><td>Lei 7.367/2025, art. 35 (já é tarefa da Seção de Transparência); São Paulo, Decreto 63.463/2024, art. 23, III.</td></tr><tr><td>Correção de redação: "e" sobrando</td><td>Art. 11, § 1º, III</td><td>—</td></tr></tbody></table></div>
   <p style="margin-top:10px"><b>O que não veio de São Paulo:</b> os Planos Setoriais anuais de cada órgão (um plano único, com responsável por base, é mais simples para SBC); a exigência de software livre nos portais (não é pedida pelo OD1); e o capítulo de licenciamento, que fica para o ato do art. 21. Nenhum dos dois textos prevê relatório de avaliação da política com proposta de revisão do texto: o OD1.3 continua vindo de Aracruz e Baton Rouge.</p>
-</section>
+</details>
 
-<section class="cartao">
-  <h2>O que a WWC pede e onde a minuta responde</h2>
+<details class="cartao">
+  <summary><h2>O que a WWC pede e onde a minuta responde</h2></summary>
   <div class="subs">
     <div class="sub-card">
       <h3>OD1.1 · Estrutura de governança</h3>
@@ -226,13 +254,13 @@ del { background: #fbe0de; color: #8a1f17; }
       <div class="arts"><a href="#art2">Art. 2º</a><a href="#art9">Art. 9º</a><a href="#art10">Art. 10</a><a href="#art15">Art. 15</a><a href="#art16">Art. 16</a><a href="#art17">Art. 17</a></div>
     </div>
   </div>
-</section>
+</details>
 
-<section class="cartao decreto" id="decreto">
-  <div class="decreto-cab">
+<details class="cartao decreto" id="decreto">
+  <summary class="decreto-cab">
     <h2>Texto da minuta</h2>
     <div class="nota">Use os filtros acima para ver só os artigos de um subcritério ou só os pontos de escolha do município ou só o que mudou na v02.</div>
-  </div>
+  </summary>
 
   <div class="ementa" data-bloco="preambulo">
     <p class="num">DECRETO Nº ……………</p>
@@ -497,7 +525,7 @@ del { background: #fbe0de; color: #8a1f17; }
   <div class="capitulo" data-bloco="anexo">Anexo Único – Hipóteses legais de restrição à abertura de dados</div>
   <article class="art novo" id="anexo" data-tipo="novo" data-sub="OD1.4">
     <div class="texto"><div class="cab"><span class="id">Anexo Único</span><span class="tag novo">Novo</span><span class="tag sub">OD1.4</span></div>
-      <table class="anexo"><thead><tr><th>Hipótese</th><th>Fundamento</th></tr></thead><tbody><tr><td>Informação classificada em grau de sigilo</td><td>Lei 12.527/2011, arts. 23 e 24; Decreto Municipal 18.882/2014, arts. 22 a 28</td></tr><tr><td>Informação pessoal relativa à intimidade, vida privada, honra e imagem</td><td>Lei 12.527/2011, art. 31</td></tr><tr><td>Dado pessoal e dado pessoal sensível, salvo se anonimizado</td><td>Lei 13.709/2018, art. 5º, I a III</td></tr><tr><td>Informação sobre a situação econômica ou financeira de contribuintes obtida pela Fazenda (sigilo fiscal)</td><td>Código Tributário Nacional, art. 198</td></tr><tr><td>Informação sobre operações financeiras protegida por sigilo bancário, quando custodiada pelo Município</td><td>Lei Complementar 105/2001, art. 1º</td></tr><tr><td>Documento preparatório, até a edição do ato decisório</td><td>Lei 12.527/2011, art. 7º, § 3º</td></tr><tr><td>Segredo de justiça e demais hipóteses legais de sigilo</td><td>Lei 12.527/2011, art. 22</td></tr><tr><td>Segredo industrial e informação confidencial de terceiros obtida em razão de contrato</td><td>Lei 12.527/2011, art. 22; Lei 9.279/1996, art. 195, XI e XII</td></tr><tr><td>Obra intelectual de terceiros, inclusive base de dados que constitua criação intelectual; os dados em si não são protegidos</td><td>Lei 9.610/1998, art. 7º, XIII e § 2º</td></tr></tbody></table></div>
+      <div class="rolavel"><table class="anexo"><thead><tr><th>Hipótese</th><th>Fundamento</th></tr></thead><tbody><tr><td>Informação classificada em grau de sigilo</td><td>Lei 12.527/2011, arts. 23 e 24; Decreto Municipal 18.882/2014, arts. 22 a 28</td></tr><tr><td>Informação pessoal relativa à intimidade, vida privada, honra e imagem</td><td>Lei 12.527/2011, art. 31</td></tr><tr><td>Dado pessoal e dado pessoal sensível, salvo se anonimizado</td><td>Lei 13.709/2018, art. 5º, I a III</td></tr><tr><td>Informação sobre a situação econômica ou financeira de contribuintes obtida pela Fazenda (sigilo fiscal)</td><td>Código Tributário Nacional, art. 198</td></tr><tr><td>Informação sobre operações financeiras protegida por sigilo bancário, quando custodiada pelo Município</td><td>Lei Complementar 105/2001, art. 1º</td></tr><tr><td>Documento preparatório, até a edição do ato decisório</td><td>Lei 12.527/2011, art. 7º, § 3º</td></tr><tr><td>Segredo de justiça e demais hipóteses legais de sigilo</td><td>Lei 12.527/2011, art. 22</td></tr><tr><td>Segredo industrial e informação confidencial de terceiros obtida em razão de contrato</td><td>Lei 12.527/2011, art. 22; Lei 9.279/1996, art. 195, XI e XII</td></tr><tr><td>Obra intelectual de terceiros, inclusive base de dados que constitua criação intelectual; os dados em si não são protegidos</td><td>Lei 9.610/1998, art. 7º, XIII e § 2º</td></tr></tbody></table></div></div>
     <aside class="expl">
       <div><h4>Por quê</h4><p>Explicar o que não se publica exige dizer com base em quê.</p></div>
       <div><h4>Intenção</h4><p>Dar uma lista fechada de hipóteses legais, que o catálogo e as negativas citam (art. 16, § 1º).</p></div>
@@ -506,10 +534,10 @@ del { background: #fbe0de; color: #8a1f17; }
     </aside>
   </article>
   <div class="vazio" id="vazio">Nenhum artigo corresponde ao filtro escolhido.</div>
-</section>
+</details>
 
-<section class="cartao obs">
-  <h2>Observações para quem for decidir</h2>
+<details class="cartao obs">
+  <summary><h2>Observações para quem for decidir</h2></summary>
   <ol>
     <li><b>Natureza deste texto.</b> É um rascunho de indicação técnica, para servir de base à equipe e à Procuradoria. Não é decisão do município.</li>
     <li class="destaque"><b>Encaixe no decreto de governança digital e de dados.</b> O decreto que o DTI enviou à Procuradoria em 23/10/2026 (processo SB 101842/2026) não cobre o OD1, mas prevê atos próprios para cada eixo e iniciativa e lista a abertura de dados entre os temas da regulamentação de dados (arts. 7º, 8º e 25). Esta minuta passa a ser esse ato para a abertura de dados. O quadro "O que mudou da v01 para a v02" diz onde cada ponto foi resolvido.</li>
@@ -524,10 +552,10 @@ del { background: #fbe0de; color: #8a1f17; }
     <li><b>Modelo de São Paulo.</b> O DTI cita o Decreto paulistano 63.463/2024 como referência para regulamentar a abertura de dados (proposta técnica, p. 18). Ele regulamenta a Lei paulistana 17.901/2023, que consolida a Política Municipal de Dados Abertos e Transparência Ativa. Os dois foram lidos por inteiro; o que veio deles e o que não veio está no quadro "O que mudou da v01 para a v02".</li>
     <li><b>Anexo Único.</b> A lista de hipóteses legais de restrição foi adaptada de Porto Alegre. Os dispositivos citados foram conferidos no texto das leis; o enquadramento final cabe à Procuradoria.</li>
   </ol>
-</section>
+</details>
 
-<section class="cartao fontes">
-  <h2>Fontes</h2>
+<details class="cartao fontes">
+  <summary><h2>Fontes</h2></summary>
   <ul>
     <li>What Works Cities, critério OD1 (v4): definição, subcritérios, evidências e glossário; revisão do Raio-X (questão 6).</li>
     <li>Lei Federal 14.129/2021, arts. 2º, III, e 29 a 37; Lei Federal 12.527/2011; Lei Federal 13.709/2018.</li>
@@ -539,7 +567,7 @@ del { background: #fbe0de; color: #8a1f17; }
     <li>Decreto de governança digital e de dados (processo SB 101842/2026: minuta de decreto e proposta técnica do DTI), arts. 1º, 4º, 5º, 7º, 8º, 10 a 12, 19, 25, 35 e 40.</li>
     <li>São Paulo, Lei 17.901/2023 (Política Municipal de Dados Abertos e Transparência Ativa) e Decreto 63.463/2024, que a regulamenta: lidos por inteiro em 23/10/2026 no Catálogo de Legislação Municipal da Prefeitura de São Paulo.</li>
   </ul>
-</section>
+</details>
 
 </main>
 <div class="rodape">Minuta preparada para o Painel WWC · SBC. Rascunho de indicação técnica; não substitui a análise da Procuradoria.</div>
@@ -585,6 +613,23 @@ del { background: #fbe0de; color: #8a1f17; }
     });
   });
   aplicar();
+})();
+</script>
+<script>
+(function () {
+  var quadros = Array.prototype.slice.call(document.querySelectorAll('details.cartao'));
+  function abrirAte(el) { var d = el && el.closest('details'); while (d) { d.open = true; d = d.parentElement.closest('details'); } }
+  function irPara(hash) { var alvo = hash && hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1))); if (alvo) { abrirAte(alvo); alvo.scrollIntoView(); } }
+  var a = document.getElementById('abrir-tudo'), f = document.getElementById('fechar-tudo');
+  if (a) a.addEventListener('click', function () { quadros.forEach(function (d) { d.open = true; }); });
+  if (f) f.addEventListener('click', function () { quadros.forEach(function (d) { d.open = false; }); });
+  var antes = [];
+  window.addEventListener('beforeprint', function () { antes = quadros.map(function (d) { return d.open; }); quadros.forEach(function (d) { d.open = true; }); });
+  window.addEventListener('afterprint', function () { quadros.forEach(function (d, i) { d.open = antes[i]; }); });
+  document.querySelectorAll('[data-filtro] button').forEach(function (b) { b.addEventListener('click', function () { var d = document.getElementById('decreto'); if (d) d.open = true; }); });
+  document.querySelectorAll('a[href^="#"]').forEach(function (l) { l.addEventListener('click', function () { var h = l.getAttribute('href'); if (h.length > 1) abrirAte(document.getElementById(h.slice(1))); }); });
+  window.addEventListener('hashchange', function () { irPara(location.hash); });
+  irPara(location.hash);
 })();
 </script>
 </body>
