@@ -27,7 +27,7 @@ main { max-width: 980px; margin: 0 auto; padding: 20px 16px 48px; display: grid;
 .ferramentas { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .ferramentas button { border: 1px solid var(--azul); background: #fff; color: var(--azul); padding: 6px 12px; border-radius: 8px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
 .ferramentas .dica-uso { font-size: 13px; color: var(--suave); }
-details.passo { background: #fff; border: 1px solid var(--borda); border-radius: 10px; box-shadow: 0 1px 3px rgba(15,40,70,.08); }
+details.passo { min-width: 0; background: #fff; border: 1px solid var(--borda); border-radius: 10px; box-shadow: 0 1px 3px rgba(15,40,70,.08); }
 details.passo > summary { list-style: none; cursor: pointer; padding: 14px 18px; display: flex; align-items: center; gap: 14px; }
 details.passo > summary::-webkit-details-marker { display: none; }
 .num { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--azul); color: #fff; display: grid; place-items: center; font-weight: 800; }
@@ -110,7 +110,25 @@ details[open] > summary .seta { transform: rotate(90deg); }
   </details>
 
   <details class="passo">
-    <summary><span class="num">2</span><span><span class="tit">DM1 · Governança de dados (essencial)</span><br><span class="sub">Sem ele não há certificação · pede 2 de 3 · revalidado</span></span><span class="seta">›</span></summary>
+    <summary><span class="num">2</span><span><span class="tit">Mapa dos documentos</span><br><span class="sub">2 minutos · o que é atualizar e o que é criar</span></span><span class="seta">›</span></summary>
+    <div class="corpo">
+  <div class="fala">Antes dos critérios, o mapa do que vamos propor. Dois documentos que já estão em trâmite recebem ajustes: o decreto de governança digital e de dados do DTI (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sb101842">SB 101842/2026</span>), que é o principal, e o do SBC+i, só com um artigo. A página de Dados Abertos também muda. O resto é criar. Os documentos novos do DM2 e do DM3 são atos do próprio DTI, que não precisam de decreto, porque a lei já dá ao DTI a tarefa de definir padrões de gestão de dados (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="lei7367_645">Lei 7.367/2025, art. 645, XIII</span>). Por isso podem sair antes de 18/12.</div>
+  <table class="tab">
+    <tr><th>Critério</th><th>Assunto</th><th>Documento</th><th>Criar ou atualizar</th><th>Processo</th></tr>
+    <tr><td>DM1</td><td>Política de governança de dados, comitê, princípios e relatório</td><td>Decreto da Política e do Programa Municipal de Governança Digital e de Dados (minuta do DTI)</td><td><b>Atualizar:</b> as alterações possíveis da DM1 v02 e o nosso ajuste no art. 35</td><td>SB 101842/2026</td></tr>
+    <tr><td>DM1</td><td>Programa SBC+i</td><td>Decreto do SBC+i</td><td><b>Atualizar, no mínimo:</b> um artigo que remeta à nova Política (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="sbcmaisi_remissao">texto sugerido</span>). A proposta de ajustes foi arquivada porque o decreto do DTI já cobre tudo</td><td>SB 100144/2026</td></tr>
+    <tr><td>DM1</td><td>Reuniões até o decreto do DTI vigorar (90 dias depois de publicado)</td><td>Atas do Comitê de Proteção de Dados (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="dec22963_art3">Decreto 22.963/2025</span>)</td><td><b>Criar</b> (registro de reunião, não norma)</td><td>SB 72089/2019</td></tr>
+    <tr><td>OD1</td><td>Política de dados abertos</td><td>Decreto da Política Municipal de Dados Abertos (OD1 v02), como ato específico de abertura de dados do decreto do DTI. Funciona mesmo se ele atrasar</td><td><b>Criar</b></td><td>Sem processo</td></tr>
+    <tr><td>OD3</td><td>Portal de dados abertos</td><td>Página de Dados Abertos como catálogo, tabelas do Perfil por Bairro em planilha, planilha do Atende Bem e texto da resposta na plataforma</td><td><b>Atualizar</b> a página e publicar dados (não é norma)</td><td>Sem processo</td></tr>
+    <tr><td>DM2</td><td>Quais dados existem (inventário)</td><td>Nota técnica do DTI com o método do inventário e a planilha-modelo</td><td><b>Criar</b></td><td>Sem processo</td></tr>
+    <tr><td>DM3</td><td>Como os dados circulam (compartilhamento, pedidos e abertura)</td><td>Procedimento do DTI, aprovado pelo Comitê de Proteção de Dados (DM3 v01), e formulário de pedido</td><td><b>Criar</b></td><td>Sem processo</td></tr>
+  </table>
+  <p class="nota">Os atos do DTI do DM2 e do DM3 (e, depois, o guia de qualidade do DM4) tratam do mesmo assunto e poderiam virar um documento só, com uma aprovação em vez de várias. É sugestão, a decidir com a equipe.</p>
+    </div>
+  </details>
+
+  <details class="passo">
+    <summary><span class="num">3</span><span><span class="tit">DM1 · Governança de dados (essencial)</span><br><span class="sub">Sem ele não há certificação · pede 2 de 3 · revalidado</span></span><span class="seta">›</span></summary>
     <div class="corpo">
   <h3>O que a WWC pede</h3>
   <p>Um grupo de governança de dados aprovado pelo prefeito, com objetivos definidos, que se reúna pelo menos a cada trimestre e que tenha princípios de transparência e uso ético de dados.</p>
@@ -141,7 +159,7 @@ details[open] > summary .seta { transform: rotate(90deg); }
   </details>
 
   <details class="passo">
-    <summary><span class="num">3</span><span><span class="tit">OD1 · Política de dados abertos</span><br><span class="sub">Pede 3 de 4 · sem janela de tempo</span></span><span class="seta">›</span></summary>
+    <summary><span class="num">4</span><span><span class="tit">OD1 · Política de dados abertos</span><br><span class="sub">Pede 3 de 4 · sem janela de tempo</span></span><span class="seta">›</span></summary>
     <div class="corpo">
   <h3>O que a WWC pede</h3>
   <p>Uma política de dados abertos escrita e publicada, com governança, escuta do público, relatório pelo menos anual e regras claras sobre o que pode ou não ser aberto.</p>
@@ -172,7 +190,7 @@ details[open] > summary .seta { transform: rotate(90deg); }
   </details>
 
   <details class="passo">
-    <summary><span class="num">4</span><span><span class="tit">OD3 · Portal de dados abertos</span><br><span class="sub">Pede 3 de 3 · resposta na plataforma: "Sim" (manter)</span></span><span class="seta">›</span></summary>
+    <summary><span class="num">5</span><span><span class="tit">OD3 · Portal de dados abertos</span><br><span class="sub">Pede 3 de 3 · resposta na plataforma: "Sim" (manter)</span></span><span class="seta">›</span></summary>
     <div class="corpo">
   <h3>O que a WWC pede</h3>
   <p>Um lugar central na internet com os dados abertos: em planilha e de graça, separados por bairro e por grupo da população quando possível, com contato e com links para os outros sites onde houver dados.</p>
@@ -208,7 +226,7 @@ details[open] > summary .seta { transform: rotate(90deg); }
   </details>
 
   <details class="passo">
-    <summary><span class="num">5</span><span><span class="tit">DM2 · Inventário de dados</span><br><span class="sub">Pede 3 de 4 · janela de 24 meses · dá para criar, com risco de prazo</span></span><span class="seta">›</span></summary>
+    <summary><span class="num">6</span><span><span class="tit">DM2 · Inventário de dados</span><br><span class="sub">Pede 3 de 4 · janela de 24 meses · dá para criar, com risco de prazo</span></span><span class="seta">›</span></summary>
     <div class="corpo">
   <h3>O que a WWC pede</h3>
   <p>Uma lista de todas as bases de dados da Prefeitura, dizendo o que cada uma contém, quem cuida e em que formato está (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="dm2_glossario">definição da WWC</span>). Não é para juntar os dados: é para saber que eles existem. Dos quatro pontos, bastam três (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="dm2_regra">texto do critério</span>):</p>
@@ -280,7 +298,7 @@ details[open] > summary .seta { transform: rotate(90deg); }
   </details>
 
   <details class="passo">
-    <summary><span class="num">6</span><span><span class="tit">DM3 · Compartilhamento de dados</span><br><span class="sub">Pede 3 de 4 · sem janela de tempo · dá para criar até o prazo</span></span><span class="seta">›</span></summary>
+    <summary><span class="num">7</span><span><span class="tit">DM3 · Compartilhamento de dados</span><br><span class="sub">Pede 3 de 4 · sem janela de tempo · dá para criar até o prazo</span></span><span class="seta">›</span></summary>
     <div class="corpo">
   <h3>O que a WWC pede</h3>
   <p>Processos escritos e fáceis de usar para compartilhar dados entre as secretarias e com parceiros de fora, inclusive dados protegidos. São quatro pontos e bastam três (<span class="cit" tabindex="0" role="button" aria-haspopup="dialog" data-ref="dm3_regra">os quatro pontos</span>): como compartilhar e quando fazer acordo; como decidir o que abrir; um canal para pedir dados, com prazo de resposta; e sistemas de dados compartilhados em uso.</p>
@@ -311,7 +329,7 @@ details[open] > summary .seta { transform: rotate(90deg); }
   </details>
 
   <details class="passo">
-    <summary><span class="num">7</span><span><span class="tit">Fechamento: próximos passos</span><br><span class="sub">2 minutos · combinar prazos e responsáveis</span></span><span class="seta">›</span></summary>
+    <summary><span class="num">8</span><span><span class="tit">Fechamento: próximos passos</span><br><span class="sub">2 minutos · combinar prazos e responsáveis</span></span><span class="seta">›</span></summary>
     <div class="corpo">
   <div class="fala">Para fechar: preciso das respostas às perguntas de hoje para atualizar as fichas. Enquanto isso, sigo com os próximos critérios de Gestão de Dados (DM4 em diante).</div>
   <h3>Combinar antes de sair</h3>
