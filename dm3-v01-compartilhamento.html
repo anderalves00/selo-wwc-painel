@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Procedimento de dados DM3 v01</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f71b3'/%3E%3Crect y='26' width='32' height='6' fill='%23ff8200'/%3E%3Cpath d='M8 20l5-6 4 4 7-9' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
+  --laranja: #ff8200; --laranja-esc: #b35b00; --laranja-claro: #fff1e3;
+  --verde: #288827; --verde-claro: #e6f4e6;
+  --texto: #2b2b2b; --texto-suave: #5f6368; --borda: #dde3e8;
+  --fundo: #f3f6f9; --cartao: #ffffff;
+  --raio: 10px; --sombra: 0 1px 3px rgba(15, 40, 70, .08);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 "Open Sans", Arial, sans-serif; }
+a { color: var(--azul); }
+h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
+
+.topo { background: linear-gradient(90deg, var(--azul-esc), var(--azul)); color: #fff; border-bottom: 5px solid var(--laranja); }
+.topo-int { padding: 20px 32px 18px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
+.topo .sobre { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; opacity: .85; font-weight: 600; }
+.topo h1 { font-size: 26px; font-weight: 800; margin-top: 4px; }
+.topo .subtitulo { font-size: 14px; opacity: .9; margin-top: 4px; }
+.topo .voltar { color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; background: rgba(255,255,255,.16); padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
+.topo .voltar:hover { background: rgba(255,255,255,.28); }
+
+.barra { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
+.barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.barra .rot { font-size: 13px; font-weight: 700; color: var(--texto-suave); }
+.grupo { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { border: 1px solid var(--borda); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
+.chip[aria-pressed=true] { background: var(--azul); border-color: var(--azul); color: #fff; }
+.contagem { font-size: 13px; color: var(--texto-suave); margin-left: auto; }
+
+main { padding: 24px 32px 48px; display: grid; gap: 22px; }
+.cartao { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); padding: 20px 22px; }
+.cartao > h2 { font-size: 19px; color: var(--azul-esc); margin-bottom: 10px; }
+.cartao p { margin: 0 0 10px; }
+.cartao p:last-child { margin-bottom: 0; }
+
+.legenda { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 12px; font-size: 14px; }
+.legenda span { display: inline-flex; align-items: center; gap: 8px; }
+.tag { display: inline-block; font: 800 11px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 5px; }
+.tag.novo { background: var(--laranja); color: #fff; }
+.tag.alterado { background: var(--azul); color: #fff; }
+.tag.igual { background: #eef1f4; color: var(--texto-suave); }
+.tag.sub { background: var(--verde-claro); color: var(--verde); }
+
+.subs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 6px; }
+.sub-card { border: 1px solid var(--borda); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.sub-card h3 { font-size: 16px; color: var(--azul-esc); }
+.sub-card .pede { font-size: 14px; }
+.sub-card .linha { font-size: 13.5px; border-radius: 6px; padding: 7px 10px; }
+.sub-card .hoje { background: #f7f9fb; }
+.sub-card .depois { background: var(--laranja-claro); }
+.sub-card .arts { display: flex; flex-wrap: wrap; gap: 6px; }
+.sub-card .arts a { font-size: 13px; font-weight: 700; text-decoration: none; background: var(--azul-claro); padding: 2px 9px; border-radius: 6px; }
+
+.decreto { padding: 0; overflow: hidden; }
+.decreto-cab { padding: 18px 22px; border-bottom: 1px solid var(--borda); background: #fafbfc; }
+.decreto-cab h2 { font-size: 19px; color: var(--azul-esc); }
+.decreto-cab .nota { font-size: 13.5px; color: var(--texto-suave); margin-top: 4px; }
+.ementa { padding: 18px 22px 6px; font-size: 14.5px; }
+.ementa .num { font-weight: 800; }
+.ementa .em { margin: 8px 0 12px auto; max-width: 520px; font-style: italic; }
+.ementa p { margin: 0 0 8px; }
+.capitulo { padding: 14px 22px 6px; font-weight: 800; color: var(--azul-esc); letter-spacing: .03em; text-transform: uppercase; font-size: 13.5px; border-top: 1px solid var(--borda); background: #fafbfc; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+.art { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); border-top: 1px solid var(--borda); }
+.art .texto { padding: 14px 22px; font-size: 14.5px; }
+.art .texto p { margin: 0 0 7px; }
+.art .texto p:last-child { margin-bottom: 0; }
+.art.igual { grid-template-columns: 1fr; }
+.art.igual .texto { color: #555b61; }
+.art .cab { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+.art .cab .id { font-weight: 800; font-size: 13px; color: var(--texto-suave); }
+.art .cab .antigo { font-size: 12.5px; color: var(--texto-suave); }
+.art.novo .texto { background: var(--laranja-claro); border-left: 5px solid var(--laranja); }
+.art.alterado .texto { background: var(--azul-claro); border-left: 5px solid var(--azul); }
+mark.novo { background: #ffd8ad; color: inherit; padding: 1px 3px; border-radius: 3px; }
+del.sup { text-decoration: line-through; text-decoration-thickness: 1.5px; color: #8a2a22; background: #fbe9e7; padding: 1px 3px; border-radius: 3px; }
+.rotulo-red { font: 800 11.5px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; margin: 10px 0 4px; }
+.rotulo-red.sup { color: #8a2a22; margin-top: 0; }
+.rotulo-red.nova { color: var(--laranja-esc); }
+.obs-red { font-size: 13.5px; color: var(--texto-suave); border-top: 1px dashed var(--borda); padding-top: 8px; margin-top: 10px !important; }
+.inc { padding-left: 18px; }
+
+.expl { padding: 14px 20px; background: #fff; border-left: 1px solid var(--borda); display: grid; gap: 10px; align-content: start; font-size: 14px; }
+.expl h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); margin-bottom: 2px; }
+.expl .wwc { background: var(--verde-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .wwc h4 { color: var(--verde); }
+.expl p { margin: 0; }
+
+.assinatura { padding: 14px 22px 20px; border-top: 1px solid var(--borda); font-size: 14.5px; }
+.vazio { padding: 20px 22px; color: var(--texto-suave); display: none; border-top: 1px solid var(--borda); }
+
+.obs ol { margin: 0; padding-left: 20px; display: grid; gap: 10px; }
+.destaque { background: var(--verde-claro); border-left: 5px solid var(--verde); border-radius: 6px; padding: 10px 14px; }
+.fontes ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14px; }
+.rodape { font-size: 13px; color: var(--texto-suave); text-align: center; padding: 0 32px 28px; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 1000px) { .subs { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .topo-int, .barra-int, main { padding-left: 16px; padding-right: 16px; }
+  .barra { position: static; }
+  .art { grid-template-columns: 1fr; }
+  .expl { border-left: 0; border-top: 1px dashed var(--borda); }
+  .art .texto, .expl, .capitulo, .ementa, .assinatura, .decreto-cab { padding-left: 16px; padding-right: 16px; }
+  .contagem { margin-left: 0; width: 100%; }
+}
+@media print {
+  .barra, .topo .voltar { display: none; }
+  body { background: #fff; }
+  .art { break-inside: avoid; }
+}
+.tag.escolha { background: #fde7c4; color: #8a4b00; }
+.aviso { background: var(--laranja-claro); border-left: 5px solid var(--laranja); border-radius: 6px; padding: 12px 16px; }
+.expl .origem { background: var(--azul-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .origem h4 { color: var(--azul-esc); }
+table.anexo { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.anexo td, table.anexo th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+table.anexo caption { text-align: left; font-weight: 700; padding: 4px 0; }
+table.anexo td.vaz { color: var(--texto-suave); font-style: italic; }
+main > *, .art .texto, .art .expl { min-width: 0; }
+@media (max-width: 600px) { main { padding: 16px 16px 32px; } .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; } .cartao { padding: 16px; } .art .texto { padding: 12px 14px; } }
+.texto .tab { overflow-x: auto; }
+.texto .tab table.anexo { min-width: 520px; }
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-int">
+    <div>
+      <div class="sobre">Painel WWC · SBC · Critério DM3 · Versão v01</div>
+      <h1>Procedimento de compartilhamento, pedidos e abertura de dados</h1>
+      <div class="subtitulo">Rascunho de indicação técnica · 28/10/2026 · Para análise da equipe, do CGPD e da Procuradoria</div>
+    </div>
+    <a class="voltar" href="index.html#DM3" onclick="if (history.length === 1) { window.close(); return false; }">← Voltar ao painel (DM3)</a>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-int">
+    <span class="rot">Subcritério WWC:</span>
+    <div class="grupo" data-filtro="sub">
+      <button class="chip" type="button" data-v="todos" aria-pressed="true">Todos</button>
+      <button class="chip" type="button" data-v="DM3.1" aria-pressed="false">DM3.1</button>
+      <button class="chip" type="button" data-v="DM3.2" aria-pressed="false">DM3.2</button>
+      <button class="chip" type="button" data-v="DM3.3" aria-pressed="false">DM3.3</button>
+      <button class="chip" type="button" data-v="escolha" aria-pressed="false">Só pontos de escolha</button>
+    </div>
+    <span class="contagem" id="contagem"></span>
+  </div>
+</div>
+
+<main>
+
+<section class="cartao">
+  <h2>O que é esta página</h2>
+  <div class="aviso"><p><b>Rascunho de indicação técnica, não decisão.</b> Este procedimento reúne o que os modelos indicados pela WWC fazem para atender ao critério DM3 (compartilhamento de dados). Instrumento, colegiado e prazos cabem ao município (DTI, CGPD e Procuradoria).</p></div>
+  <p style="margin-top:12px">SBC não tem processo escrito para uma secretaria pedir dados a outra, para compartilhar com parceiros nem para decidir o que abrir. O canal do cidadão existe (LAI, 20 + 10 dias). O DM3 pede <b>3 de 4 subcritérios</b>, sem janela temporal: basta o ato publicado antes do envio (18/12/2026), e a WWC aceitou de San Antonio um texto de uma página.</p>
+  <p>O procedimento responde a três perguntas: <b>pode compartilhar?</b> (classes de acesso, art. 7º), <b>de que forma?</b> (a escada, art. 8º) e <b>como formalizar?</b> (termo-padrão e formulário por pedido, art. 9º). Cada artigo e cada anexo traz ao lado por que foi incluído, a intenção, a origem e a relação com a WWC.</p>
+  <div class="legenda">
+    <span><span class="tag novo">Novo</span> texto proposto</span>
+    <span><span class="tag escolha">Ponto de escolha do município</span> recomendação que o município pode trocar</span>
+    <span><span class="tag sub">DM3.x</span> subcritério da WWC atendido</span>
+  </div>
+</section>
+
+<section class="cartao">
+  <h2>Versões desta recomendação</h2>
+  <div class="texto"><div class="tab"><table class="anexo"><thead><tr><th>Versão</th><th>Data</th><th>O que é</th><th>Situação</th></tr></thead><tbody><tr><td><b>v01</b></td><td>28/10/2026</td><td>Procedimento de compartilhamento, pedidos e abertura de dados: 21 artigos e 4 anexos (termo de uso, formulário de pedido, guia de decisão e registro).</td><td>Vigente</td></tr><tr><td><b>v02</b></td><td>—</td><td>Procedimento com os ajustes da equipe e da Procuradoria.</td><td>Aguarda a equipe</td></tr></tbody></table></div></div>
+</section>
+
+<section class="cartao">
+  <h2>O que a WWC pede e onde o procedimento responde</h2>
+  <div class="subs">
+    <div class="sub-card">
+      <h3>DM3.1 · Compartilhar e quando firmar acordo</h3>
+      <div class="pede">Processo documentado para compartilhar dados internamente e com parceiros externos, com orientações sobre quando firmar acordos.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Não há processo. O decreto do SB 101842 (minuta) dá as condições (art. 26), não o caminho.</div>
+      <div class="linha depois"><b>No procedimento:</b> Classes de acesso, escada de formas, instrumento por destinatário (sem convênio entre secretarias; acordo com outro ente; termo de uso com parceiro privado), compromissos do recebedor e registro público.</div>
+      <div class="arts"><a href="#art1">Art. 1º</a><a href="#art3">Art. 3º</a><a href="#art4">Art. 4º</a><a href="#art6">Art. 6º</a><a href="#art7">Art. 7º</a><a href="#art8">Art. 8º</a><a href="#art9">Art. 9º</a><a href="#art10">Art. 10</a><a href="#art11">Art. 11</a><a href="#art19">Art. 19</a><a href="#anx1">Anexo I</a><a href="#anx2">Anexo II</a><a href="#anx3">Anexo III</a><a href="#anx4">Anexo IV</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM3.2 · Decidir o que abrir</h3>
+      <div class="pede">Processo documentado para decidir quando e como abrir dados, que avalia oportunidades e danos e considera os pedidos já recebidos.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Nada em vigor. A OD1 v02 (minuta) prioriza, mas não avalia danos.</div>
+      <div class="linha depois"><b>No procedimento:</b> Lista anual de candidatas avaliada em matriz de benefícios (inclusive os pedidos recebidos) e de riscos de dano, verificação de reidentificação antes de abrir e motivo publicado quando não se abre.</div>
+      <div class="arts"><a href="#art15">Art. 15</a><a href="#art16">Art. 16</a><a href="#art17">Art. 17</a><a href="#anx3">Anexo III</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM3.3 · Canal fácil e prazo</h3>
+      <div class="pede">Forma fácil de receber pedidos internos e externos, com resposta exigida em prazo adequado.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Só a LAI (20 + 10 dias), para o cidadão. Nada para pedido entre secretarias ou de parceiro.</div>
+      <div class="linha depois"><b>No procedimento:</b> Formulário único no DTI, encaminhamento em 2 dias úteis, resposta da secretaria dona em 20 + 10 dias, revisão pelo CGPD e pedidos publicados com prazo.</div>
+      <div class="arts"><a href="#art4">Art. 4º</a><a href="#art5">Art. 5º</a><a href="#art12">Art. 12</a><a href="#art13">Art. 13</a><a href="#art14">Art. 14</a><a href="#anx2">Anexo II</a><a href="#anx4">Anexo IV</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM3.4 · Sistemas compartilhados em uso</h3>
+      <div class="pede">A prefeitura contribui com sistemas de dados compartilhados ou integrados e os usa para decidir e melhorar serviços.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Existe (São Bernardo Protege, patinetes, REDESIM), sem prova de uso reunida.</div>
+      <div class="linha depois"><b>No procedimento:</b> Não depende deste texto, e sim da prova de uso pedida à equipe. O registro (art. 19 e Anexo IV) passa a listar esses casos.</div>
+      <div class="arts"><a href="#art19">Art. 19</a><a href="#anx4">Anexo IV</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="cartao decreto" id="decreto">
+  <div class="decreto-cab">
+    <h2>Texto do procedimento</h2>
+    <div class="nota">Use os filtros acima para ver só os artigos de um subcritério ou só os pontos de escolha do município.</div>
+  </div>
+
+  <div class="ementa" data-bloco="preambulo">
+    <p class="num">INSTRUÇÃO Nº …………… (instrumento a definir)</p>
+    <p class="em">Estabelece o procedimento de compartilhamento de dados, de recebimento e resposta a pedidos de dados e de decisão sobre a abertura de dados no Poder Executivo Municipal, e aprova os modelos de termo de uso, formulário de pedido, guia de decisão e registro.</p>
+    <p>O(A) DIRETOR(A) DO DEPARTAMENTO DE TECNOLOGIA DA INFORMAÇÃO DA SECRETARIA DE ADMINISTRAÇÃO, com a aprovação do COMITÊ GESTOR DE PROTEÇÃO DE DADOS – CGPD, no uso de suas atribuições, considerando o que consta do processo administrativo nº ……………;</p>
+    <p>Considerando a Lei Federal nº 13.709, de 14 de agosto de 2018 (Lei Geral de Proteção de Dados Pessoais), em especial os arts. 23, 26 e 27;</p>
+    <p>Considerando a Lei Federal nº 12.527, de 18 de novembro de 2011, e o Decreto Municipal nº 18.882, de 28 de abril de 2014;</p>
+    <p>Considerando o Decreto Municipal nº 22.963, de 5 de junho de 2025, que institui o Programa de Proteção de Dados, com a elaboração de minutas-padrão, modelos de documentação e procedimentos (art. 2º, II), e atribui ao DTI o apoio técnico ao CGPD (art. 5º, I);</p>
+    <p>Considerando o inciso XIII do art. 645 da Lei Municipal nº 7.367, de 15 de janeiro de 2025; e</p>
+    <p>Considerando a necessidade de tornar mais ágil e seguro o compartilhamento de dados entre os órgãos municipais e com parceiros, com regras claras sobre quando firmar acordos, prazos de resposta e critérios para a abertura de dados,</p>
+    <p>RESOLVE:</p>
+  </div>
+
+  <div class="capitulo">Capítulo I – Do objeto e das definições</div>
+  <article class="art novo" id="art1" data-tipo="novo" data-sub="DM3.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 1º</span><span class="tag novo">Novo</span><span class="tag sub">DM3.1</span></div>
+      <p>Art. 1º Este ato estabelece o procedimento para o compartilhamento de dados pelos órgãos da Administração Direta do Poder Executivo Municipal, para o recebimento e a resposta de pedidos de dados e para a decisão sobre a abertura de dados.</p><p>§ 1º O procedimento aplica-se ao compartilhamento:</p><p class="inc">I - entre órgãos da Administração Direta;</p><p class="inc">II - com as entidades da Administração Indireta municipal e com órgãos e entidades de outros entes públicos; e</p><p class="inc">III - com pessoas jurídicas de direito privado, instituições de ensino e pesquisa, organizações da sociedade civil e pesquisadores.</p><p>§ 2º Este ato não altera:</p><p class="inc">I - os pedidos de acesso à informação, que seguem a Lei Federal nº 12.527, de 18 de novembro de 2011, e o Decreto Municipal nº 18.882, de 28 de abril de 2014;</p><p class="inc">II - as atribuições do Comitê Gestor de Proteção de Dados (CGPD) e do Encarregado de Proteção de Dados Pessoais previstas no Decreto Municipal nº 22.963, de 5 de junho de 2025; e</p><p class="inc">III - o tratamento de dados por contratado que atue em nome do Município, regido pelo respectivo contrato.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM3.1 pede um processo para compartilhar "internamente e com parceiros externos". O ato precisa dizer, logo no início, que cobre os dois lados e o que fica de fora.</p></div>
+      <div><h4>Intenção</h4><p>Os três destinatários do § 1º são os mesmos do exemplo de San Antonio (entre departamentos, com parceiros externos, com o público). O § 2º evita conflito com a LAI, que continua sendo o canal do cidadão, com o CGPD e com os contratos de quem trata dados em nome da Prefeitura, que não são compartilhamento.</p></div>
+      <div class="origem"><h4>Origem</h4><p>San Antonio, Diretiva Administrativa 7.12 (2021), seção de compartilhamento (exemplo aceito pela WWC, pacote do Fórum); Decreto federal 10.046/2019, art. 1º; LGPD, art. 39 (o operador trata dados em nome do controlador).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.1</h4><p>Delimita o "processo documentado para compartilhar dados internamente e com parceiros externos" do DM3.1.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art2" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 2º</span><span class="tag novo">Novo</span></div>
+      <p>Art. 2º Para os fins deste ato, considera-se:</p><p class="inc">I - secretaria dona do dado: órgão que produz ou custodia a base de dados e responde por seu conteúdo, sua qualidade e pelas decisões sobre seu acesso;</p><p class="inc">II - solicitante: órgão, entidade ou pessoa que pede dados nos termos deste ato;</p><p class="inc">III - recebedor: quem recebe os dados compartilhados e responde por seu uso;</p><p class="inc">IV - compartilhamento: disponibilização de dados não publicados como dados abertos, por qualquer meio, inclusive acesso a sistema, consulta, extração ou transferência de arquivo;</p><p class="inc">V - dado pessoal, dado pessoal sensível e dado anonimizado: os definidos no art. 5º da Lei Federal nº 13.709, de 14 de agosto de 2018 (LGPD);</p><p class="inc">VI - dado agregado: resultado de contagem, soma, média ou outra síntese de registros que não permita identificar pessoa natural;</p><p class="inc">VII - termo de uso de dados: instrumento-padrão do Anexo I, que fixa as regras de uso dos dados pelo recebedor; e</p><p class="inc">VIII - formulário de pedido: instrumento do Anexo II, que descreve cada pedido e registra a decisão da secretaria dona.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Os papéis precisam de nome para que o resto do texto diga quem faz o quê.</p></div>
+      <div><h4>Intenção</h4><p>"Secretaria dona do dado" é a tradução do "data owner" da AISP: quem decide o acesso. O decreto do SB 101842 veda atribuir "propriedade privada sobre dados" (art. 25); aqui "dona" é só quem responde pela base, e a definição diz isso.</p></div>
+      <div class="origem"><h4>Origem</h4><p>AISP, Introdução ao compartilhamento e integração de dados (2020), p. 8 (dono, curador e custodiante); Decreto federal 10.046/2019, art. 2º (gestor de dados); LGPD, art. 5º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio. Usa o vocabulário do glossário da plataforma (dados compartilhados, dados protegidos).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art3" data-tipo="novo" data-sub="DM3.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 3º</span><span class="tag novo">Novo</span><span class="tag sub">DM3.1</span></div>
+      <p>Art. 3º O compartilhamento observará:</p><p class="inc">I - finalidade específica, ligada a política pública, serviço, atribuição legal ou pesquisa de interesse público, informada no pedido;</p><p class="inc">II - base legal e, quando houver dado pessoal, uma das hipóteses dos arts. 7º, 11, 23 e 26 da LGPD;</p><p class="inc">III - mínimo necessário: só os campos, o período e o recorte indispensáveis à finalidade;</p><p class="inc">IV - a forma mais protegida que atenda à finalidade, nos termos do art. 8º;</p><p class="inc">V - segurança na transmissão e na guarda, com registro de quem recebeu o quê; e</p><p class="inc">VI - publicidade dos compartilhamentos, nos termos do art. 11.</p><p>Parágrafo único. Os dados públicos são compartilhados e abertos por padrão; a restrição é exceção e será sempre fundamentada.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>As condições já estão no decreto do SB 101842 (art. 26: finalidade, base jurídica, minimização, destinatários, rastreabilidade), mas ele ainda é minuta e não diz como aplicá-las.</p></div>
+      <div><h4>Intenção</h4><p>Repetir as condições do art. 26 do SB em linguagem de procedimento, para que valham desde já, e acrescentar a forma mais protegida (IV), que é a escada do art. 8º.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto do SB 101842/2026 (minuta), art. 26; Decreto federal 10.046/2019, art. 3º; LGPD, arts. 6º, III (necessidade), e 26, caput; AISP, Introdução, p. 10 (é legal? é ético? é boa ideia?).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.1</h4><p>Dá ao processo do DM3.1 as salvaguardas que a definição do DM3 pede para os "dados protegidos".</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo II – Dos papéis</div>
+  <article class="art novo" id="art4" data-tipo="novo" data-sub="DM3.1 DM3.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 4º</span><span class="tag novo">Novo</span><span class="tag sub">DM3.1</span><span class="tag sub">DM3.3</span></div>
+      <p>Art. 4º Compete à secretaria dona do dado:</p><p class="inc">I - classificar suas bases de dados nas classes de acesso do art. 7º;</p><p class="inc">II - indicar um ponto de contato para pedidos de dados, que poderá ser o servidor que responde pelos pedidos de acesso à informação no órgão;</p><p class="inc">III - analisar e decidir os pedidos de dados nos prazos do art. 13;</p><p class="inc">IV - firmar os instrumentos de compartilhamento, observado o art. 9º; e</p><p class="inc">V - avaliar, com o DTI, as bases candidatas à abertura (art. 15).</p><p>Parágrafo único. A decisão sobre a finalidade e o acesso cabe à secretaria dona; a liberação técnica, ao DTI.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Sem regra explícita, quem acaba decidindo o acesso é a área de TI, que guarda os sistemas. A AISP aponta isso como o problema mais comum.</p></div>
+      <div><h4>Intenção</h4><p>Deixar a palavra final com quem conhece e responde pelo dado, como em Los Angeles County, e a TI com o meio técnico. O parágrafo único repete a distinção que o próprio DTI pôs no decreto do SB (art. 17).</p></div>
+      <div class="origem"><h4>Origem</h4><p>AISP, Introdução, p. 8 e 10–12; AISP, estudo de caso de Los Angeles County (2014): cada órgão dono aprova ou recusa o formulário; decreto do SB 101842/2026 (minuta), art. 17; Decreto 22.963/2025, art. 5º, II.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.1 e DM3.3</h4><p>Diz quem decide no processo do DM3.1 e quem responde no prazo do DM3.3 ("as áreas responsáveis pelos dados").</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art5" data-tipo="novo" data-sub="DM3.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 5º</span><span class="tag novo">Novo</span><span class="tag sub">DM3.3</span></div>
+      <p>Art. 5º Compete ao Departamento de Tecnologia da Informação (DTI) da Secretaria de Administração:</p><p class="inc">I - manter o canal único de pedidos (art. 12), registrar cada pedido e controlar os prazos;</p><p class="inc">II - orientar o solicitante no preenchimento do formulário de pedido;</p><p class="inc">III - oferecer meio seguro de transmissão e, quando possível, ambiente para análise de dados dentro da Prefeitura;</p><p class="inc">IV - manter e publicar o Registro de Compartilhamentos e Pedidos (Anexo IV);</p><p class="inc">V - manter atualizados os Anexos II a IV; e</p><p class="inc">VI - apresentar ao CGPD, uma vez por ano, relatório com o número de pedidos, os prazos de resposta, as recusas e seus motivos, com propostas de revisão deste ato.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Um canal fácil precisa de alguém que receba, registre e cobre o prazo. O DTI já tem a competência de estratégia de dados e já apoia o CGPD.</p></div>
+      <div><h4>Intenção</h4><p>O DTI faz a parte de balcão e de meio técnico, sem decidir pelo dono. O apoio ao solicitante (II) vem do decreto federal. O relatório anual (VI) dá ao CGPD os números para corrigir o procedimento.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Lei Municipal 7.367/2025, art. 645, XIII; Decreto 22.963/2025, art. 5º, I; Decreto federal 10.046/2019, art. 15, § 1º (apoio consultivo ao solicitante); KYSTATS (Kentucky), no kit de equidade da AISP, p. 23 e 56–57 (política publicada e fluxo com prazo).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.3</h4><p>Sustenta a "forma fácil de receber pedidos" do DM3.3.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art6" data-tipo="novo" data-sub="DM3.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 6º</span><span class="tag novo">Novo</span><span class="tag sub">DM3.1</span></div>
+      <p>Art. 6º Quando o pedido envolver dado pessoal não anonimizado, o Encarregado de Proteção de Dados Pessoais se manifestará antes da decisão da secretaria dona, dentro do prazo do art. 13.</p><p>Parágrafo único. A Procuradoria-Geral do Município será ouvida quando o instrumento se afastar do modelo do Anexo I ou envolver transferência de dado pessoal a pessoa jurídica de direito privado.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Compartilhar dado pessoal com empresa ou organização privada só é permitido em hipóteses fechadas da LGPD (arts. 26, § 1º, e 27). Quem conhece essas hipóteses é o Encarregado e a Procuradoria.</p></div>
+      <div><h4>Intenção</h4><p>Pôr o Encarregado dentro do prazo, e não depois dele, e reservar a Procuradoria aos casos fora do modelo, para não transformar todo pedido em parecer jurídico.</p></div>
+      <div class="origem"><h4>Origem</h4><p>LGPD, arts. 26, § 1º, 27 e 41; Decreto 22.963/2025, art. 3º, § 1º (o Encarregado integra o CGPD); AISP, Introdução, p. 10 (a pergunta "é legal?" vai ao jurídico); Los Angeles County: pedido externo passa pelo jurídico do condado.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.1</h4><p>Dá ao processo do DM3.1 o tratamento dos "dados protegidos" que a definição do DM3 cita.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo III – Das classes de acesso</div>
+  <article class="art novo" id="art7" data-tipo="novo" data-sub="DM3.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 7º</span><span class="tag novo">Novo</span><span class="tag sub">DM3.1</span></div>
+      <p>Art. 7º A secretaria dona classificará cada base de dados em uma das seguintes classes de acesso:</p><p class="inc">I - aberta: sem dado pessoal, sigiloso ou protegido, ou já anonimizada ou agregada; pode ser publicada e compartilhada sem instrumento;</p><p class="inc">II - restrita: contém dado pessoal, sigiloso ou protegido por lei; só é compartilhada para finalidade específica, na forma dos arts. 8º e 9º; ou</p><p class="inc">III - indisponível: não pode ser compartilhada, por vedação legal, por não estar em meio digital ou por qualidade insuficiente para o uso pretendido.</p><p>§ 1º A classificação nas classes restrita e indisponível indicará o fundamento, legal ou técnico, sem revelar conteúdo protegido.</p><p>§ 2º Uma base pode ter partes em classes diferentes; a parte aberta segue o inciso I.</p><p>§ 3º A classificação será registrada no inventário de bases de dados da Prefeitura, quando houver, e, até lá, no Registro do Anexo IV, no primeiro pedido que envolver a base.</p><p>§ 4º O motivo da indisponibilidade será informado ao solicitante.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A primeira pergunta de qualquer pedido é "isto pode ser compartilhado?". Sem classes, cada secretaria responde de um jeito.</p></div>
+      <div><h4>Intenção</h4><p>Três classes simples, que respondem à pergunta antes de se discutir o instrumento. Combinam com as cinco categorias de abertura da OD1 v02 (art. 16): aberta = publicável inteira, após tratamento ou em parte (I a III); restrita = acesso restrito (IV); indisponível = não publicável (V). O § 3º liga a classificação ao inventário do DM2.</p></div>
+      <div class="origem"><h4>Origem</h4><p>AISP, Introdução, p. 7 (aberto, restrito, indisponível); Decreto federal 10.046/2019, art. 4º (amplo, restrito e específico); AISP, kit de equidade, p. 23 (documentar por que um dado é indisponível); OD1 v02, art. 16.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.1</h4><p>É o esqueleto do DM3.1. O motivo registrado e informado (§§ 1º e 4º) também responde à transparência das decisões do OD1.4.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo IV – Do compartilhamento</div>
+  <article class="art novo" id="art8" data-tipo="novo" data-sub="DM3.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 8º</span><span class="tag novo">Novo</span><span class="tag sub">DM3.1</span></div>
+      <p>Art. 8º Antes de entregar dados de base restrita, a secretaria dona e o solicitante verificarão, nesta ordem, se a finalidade é atendida por:</p><p class="inc">I - resultado: a secretaria dona faz a análise e entrega só o resultado;</p><p class="inc">II - análise na Prefeitura: o solicitante analisa os dados em ambiente controlado da Prefeitura, sem levar cópia;</p><p class="inc">III - dado agregado ou anonimizado; ou</p><p class="inc">IV - dado identificado, limitado ao mínimo necessário, sob o instrumento do art. 9º.</p><p>Parágrafo único. Passa-se ao inciso seguinte só quando o anterior não atender à finalidade, com a justificativa registrada no formulário de pedido. O Anexo III traz perguntas e exemplos para essa escolha.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A maior parte dos pedidos não precisa do dado identificado: precisa de uma contagem, de um mapa ou de uma análise. Entregar a base inteira é o caminho mais arriscado e o que mais trava as secretarias.</p></div>
+      <div><h4>Intenção</h4><p>Transformar a "escada" do Urban Institute numa regra de ordem: começa-se pelo degrau mais protegido. O último degrau da escada original (publicar versão anonimizada para todos) é a abertura, tratada no Capítulo VI.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Urban Institute, escada de formas de compartilhar, no guia do Beeck Center (2020), p. 9 e 16; AISP, Introdução, p. 6 e 22 (começar pelo agregado); LGPD, art. 6º, III.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.1</h4><p>É a parte "como compartilhar" do DM3.1 e a que torna o processo "fácil de usar": o degrau mais protegido costuma dispensar acordo.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art9" data-tipo="novo" data-sub="DM3.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 9º</span><span class="tag novo">Novo</span><span class="tag sub">DM3.1</span></div>
+      <p>Art. 9º O instrumento de compartilhamento depende da classe da base e do destinatário:</p><p class="inc">I - base aberta: nenhum instrumento; o pedido é atendido com a indicação do local de publicação ou com a entrega do arquivo, e a base é considerada para abertura (art. 15);</p><p class="inc">II - base restrita, entre órgãos da Administração Direta: formulário de pedido aprovado pela secretaria dona, com o compromisso do recebedor, dispensados convênio, acordo ou instrumento congênere;</p><p class="inc">III - base restrita, com entidade da Administração Indireta ou com outro ente público, inclusive instituição pública de ensino e pesquisa: acordo de cooperação técnica, convênio ou termo de adesão que contenha, no mínimo, os elementos do Anexo I, acompanhado do formulário de cada pedido; e</p><p class="inc">IV - base restrita, com pessoa jurídica de direito privado, organização da sociedade civil ou pesquisador: termo de uso de dados (Anexo I) e formulário de cada pedido, observados, quando houver dado pessoal, os arts. 26, § 1º, e 27 da LGPD.</p><p>§ 1º Firmado o termo ou o acordo, novos pedidos do mesmo recebedor exigem apenas novo formulário aprovado pela secretaria dona, enquanto o instrumento estiver vigente.</p><p>§ 2º O compartilhamento contínuo para a prestação de serviço, com dado identificado, exigirá também acesso por perfil e registro dos acessos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>É o centro do DM3.1: a WWC pede "orientações sobre quando firmar acordos de compartilhamento". Hoje não há regra, e o padrão tende a ser o convênio, que é lento até entre secretarias da mesma Prefeitura.</p></div>
+      <div><h4>Intenção</h4><p>Uma linha por situação. Entre secretarias, a Prefeitura é uma só pessoa jurídica: basta o formulário, como no decreto federal, que dispensa convênio entre órgãos. Com outro ente, o instrumento que já se usa (cooperação ou adesão), desde que traga os elementos do termo. Com o setor privado, o termo-padrão. O § 1º é o achado de Los Angeles County: um termo por parceiro e um formulário por projeto, em vez de um acordo novo a cada estudo.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto federal 10.046/2019, art. 5º (dispensa de convênio entre órgãos); LGPD, arts. 26 e 27; AISP, Introdução, p. 6 e 16–17 (a finalidade define o instrumento: agregado, acordo simples ou nenhum; análise, memorando e termo de uso; operação, acesso por perfil e trilha de auditoria); AISP, estudo de caso de Los Angeles County (2014), e guia do Beeck Center, p. 17 (memorando-padrão + formulário por projeto); San Antonio, Diretiva 7.12 (acordo-padrão aprovado em 2019 para parceiros externos).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.1</h4><p>É a "orientação sobre quando firmar acordos" do DM3.1. O termo assinado com um parceiro é a "cópia de um acordo vigente" que a WWC sugere como evidência.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art10" data-tipo="novo" data-sub="DM3.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 10</span><span class="tag novo">Novo</span><span class="tag sub">DM3.1</span></div>
+      <p>Art. 10. Em todo compartilhamento de base restrita, o recebedor se compromete a:</p><p class="inc">I - usar os dados apenas para a finalidade aprovada;</p><p class="inc">II - não repassar os dados a terceiros nem cruzá-los com outras bases sem autorização da secretaria dona;</p><p class="inc">III - não tentar reidentificar pessoas em dados anonimizados ou agregados;</p><p class="inc">IV - restringir o acesso às pessoas indicadas no formulário, que assinarão termo de confidencialidade;</p><p class="inc">V - comunicar sem demora à secretaria dona e ao Encarregado qualquer incidente de segurança;</p><p class="inc">VI - enviar à secretaria dona, com antecedência mínima de 10 (dez) dias úteis, os resultados a publicar que derivem de dado pessoal, cuja revisão se limitará à proteção de dados pessoais e à correção de erro sobre os dados, sem impedir a divulgação das conclusões;</p><p class="inc">VII - citar a fonte dos dados; e</p><p class="inc">VIII - eliminar ou devolver os dados ao fim da finalidade ou do prazo, declarando-o à secretaria dona.</p><p>Parágrafo único. Entre órgãos da Administração Direta, estes compromissos constam do formulário de pedido (Anexo II, parte G); nos demais casos, do termo de uso ou do acordo.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Os compromissos do recebedor são o que dá segurança à secretaria dona para dizer "sim". Pô-los no ato evita negociá-los a cada pedido.</p></div>
+      <div><h4>Intenção</h4><p>Um núcleo mínimo que vale para todos, inclusive entre secretarias, onde não há termo. A revisão antes de publicar (VI) protege a privacidade sem virar censura, como recomenda a NNIP; o prazo de 10 dias úteis fica entre os 10 dias do MOU e os 14 do acordo de Washington.</p></div>
+      <div class="origem"><h4>Origem</h4><p>NNIP/Urban Institute, elementos de um acordo de compartilhamento (itens 5, 7, 10 e 11); NNIP, MOU de exemplo (revisão 10 dias antes da divulgação; sem repasse) e acordo escola–instituto de Washington, 2009 (termo de confidencialidade individual; só agregado nas publicações; destruição no fim; 14 dias para revisão); AISP, Introdução, p. 16–17 (licença de uso); Decreto federal 10.046/2019, arts. 3º, II, e 14, § 2º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.1</h4><p>Completa o processo do DM3.1 com as proteções para os "dados protegidos".</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art11" data-tipo="novo" data-sub="DM3.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 11</span><span class="tag novo">Novo</span><span class="tag sub">DM3.1</span></div>
+      <p>Art. 11. Serão publicados na página de Dados Abertos e mantidos atualizados:</p><p class="inc">I - a relação dos compartilhamentos vigentes de bases restritas (Anexo IV, parte A), com as partes, a finalidade, a base legal, as categorias de dados e o prazo; e</p><p class="inc">II - a relação dos pedidos recebidos e das respostas (Anexo IV, parte B), sem identificar pessoas naturais solicitantes.</p><p>Parágrafo único. Não serão publicadas informações que permitam acesso indevido a sistemas ou que revelem conteúdo protegido.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A LGPD obriga o poder público a informar, em local de fácil acesso, as hipóteses em que trata dados pessoais, com finalidade e procedimentos (art. 23, I); o decreto federal estende isso aos compartilhamentos e pede a lista dos vigentes.</p></div>
+      <div><h4>Intenção</h4><p>Cumprir a LGPD e, ao mesmo tempo, produzir a evidência que a WWC sugere: o inventário dos acordos. Publicar os pedidos (II) mostra que o canal funciona e se o prazo é cumprido.</p></div>
+      <div class="origem"><h4>Origem</h4><p>LGPD, art. 23, I; Decreto federal 10.046/2019, art. 5º, §§ 1º e 2º, e art. 30, § 1º (catálogo e compartilhamentos vigentes); NNIP, registro de dados confidenciais; OD1 v02, art. 15, III (pedidos e respostas publicados).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.1</h4><p>É o "inventário dos acordos de compartilhamento" da evidência sugerida do DM3. A parte B também mostra a resposta em prazo do DM3.3.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo V – Dos pedidos de dados</div>
+  <article class="art novo" id="art12" data-tipo="novo" data-sub="DM3.3 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 12</span><span class="tag novo">Novo</span><span class="tag sub">DM3.3</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 12. Os pedidos de dados de órgãos municipais, de outros entes públicos e de parceiros externos serão apresentados pelo formulário do Anexo II, em canal único mantido pelo DTI e divulgado na página de Dados Abertos e na intranet.</p><p>§ 1º O DTI registrará o pedido, com número e data, e o encaminhará à secretaria dona em até 2 (dois) dias úteis.</p><p>§ 2º O pedido de dado já publicado será respondido pelo DTI com a indicação do local de publicação.</p><p>§ 3º O pedido recebido por outro meio, como ofício ou mensagem eletrônica, será registrado pelo DTI no canal.</p><p>§ 4º O pedido de cidadão sobre informação pública segue a Lei Federal nº 12.527, de 2011, e o Decreto Municipal nº 18.882, de 2014.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O canal do cidadão existe (LAI), mas não há canal para uma secretaria pedir dados a outra nem para um parceiro pedir dado restrito. Hoje isso corre por ofício ou e-mail, sem registro nem prazo.</p></div>
+      <div><h4>Intenção</h4><p>Um formulário só, para todos os que não são o cidadão comum, e um único lugar que registra. A ferramenta é escolha do município: PRODIGI, Atende Bem ou um formulário simples; o que importa é o link público e o número do pedido. O § 3º impede que o pedido por ofício fique fora do controle.</p></div>
+      <div class="origem"><h4>Origem</h4><p>San Antonio, Diretiva 7.12 (formulário para pedir bases); KYSTATS (Kentucky), no kit de equidade da AISP, p. 23 e 56–57 (formulários on-line e fluxo do pedido); AISP, kit de equidade, p. 23 (processo de pedido acessível, com regras publicadas); Decreto Municipal 18.882/2014, art. 9º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.3</h4><p>É a "forma fácil de receber pedidos internos e externos" do DM3.3. O link do formulário é a primeira evidência sugerida pela WWC ("link de um canal on-line").</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art13" data-tipo="novo" data-sub="DM3.3 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 13</span><span class="tag novo">Novo</span><span class="tag sub">DM3.3</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 13. A secretaria dona responderá ao pedido em até 20 (vinte) dias, contados do recebimento, prorrogáveis por mais 10 (dez) dias mediante justificativa comunicada ao solicitante.</p><p>§ 1º A resposta será uma das seguintes:</p><p class="inc">I - aprovação, com a forma (art. 8º) e o instrumento (art. 9º);</p><p class="inc">II - aprovação com ajustes, como forma mais protegida, menos campos ou outro período; ou</p><p class="inc">III - recusa fundamentada, com o motivo e, quando houver, a alternativa possível.</p><p>§ 2º Aprovado o pedido e firmado o instrumento, quando exigido, os dados serão disponibilizados no prazo indicado no formulário, não superior a 30 (trinta) dias.</p><p>§ 3º A manifestação do Encarregado, quando exigida (art. 6º), ocorrerá dentro do prazo do caput.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM3.3 pede que as áreas donas dos dados respondam "em prazo adequado". Sem prazo escrito, o pedido interno espera indefinidamente.</p></div>
+      <div><h4>Intenção</h4><p>Usar o prazo que as secretarias já conhecem, o da LAI municipal (20 + 10 dias), em vez de inventar outro. A soma, 30 dias, é o prazo do decreto federal para o gestor responder. A resposta com ajustes (II) evita que a escolha seja só "sim ou não". O prazo é escolha do município: para pedidos internos, pode ser menor.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto Municipal 18.882/2014, art. 12 (20 dias, prorrogáveis por 10); Decreto federal 10.046/2019, art. 9º (acesso em 30 dias) e art. 15, § 2º (manifestação do gestor em 30 dias); KYSTATS, fluxo com prazo de resposta (kit de equidade da AISP).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.3</h4><p>É a "exigência de resposta em prazo adequado" do DM3.3. Em 2025, os pedidos da LAI levaram em média 28,9 dias, com 61% de prorrogações (ficha OD1): o registro do art. 11 mostrará se o prazo daqui é cumprido.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art14" data-tipo="novo" data-sub="DM3.3 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 14</span><span class="tag novo">Novo</span><span class="tag sub">DM3.3</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 14. Da recusa, da aprovação com ajustes ou da falta de resposta no prazo, o solicitante poderá pedir revisão ao CGPD em até 10 (dez) dias.</p><p>§ 1º O CGPD decidirá na reunião seguinte, ouvidos a secretaria dona e, quando houver dado pessoal, o Encarregado.</p><p>§ 2º Os pedidos não respondidos no prazo constarão do Registro como "em atraso" e do relatório previsto no art. 5º, VI.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Prazo sem consequência não é exigência. Alguém precisa decidir quando o solicitante discorda ou quando a secretaria não responde.</p></div>
+      <div><h4>Intenção</h4><p>Dar ao solicitante uma instância e tornar visível o atraso. O CGPD é o colegiado que já existe e já reúne as secretarias; com o comitê de governança de dados do decreto do SB (CGD) instalado, a revisão dos pedidos sem dado pessoal pode passar a ele. É escolha do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto Municipal 18.882/2014, art. 19 (recurso em 10 dias, inclusive por descumprimento de prazo); Decreto federal 10.046/2019, art. 26 (controvérsias decididas pelo comitê central); Decreto 22.963/2025, art. 4º, III.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.3</h4><p>Reforça a exigência de prazo do DM3.3.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo VI – Da abertura de dados</div>
+  <article class="art novo" id="art15" data-tipo="novo" data-sub="DM3.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 15</span><span class="tag novo">Novo</span><span class="tag sub">DM3.2</span></div>
+      <p>Art. 15. O DTI, com as secretarias donas, organizará ao menos uma vez por ano a lista de bases candidatas à abertura, avaliadas na matriz do Anexo III, parte C, que considera:</p><p class="inc">I - benefícios: a demanda, a utilidade para as políticas públicas e para a população e a prontidão da base; e</p><p class="inc">II - riscos de dano: a reidentificação de pessoas, inclusive pelo cruzamento com bases já publicadas, a exposição de grupos vulneráveis ou de territórios pequenos e os riscos à segurança de pessoas, bens ou sistemas.</p><p>§ 1º São fontes da demanda os pedidos recebidos por este ato (Anexo IV, parte B), os pedidos de acesso à informação, por assunto, e as manifestações da população sobre dados abertos.</p><p>§ 2º Entra obrigatoriamente na lista a base classificada como aberta e a base pedida por mais de um solicitante em 12 meses.</p><p>§ 3º A lista, a avaliação e a decisão sobre cada base serão publicadas na página de Dados Abertos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM3.2 pede um processo para decidir "quando e como abrir", que avalie "oportunidades e danos" e considere "os pedidos já recebidos". A OD1 v02 já prevê a matriz de priorização e o uso dos pedidos da LAI, mas não fala em danos e ainda é minuta.</p></div>
+      <div><h4>Intenção</h4><p>Pôr no mesmo ato os dois lados da matriz, benefícios e danos, e usar como demanda os pedidos deste próprio procedimento: o que é pedido muitas vezes deveria estar publicado (§ 2º). Publicar a decisão (§ 3º) liga a abertura à transparência do OD1.4.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Baton Rouge, manual de dados abertos (priorização de 0 a 5 em cinco critérios; pedidos de acesso como sinal de demanda); AISP, kit de equidade, p. 13 (matriz risco × benefício) e p. 21–22 (abrir tem efeito desigual); guia do Beeck Center, p. 10 (efeito mosaico); OD1 v02, arts. 9º, II, e 14; São Paulo, Lei 17.901/2023, art. 11 (prioridade às bases procuradas pela LAI).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.2</h4><p>É o DM3.2 inteiro: processo documentado, oportunidades (I), danos (II) e pedidos recebidos (§ 1º).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art16" data-tipo="novo" data-sub="DM3.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 16</span><span class="tag novo">Novo</span><span class="tag sub">DM3.2</span></div>
+      <p>Art. 16. A abertura de base que contenha ou possa conter dados pessoais, ou dados sobre pequenos grupos ou territórios, será precedida de:</p><p class="inc">I - manifestação do Encarregado de Proteção de Dados Pessoais;</p><p class="inc">II - verificação do risco de reidentificação, inclusive pelo cruzamento com outras bases publicadas; e</p><p class="inc">III - escolha da forma de publicação que reduza o risco, como agregação, supressão de contagens pequenas ou anonimização.</p><p>Parágrafo único. Quando o risco não puder ser reduzido, a base não será aberta, e o motivo será registrado e publicado, sem revelar conteúdo protegido.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Dados inofensivos isolados podem, combinados com outros já publicados, revelar quem é a pessoa (efeito mosaico). A avaliação de danos precisa de um passo concreto antes de publicar.</p></div>
+      <div><h4>Intenção</h4><p>Três verificações curtas e uma saída clara: se o risco não cai, não se abre, mas se diz por quê. É o mesmo cuidado do art. 16, § 3º, da OD1 v02, antecipado para valer já.</p></div>
+      <div class="origem"><h4>Origem</h4><p>OD1 v02, art. 16, § 3º; guia do Beeck Center, p. 10 (efeito mosaico); caso de Seattle indicado pela WWC no OD1 (revisão do efeito mosaico antes de publicar); AISP, kit de equidade, p. 21–22; LGPD, art. 12 (dado anonimizado).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.2</h4><p>Avaliação de danos do DM3.2. Também apoia o DM5.2 (processo para evitar a divulgação indevida).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art17" data-tipo="novo" data-sub="DM3.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 17</span><span class="tag novo">Novo</span><span class="tag sub">DM3.2</span></div>
+      <p>Art. 17. Publicada a Política Municipal de Dados Abertos, a lista e a avaliação previstas neste Capítulo integrarão o Plano de Dados Abertos nela previsto.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A OD1 v02 prevê um Plano de Dados Abertos com matriz de priorização. Não pode haver duas listas de prioridades.</p></div>
+      <div><h4>Intenção</h4><p>Este Capítulo vale enquanto a política não sai e, depois, passa a alimentar o plano dela.</p></div>
+      <div class="origem"><h4>Origem</h4><p>OD1 v02, art. 9º, II e III.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.2</h4><p>Mantém um só processo de abertura (DM3.2 e OD1).</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo VII – Das disposições finais</div>
+  <article class="art novo" id="art18" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 18</span><span class="tag novo">Novo</span></div>
+      <p>Art. 18. Integram este ato os seguintes anexos:</p><p class="inc">I - Anexo I – Termo de uso de dados;</p><p class="inc">II - Anexo II – Formulário de pedido de dados;</p><p class="inc">III - Anexo III – Guia de decisão; e</p><p class="inc">IV - Anexo IV – Registro de compartilhamentos e pedidos.</p><p>Parágrafo único. O DTI poderá atualizar os Anexos II a IV; o Anexo I será alterado ouvidos a Procuradoria-Geral do Município e o CGPD.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Os anexos são a parte prática. Aprovados junto com o ato, viram norma e contam como evidência.</p></div>
+      <div><h4>Intenção</h4><p>Deixar o formulário, o guia e o registro com quem os opera (DTI) e o termo, que tem efeito jurídico, com a Procuradoria.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decisão de 28/10/2026 (`DecisoesProj.md`): um documento só, com anexos, para que o guia não fique como manual solto.</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art19" data-tipo="novo" data-sub="DM3.1 DM3.4">
+    <div class="texto"><div class="cab"><span class="id">Art. 19</span><span class="tag novo">Novo</span><span class="tag sub">DM3.1</span><span class="tag sub">DM3.4</span></div>
+      <p>Art. 19. As secretarias informarão ao DTI, em até 60 (sessenta) dias da publicação deste ato, os acordos, convênios, termos de adesão, credenciamentos e contratos vigentes que envolvam troca de dados com terceiros, para inclusão no Registro do Anexo IV.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A Prefeitura já troca dados por vários instrumentos (credenciamento das operadoras de patinetes, REDESIM, CEMADEN), mas ninguém tem a lista.</p></div>
+      <div><h4>Intenção</h4><p>Montar o inventário inicial dos acordos sem depender de pesquisa manual. O Anexo IV já vem com os casos achados nos decretos, a confirmar.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto federal 10.046/2019, art. 30, § 1º; evidência sugerida pela WWC no DM3 ("inventário dos acordos de compartilhamento").</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.1 e DM3.4</h4><p>Produz a evidência sugerida do DM3 e ajuda o dossiê do DM3.4 (sistemas compartilhados em uso).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art20" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 20</span><span class="tag novo">Novo</span></div>
+      <p>Art. 20. Este procedimento será incorporado à regulamentação de dados prevista no decreto que instituir a Política e o Programa Municipal de Governança Digital e de Dados, quando editada.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O decreto do SB 101842/2026, ainda na Procuradoria, prevê uma regulamentação de dados que trate de acesso e abertura (art. 25). A DM1 v02 sugere que ela inclua o compartilhamento e a abertura (art. 25, parágrafo único, III e IV).</p></div>
+      <div><h4>Intenção</h4><p>Não esperar o decreto, que só vigora 90 dias depois de publicado, e ao mesmo tempo não criar uma regra paralela: quando a regulamentação vier, este ato vira parte dela.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto do SB 101842/2026 (minuta), arts. 25 e 40; DM1 v02, alteração do art. 25.</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio. Liga o DM3 ao DM1.</p></div>
+    </aside>
+  </article>
+  <article class="art igual" id="art21" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 21</span></div><p>Art. 21. Este ato entra em vigor na data de sua publicação.</p></div>
+  </article>
+  <div class="assinatura" data-bloco="assinatura">São Bernardo do Campo, ………..<br><b>Diretor(a) do Departamento de Tecnologia da Informação</b></div>
+  <div class="capitulo">Anexos</div>
+  <article class="art novo" id="anx1" data-tipo="novo" data-sub="DM3.1">
+    <div class="texto"><div class="cab"><span class="id">Anexo I</span><span class="tag novo">Novo</span><span class="tag sub">DM3.1</span></div>
+      <p><b>Anexo I – Termo de uso de dados (modelo)</b></p><p>TERMO DE USO DE DADOS Nº ……/…… entre o Município de São Bernardo do Campo, por meio da [secretaria dona do dado], e [recebedor].</p><p>Cláusula 1 – Finalidade. Os dados serão usados exclusivamente para a finalidade descrita no formulário de pedido aprovado (Anexo II), que integra este termo. Cada novo projeto exige novo formulário aprovado pela secretaria dona.</p><p>Cláusula 2 – Vigência e saída. Este termo vigora pelo prazo indicado no formulário, de até 2 (dois) anos, prorrogável. Qualquer parte pode encerrá-lo com aviso prévio de 60 (sessenta) dias.</p><p>Cláusula 3 – Dados. Os dados são os listados, campo a campo, no formulário aprovado, limitados ao mínimo necessário à finalidade.</p><p>Cláusula 4 – Atualização. Quando houver mais de uma entrega, a periodicidade é a do formulário.</p><p>Cláusula 5 – Guarda e segurança. A transmissão usará o meio seguro indicado pelo DTI. O recebedor guardará os dados em ambiente com acesso controlado, restrito às pessoas indicadas no formulário, que assinarão termo de confidencialidade, e comunicará sem demora à secretaria dona e ao Encarregado de Proteção de Dados Pessoais qualquer incidente de segurança.</p><p>Cláusula 6 – Responsáveis. Cada parte indica um ponto de contato. O recebedor indica também um responsável pela guarda, que registra o que recebeu e o destino dado aos dados.</p><p>Cláusula 7 – Usos permitidos, cruzamento e repasse. É vedado usar os dados para fim diverso do aprovado, repassá-los a terceiros, cruzá-los com bases não previstas no formulário, tentar reidentificar pessoas e usá-los para decisões sobre pessoas determinadas, salvo se essa for a finalidade aprovada.</p><p>Cláusula 8 – Custos. Cada parte arca com os próprios custos, sem pagamento pelos dados.</p><p>Cláusula 9 – Qualidade. Os dados são entregues no estado em que se encontram, com as limitações conhecidas informadas pela secretaria dona, sem garantia de completude ou exatidão.</p><p>Cláusula 10 – Responsabilidade. Cada parte responde pelos atos que praticar, nos termos da legislação, inclusive dos arts. 42 a 45 da LGPD, e avisará a outra, sem demora, de reclamação ou ação judicial que envolva os dados.</p><p>Cláusula 11 – Publicação dos resultados. Só se publicam resultados agregados, que não identifiquem pessoas. Resultados derivados de dado pessoal serão enviados à secretaria dona com 10 (dez) dias úteis de antecedência; a revisão se limita à proteção de dados pessoais e à correção de erro sobre os dados, sem impedir a divulgação das conclusões. A publicação citará a fonte, e uma cópia será enviada ao Município.</p><p>Cláusula 12 – Término e destino dos dados. Encerrada a finalidade, o prazo ou o termo, o recebedor eliminará ou devolverá os dados e o declarará por escrito à secretaria dona.</p><p>Local, data e assinaturas: titular da secretaria dona; representante legal do recebedor.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Um termo-padrão evita redigir e negociar um acordo novo a cada parceiro. Em Los Angeles County, foi isso que destravou o processo.</p></div>
+      <div><h4>Intenção</h4><p>Uma cláusula para cada um dos 12 elementos que a NNIP lista, adaptados à LGPD. O termo remete ao formulário: o termo fixa as regras, o formulário descreve o projeto.</p></div>
+      <div class="origem"><h4>Origem</h4><p>NNIP/Urban Institute, elementos de um acordo de compartilhamento (12 elementos, na ordem das cláusulas); NNIP, MOU de exemplo (saída com aviso de 60 dias; revisão antes da divulgação) e acordo de Washington, 2009 (responsável pela guarda; termo de confidencialidade; destruição); AISP, estudo de caso de Los Angeles County; LGPD, arts. 26, 27 e 42 a 45.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.1</h4><p>Modelo do acordo do DM3.1. Assinado com um parceiro, vira a "cópia de um acordo vigente" da evidência sugerida.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx2" data-tipo="novo" data-sub="DM3.3 DM3.1">
+    <div class="texto"><div class="cab"><span class="id">Anexo II</span><span class="tag novo">Novo</span><span class="tag sub">DM3.3</span><span class="tag sub">DM3.1</span></div>
+      <p><b>Anexo II – Formulário de pedido de dados</b></p><p>O formulário é preenchido pelo solicitante (partes A a G) e pela secretaria dona (parte H). O DTI atribui número e data e orienta o preenchimento.</p><div class="tab"><table class="anexo"><thead><tr><th>Parte</th><th>O que se informa</th></tr></thead><tbody><tr><td>A. Identificação</td><td>Número e data (DTI); solicitante (órgão, entidade ou pessoa); responsável e contato; tipo de pedido: entre órgãos da Prefeitura, outro ente público ou parceiro externo.</td></tr><tr><td>B. Finalidade</td><td>Problema de política pública, serviço ou pesquisa que se quer resolver; como os dados serão usados; base legal, quando houver dado pessoal; prazo de uso.</td></tr><tr><td>C. Dados pedidos</td><td>Secretaria dona; base; campos; período; recorte (território, público); periodicidade, se houver mais de uma entrega.</td></tr><tr><td>D. Forma (art. 8º)</td><td>Forma pedida (resultado, análise na Prefeitura, agregado ou anonimizado, identificado) e por que as formas mais protegidas não atendem.</td></tr><tr><td>E. Segurança</td><td>Pessoas que terão acesso; onde os dados ficarão; meio de recebimento; data prevista de eliminação.</td></tr><tr><td>F. Publicação</td><td>O que se pretende publicar com os dados, e quando.</td></tr><tr><td>G. Compromisso do recebedor</td><td>Declaração de que cumprirá os compromissos do art. 10. Nos pedidos entre órgãos da Prefeitura, substitui o termo de uso.</td></tr><tr><td>H. Decisão (secretaria dona)</td><td>Classe da base (art. 7º); decisão (aprovado, aprovado com ajustes, recusado); forma e instrumento; motivo; manifestação do Encarregado, quando houver dado pessoal; prazo de entrega; data e responsável.</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O pedido precisa ser descrito do mesmo jeito sempre, para que a secretaria dona decida rápido e o registro seja comparável.</p></div>
+      <div><h4>Intenção</h4><p>Um formulário curto, no modelo de Los Angeles County (resumo do projeto e tabela das bases), com a decisão no próprio documento. A parte D obriga a pensar na escada antes de pedir a base inteira.</p></div>
+      <div class="origem"><h4>Origem</h4><p>AISP, estudo de caso de Los Angeles County (formulário por projeto: resumo e tabela das bases, aprovado pelo órgão dono); Decreto federal 10.046/2019, arts. 5º, § 3º, e 15 (pedido fundamentado, com os dados especificados no maior detalhe possível); KYSTATS (formulários on-line).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.3 e DM3.1</h4><p>É o instrumento da "forma fácil de receber pedidos" do DM3.3 e o pedido registrado do DM3.1.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx3" data-tipo="novo" data-sub="DM3.1 DM3.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo III</span><span class="tag novo">Novo</span><span class="tag sub">DM3.1</span><span class="tag sub">DM3.2</span></div>
+      <p><b>Anexo III – Guia de decisão</b></p><p>Parte A – Três perguntas antes de compartilhar. 1. É legal? Há base legal e nenhum sigilo impede? Na dúvida, ouvir o Encarregado ou a Procuradoria. 2. É ético? O uso pode prejudicar as pessoas que estão nos dados ou grupos já expostos? Será usado contra o próprio cidadão? 3. É boa ideia? O pedido resolve um problema concreto? Uma forma mais simples atende?</p><p>Parte B – A escada de formas de compartilhar (art. 8º). Começa-se pelo degrau 1 e só se sobe quando o anterior não atende.</p><div class="tab"><table class="anexo"><thead><tr><th>Degrau</th><th>Quando serve</th><th>Exemplo</th></tr></thead><tbody><tr><td>1. Só o resultado</td><td>A pergunta tem resposta numérica ou analítica.</td><td>Uma secretaria quer saber quantas famílias atendidas por um programa moram em área de risco: a secretaria dona faz o cruzamento e devolve só a contagem por bairro.</td></tr><tr><td>2. Análise na Prefeitura</td><td>A análise precisa de registros individuais, mas não de levar a base.</td><td>Uma universidade analisa registros de atendimento num computador da Prefeitura, sem copiar os dados.</td></tr><tr><td>3. Agregado ou anonimizado</td><td>Indicadores, estudos e mapas.</td><td>Viagens de patinetes entregues por região e faixa de horário, sem trajetos individuais.</td></tr><tr><td>4. Identificado, sob termo</td><td>Atendimento a pessoas determinadas, por mais de uma secretaria.</td><td>Em alerta de chuva, a Defesa Civil e a Assistência Social usam a mesma lista de famílias de área de risco para avisar e acolher.</td></tr></tbody></table></div><p>Parte C – Matriz de abertura (art. 15). Cada critério recebe 0, 1 ou 2. Leitura: benefício de 4 a 6 e risco de 0 a 1, abrir no próximo ciclo; benefício de 4 a 6 e risco de 2 a 3, abrir depois de tratar (agregar, anonimizar, suprimir contagens pequenas); risco de 4 a 6, ou nota 2 em reidentificação sem tratamento possível, não abrir e registrar o motivo; benefício de 0 a 3 e risco baixo, abrir quando houver capacidade.</p><div class="tab"><table class="anexo"><thead><tr><th>Critério</th><th>0</th><th>1</th><th>2</th></tr></thead><tbody><tr><td>Benefício: demanda</td><td>Nenhum pedido</td><td>Um pedido no ano</td><td>Dois ou mais pedidos, ou tema de consulta pública</td></tr><tr><td>Benefício: utilidade</td><td>Só uso interno</td><td>Útil a um público específico</td><td>Útil a muitos públicos ou a política prioritária</td></tr><tr><td>Benefício: prontidão</td><td>Precisa de muito tratamento</td><td>Precisa de ajustes</td><td>Pronta para publicar</td></tr><tr><td>Risco: reidentificação</td><td>Não trata de pessoas</td><td>Trata de pessoas, em agregado</td><td>Registros individuais ou contagens pequenas</td></tr><tr><td>Risco: grupos expostos</td><td>Não trata de grupos vulneráveis</td><td>Trata, em agregado amplo</td><td>Permite apontar grupos ou territórios pequenos</td></tr><tr><td>Risco: segurança</td><td>Nenhum</td><td>Baixo</td><td>Expõe pessoas, bens ou sistemas</td></tr></tbody></table></div><p>Exemplo de leitura: os dados de chuva da rede do CIM têm demanda e utilidade altas (orientam a Operação São Bernardo Protege, e o Decreto 23.103/2025 já manda publicá-los) e risco zero: abrir no próximo ciclo.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Regras gerais não bastam para quem decide um pedido concreto. O guia dá as perguntas e exemplos de SBC, e aprovado junto com o ato vira norma.</p></div>
+      <div><h4>Intenção</h4><p>Três ferramentas curtas: as três perguntas da AISP, a escada do Urban Institute com exemplos locais e uma matriz de abertura simples, de 0 a 2, que qualquer secretaria aplica sem planilha. Os exemplos são ilustrativos, não descrevem compartilhamentos que já existam.</p></div>
+      <div class="origem"><h4>Origem</h4><p>AISP, Introdução, p. 10 (três perguntas); Urban Institute, escada, no guia do Beeck Center, p. 9 e 16; AISP, kit de equidade, p. 13 (matriz risco × benefício); Baton Rouge, manual de dados abertos (priorização de 0 a 5 em cinco critérios, aqui simplificada); Decreto 23.103/2025, art. 3º, § 1º, I.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.1 e DM3.2</h4><p>A escada orienta "quando firmar acordo" (DM3.1); a matriz é a avaliação de oportunidades e danos do DM3.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx4" data-tipo="novo" data-sub="DM3.1 DM3.3 DM3.4">
+    <div class="texto"><div class="cab"><span class="id">Anexo IV</span><span class="tag novo">Novo</span><span class="tag sub">DM3.1</span><span class="tag sub">DM3.3</span><span class="tag sub">DM3.4</span></div>
+      <p><b>Anexo IV – Registro de compartilhamentos e pedidos</b></p><p>O Registro tem três partes. As partes A e B são publicadas na página de Dados Abertos (art. 11); a parte C é interna. A parte A vem pré-preenchida com os casos achados nos decretos municipais, a confirmar pelas secretarias (art. 19).</p><p><b>Parte A – Compartilhamentos vigentes (pública)</b></p><div class="tab"><table class="anexo"><thead><tr><th>Partes (quem entrega → quem recebe)</th><th>Instrumento</th><th>Dados</th><th>Dado pessoal?</th><th>Finalidade</th><th>Vigência</th></tr></thead><tbody><tr><td>Operadoras credenciadas de bicicletas e patinetes → Secretaria de Transporte</td><td>Credenciamento (Decreto 23.119/2025, art. 7º, VII)</td><td>Uso diário: trajetos, horários, viagens, usuários, quilometragem</td><td>Não (anonimizados)</td><td>Políticas de mobilidade</td><td>A confirmar</td></tr><tr><td>CEMADEN (federal) e rede do CIM → Defesa Civil</td><td>Decreto 23.103/2025; instrumento com o CEMADEN a confirmar</td><td>Chuva medida por pluviômetros</td><td>Não</td><td>Níveis de alerta da Operação São Bernardo Protege</td><td>A confirmar</td></tr><tr><td>Município, Estado e União (REDESIM)</td><td>Termo de adesão (Decreto 22.602/2024)</td><td>Registro e licenciamento de empresas</td><td>A confirmar</td><td>Licenciamento integrado</td><td>A confirmar</td></tr></tbody></table></div><p><b>Parte B – Pedidos recebidos (pública)</b></p><div class="tab"><table class="anexo"><thead><tr><th>Nº e data</th><th>Solicitante (órgão ou categoria)</th><th>Dados pedidos</th><th>Secretaria dona</th><th>Prazo</th><th>Respondido em</th><th>Decisão e motivo</th></tr></thead><tbody><tr><td colspan="7" class="vaz">Preenchido a cada pedido.</td></tr></tbody></table></div><p><b>Parte C – Controle das entregas (interna)</b></p><div class="tab"><table class="anexo"><thead><tr><th>Nº do pedido</th><th>Data</th><th>O que foi entregue</th><th>Meio</th><th>Quem recebeu</th><th>Eliminação declarada em</th></tr></thead><tbody><tr><td colspan="6" class="vaz">Preenchido a cada pedido.</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Sem registro não há prova de que o procedimento funciona, nem como cumprir a publicidade que a LGPD exige.</p></div>
+      <div><h4>Intenção</h4><p>Uma planilha de três abas: o inventário dos acordos (A), os pedidos com prazo e decisão (B) e o controle de entregas (C), no modelo do registro de dados confidenciais da NNIP. A parte A pré-preenchida mostra à equipe o que já existe.</p></div>
+      <div class="origem"><h4>Origem</h4><p>NNIP, registro de dados confidenciais (ficha por item recebido e linha do tempo); Decreto federal 10.046/2019, art. 30, § 1º; LGPD, art. 23, I; Decretos 23.119/2025, 23.103/2025 e 22.602/2024.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM3.1 e DM3.3 e DM3.4</h4><p>A parte A é o "inventário dos acordos de compartilhamento" da evidência sugerida; a parte B mostra o prazo do DM3.3; os casos da parte A alimentam o dossiê do DM3.4.</p></div>
+    </aside>
+  </article>
+  <div class="vazio" id="vazio">Nenhum item corresponde ao filtro escolhido.</div>
+</section>
+
+<section class="cartao obs">
+  <h2>Observações para quem for decidir</h2>
+  <ol>
+    <li><b>Natureza deste texto.</b> É um rascunho de indicação técnica, para servir de base à equipe e à Procuradoria. A decisão cabe ao município.</li>
+    <li class="destaque"><b>Instrumento (ponto de escolha).</b> O texto está escrito como ato do DTI aprovado pelo CGPD, com base no Decreto 22.963/2025, que já prevê que o Programa de Proteção de Dados produza "minutas-padrão, modelos de documentação e procedimentos" (art. 2º, II). Para obrigar as demais secretarias a responder no prazo (art. 13), o ato precisa alcançá-las: uma instrução só do DTI pode não bastar, e a alternativa é uma portaria do Secretário de Administração ou resolução do CGPD. A escolha cabe à equipe e à Procuradoria (ficha DM3, pedido 6).</li>
+    <li><b>Por que um documento só, com anexos.</b> A WWC pede "processo documentado". Aprovados junto com o ato, o termo, o formulário, o guia e o registro viram norma e contam como evidência; um manual à parte corre o risco de nunca ser aprovado. O exemplo aceito pela WWC (San Antonio) é uma seção de uma página: o corpo deste ato pode ser encurtado sem perder o critério, desde que fiquem quem decide, o instrumento por destinatário, o canal com prazo e a matriz de abertura.</li>
+    <li><b>Prazo da certificação (18/12/2026).</b> O DM3 não tem janela temporal e pede 3 de 4. Publicado antes do envio, o ato cobre o DM3.1, o DM3.2 e o DM3.3; o DM3.4 depende da prova de uso pedida à equipe. Com o link do formulário (art. 12) e o Registro com os acordos (Anexo IV), a evidência sugerida fica completa.</li>
+    <li><b>Encaixe no decreto do SB 101842/2026 e na OD1 v02.</b> O ato antecipa o que a DM1 v02 sugere pôr na regulamentação de dados (art. 25, parágrafo único, III e IV) e passa a fazer parte dela quando editada (art. 20). As três classes de acesso (art. 7º) correspondem às cinco categorias de abertura da OD1 v02 (art. 16), e a lista de abertura passa ao Plano de Dados Abertos quando a política sair (art. 17). A avaliação de danos que falta na OD1 v02 vai para a v03 dela (Backlog).</li>
+    <li><b>Números escolhidos aqui.</b> Os prazos são propostas, não medidas: 20 + 10 dias para responder (os da LAI municipal; somados, os 30 dias do Decreto federal 10.046/2019), 2 dias úteis para o DTI encaminhar, 30 dias para entregar, 10 dias úteis para rever publicações (entre os 10 dias do MOU e os 14 do acordo de Washington, da NNIP) e 60 dias para levantar os acordos. A matriz de 0 a 2 é uma simplificação da de Baton Rouge (0 a 5).</li>
+    <li><b>O que ficou de fora.</b> A ligação de registros pessoais de várias secretarias num sistema integrado, como em Los Angeles County, não é proposta: pede infraestrutura e debate próprios. Dados de segurança pública e biometria (Muralha Paulista) também não: o kit da AISP, recurso indicado pela WWC no DM3, desaconselha ligar dados da polícia e usar reconhecimento facial.</li>
+    <li><b>Anexo IV pré-preenchido.</b> As três linhas da parte A saíram dos decretos lidos (23.119/2025, 23.103/2025 e 22.602/2024). Instrumento, dados pessoais e vigência estão "a confirmar" com a equipe (ficha DM3, pedido 1).</li>
+  </ol>
+</section>
+
+<section class="cartao fontes">
+  <h2>Fontes</h2>
+  <ul>
+    <li>What Works Cities, critério DM3 (v4): definição, subcritérios, evidência sugerida e glossário; pacote do Fórum (San Antonio, Diretiva Administrativa 7.12, 2021).</li>
+    <li>AISP (Universidade da Pensilvânia): Introdução ao compartilhamento e integração de dados (2020); kit de equidade racial na integração de dados (2020), inclusive o caso KYSTATS; estudo de caso de Los Angeles County (2014).</li>
+    <li>NNIP/Urban Institute: elementos de um acordo de compartilhamento de dados; MOU de exemplo; acordo escola–instituto de pesquisa de Washington (2009); registro de dados confidenciais.</li>
+    <li>Beeck Center (Georgetown), guia de governança do compartilhamento de dados (2020), com a escada de formas de compartilhar do Urban Institute.</li>
+    <li>Baton Rouge, manual de dados abertos (priorização), lido no OD1.</li>
+    <li>Lei Federal 13.709/2018 (LGPD), arts. 5º, 6º, 7º, 11, 12, 23, 26, 27, 39 e 42 a 45; Lei Federal 12.527/2011; Decreto federal 10.046/2019, arts. 1º a 5º, 9º, 14, 15, 26 e 30.</li>
+    <li>São Bernardo do Campo: Decreto 18.882/2014 (LAI), arts. 9º, 12 e 19; Decreto 22.963/2025 (Programa de Proteção de Dados e CGPD); Lei 7.367/2025, art. 645, XIII; Decretos 23.103/2025, 23.119/2025 e 22.602/2024; minuta do decreto de governança digital e de dados (processo SB 101842/2026), arts. 17, 25, 26 e 40.</li>
+    <li>Recomendações deste projeto: DM1 v02 (`versoes/DM1-v02.md`) e OD1 v02 (`versoes/OD1-v02.md`); ficha DM3 (`fichas/DM3.md`).</li>
+  </ul>
+</section>
+
+</main>
+<div class="rodape">Procedimento preparado para o Painel WWC · SBC. Rascunho de indicação técnica; não substitui a análise da Procuradoria.</div>
+
+<script>
+(function () {
+  var estado = { sub: 'todos' };
+  var arts = Array.prototype.slice.call(document.querySelectorAll('.art'));
+  var caps = Array.prototype.slice.call(document.querySelectorAll('.capitulo'));
+  var blocos = Array.prototype.slice.call(document.querySelectorAll('[data-bloco]'));
+  function aplicar() {
+    var visiveis = 0;
+    arts.forEach(function (a) {
+      var subs = (a.getAttribute('data-sub') || '').split(' ');
+      var ok = estado.sub === 'todos' || subs.indexOf(estado.sub) >= 0;
+      a.hidden = !ok; if (ok) visiveis++;
+    });
+    caps.forEach(function (c) {
+      var el = c.nextElementSibling, algum = false;
+      while (el && el.classList.contains('art')) { if (!el.hidden) algum = true; el = el.nextElementSibling; }
+      c.hidden = !algum;
+    });
+    blocos.forEach(function (b) { b.hidden = estado.sub !== 'todos'; });
+    document.getElementById('vazio').style.display = visiveis ? 'none' : 'block';
+    document.getElementById('contagem').textContent = visiveis + ' de ' + arts.length + ' itens';
+  }
+  document.querySelectorAll('[data-filtro]').forEach(function (g) {
+    g.addEventListener('click', function (ev) {
+      var b = ev.target.closest('button'); if (!b) return;
+      estado.sub = b.getAttribute('data-v');
+      g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      aplicar();
+    });
+  });
+  document.querySelectorAll('.sub-card .arts a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var alvo = document.querySelector(a.getAttribute('href'));
+      if (alvo && alvo.hidden) {
+        estado.sub = 'todos';
+        document.querySelectorAll('[data-filtro] button').forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-v') === 'todos' ? 'true' : 'false'); });
+        aplicar();
+      }
+    });
+  });
+  aplicar();
+})();
+</script>
+</body>
+</html>
