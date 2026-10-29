@@ -277,6 +277,11 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
       <div class="bloco-corpo"><div class="tabela-wrap"><table id="tabela-ordem"></table></div></div>
     </details>
 
+    <details class="bloco" id="mapa">
+      <summary><h2>Mapa dos documentos</h2><span class="seta" aria-hidden="true">›</span></summary>
+      <div class="bloco-corpo"><p class="nota" id="mapa-intro"></p><div class="tabela-wrap"><table id="tabela-mapa"></table></div><p class="nota" id="mapa-nota"></p></div>
+    </details>
+
     <details class="bloco" id="pendencias">
       <summary><h2>Pendências para a equipe</h2><span class="seta" aria-hidden="true">›</span></summary>
       <div class="bloco-corpo"><div class="pend-grid" id="pend-grid"></div></div>
@@ -297,7 +302,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
 </div>
 <footer>Página de trabalho da equipe. Não indexada por buscadores. As respostas só são inseridas na plataforma depois da validação da equipe.</footer>
 
-<script src="dados.js?v=308BD8183B"></script>
+<script src="dados.js?v=F1C4F438C1"></script>
 <script>
 (function () {
   const P = window.PAINEL;
@@ -411,6 +416,20 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
     </tr>`).join('') + '</tbody>';
   document.querySelectorAll('tr.clicavel').forEach(tr => tr.addEventListener('click', e => { if (e.target.tagName !== 'A') abrir(tr.dataset.alvo, true); }));
 
+  // Mapa dos documentos: o que se propõe criar ou atualizar, por critério
+  if (P.mapa) {
+    $('#mapa-intro').textContent = P.mapa.intro || '';
+    $('#mapa-nota').textContent = P.mapa.nota || '';
+    $('#tabela-mapa').innerHTML = `<thead><tr><th>Critério</th><th>Assunto</th><th>Documento</th><th>Criar ou atualizar</th><th>Processo</th></tr></thead><tbody>` +
+      P.mapa.linhas.map(l => `<tr>
+        <td><a href="#${l.criterio}" class="interno"><strong>${esc(l.criterio)}</strong></a></td>
+        <td>${esc(l.assunto)}</td>
+        <td>${esc(l.documento)}${l.u ? ` <a href="${esc(l.u)}">Abrir a proposta</a>` : ''}</td>
+        <td>${tag(l.acao === 'Atualizar' ? { r: 'Atualizar', c: 't-laranja' } : { r: 'Criar', c: 't-azul' })} ${esc(l.detalhe || '')}</td>
+        <td>${esc(l.processo)}</td>
+      </tr>`).join('') + '</tbody>';
+  } else { $('#mapa').remove(); }
+
   // Pendências
   const pend = [];
   P.criterios.filter(emAberto).forEach(c => pend.push(`<div class="pend"><h3>Decisão · ${c.codigo}</h3>
@@ -433,6 +452,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
   $('#lateral').innerHTML = `<h2>Painel</h2>
     <a href="#visao-geral"><span class="tit" style="color:inherit">Visão geral</span></a>
     <a href="#ordem"><span class="tit" style="color:inherit">Ordem de trabalho</span></a>
+    <a href="#mapa"><span class="tit" style="color:inherit">Mapa dos documentos</span></a>
     <a href="#pendencias"><span class="tit" style="color:inherit">Pendências para a equipe</span></a>` +
     P.areas.map(a => `<h2>${a.id} · ${esc(a.nome)}</h2>` + daArea(a.id)
       .map(c => `<a href="#${c.codigo}" data-nav="${c.codigo}"><span class="ponto" style="background:${FICHA[c.ficha].cor}" title="${esc(FICHA[c.ficha].r)}"></span><span class="cod">${c.codigo}</span><span class="tit">${esc(c.titulo)}</span></a>`).join('')).join('') +

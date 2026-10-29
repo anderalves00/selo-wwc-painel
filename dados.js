@@ -61,6 +61,24 @@ window.PAINEL = {
   atualizado: '2026-10-29',
   prazos: { envio: '2026-12-18', interno: '1ª semana de dezembro de 2026' },
 
+  // Mapa dos documentos (pedido do usuário, 2026-10-29): o que se propõe criar ou atualizar, por critério, com o processo SB.
+  // Mesma tabela do passo 2 do roteiro, sem as falas. acao: 'Criar' | 'Atualizar'; u: proposta no painel, se houver.
+  mapa: {
+    intro: 'O que o projeto propõe criar ou atualizar em cada critério. Só dois documentos que já estão em trâmite recebem ajustes: o decreto de governança digital e de dados do DTI, que é o principal, e o do SBC+i, com um artigo só; se a Secretaria de Transporte aceitar, também o dos patinetes. A página de Dados Abertos também muda. O resto é documento novo; os do DM2, do DM3 e do DM4 são atos do próprio DTI, que não precisam de decreto, porque a Lei 7.367/2025 (art. 645, XIII) já dá ao DTI a tarefa de definir padrões de gestão de dados. Todas são indicações técnicas: a decisão é do município.',
+    nota: 'Os atos do DTI do DM2, do DM3 e do DM4 tratam do mesmo assunto e poderiam virar um documento só, com uma aprovação em vez de três. É sugestão, a decidir com a equipe.',
+    linhas: [
+      { criterio: 'DM1', assunto: 'Política de governança de dados, comitê, princípios e relatório', documento: 'Decreto da Política e do Programa Municipal de Governança Digital e de Dados (minuta do DTI)', acao: 'Atualizar', detalhe: 'as alterações possíveis da DM1 v02, com o nosso ajuste no art. 35', processo: 'SB 101842/2026', u: 'dm1-v02-governanca-digital.html' },
+      { criterio: 'DM1', assunto: 'Programa SBC+i', documento: 'Decreto do SBC+i', acao: 'Atualizar', detalhe: 'no mínimo um artigo que remeta à nova Política; a proposta de ajustes foi arquivada porque o decreto do DTI já cobre tudo', processo: 'SB 100144/2026' },
+      { criterio: 'DM1', assunto: 'Reuniões até o decreto do DTI vigorar (90 dias depois de publicado)', documento: 'Atas do Comitê Gestor de Proteção de Dados (Decreto 22.963/2025)', acao: 'Criar', detalhe: 'registro de reunião, não norma', processo: 'SB 72089/2019' },
+      { criterio: 'OD1', assunto: 'Política de dados abertos', documento: 'Decreto da Política Municipal de Dados Abertos (OD1 v02), ato específico de abertura de dados do decreto do DTI; funciona mesmo se ele atrasar', acao: 'Criar', processo: 'Sem processo', u: 'od1-v02-dados-abertos.html' },
+      { criterio: 'OD3', assunto: 'Portal de dados abertos', documento: 'Página de Dados Abertos como catálogo, tabelas do Perfil por Bairro em planilha, planilha do Atende Bem e texto da resposta na plataforma', acao: 'Atualizar', detalhe: 'a página e a publicação de dados; não é norma', processo: 'Sem processo', u: 'proposta-od3-catalogo.html' },
+      { criterio: 'DM2', assunto: 'Quais dados existem (inventário)', documento: 'Nota técnica do DTI com o método do inventário e a planilha-modelo', acao: 'Criar', processo: 'Sem processo' },
+      { criterio: 'DM3', assunto: 'Como os dados circulam (compartilhamento, pedidos e abertura)', documento: 'Procedimento do DTI, aprovado pelo Comitê de Proteção de Dados (DM3 v01), e formulário de pedido', acao: 'Criar', processo: 'Sem processo', u: 'dm3-v01-compartilhamento.html' },
+      { criterio: 'DM4', assunto: 'Como garantir que os dados estão certos (qualidade e padrões)', documento: 'Guia de Qualidade e Padrões de Dados do DTI, com padrões de campos comuns e formulário de metadados, e formulário "aponte um erro nos dados"', acao: 'Criar', detalhe: 'o texto do guia (v01) ainda será redigido', processo: 'Sem processo' },
+      { criterio: 'DM4', assunto: 'Dados das operadoras de patinetes num padrão aberto (GBFS)', documento: 'Decreto 23.119/2025 (credenciamento de bicicletas e patinetes)', acao: 'Atualizar', detalhe: 'só se a Secretaria de Transporte aceitar', processo: 'SB 101678/2025' }
+    ]
+  },
+
   areas: [
     { id: 'DM', nome: 'Gestão de dados' },
     { id: 'OD', nome: 'Dados abertos' },
@@ -78,6 +96,7 @@ window.PAINEL = {
   // com breve contexto e o que mudou no entendimento. Ajuste de layout ou correção de link do painel não entra.
   // Conferência interna de critério já fechado que não muda nada também não entra (usuário, 2026-10-28: não gerar incerteza na equipe).
   historico: [
+    { data: '2026-10-29', texto: 'DM4: análise validada. O caminho a levar à equipe é um guia curto de qualidade e padrões de dados do DTI, no modelo de Cambridge, com um primeiro ciclo de conferência e um formulário para o público apontar erros. O próximo passo é redigir o texto do guia (v01).' },
     { data: '2026-10-29', texto: 'DM4: ficha aberta, em análise. SBC não tem documento sobre qualidade dos dados nem padrão para campos comuns como o endereço, mas há peças: o dicionário de dados do GeoPortal, as notas de fonte do Painel Estatístico e uma auditoria mensal das internações na Saúde, com correção no mês seguinte. As listas de referência do endereço existem (logradouros com código e os 34 bairros oficiais), mas nem as camadas do GeoPortal usam o código. Caminho proposto, no modelo de Cambridge que a WWC aceitou: um guia curto de qualidade e padrões do DTI, um primeiro ciclo de auditoria e um formulário para o público apontar erros. Com risco, porque o quarto subcritério depende do inventário (DM2) ou de publicar o GTFS dos ônibus.' },
     { data: '2026-10-28', texto: 'DM3: ficha aberta, em análise. SBC não tem processo escrito de compartilhamento nem de abertura de dados; o canal externo já existe (pedidos pela LAI, com prazo de 20 + 10 dias). Já há sistemas de dados compartilhados entre esferas de governo usados para decidir: a Operação São Bernardo Protege aciona 14 secretarias a partir da chuva medida pelo CIM e pelo CEMADEN. Caminho até o prazo: um procedimento curto do DTI, com o CGPD, que diga quando firmar acordo, como pedir dados com prazo de resposta e como decidir o que abrir, como a WWC aceitou de San Antonio.' },
     { data: '2026-10-28', texto: 'DM2: lidos os recursos que a WWC indica para o critério (GovEx, São Francisco, Bloomberg Cities, Kansas City; o de Filadélfia não abre). Dois pontos mudam o plano: as bases com dado pessoal ou sigiloso também entram no inventário, com o motivo da restrição, e o formulário deve trazer perguntas que ajudem a secretaria a lembrar das próprias bases. Kansas City planejou 7 secretarias em 60 dias e teve de adaptar, o que confirma o risco de prazo.' },
@@ -564,7 +583,7 @@ window.PAINEL = {
       titulo: 'Melhorando a qualidade dos dados',
       definicao: 'A prefeitura tem e aplica políticas ou práticas documentadas para melhorar a qualidade dos dados.',
       regra: { min: 4, total: 5 }, janela: 'Sem janela', plataforma: { resposta: 'Vazio' },
-      ficha: 'em_analise', classificacao: 'criar_risco',
+      ficha: 'rascunho', classificacao: 'criar_risco',
       resumo: 'SBC não tem documento que diga como cuidar da qualidade dos dados, nem padrão para campos comuns como o endereço. Há peças soltas: o dicionário de dados do GeoPortal (13 camadas com fonte e descrição dos campos), as notas de fonte do Painel Estatístico e uma auditoria mensal de verdade na Saúde, que confere as internações contra as regras do SUS e cobra a correção no mês seguinte. As listas de referência para o endereço já existem (logradouros com código numérico e os 34 bairros oficiais), mas nem as camadas do próprio GeoPortal usam o código: guardam o endereço como texto. O caminho, como no exemplo de Cambridge que a WWC aceitou, é um guia curto de qualidade e padrões de dados do DTI, com um primeiro ciclo de auditoria e um formulário para o público apontar erros. São necessários 4 de 5: três dependem só desse guia e do formulário; o quarto depende do inventário (DM2) ou de publicar o GTFS dos ônibus, se a concessionária tiver o arquivo.',
       subcriterios: [
         { cod: 'DM4.1', texto: 'A prefeitura adotou e publicou conjuntos de dados que seguem pelo menos um padrão de dados cívicos (por exemplo, o GTFS, de transporte público), para facilitar a integração com sistemas externos.', situacao: 'nao_tem', classificacao: 'criar_risco',
@@ -612,7 +631,7 @@ window.PAINEL = {
       plano: [
         { texto: 'Levantar o que SBC já tem', feito: true },
         { texto: 'Ler os recursos que a WWC indica', feito: true },
-        { texto: 'Validar a análise internamente', feito: false },
+        { texto: 'Validar a análise internamente', feito: true },
         { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM4' },
         { texto: 'Redigir o guia de qualidade e padrões de dados, com os apêndices de padrões de campos comuns e de metadados (v01)', feito: false },
         { texto: 'Aprovar o guia (DTI e comitê de dados, ou o instrumento que a equipe escolher) e publicá-lo', feito: false },
