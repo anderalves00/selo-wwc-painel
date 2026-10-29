@@ -136,6 +136,15 @@ main > *, .art .texto, .art .expl { min-width: 0; }
 @media (max-width: 600px) { main { padding: 16px 16px 32px; } .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; } .cartao { padding: 16px; } .art .texto { padding: 12px 14px; } }
 .texto .tab { overflow-x: auto; }
 .texto .tab table.anexo { min-width: 520px; }
+details.cartao > summary { list-style: none; cursor: pointer; }
+details.cartao > summary::-webkit-details-marker { display: none; }
+details.cartao > summary h2 { font-size: 19px; color: var(--azul-esc); margin: 0; }
+details.cartao[open] > summary h2 { margin-bottom: 10px; }
+details.cartao.decreto > summary h2 { margin-bottom: 0; }
+details.cartao > summary h2::before { content: "\25B8"; display: inline-block; width: 1.1em; color: var(--azul); transition: transform .15s; }
+details.cartao[open] > summary h2::before { transform: rotate(90deg); }
+details.cartao > summary:focus-visible { outline: 2px solid var(--azul); outline-offset: 4px; border-radius: 4px; }
+.barra .acoes { margin-left: auto; display: flex; gap: 6px; }
 </style>
 </head>
 <body>
@@ -162,13 +171,14 @@ main > *, .art .texto, .art .expl { min-width: 0; }
       <button class="chip" type="button" data-v="escolha" aria-pressed="false">Só pontos de escolha</button>
     </div>
     <span class="contagem" id="contagem"></span>
+    <div class="acoes"><button class="chip" type="button" id="abrir-tudo">Expandir tudo</button><button class="chip" type="button" id="fechar-tudo">Recolher tudo</button></div>
   </div>
 </div>
 
 <main>
 
-<section class="cartao">
-  <h2>O que é esta página</h2>
+<details class="cartao" open>
+  <summary><h2>O que é esta página</h2></summary>
   <div class="aviso"><p><b>Rascunho de indicação técnica, não decisão.</b> Este procedimento reúne o que os modelos indicados pela WWC fazem para atender ao critério DM3 (compartilhamento de dados). Instrumento, colegiado e prazos cabem ao município (DTI, CGPD e Procuradoria).</p></div>
   <h3 style="margin-top:14px">O que é este documento</h3>
   <p>Não é lei nem decreto. É um <b>ato normativo interno</b>: uma instrução do Departamento de Tecnologia da Informação (DTI), aprovada pelo Comitê Gestor de Proteção de Dados (CGPD). Não cria direito nem dever novo para o cidadão: organiza, num passo a passo para as secretarias, a aplicação de leis e decretos que já existem.</p>
@@ -188,15 +198,15 @@ main > *, .art .texto, .art .expl { min-width: 0; }
     <span><span class="tag escolha">Ponto de escolha do município</span> recomendação que o município pode trocar</span>
     <span><span class="tag sub">DM3.x</span> subcritério da WWC atendido</span>
   </div>
-</section>
+</details>
 
-<section class="cartao">
-  <h2>Versões desta recomendação</h2>
+<details class="cartao">
+  <summary><h2>Versões desta recomendação</h2></summary>
   <div class="texto"><div class="tab"><table class="anexo"><thead><tr><th>Versão</th><th>Data</th><th>O que é</th><th>Situação</th></tr></thead><tbody><tr><td><b>v01</b></td><td>28/10/2026</td><td>Procedimento de compartilhamento, pedidos e abertura de dados: 21 artigos e 4 anexos (termo de uso, formulário de pedido, guia de decisão e registro).</td><td>Vigente</td></tr><tr><td><b>v02</b></td><td>—</td><td>Procedimento com os ajustes da equipe e da Procuradoria.</td><td>Aguarda a equipe</td></tr></tbody></table></div></div>
-</section>
+</details>
 
-<section class="cartao">
-  <h2>O que a WWC pede e onde o procedimento responde</h2>
+<details class="cartao">
+  <summary><h2>O que a WWC pede e onde o procedimento responde</h2></summary>
   <div class="subs">
     <div class="sub-card">
       <h3>DM3.1 · Compartilhar e quando firmar acordo</h3>
@@ -227,13 +237,13 @@ main > *, .art .texto, .art .expl { min-width: 0; }
       <div class="arts"><a href="#art19">Art. 19</a><a href="#anx4">Anexo IV</a></div>
     </div>
   </div>
-</section>
+</details>
 
-<section class="cartao decreto" id="decreto">
-  <div class="decreto-cab">
+<details class="cartao decreto" id="decreto">
+  <summary class="decreto-cab">
     <h2>Texto do procedimento</h2>
     <div class="nota">Use os filtros acima para ver só os artigos de um subcritério ou só os pontos de escolha do município.</div>
-  </div>
+  </summary>
 
   <div class="ementa" data-bloco="preambulo">
     <p class="num">INSTRUÇÃO Nº …………… (instrumento a definir)</p>
@@ -500,10 +510,10 @@ main > *, .art .texto, .art .expl { min-width: 0; }
     </aside>
   </article>
   <div class="vazio" id="vazio">Nenhum item corresponde ao filtro escolhido.</div>
-</section>
+</details>
 
-<section class="cartao obs">
-  <h2>Observações para quem for decidir</h2>
+<details class="cartao obs">
+  <summary><h2>Observações para quem for decidir</h2></summary>
   <ol>
     <li><b>Natureza deste texto.</b> É um rascunho de indicação técnica, para servir de base à equipe e à Procuradoria. A decisão cabe ao município.</li>
     <li class="destaque"><b>Instrumento (ponto de escolha).</b> O texto está escrito como ato do DTI aprovado pelo CGPD, com base no Decreto 22.963/2025, que já prevê que o Programa de Proteção de Dados produza "minutas-padrão, modelos de documentação e procedimentos" (art. 2º, II). Para obrigar as demais secretarias a responder no prazo (art. 13), o ato precisa alcançá-las: uma instrução só do DTI pode não bastar, e a alternativa é uma portaria do Secretário de Administração ou resolução do CGPD. A escolha cabe à equipe e à Procuradoria (ficha DM3, pedido 6).</li>
@@ -514,10 +524,10 @@ main > *, .art .texto, .art .expl { min-width: 0; }
     <li><b>O que ficou de fora.</b> A ligação de registros pessoais de várias secretarias num sistema integrado, como em Los Angeles County, não é proposta: pede infraestrutura e debate próprios. Dados de segurança pública e biometria (Muralha Paulista) também não: o kit da AISP, recurso indicado pela WWC no DM3, desaconselha ligar dados da polícia e usar reconhecimento facial.</li>
     <li><b>Anexo IV pré-preenchido.</b> As três linhas da parte A saíram dos decretos lidos (23.119/2025, 23.103/2025 e 22.602/2024). Instrumento, dados pessoais e vigência estão "a confirmar" com a equipe (ficha DM3, pedido 1).</li>
   </ol>
-</section>
+</details>
 
-<section class="cartao fontes">
-  <h2>Fontes</h2>
+<details class="cartao fontes">
+  <summary><h2>Fontes</h2></summary>
   <ul>
     <li>What Works Cities, critério DM3 (v4): definição, subcritérios, evidência sugerida e glossário; pacote do Fórum (San Antonio, Diretiva Administrativa 7.12, 2021).</li>
     <li>AISP (Universidade da Pensilvânia): Introdução ao compartilhamento e integração de dados (2020); kit de equidade racial na integração de dados (2020), inclusive o caso KYSTATS; estudo de caso de Los Angeles County (2014).</li>
@@ -528,7 +538,7 @@ main > *, .art .texto, .art .expl { min-width: 0; }
     <li>São Bernardo do Campo: Decreto 18.882/2014 (LAI), arts. 9º, 12 e 19; Decreto 22.963/2025 (Programa de Proteção de Dados e CGPD); Lei 7.367/2025, art. 645, XIII; Decretos 23.103/2025, 23.119/2025 e 22.602/2024; minuta do decreto de governança digital e de dados (processo SB 101842/2026), arts. 17, 25, 26 e 40.</li>
     <li>Recomendações deste projeto: DM1 v02 (`versoes/DM1-v02.md`) e OD1 v02 (`versoes/OD1-v02.md`); ficha DM3 (`fichas/DM3.md`).</li>
   </ul>
-</section>
+</details>
 
 </main>
 <div class="rodape">Procedimento preparado para o Painel WWC · SBC. Rascunho de indicação técnica; não substitui a análise da Procuradoria.</div>
@@ -555,9 +565,19 @@ main > *, .art .texto, .art .expl { min-width: 0; }
     document.getElementById('vazio').style.display = visiveis ? 'none' : 'block';
     document.getElementById('contagem').textContent = visiveis + ' de ' + arts.length + ' itens';
   }
+  var quadros = Array.prototype.slice.call(document.querySelectorAll('details.cartao'));
+  function abrirAte(el) { var d = el && el.closest('details'); while (d) { d.open = true; d = d.parentElement.closest('details'); } }
+  function irPara(hash) { var alvo = hash && document.getElementById(hash.slice(1)); if (alvo) { abrirAte(alvo); alvo.scrollIntoView(); } }
+  document.getElementById('abrir-tudo').addEventListener('click', function () { quadros.forEach(function (d) { d.open = true; }); });
+  document.getElementById('fechar-tudo').addEventListener('click', function () { quadros.forEach(function (d) { d.open = false; }); });
+  var antes = [];
+  window.addEventListener('beforeprint', function () { antes = quadros.map(function (d) { return d.open; }); quadros.forEach(function (d) { d.open = true; }); });
+  window.addEventListener('afterprint', function () { quadros.forEach(function (d, i) { d.open = antes[i]; }); });
+  window.addEventListener('hashchange', function () { irPara(location.hash); });
   document.querySelectorAll('[data-filtro]').forEach(function (g) {
     g.addEventListener('click', function (ev) {
       var b = ev.target.closest('button'); if (!b) return;
+      document.getElementById('decreto').open = true;
       estado.sub = b.getAttribute('data-v');
       g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
       aplicar();
@@ -566,6 +586,7 @@ main > *, .art .texto, .art .expl { min-width: 0; }
   document.querySelectorAll('.sub-card .arts a').forEach(function (a) {
     a.addEventListener('click', function () {
       var alvo = document.querySelector(a.getAttribute('href'));
+      abrirAte(alvo);
       if (alvo && alvo.hidden) {
         estado.sub = 'todos';
         document.querySelectorAll('[data-filtro] button').forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-v') === 'todos' ? 'true' : 'false'); });
@@ -574,6 +595,7 @@ main > *, .art .texto, .art .expl { min-width: 0; }
     });
   });
   aplicar();
+  irPara(location.hash);
 })();
 </script>
 </body>
