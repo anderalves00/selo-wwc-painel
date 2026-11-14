@@ -213,6 +213,14 @@ details.nao-serve > summary { cursor: pointer; font-weight: 600; color: var(--te
 .lista-simples { margin: 0; padding-left: 20px; }
 .lista-simples li { margin: 4px 0; }
 
+.cenarios { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.cenario { border: 1px solid var(--borda); border-radius: 8px; padding: 12px 14px; min-width: 0; }
+.cenario .cen-topo { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.cenario .cen-dep { margin-top: 8px; font-size: 14px; }
+.cenario .cen-dep ul { margin: 4px 0 0 18px; padding: 0; }
+.cenario .cen-texto { margin-top: 10px; padding: 10px 12px; border-left: 3px solid var(--azul); background: #f4f7fa; font-size: 14px; border-radius: 0 6px 6px 0; }
+.cenario details { margin-top: 10px; }
+.cenario .porque { margin: 8px 0 0; font-size: 14px; }
 .vazio-ficha { margin-top: 16px; padding: 12px 14px; border: 1px dashed #b7c3cd; border-radius: 8px; color: var(--texto-suave); font-size: 14px; }
 .oculto { display: none !important; }
 footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
@@ -306,7 +314,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
 </div>
 <footer>Página de trabalho da equipe. Não indexada por buscadores. As respostas só são inseridas na plataforma depois da validação da equipe.</footer>
 
-<script src="dados.js?v=C8443264AE"></script>
+<script src="dados.js?v=55CB8A0D71"></script>
 <script>
 (function () {
   const P = window.PAINEL;
@@ -483,6 +491,18 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
     return `<div class="relatorio"><a class="botao-rel ${r.status === 'final' ? '' : 'rascunho'}" href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(rotulo)} ↗</a>${r.atualizado ? `<span class="nota">Atualizado em ${fmtData(r.atualizado)}</span>` : ''}</div>`;
   }
 
+  // Cenários de resposta (pedido do usuário, 2026-11-13): hoje × com as melhorias, cada um redigido como se fosse o oficial
+  function cenariosHtml(c) {
+    const s = c.cenarios; if (!s) return '';
+    const destaca = t => esc(t).replace(/\[PENDENTE:([^\]]*)\]/g, '<mark>[PENDENTE:$1]</mark>');
+    const card = (x, rot) => !x ? '' : `<div class="cenario"><div class="cen-topo"><b>${rot}</b><span class="tag ${/^Sim/.test(x.marcar) ? 't-verde' : 't-laranja'}">Marcar: ${esc(x.marcar)}</span></div>
+      ${x.conta ? `<div class="nota" style="margin-top:6px">${esc(x.conta)}</div>` : ''}
+      ${x.depende && x.depende.length ? `<div class="cen-dep"><b>Depende de:</b><ul>${x.depende.map(d => `<li>${esc(d)}</li>`).join('')}</ul></div>` : ''}
+      <div class="cen-texto">${destaca(x.texto)}</div>
+      ${x.porques && x.porques.length ? `<details class="nao-serve"><summary>Perguntas que podem surgir (${x.porques.length})</summary>${x.porques.map(p => `<p class="porque"><b>${esc(p.p)}</b><br>${esc(p.r)}</p>`).join('')}</details>` : ''}</div>`;
+    return `<h3 id="cenarios-${c.codigo}">Cenários de resposta à WWC</h3><div class="nota" style="margin:0 0 8px">Duas respostas redigidas como se fossem a oficial. O envio usa a de hoje, que só cita o que já existe; a outra mostra o que as melhorias propostas acrescentam e do que elas dependem.</div><div class="cenarios">${card(s.hoje, 'Hoje')}${card(s.melhorias, 'Com as melhorias')}</div>`;
+  }
+
   // Resposta para a plataforma: espelha os campos que a equipe preenche (resposta, texto livre, evidências)
   function respostaHtml(c) {
     const r = c.resposta;
@@ -562,6 +582,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
         ${AVISO_PEDIDOS}
         <ul class="checklist">${c.pedidos.map(p => `<li class="${pedidoConcluido(p) ? 'feito' : ''}"><span class="caixa">${pedidoConcluido(p) ? '✓' : ''}</span><span>${esc(p.texto)} ${tag(PEDIDO[p.status])}${refsHtml(p.refs)}</span></li>`).join('')}</ul>`;
     }
+    analise += cenariosHtml(c);
     analise += respostaHtml(c);
     if (c.modelos && c.modelos.length) {
       analise += `<h3>Modelos de outras cidades que ajudam</h3><div class="tabela-wrap"><table><thead><tr><th>Modelo</th><th>Ajuda em</th><th>O que aproveitar</th></tr></thead><tbody>${c.modelos.map(m => `<tr><td>${ext(m.u, m.nome)} ↗</td><td>${m.cobre.map(x => `<span class="tag t-azul">${x}</span>`).join(' ')}</td><td>${esc(m.texto)}</td></tr>`).join('')}</tbody></table></div>`;
