@@ -62,7 +62,20 @@ window.REFS = {
   msc_tesouro: { t: 'Matriz de Saldos Contábeis (Tesouro Nacional, Siconfi)', d: 'Envio mensal obrigatório dos dados contábeis de todo município, numa instância XBRL GL ou num arquivo CSV, publicados pelo Tesouro.', u: 'https://siconfi.tesouro.gov.br/siconfi/pages/public/arquivo/conteudo/Cartilha_Matriz_de_Saldos_Contabeis.pdf' },
   cambridge_dm4: { t: 'Cambridge (EUA): Guia de Qualidade de Dados, em português (exemplo aceito pela WWC)', d: 'Guia de 13 páginas do pacote de recursos do DM4 no Fórum da WWC: limiar para publicar, auditoria por amostra, formulário de metadados e formatos padrão de campos comuns.', u: 'https://drive.google.com/file/d/1hLYyg8pI3KWwKVNJRhDymxIHHl_dB6Me/view' },
   sp60663: { t: 'Decreto nº 60.663/2021 do Município de São Paulo', d: 'Cadastro Base de Pessoas, Cadastros de Uso Geral e Comitê Central de Governança de Dados: todos os sistemas usam os cadastros de referência, e o comitê decide quando dois cadastros divergem.', u: 'https://legislacao.prefeitura.sp.gov.br/decreto-60663-de-25-de-outubro-de-2021' },
+  dec22453: { t: 'Decreto nº 22.453/2023 (Política de Segurança da Informação, Anexo Único)', d: 'Manda que todos os usuários passem por capacitação e conscientização, inclusive em proteção de dados pessoais, e que toda informação tenha mecanismos de proteção e classificação, conforme a LAI e a LGPD. O DTI promove campanhas e treinamentos com a Gestão de Pessoas. Revisão anual. Não fixa periodicidade do treinamento.', u: 'https://leis.org/0wdhm' },
+  site_lgpd: { t: 'Site "Proteção e Privacidade de Dados Pessoais" da Prefeitura', d: '11 seções: direitos do titular, bases legais, Encarregada e CGPD, programa, documentos e contato por e-mail para pedidos e denúncias. Afirma treinamentos contínuos, RIPD e atas do CGPD, mas não publica esses documentos (lido em 13/11/2026).', u: 'https://www.saobernardo.sp.gov.br/web/lgpd/sobre-lgpd' },
+  segep2025: { t: 'Relatório Anual de Atividades 2025 da Secretaria de Gestão de Pessoas', d: 'Capacitação em 2025: cursos de liderança e o Projeto Diálogos (saúde). Nenhuma capacitação em LGPD ou privacidade registrada.', u: 'https://www.saobernardo.sp.gov.br/web/gestao-de-pessoas/relatorio-de-atividades' },
   dec10046: { t: 'Decreto federal nº 10.046/2019', d: 'Governança no compartilhamento de dados na administração federal: três níveis (amplo, restrito, específico), compartilhamento entre órgãos sem convênio, prazo de 30 dias e publicidade do compartilhamento de dados pessoais. Modelo, não vale para o município.', u: 'https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2019/decreto/d10046.htm' },
+  lei7367_dti: { t: 'Lei nº 7.367/2025, arts. 645 a 659 (estrutura do DTI)', d: 'A segurança está distribuída: Divisão de Infraestrutura (firewalls, detecção de intrusão, treinamento de usuários), Seção de Manutenção de Servidores e de Segurança (vulnerabilidades, atualizações) e Divisão de Dados (segurança e privacidade dos dados). Não há cargo de responsável pela segurança da informação.', u: L7367 + '#:~:text=Art.%20645.' },
+  proc86634: { t: 'Processo SB nº 86634/2023 (interno, sem link público)', d: 'Processo da Política de Segurança da Informação. A versão interna do DTI de 2023 (base ISO 27002) previa normas de backup e restauração, plano de continuidade dos serviços essenciais de TI "testado anualmente", gestão de incidentes, de riscos e de vulnerabilidades, e um Comitê de Segurança da Informação. Nada disso ficou na versão publicada.' },
+  proc675: { t: 'Processo PC nº 675/2026 (interno, sem link público)', d: 'Contratação do PDTIC 2026–2029 (FUNDUNESP, contrato de 27/07/2026), com escopo de governança de TIC. Não se sabe se o diagnóstico cobre segurança.' },
+  igov_iegm: { t: 'Respostas de SBC ao i-Gov TI do IEGM (TCE-SP)', d: 'Questionário anual de governança de TI do Tribunal de Contas. SBC citou a PSI e o Decreto 22.963 como evidência do quesito 10.1. As respostas completas não foram obtidas pelo projeto.' },
+  avoz_ppa: { t: 'Programa "A Voz da Gente, Cidade pra Frente": ciclo do PPA 2026–2029', d: 'Consulta on-line de 60 dias e 15 audiências nos bairros em 2025: 3.398 contribuições, 1.742 pertinentes, 1.646 incorporadas, cada uma com resposta escrita (Anexo V). A página ainda liga as planilhas 08 e 09, com dados pessoais de participantes.', u: 'https://www.saobernardo.sp.gov.br/web/transparencia/ppa' },
+  nm2646: { t: 'Edital de Chamamento do "A Voz da Gente", ciclo 2026/2027 (Notícias do Município nº 2646, de 29/05/2026, p. 37–51)', d: 'Audiências com acessibilidade e intérprete de Libras, revezamento de falas entre bairros "para promover a representatividade territorial e temática", parecer das secretarias sobre cada contribuição, dados tratados pela LGPD e relatório consolidado sem dados pessoais (item 6.1).' },
+  loa2027: { t: 'LOA 2027: audiência de elaboração e minuta da mensagem do projeto (SB 80747/2026)', d: 'Segundo ciclo do "A Voz da Gente": 16 audiências nos bairros e 3 setoriais (Terceiro Setor, setor produtivo e uma com crianças), consulta on-line; a mensagem fala em 2.505 contribuições. Devolutiva por contribuição não localizada.' },
+  dec21580: { t: 'Decreto nº 21.580/2021 (usuários de serviços públicos), alterado pelo Decreto nº 22.243/2023', d: 'Avaliação anual dos serviços por pesquisa com "significância estatística" (art. 21) e Conselho de Usuários dos Serviços Públicos, consultivo, escolhido em chamamento aberto pelos critérios de "representatividade e pluralidade" (arts. 22-A a 22-H). Não se sabe se o conselho foi instalado.' },
+  dec23215: { t: 'Decreto nº 23.215/2026 (Política de Atendimento)', d: 'Escuta ativa e uso das pesquisas de satisfação para aperfeiçoar os serviços (arts. 6º, X, e 7º, VIII). Princípio, não método.' },
+  atende_pesquisa: { t: 'Pesquisas de satisfação do Atende Bem (2019 a 2024)', d: 'Pesquisa anual publicada. A de 2024 só tem perguntas fechadas (notas de 1 a 5 e sim ou não), conferido nas colunas da planilha.', u: 'https://www.saobernardo.sp.gov.br/web/sbc/pesquisas-de-satisfacao' },
 };
 
 window.PAINEL = {
@@ -683,40 +696,240 @@ window.PAINEL = {
     },
     {
       codigo: 'DM5', area: 'DM', ordem: 7,
-      titulo: 'Protegendo a privacidade e a confidencialidade dos dados',
+      cenarios: {"hoje": {"marcar": "Em andamento", "conta": "Só o DM5.2, no texto e ainda não vigente; o critério pede 2 de 3", "texto": "A Prefeitura mantém o Programa de Proteção de Dados (Decreto nº 22.963/2025), com Comitê Gestor e Encarregada designados, página pública sobre a LGPD e canal do titular. O Decreto nº 23.413/2026 exige, antes de cada publicação de base, uma verificação de publicação segura que avalia o risco de reidentificação por cruzamento com outras bases, feita por um segundo agente e orientada pela Encarregada (art. 9º); entra em vigor em 4 de fevereiro de 2027.", "porques": [{"p": "E a capacitação anual dos servidores (DM5.3)?", "r": "As normas municipais mandam capacitar (Decreto 22.963, art. 5º; Política de Segurança da Informação; Decreto 23.409, art. 33), mas não há registro de treinamento nos últimos 12 meses. Se a equipe comprovar um, a resposta passa a \"Sim, com risco de vigência\" (DM5.2 + DM5.3)."}, {"p": "E as bases compartilhadas internamente?", "r": "O Decreto 23.403/2026 exige finalidade, minimização e autorização para cada compartilhamento (art. 26); o procedimento detalhado (DM3 v01) aguarda a equipe."}, {"p": "Como os moradores participam da gestão de riscos à privacidade (DM5.1)?", "r": "Ainda não participam. O site LGPD tem canal por e-mail para pedidos e denúncias, mas não há consulta nem conselho sobre as práticas de privacidade."}]}, "melhorias": {"marcar": "Sim", "conta": "2 ou 3 de 3", "depende": ["DTI ou CGPD aprovam o Roteiro de Verificação de Publicação e Compartilhamento Seguro (DM5 v01), como base do art. 21, III, do Decreto 23.413 (DM5-3)", "Capacitação em privacidade realizada e registrada até 18/12, com calendário anual (DM5-6)", "Para o DM5.1: consulta pública de pelo menos 15 dias começando até ~03/12 (DM5-5)"], "texto": "Toda base, antes de ser publicada ou compartilhada, passa pelo Roteiro de Verificação de Publicação e Compartilhamento Seguro [PENDENTE: número do ato], que classifica a base, avalia o risco de identificação inclusive por cruzamento, registra a decisão e a data de revisão, com conferência por um segundo servidor e orientação da Encarregada (Decreto 23.413, art. 9º). Os servidores recebem capacitação anual em proteção de dados [PENDENTE: data e número de participantes da primeira turma].", "porques": [{"p": "Por que o DTI, se o decreto dá os padrões à Secretaria de Administração?", "r": "O decreto só vigora em 04/02/2027 e os padrões vencem em ~05/05/2027. O roteiro pode sair já, pelo Decreto 22.963 (art. 2º, II), e ser oferecido como base dos padrões técnicos (art. 21, III)."}]}},
+      titulo: 'Protegendo a privacidade e o sigilo dos dados',
       definicao: 'A prefeitura tem políticas ou práticas documentadas para proteger a privacidade e o sigilo dos dados que mantém.',
-      regra: { min: 2, total: 3 }, janela: 'Anual', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
+      regra: { min: 2, total: 3 }, janela: 'Anual', plataforma: { resposta: 'Vazio' },
+      ficha: 'rascunho', classificacao: 'criar_risco',
+      resumo: 'SBC tem a estrutura da LGPD: o Programa de Proteção de Dados (Decreto 22.963/2025), o Comitê Gestor e a Encarregada, e um site público com os direitos do titular e um canal por e-mail. O que o DM5 pede vai além: um processo para não publicar nem compartilhar dado pessoal por engano, treinamento dos servidores todo ano e a participação dos moradores. O processo existe no texto: o Decreto 23.413 manda fazer, antes de cada publicação, uma verificação de publicação segura que olha o risco de identificar alguém cruzando bases, conferida por um segundo servidor; mas só vigora em 04/02/2027, e o roteiro dessa verificação vem até maio de 2027. Treinamento: as normas mandam capacitar, o site diz que há treinamentos contínuos, mas o relatório de 2025 da Gestão de Pessoas só registra cursos de liderança, e nenhum material ou lista de presença foi achado. São necessários 2 de 3. O caminho é emitir já um roteiro de verificação (DTI e Comitê Gestor) e fazer e registrar uma capacitação antes do envio.',
       subcriterios: [
-        { cod: 'DM5.1', texto: 'A prefeitura tem um processo para envolver os moradores e outros interessados externos nas práticas de gestão de riscos à privacidade.' },
-        { cod: 'DM5.2', texto: 'A prefeitura tem um processo documentado para reduzir a chance de divulgar por engano dados privados, sensíveis ou sigilosos (como dados que identificam pessoas), tanto nos conjuntos de dados compartilhados internamente quanto nos compartilhados com o público.' },
-        { cod: 'DM5.3', texto: 'A prefeitura oferece aos servidores, pelo menos uma vez por ano, informação e treinamento sobre como avaliar e reduzir os riscos à privacidade e outros riscos ligados aos seus dados.' }
+        { cod: 'DM5.1', texto: 'A prefeitura tem um processo para envolver os moradores e outros interessados externos nas práticas de gestão de riscos à privacidade.', situacao: 'nao_tem', classificacao: 'criar_risco',
+          nota: 'Não há processo. O canal por e-mail do site LGPD é para o titular exercer direitos e denunciar, não para opinar sobre as práticas. A consulta pública do Plano de Dados Abertos (Decreto 23.413, art. 18) trata de prioridades de abertura e só existe em 2027. Dá para criar uma consulta de pelo menos 15 dias sobre o roteiro de publicação segura, mas precisa começar até ~03/12. É a reserva: o critério pede 2 de 3.', refs: ['site_lgpd', 'dec23413'] },
+        { cod: 'DM5.2', texto: 'A prefeitura tem um processo documentado para reduzir a chance de divulgar por engano dados privados, sensíveis ou sigilosos (como dados que identificam pessoas), tanto nos conjuntos de dados compartilhados internamente quanto nos compartilhados com o público.', situacao: 'parcial', classificacao: 'atende',
+          nota: 'Atende no texto, com risco de vigência. Para as bases publicadas, o Decreto 23.413 (art. 9º) é o processo: verificação antes de cada publicação, risco de reidentificação por cruzamento, segundo agente e orientação da Encarregada. Para as compartilhadas internamente, o Decreto 23.403 (art. 26) exige finalidade, minimização e autorização. Os dois vigoram em 04/02/2027, e o roteiro da verificação vem até ~05/05/2027. A Política de Segurança da Informação manda classificar toda informação, mas não diz como. O que tira o risco: o DTI e o Comitê Gestor emitirem já o roteiro (DM5 v01). Contraevidência a corrigir: a planilha da consulta do PPA foi publicada com nome, idade, bairro e escolaridade dos respondentes (constatado em outubro).', refs: ['dec23413', 'dec23403', 'dec22453', 'proc101842'] },
+        { cod: 'DM5.3', texto: 'A prefeitura oferece aos servidores, pelo menos uma vez por ano, informação e treinamento sobre como avaliar e reduzir os riscos à privacidade e outros riscos ligados aos seus dados.', situacao: 'nao_tem', classificacao: 'criar',
+          nota: 'Sem evidência nos últimos 12 meses. As normas mandam capacitar: o Decreto 22.963 (art. 5º, II, c), a Política de Segurança da Informação e o Decreto 23.409 (art. 33, programa contínuo de capacitação em IA que inclui proteção de dados, já em vigor). O Plano de Ação de 2025 previa um curso na Escola de Governo em agosto de 2025, e o site LGPD fala em treinamentos contínuos, mas o relatório de 2025 da Gestão de Pessoas só registra cursos de liderança. Dá para criar: uma capacitação registrada antes de 18/12 e a regra de repetir todo ano.', refs: ['dec22963', 'dec22453', 'dec23409', 'segep2025', 'site_lgpd'] }
       ],
-      evidencias: ['Resumo das práticas de proteção de dados pessoais.', 'Memorandos ou materiais de treinamento sobre riscos de privacidade.', 'Evidência de treinamentos anuais.'],
-      nota: 'O Decreto 22.963/2025 (Programa de Proteção de Dados) é o ponto de partida provável.'
+      evidencias: ['Resumo das práticas para proteger dados privados, sensíveis e sigilosos.', 'Memorandos internos ou materiais de treinamento sobre como reduzir riscos à privacidade.', 'Evidência de que os treinamentos anuais estão acontecendo.'],
+      versoes: [
+        { v: 'v01', data: '—', situacao: 'aguarda', t: 'Roteiro de Verificação de Publicação e Compartilhamento Seguro',
+          d: 'A redigir (análise validada em 13/11/2026). Classificação de cada base, formulário de decisão antes de publicar ou compartilhar (campos que identificam, cruzamento com outras bases, solução aplicada, decisão e data de revisão), conferência por um segundo servidor, orientação da Encarregada e retirada pronta do que sair por engano. Ato do DTI aprovado pelo Comitê Gestor de Proteção de Dados, como base do roteiro do Decreto 23.413 (art. 21, III).' }
+      ],
+      propostas: [
+        { t: 'Procedimento de compartilhamento de dados (DM3 v01)', u: 'dm3-v01-compartilhamento.html', nota: 'Formulário de pedido, termo de uso e matriz de abertura para bases compartilhadas entre órgãos e com terceiros. Se aprovado, é o processo documentado da parte interna do DM5.2.' }
+      ],
+      sbc: {
+        tem: [
+          { titulo: 'Programa de Proteção de Dados, Comitê Gestor e Encarregada', texto: 'Decreto 22.963/2025, Portaria 10.364/2025 (Encarregada) e Portaria 10.510/2026 (8 membros do Comitê Gestor). Em vigor. A primeira reunião do comitê foi proposta para setembro de 2026.', links: [{ t: 'Decreto 22.963/2025', u: 'https://leis.org/2cax4' }] },
+          { titulo: 'Site sobre a LGPD', texto: 'Direitos do titular, bases legais, estrutura de governança, programa e canal por e-mail para pedidos e denúncias. Serve como resumo das práticas (primeira evidência sugerida pela WWC).', links: [{ t: 'Proteção e Privacidade de Dados Pessoais', u: 'https://www.saobernardo.sp.gov.br/web/lgpd/sobre-lgpd' }] }
+        ],
+        incompleto: [
+          { titulo: 'Verificação de publicação segura (Decreto 23.413, art. 9º)', texto: 'Antes de cada publicação, avaliação do risco de reidentificação por cruzamento, por um segundo agente, com orientação da Encarregada.', falta: 'Vigora em 04/02/2027; o roteiro vem até ~05/05/2027; não cobre o compartilhamento interno.' },
+          { titulo: 'Política de Segurança da Informação (Decreto 22.453/2023)', texto: 'Manda capacitar todos os usuários, inclusive em proteção de dados, e classificar toda informação.', falta: 'Não diz como classificar nem com que frequência treinar; não se achou registro de nenhum dos dois.' },
+          { titulo: 'Programa de capacitação em IA (Decreto 23.409, art. 33)', texto: 'Programa contínuo, com proteção de dados e sigilo, registrado e avaliado. Em vigor.', falta: 'Ainda não há turma registrada; cobre só o uso de IA.' }
+        ],
+        naoTem: [
+          { titulo: 'Treinamento em privacidade nos últimos 12 meses', texto: 'Nenhum registro de capacitação em LGPD ou privacidade; o relatório de 2025 da Gestão de Pessoas só cita liderança e saúde (DM5.3).' },
+          { titulo: 'Classificação das bases e formulário de decisão', texto: 'Nenhuma base tem nível de sigilo registrado, nem decisão documentada de publicar ou compartilhar (DM5.2).' },
+          { titulo: 'Participação dos moradores nas práticas de privacidade', texto: 'Nenhuma consulta, conselho ou canal de opinião sobre como a Prefeitura gere os riscos à privacidade (DM5.1).' }
+        ],
+        naoServe: [
+          { titulo: 'Canal do titular por e-mail', texto: 'Serve para exercer direitos e denunciar, não para envolver o público na gestão de riscos (DM5.1).' }
+        ]
+      },
+      modelos: [
+        { nome: 'Memphis (EUA): Política de Sensibilidade da Informação e políticas de privacidade e treinamento', cobre: ['DM5.2', 'DM5.3'], texto: 'Exemplo do pacote do Fórum. Três classes de informação (pública, confidencial, restrita), com toda informação presumida confidencial até ser declarada pública; aviso ao cidadão antes da coleta; curso obrigatório periódico e treinamento anual por função para quem acessa dado confidencial.', u: 'https://com.navexone.com/content/?public=true&siteid=1' },
+        { nome: 'São Francisco (EUA): kit de lançamento de dados abertos (DataSF)', cobre: ['DM5.2'], texto: 'Recurso da WWC. Quatro passos antes de publicar base com dado pessoal e um formulário que registra a decisão: campos que identificam, valor e risco, solução aplicada, decisão (aberta, acesso limitado, fechada) e data da próxima revisão.' },
+        { nome: 'Seattle (EUA): avaliação de riscos de dados abertos (Future of Privacy Forum)', cobre: ['DM5.1', 'DM5.2', 'DM5.3'], texto: 'Recurso da WWC. Avaliação anual de riscos exigida pela política de dados; o método passou pelo conselho comunitário de tecnologia e por 45 dias de consulta pública; modelo de análise benefício × risco antes de publicar; treinamento de privacidade para os servidores.', u: 'https://fpf.org/wp-content/uploads/2018/01/FPF-Open-Data-Risk-Assessment-for-City-of-Seattle.pdf' },
+        { nome: 'GovEx: Matriz de Privacidade', cobre: ['DM5.2'], texto: 'Recurso da WWC. 22 campos comuns e como a sensibilidade muda quando dois se combinam (efeito mosaico): coordenada é aberta sozinha e sensível com idade, nome ou endereço residencial.', u: 'https://govex.jhu.edu/blog/being-sensitive-about-data-sensitivity/' },
+        { nome: 'Washington, DC (EUA): Política de Dados (Ordem 2017-115)', cobre: ['DM5.1', 'DM5.2', 'DM5.3'], texto: 'Recurso da WWC. Toda base classificada em 5 níveis, com a justificativa publicada no inventário anual; revisão do risco de cruzar bases tarjadas; retirada pronta de dado protegido publicado por engano; o diretor de dados recebe e responde à opinião do público; responsáveis treinados em cada órgão.', u: 'https://opendata.dc.gov/pages/data-policy' }
+      ],
+      plano: [
+        { texto: 'Levantar o que SBC já tem', feito: true },
+        { texto: 'Ler os recursos que a WWC indica', feito: true },
+        { texto: 'Validar a análise internamente', feito: true },
+        { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM5' },
+        { texto: 'Redigir o roteiro de verificação de publicação e compartilhamento seguro (v01)', feito: false },
+        { texto: 'Aprovar o roteiro (DTI e Comitê Gestor de Proteção de Dados) e publicá-lo', feito: false },
+        { texto: 'Realizar e registrar uma capacitação em privacidade até 18/12 e fixar o calendário anual', feito: false },
+        { texto: 'Corrigir a planilha da consulta do PPA, se ainda estiver publicada com dados pessoais', feito: false },
+        { texto: 'Se houver prazo: consulta pública de pelo menos 15 dias sobre o roteiro (DM5.1)', feito: false },
+        { texto: 'Reunir as evidências e preparar a resposta', feito: false }
+      ],
+      pedidos: [
+        { texto: 'Se houve capacitação em LGPD ou proteção de dados para servidores desde dezembro de 2025 (o Plano de Ação previa uma na Escola de Governo em agosto de 2025), com data, público, material e lista de presença; e se a orientação provisória de uso de IA e o ponto único de orientações do Decreto 23.409 (art. 34) já saíram', refs: ['proc72089', 'dec23409', 'segep2025'], status: 'a_pedir' },
+        { texto: 'O Diagnóstico Preliminar de Exposição de Dados Pessoais citado no SB 101842 (mesmo pedido do OD1) e o que foi corrigido; e se a planilha da consulta do PPA ainda está publicada com dados pessoais', refs: ['proc101842'], status: 'a_pedir' },
+        { texto: 'Se o Comitê Gestor de Proteção de Dados já se reuniu, com ata, e se o DTI ou o Comitê aceitam aprovar agora o roteiro de verificação (DM5 v01), como base do art. 21, III, do Decreto 23.413 (mesma pergunta do DM2, DM3 e DM4)', refs: ['cgpd', 'dec23413'], status: 'a_pedir' },
+        { texto: 'As respostas de SBC ao i-Gov TI do IEGM (TCE-SP) e se há relatório de impacto (RIPD) dos sistemas de videomonitoramento com reconhecimento facial e leitura de placas', refs: ['dec22963'], status: 'a_pedir' },
+        { texto: 'Se a Prefeitura aceita abrir consulta pública de pelo menos 15 dias sobre o roteiro ou as práticas de privacidade antes de 18/12, ou levar o tema a algum conselho municipal', refs: ['site_lgpd'], status: 'a_pedir' },
+        { texto: 'Se a Gestão de Pessoas ou a Escola de Governo podem realizar até 18/12 uma capacitação registrada sobre privacidade e riscos dos dados, e incluí-la no calendário anual', refs: ['dec22453', 'segep2025'], status: 'a_pedir' }
+      ]
     },
     {
       codigo: 'DM6', area: 'DM', ordem: 8,
+      cenarios: {
+        hoje: { marcar: 'Em andamento', conta: 'Só o DM6.2, em parte; o critério pede 3 de 3',
+          texto: 'A Prefeitura mantém a Política de Segurança da Informação (Decreto nº 22.453/2023), revista anualmente, com controles de acesso, monitoramento, proteção física do data center, exigência de planos de contingência para sistemas novos e o compromisso de capacitação e conscientização dos usuários; a gestão da segurança é exercida pelo Departamento de Tecnologia da Informação. O Decreto nº 23.409/2026 já define o procedimento de resposta a incidentes para sistemas de inteligência artificial.',
+          porques: [
+            { p: 'Quem orienta o Prefeito sobre segurança, e com que frequência (DM6.1)?', r: 'A direção do DTI responde pela segurança; ainda não há rotina formal de relato anual ao Prefeito.' },
+            { p: 'Há plano de continuidade e de recuperação (DM6.2)?', r: 'A PSI exige planos de contingência para sistemas novos; o plano para os serviços essenciais está em elaboração.' },
+            { p: 'Há treinamento anual (DM6.3)?', r: 'A PSI manda capacitar todos os usuários; não há registro de treinamento nos últimos 12 meses.' }
+          ] },
+        melhorias: { marcar: 'Sim', conta: '3 de 3',
+          depende: ['DTI emite a Norma Complementar de Segurança da Informação (DM6 v01), como prevê a PSI (DM6-6)', 'Relato documentado ao Prefeito até 18/12 (DM6-1)', 'Capacitação conjunta em privacidade e segurança até 18/12, com lista de presença (DM5-6)', 'Primeira avaliação de riscos registrada: diagnóstico do PDTIC 2026–2029 ou varredura de vulnerabilidades (DM6-3)'],
+          texto: 'A Norma Complementar de Segurança da Informação [PENDENTE: número] designa o responsável pela segurança da informação, que apresentou ao Prefeito em [PENDENTE: data] o relato anual de riscos; estabelece o plano de continuidade e recuperação dos serviços essenciais, testado anualmente, e a avaliação anual de riscos de segurança, a primeira concluída em [PENDENTE]. Os servidores recebem treinamento anual em segurança e proteção de dados, com renovação do Termo de Ciência; a primeira turma foi em [PENDENTE: data, participantes].',
+          porques: [
+            { p: 'Por que uma norma complementar, e não um decreto?', r: 'A própria PSI prevê normas complementares do DTI (§ 12), aprovadas pela Secretaria de Administração. Pode sair antes de 18/12, aproveitando o texto que o DTI escreveu em 2023.' }
+          ] }
+      },
       titulo: 'Gerenciando a segurança dos dados',
       definicao: 'A prefeitura tem políticas ou práticas documentadas para gerenciar o risco de vazamento, perda ou alteração não autorizada de dados.',
-      regra: { min: 3, total: 3 }, janela: 'Anual', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
+      regra: { min: 3, total: 3 }, janela: 'Anual', plataforma: { resposta: 'Vazio' },
+      ficha: 'rascunho', classificacao: 'criar_risco',
+      resumo: 'SBC tem a Política de Segurança da Informação (Decreto 22.453/2023), em vigor: controles de acesso, monitoramento, data center protegido, revisão anual, termo de ciência na posse e a ordem de capacitar todos os usuários. O DM6 pede três coisas ao mesmo tempo, e nenhuma está atendida hoje. Não há responsável designado pela segurança que oriente o Prefeito todo ano: a função existe de fato no DTI, sem nome nem rotina. Não há plano de continuidade e recuperação dos serviços essenciais, nem avaliação regular de riscos; a PSI só promete a metodologia. E não há registro de treinamento de segurança nos últimos 12 meses. O DTI já escreveu em 2023 o que falta (backup, plano de continuidade testado todo ano, gestão de riscos), mas ficou fora da versão publicada. O caminho é uma norma complementar da PSI, um relato documentado ao Prefeito e a mesma capacitação do DM5, tudo antes de 18/12. Pede 3 de 3, por isso o risco.',
       subcriterios: [
-        { cod: 'DM6.1', texto: 'A prefeitura tem um responsável pela segurança da informação, ou função equivalente, que orienta a alta gestão pelo menos uma vez por ano.' },
-        { cod: 'DM6.2', texto: 'A prefeitura tem um plano ou protocolos de segurança cibernética documentados, que incluem planos de continuidade das operações e de recuperação e uma avaliação regular dos riscos de segurança, que pode ser feita por terceiros ou por outro órgão independente.' },
-        { cod: 'DM6.3', texto: 'A prefeitura oferece treinamentos anuais para atualizar os servidores sobre as políticas e os procedimentos para gerenciar o risco de vazamento, perda ou alteração não autorizada de dados.' }
+        { cod: 'DM6.1', texto: 'A prefeitura tem um responsável pela segurança da informação, ou função equivalente, que orienta o chefe do Executivo (o prefeito ou a prefeita) pelo menos uma vez por ano.', situacao: 'nao_tem', classificacao: 'criar_risco',
+          nota: 'Não há cargo de responsável pela segurança da informação: a segurança está distribuída entre a Divisão de Infraestrutura, a Seção de Manutenção de Servidores e de Segurança e a Divisão de Dados do DTI. A função equivalente mais próxima é a direção do DTI. Não há registro de que oriente o Prefeito sobre risco de segurança. O original diz "chief executive(s)": vale o Prefeito, não a alta gestão em geral (tradução corrigida em 13/11/2026). Dá para criar: designar o responsável na norma complementar e fazer um relato documentado ao Prefeito antes de 18/12. Depende da agenda do Prefeito.', refs: ['lei7367_dti', 'dec22453'] },
+        { cod: 'DM6.2', texto: 'A prefeitura tem um plano ou protocolos de segurança cibernética documentados, que incluem planos de continuidade das operações e de recuperação e uma avaliação regular dos riscos de segurança, que pode ser feita por terceiros ou por outro órgão independente.', situacao: 'parcial', classificacao: 'criar_risco',
+          nota: 'O protocolo existe: a PSI, em vigor, com planos de contingência exigidos para sistemas novos. Faltam o plano de continuidade e recuperação dos serviços de TI essenciais e a avaliação regular de riscos (a PSI diz que o DTI "proporá" a metodologia). A versão interna de 2023 previa os dois, com teste anual. O PDTIC 2022–2025 avaliou os controles no padrão ISO 27002 uma vez, em 2021–2022; não é processo regular. Se o diagnóstico do PDTIC 2026–2029, feito por terceiro, cobrir segurança, conta como primeira avaliação.', refs: ['dec22453', 'proc86634', 'pdtic', 'proc675', 'dec23409'] },
+        { cod: 'DM6.3', texto: 'A prefeitura oferece treinamentos anuais para atualizar os servidores sobre as políticas e os procedimentos para gerenciar o risco de vazamento, perda ou alteração não autorizada de dados.', situacao: 'nao_tem', classificacao: 'criar',
+          nota: 'Sem evidência nos últimos 12 meses: o relatório de 2025 da Gestão de Pessoas só registra cursos de liderança e o Projeto Diálogos. A PSI manda capacitar todos os usuários, sem periodicidade, e o termo de ciência é assinado na posse, não todo ano. Dá para criar: a mesma capacitação do DM5.3, cobrindo privacidade e segurança, com lista de presença e material, antes de 18/12, e a regra de repetir todo ano com renovação do termo.', refs: ['dec22453', 'segep2025'] }
       ],
-      evidencias: ['Cópia da política ou prática documentada.', 'Evidência de treinamentos anuais.'],
-      nota: 'Ponto de partida provável: Decreto 22.453/2023 (Política de Segurança da Informação).'
+      evidencias: ['Cópia da política ou prática documentada.', 'Evidência de que os treinamentos anuais estão acontecendo.'],
+      versoes: [
+        { v: 'v01', data: '—', situacao: 'aguarda', t: 'Norma Complementar de Segurança da Informação',
+          d: 'A redigir (análise validada em 13/11/2026). Ato do DTI aprovado pela Secretaria de Administração, como prevê a PSI (§§ 10.3 e 12), aproveitando a versão interna de 2023: responsável pela segurança com relato anual ao Prefeito; plano de continuidade e recuperação dos serviços essenciais, com cópia fora do local, testes de restauração e teste anual; avaliação de riscos anual e antes de sistema novo, podendo ser feita por terceiro; resposta a incidentes estendida a todos os sistemas, no modelo do Decreto 23.409 (art. 32); treinamento anual obrigatório e renovação anual do termo de ciência.' }
+      ],
+      sbc: {
+        tem: [
+          { titulo: 'Política de Segurança da Informação (Decreto 22.453/2023)', texto: 'Em vigor. Objetivo de evitar destruição, alteração ou divulgação indevida; controles de acesso, e-mail, monitoramento e data center com controles físicos; planos de contingência exigidos no levantamento de projetos e sistemas novos; revisão no mínimo anual; termo de ciência e responsabilidade na posse; normas complementares previstas. É o protocolo documentado do DM6.2.', links: [{ t: 'Decreto 22.453/2023', u: 'https://leis.org/0wdhm' }] }
+        ],
+        incompleto: [
+          { titulo: 'Versão interna da PSI de 2023 (SB 86634/2023)', texto: 'Previa backup e restauração, plano de continuidade dos serviços essenciais de TI "implementado e testado anualmente", gestão de incidentes, de riscos e de vulnerabilidades, e um Comitê de Segurança da Informação com reunião ao menos semestral.', falta: 'Ficou fora da versão publicada. É o ponto de partida da norma complementar.' },
+          { titulo: 'Estrutura do DTI (Lei 7.367/2025, arts. 645 a 659)', texto: 'Infraestrutura, segurança de servidores e segurança dos dados distribuídas em três unidades; a Divisão de Infraestrutura inclui treinamento de usuários.', falta: 'Nenhum cargo de responsável pela segurança e nenhum relato ao Prefeito (DM6.1).' },
+          { titulo: 'Resposta a incidentes do Decreto 23.409/2026 (IA)', texto: 'Cópias de segurança, gestão de vulnerabilidades e continuidade (art. 15); procedimento de incidente com contenção, causa raiz, recuperação e comunicação (art. 32). Em vigor.', falta: 'Vale só para sistemas de inteligência artificial.' },
+          { titulo: 'PDTIC 2022–2025, Anexos, item 10', texto: 'Situação dos controles de segurança no padrão ISO 27002, inclusive gestão de incidentes e continuidade.', falta: 'Avaliação pontual de 2021–2022, não processo regular. Os percentuais não foram conferidos na imagem e não são citados.' },
+          { titulo: 'PDTIC 2026–2029 (contratado em 27/07/2026)', texto: 'Diagnóstico de governança de TIC feito por terceiro.', falta: 'Não se sabe se cobre segurança (DM6-3).' }
+        ],
+        naoTem: [
+          { titulo: 'Responsável designado e relato anual ao Prefeito', texto: 'Nenhum ato designa o responsável pela segurança da informação; nenhum registro de orientação ao Prefeito sobre riscos (DM6.1).' },
+          { titulo: 'Plano de continuidade e recuperação dos serviços essenciais', texto: 'Nenhum documento lista os serviços críticos, a ordem de recuperação e os testes de restauração (DM6.2).' },
+          { titulo: 'Avaliação regular de riscos de segurança', texto: 'A PSI só promete a metodologia; não se achou avaliação recente registrada (DM6.2).' },
+          { titulo: 'Treinamento de segurança nos últimos 12 meses', texto: 'Nenhum registro de campanha, palestra ou curso; o termo de ciência não é renovado (DM6.3).' }
+        ],
+        naoServe: [
+          { titulo: 'Atos da Mesa 1.162 e 1.164/2026 da Câmara Municipal', texto: 'A Câmara tem PSI com capacitação periódica e procedimento de incidentes com formulário. É o Legislativo: não conta para a Prefeitura, mas serve de modelo próximo.' },
+          { titulo: 'Decreto 23.403/2026, art. 28', texto: 'Segurança desde a concepção, observada a PSI. Princípio, não plano; vigora em 04/02/2027.' }
+        ]
+      },
+      modelos: [
+        { nome: 'Cincinnati (EUA): Política de Segurança da Informação (2018)', cobre: ['DM6.1', 'DM6.2', 'DM6.3'], texto: 'Exemplo aceito no pacote do Fórum. Responsável pela segurança com políticas, auditorias, simulados e comitê de segurança trimestral; cada departamento com plano de recuperação e continuidade testado todo ano; avaliação de riscos antes de todo projeto e, de toda a infraestrutura, no mínimo a cada 3 anos, inclusive por terceiros; briefing de segurança na admissão e uma vez por ano para todos, com presença registrada e termo assinado todo ano; phishing simulado com reciclagem.' },
+        { nome: 'Coalizão de CISOs de Cidades: o que gestores locais devem saber e fazer (2020)', cobre: ['DM6.1', 'DM6.2', 'DM6.3'], texto: 'Modelo do pacote do Fórum. Segurança é responsabilidade dos eleitos e da alta gestão; criar por norma o cargo de responsável pela segurança, com autoridade; planos de continuidade e recuperação; backup fora do local; treinamento regular para todos; e a equipe de segurança deve orientar os gestores de topo, em sessão executiva, pelo menos uma vez por ano, origem quase literal do DM6.1.', u: 'https://cityciso.org/research' },
+        { nome: 'Plano de conscientização em cibersegurança (ciberseguridad.com, Espanha)', cobre: ['DM6.3'], texto: 'Recurso da WWC. Programa em quatro fases (planejar, implantar, operar, avaliar), com aprovação da direção, presença obrigatória registrada, exercícios e revisão anual com métricas.', u: 'https://ciberseguridad.com/normativa/espana/medidas/plan-concienciacion/' },
+        { nome: 'Memphis (EUA): Política de Treinamento em Segurança (IT-20)', cobre: ['DM6.3'], texto: 'Lida no DM5. Curso on-line obrigatório periódico, novos servidores em 45 dias, testes de phishing e treinamento anual por função.', u: 'https://com.navexone.com/content/?public=true&siteid=1' },
+        { nome: 'Pew/Stateline: estados nomeiam diretores de privacidade (2018)', cobre: ['DM6.1'], texto: 'Recurso da WWC. Diretores de privacidade trabalhando junto com os de segurança; serve mais ao DM5.', u: 'https://www.pewtrusts.org/en/research-and-analysis/blogs/stateline/2018/08/21/more-states-appoint-chief-privacy-officers-to-protect-peoples-data' }
+      ],
+      plano: [
+        { texto: 'Levantar o que SBC já tem', feito: true },
+        { texto: 'Ler os recursos que a WWC indica', feito: true },
+        { texto: 'Validar a análise internamente', feito: true },
+        { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM6' },
+        { texto: 'Redigir a norma complementar de segurança da informação (v01), a partir da versão interna de 2023', feito: false },
+        { texto: 'Aprovar a norma (DTI e Secretaria de Administração) e publicá-la', feito: false },
+        { texto: 'Relato documentado do responsável pela segurança ao Prefeito até 18/12 (ata, nota ou apresentação com data)', feito: false },
+        { texto: 'Capacitação conjunta em privacidade e segurança até 18/12 (a mesma do DM5.3), com lista de presença, e calendário anual', feito: false },
+        { texto: 'Primeira avaliação de riscos registrada: diagnóstico do PDTIC 2026–2029, se cobrir segurança, ou varredura de vulnerabilidades dos sistemas expostos à internet', feito: false },
+        { texto: 'Reunir as evidências e preparar a resposta', feito: false }
+      ],
+      pedidos: [
+        { texto: 'Quem responde de fato pela segurança da informação (direção do DTI, Divisão de Infraestrutura, Seção de Segurança) e se houve, nos últimos 12 meses, algum relato ao Prefeito sobre riscos de segurança; se não, se é possível agendar um antes de 18/12', refs: ['lei7367_dti'], status: 'a_pedir' },
+        { texto: 'O que o DTI pratica hoje em cópias de segurança e recuperação (frequência, cópia fora do local ou em nuvem, testes de restauração, plano de recuperação de desastres, contratos de data center), e se o plano de continuidade da versão interna de 2023 chegou a existir', refs: ['proc86634'], status: 'a_pedir' },
+        { texto: 'Se houve avaliação de riscos ou de vulnerabilidades no último ano (teste de invasão, varredura, auditoria do TCE, diagnóstico do PDTIC 2026–2029) e se o escopo do novo PDTIC inclui segurança', refs: ['proc675', 'pdtic'], status: 'a_pedir' },
+        { texto: 'As respostas de SBC ao i-Gov TI do IEGM (mesmo pedido do DM5) e se houve incidente de segurança relevante nos últimos anos, e como foi tratado', refs: ['igov_iegm'], status: 'a_pedir' },
+        { texto: 'Se houve campanha, palestra ou treinamento de segurança nos últimos 12 meses, e quantos servidores assinaram o termo de ciência da PSI', refs: ['dec22453', 'segep2025'], status: 'a_pedir' },
+        { texto: 'Se o DTI aceita emitir agora uma norma complementar da PSI com responsável, relato anual, continuidade e recuperação, avaliação de riscos e treinamento anual (DM6 v01), aproveitando a versão interna de 2023', refs: ['dec22453', 'proc86634'], status: 'a_pedir' }
+      ]
     },
     {
       codigo: 'DM7', area: 'DM', ordem: 9,
+      cenarios: {
+        hoje: { marcar: 'Em andamento', conta: 'O DM7.1 se sustenta com documentos; o DM7.2 não existe; o critério pede 2 de 2',
+          texto: 'A Prefeitura ouve a população de forma regular pelo Programa A Voz da Gente, Cidade pra Frente, regido por edital próprio, com audiências públicas descentralizadas em todas as regiões, audiências setoriais (inclusive com crianças) e consulta pública on-line. No ciclo do PPA 2026–2029, recebeu 3.398 contribuições; cada uma recebeu resposta escrita das secretarias, e 1.646 das 1.742 consideradas pertinentes foram incorporadas ao plano. O ciclo se repetiu em 2026 para a LOA 2027.',
+          porques: [
+            { p: 'Há protocolo revisado por especialista ou modelo validado (DM7.2)?', r: 'Ainda não; está em elaboração.' },
+            { p: 'Como se garante que os métodos são éticos e representativos?', r: 'O edital assegura acessibilidade, intérprete de Libras, revezamento de falas entre bairros e tratamento dos dados conforme a LGPD.' }
+          ] },
+        melhorias: { marcar: 'Sim', conta: '2 de 2',
+          depende: ['Prefeitura aprova por ato o Protocolo de Escuta e Pesquisa Qualitativa (DM7 v01) (DM7-6)', 'Planilhas 08 e 09 do PPA retiradas do ar ou anonimizadas (DM7-3)', 'Relatório consolidado do ciclo 2026 publicado (DM7-1)'],
+          texto: 'Toda escuta qualitativa da Prefeitura segue o Protocolo de Escuta e Pesquisa Qualitativa [PENDENTE: número do ato], baseado no Guia de Prática de Pesquisa Qualitativa do Code for America [e revisado por PENDENTE: especialista], que exige plano com objetivo e amostra, consentimento informado, proteção dos dados pessoais, verificação da representatividade dos participantes, análise com critérios escritos e devolutiva pública. O Programa A Voz da Gente aplica o protocolo; o relatório consolidado do ciclo 2026 está publicado em [PENDENTE: link]. Exemplo de decisão: [PENDENTE: caso].',
+          porques: [
+            { p: 'Precisa de revisão por especialista?', r: 'Não obrigatoriamente: o critério diz "e/ou". Basear o protocolo no guia do Code for America, que é o modelo que a própria WWC oferece, já atende; a revisão por um professor de métodos de pesquisa reforça.' }
+          ] }
+      },
       titulo: 'Práticas de dados qualitativos',
       definicao: 'A prefeitura tem uma estratégia ou um processo documentado para coletar com regularidade a opinião da comunidade e dados qualitativos de moradores e de outros interessados externos, para apoiar as decisões.',
-      regra: { min: 2, total: 2 }, janela: 'Sem janela', ficha: 'nao_iniciada', plataforma: { resposta: 'Vazio' },
+      regra: { min: 2, total: 2 }, janela: 'Sem janela', plataforma: { resposta: 'Vazio' },
+      ficha: 'rascunho', classificacao: 'criar',
+      resumo: 'SBC ouve a população de forma regular pelo programa "A Voz da Gente, Cidade pra Frente": no ciclo do PPA 2026–2029, 15 audiências nos bairros e 60 dias de consulta on-line deram 3.398 contribuições; cada uma teve resposta escrita, e 1.646 das 1.742 pertinentes entraram no plano. Em 2026 o ciclo se repetiu para a LOA 2027, com audiências setoriais, uma delas com crianças, e um edital que garante Libras, revezamento de falas entre bairros e tratamento dos dados pela LGPD. Isso sustenta o DM7.1, desde que se corrija uma falha: as planilhas do PPA com nome, idade e bairro de participantes continuam ligadas na página oficial, o que contradiz o "ético". O DM7.2 não existe: não há protocolo escrito de pesquisa qualitativa. O caminho é um protocolo de escuta aprovado por ato, baseado no guia do Code for America, que é o modelo da própria WWC. Pede 2 de 2.',
       subcriterios: [
-        { cod: 'DM7.1', texto: 'A prefeitura usa métodos rigorosos de coleta de dados qualitativos (como grupos focais, entrevistas e perguntas abertas em pesquisas), que sejam éticos, representativos e/ou participativos, para apoiar as decisões.' },
-        { cod: 'DM7.2', texto: 'A prefeitura exige um protocolo de avaliação para orientar a pesquisa qualitativa, revisado por um especialista em métodos de coleta de dados, e/ou usa um modelo validado de boas práticas elaborado por especialistas.' }
+        { cod: 'DM7.1', texto: 'A prefeitura usa métodos rigorosos de coleta de dados qualitativos (como grupos focais, entrevistas e perguntas abertas em pesquisas), que sejam éticos, representativos e/ou participativos, para apoiar as decisões.', situacao: 'parcial', classificacao: 'juntando',
+          nota: 'Atende em grande parte, juntando documentos depois de uma correção. Há método participativo de rotina (audiências nos bairros, setoriais, consulta on-line com contribuições abertas), documentado em edital e ligado à decisão orçamentária com devolutiva por contribuição. Faltam o rigor escrito (como as contribuições são analisadas e quem participou em relação à população; no on-line do PPA, 68,6% tinham superior completo ou pós) e tirar do ar ou anonimizar as planilhas 08 e 09 do PPA. A página da WWC em português ainda traz o texto antigo ("igualitários" e sem "para apoiar as decisões"); vale o original.', refs: ['avoz_ppa', 'nm2646', 'loa2027'] },
+        { cod: 'DM7.2', texto: 'A prefeitura exige um protocolo de avaliação para orientar a pesquisa qualitativa, revisado por um especialista em métodos de coleta de dados, e/ou usa um modelo validado de boas práticas elaborado por especialistas.', situacao: 'nao_tem', classificacao: 'criar',
+          nota: 'Não há protocolo exigido nem revisão por especialista, e nenhum modelo validado é adotado formalmente. Dá para criar: um protocolo de escuta e pesquisa qualitativa aprovado por ato (Secretaria da Fazenda, que coordena o programa, ou Coordenação Governamental), baseado no guia do Code for America. Como o critério diz "e/ou", a revisão por especialista reforça, não condiciona.', refs: ['nm2646'] }
       ],
-      evidencias: ['Estratégia ou processo documentado de coleta qualitativa.', 'Resumo de como se garante que os métodos são éticos e participativos.', 'Exemplo de protocolo revisado por especialista.', 'Exemplo de decisão informada por escuta da comunidade.']
+      evidencias: ['Estratégia ou processo documentado de coleta qualitativa.', 'Resumo de como se garante que os métodos são éticos, equitativos e participativos.', 'Exemplo de protocolo revisado por especialista ou baseado em modelo validado.', 'Exemplo de opinião da comunidade ou dado qualitativo que informou uma decisão.'],
+      versoes: [
+        { v: 'v01', data: '—', situacao: 'aguarda', t: 'Protocolo de Escuta e Pesquisa Qualitativa',
+          d: 'A redigir (análise validada em 15/11/2026). Vale para o "A Voz da Gente" e para qualquer escuta qualitativa das secretarias: plano de cada escuta (objetivo, decisão que vai apoiar, perguntas, desenho da amostra, métodos); ética (consentimento informado, coleta mínima, dados pessoais separados das contribuições e nunca publicados, cuidados com crianças); representatividade (perfil de quem participou comparado ao da população e busca ativa de quem ficou de fora); análise com critérios escritos e parecer registrado; devolutiva pública com o que mudou na decisão; revisão por especialista e a cada ciclo.' }
+      ],
+      sbc: {
+        tem: [
+          { titulo: '"A Voz da Gente", ciclo do PPA 2026–2029 (2025)', texto: 'Consulta on-line de 60 dias e 15 audiências nos bairros: 3.398 contribuições, 1.742 pertinentes e 1.646 incorporadas (94,5%), contagem conferida na planilha e igual à da página oficial. Resposta escrita para cada contribuição (Anexo V). Casos de decisão: reforma do CAPS Assunção incluída no PPA. Os setores mais pobres participaram mais.', links: [{ t: 'Página do PPA 2026–2029', u: 'https://www.saobernardo.sp.gov.br/web/transparencia/ppa' }] },
+          { titulo: 'Edital de Chamamento do ciclo 2026/2027', texto: 'Objetivo, público, 15 audiências com acessibilidade e intérprete de Libras em todas, consentimento para contato, revezamento de falas entre bairros "para promover a representatividade territorial e temática", parecer de pertinência e viabilidade das secretarias, dados tratados pela LGPD e relatório consolidado sem dados pessoais. É o processo documentado da definição.' }
+        ],
+        incompleto: [
+          { titulo: 'Ciclo LOA 2027 (2026)', texto: '16 audiências nos bairros, 3 setoriais (Terceiro Setor, setor produtivo e crianças) e consulta on-line; a mensagem do projeto fala em 2.505 contribuições e que "uma boa parte" foi incluída.', falta: 'Não foram achados a devolutiva por contribuição nem o relatório consolidado prometido no edital (DM7-1).' },
+          { titulo: 'Publicação das contribuições do PPA', texto: 'A página oficial publica as contribuições e a consulta on-line.', falta: 'As planilhas 08 e 09 trazem nome, idade, bairro, gênero e escolaridade de participantes; precisam sair do ar ou ser anonimizadas (DM7-3, mesma correção do DM5).' },
+          { titulo: 'Conselho de Usuários dos Serviços Públicos (Decreto 21.580/2021)', texto: 'Consultivo, escolhido em chamamento aberto pelos critérios de representatividade e pluralidade, com reunião ao menos anual; avaliação anual dos serviços com significância estatística.', falta: 'Não se sabe se foi instalado (DM7-4).' },
+          { titulo: 'Pesquisas de satisfação do Atende Bem', texto: 'Anuais desde 2019, publicadas.', falta: 'Só perguntas fechadas: reforçam a rotina de escuta, não o método qualitativo.' }
+        ],
+        naoTem: [
+          { titulo: 'Protocolo de pesquisa qualitativa', texto: 'Nenhum documento exige plano, amostra, consentimento, análise e devolutiva para as escutas (DM7.2).' },
+          { titulo: 'Verificação de quem participou', texto: 'Não há registro de que a Prefeitura compare o perfil dos participantes com o da população; no on-line do PPA, 66,7% eram mulheres e 68,6% tinham superior completo ou pós (DM7.1).' },
+          { titulo: 'Método escrito de análise das contribuições', texto: 'O edital manda as secretarias darem parecer de pertinência e viabilidade, mas não diz com que critério (DM7.1, DM7-2).' }
+        ],
+        naoServe: [
+          { titulo: 'Decreto 23.215/2026 (Política de Atendimento)', texto: 'Escuta ativa e uso das pesquisas de satisfação. Princípio, não método.' },
+          { titulo: 'Consulta do Plano de Dados Abertos (Decreto 23.413, art. 18)', texto: 'Consulta de pelo menos 15 dias sobre dados, só a partir de 2027.' }
+        ]
+      },
+      modelos: [
+        { nome: 'Code for America: Guia de Prática de Pesquisa Qualitativa (2020)', cobre: ['DM7.1', 'DM7.2'], texto: 'Recurso da página e modelo do pacote do Fórum: é o modelo validado que a própria WWC oferece para o DM7.2. Plano de pesquisa com justificativa, objetivos, perguntas, métodos, desenho da amostra, recrutamento e plano de análise; consentimento informado; dados mínimos, pseudonimizados e apagados ao fim; análise por codificação e mapa de afinidade.' },
+        { nome: 'Nova York (EUA): NYC Speaks e Conversas Comunitárias', cobre: ['DM7.1'], texto: 'Exemplo aceito no pacote do Fórum. Mapas de resposta que ligam cada achado a uma citação e a um compromisso da Prefeitura; meta de pesquisa anual e de um responsável pelo engajamento.' },
+        { nome: 'South Bend (EUA): pesquisa da comunidade', cobre: ['DM7.1'], texto: 'Exemplo aceito no pacote do Fórum. Pesquisa a cada dois anos desde 2018, por instituto externo, com amostra aleatória (628 domicílios em 2024) e só perguntas fechadas; a de 2020 levou ao plano de recuperação de ruas. Mostra que a WWC aceita rigor vindo de terceiro especializado.', u: 'https://southbendin.gov/communitysurvey/' },
+        { nome: 'MDRC: experiência vivida na ciência de dados (2022)', cobre: ['DM7.1'], texto: 'Recurso da WWC. Ouvir quem tem a experiência do desenho à divulgação; mostra o viés de não resposta (quem responde é quem vai melhor) e o de cortesia, e como um conselho de participantes ajudou a ouvir quem não respondia.', u: 'https://www.mdrc.org/sites/default/files/Lived_Experience_in_Data_Science.pdf' },
+        { nome: 'Urban Institute: Data Chats e guia de voz e poder da comunidade', cobre: ['DM7.1', 'DM7.2'], texto: 'Recursos da WWC. Conversas de 7 a 12 moradores sobre dados do bairro, com roteiro e termo de parceria; quatro kits de métodos engajados, entre eles pesquisas (testar o questionário com grupo diverso, estratégia de amostra, devolver os dados) e conselhos consultivos que podem revisar instrumentos e o protocolo.', u: 'https://www.urban.org/research/publication/community-voice-and-power-sharing-guidebook' }
+      ],
+      plano: [
+        { texto: 'Levantar o que SBC já tem', feito: true },
+        { texto: 'Ler os recursos que a WWC indica', feito: true },
+        { texto: 'Validar a análise internamente', feito: true },
+        { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM7' },
+        { texto: 'Tirar do ar ou anonimizar as planilhas 08 e 09 do PPA (DM5 e DM7)', feito: false },
+        { texto: 'Redigir o protocolo de escuta e pesquisa qualitativa (v01), baseado no guia do Code for America', feito: false },
+        { texto: 'Aprovar o protocolo por ato e, se houver tempo, obter parecer de um especialista em métodos de pesquisa', feito: false },
+        { texto: 'Publicar o relatório consolidado do ciclo 2026, com a devolutiva da LOA 2027 e o perfil dos participantes', feito: false },
+        { texto: 'Reunir as evidências (edital, protocolo, relatório, Anexo V e um caso de decisão) e preparar a resposta', feito: false }
+      ],
+      pedidos: [
+        { texto: 'Se o relatório consolidado do ciclo 2026 (edital, item 6.1) e a resposta a cada contribuição da LOA 2027 foram ou serão publicados, e onde; quantas contribuições entraram no projeto da LOA 2027', refs: ['nm2646', 'loa2027'], status: 'a_pedir' },
+        { texto: 'Como as contribuições são analisadas: se há orientação escrita às secretarias (critério de pertinência e viabilidade, modelo de parecer) e quem coordena', refs: ['nm2646'], status: 'a_pedir' },
+        { texto: 'Se a Prefeitura aceita tirar do ar ou anonimizar as planilhas 08 e 09 do PPA, que expõem nome, idade, bairro e escolaridade (mesma correção do DM5)', refs: ['avoz_ppa'], status: 'a_pedir' },
+        { texto: 'Se o Conselho de Usuários dos Serviços Públicos foi instalado: portaria, membros, atas', refs: ['dec21580'], status: 'a_pedir' },
+        { texto: 'Outras escutas qualitativas das secretarias nos últimos 24 meses (entrevistas, grupos focais, oficinas, diagnósticos participativos), com o material', status: 'a_pedir' },
+        { texto: 'Se a Prefeitura aceita aprovar por ato um protocolo de escuta e pesquisa qualitativa (DM7 v01) e se há especialista de universidade parceira que possa revisá-lo antes de 18/12', status: 'a_pedir' },
+        { texto: 'Um caso concreto de decisão mudada por contribuição da população no ciclo 2026, com o documento que mostra a mudança; e como foi feita a audiência com crianças (autorização dos responsáveis, roteiro)', refs: ['loa2027'], status: 'a_pedir' }
+      ]
     },
     {
       codigo: 'DM8', area: 'DM', ordem: 10,
