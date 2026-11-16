@@ -75,11 +75,14 @@ window.REFS = {
   loa2027: { t: 'LOA 2027: audiência de elaboração e minuta da mensagem do projeto (SB 80747/2026)', d: 'Segundo ciclo do "A Voz da Gente": 16 audiências nos bairros e 3 setoriais (Terceiro Setor, setor produtivo e uma com crianças), consulta on-line; a mensagem fala em 2.505 contribuições. Devolutiva por contribuição não localizada.' },
   dec21580: { t: 'Decreto nº 21.580/2021 (usuários de serviços públicos), alterado pelo Decreto nº 22.243/2023', d: 'Avaliação anual dos serviços por pesquisa com "significância estatística" (art. 21) e Conselho de Usuários dos Serviços Públicos, consultivo, escolhido em chamamento aberto pelos critérios de "representatividade e pluralidade" (arts. 22-A a 22-H). Não se sabe se o conselho foi instalado.' },
   dec23215: { t: 'Decreto nº 23.215/2026 (Política de Atendimento)', d: 'Escuta ativa e uso das pesquisas de satisfação para aperfeiçoar os serviços (arts. 6º, X, e 7º, VIII). Princípio, não método.' },
+  dec22452: { t: 'Decreto nº 22.452/2023 (cotas raciais em concurso)', d: 'Regulamenta a Lei nº 7.243/2023. Autodeclaração de preto ou pardo "conforme o quesito cor ou raça utilizado pela [...] IBGE" (art. 3º), com opção de não declarar (art. 3º, § 2º).', u: LEIS + 'decreto/2023/22452/decreto-n-22452-2023-dispoe-sobre-a-regulamentacao-da-lei-municipal-n-7243-de-26-de-setembro-de-2023-que-reserva-aos-candidatos-negros-25-vinte-e-cinco-por-cento-das-vagas-oferecidas-nos-concursos-publicos-para-provimento-de-cargos-efetivos-e-empregos-publicos-no-ambito-do-municipio-de-sao-bernardo-do-campo-e-da-outras/' },
+  dec20653: { t: 'Decreto nº 20.653/2019 (nome social e identidade de gênero)', d: 'Campo de nome social em fichas, formulários e prontuários, inclusive eletrônicos, de toda a Administração Direta e Indireta (art. 3º); os sistemas passam a ter o campo quando atualizados (art. 6º). Não define categorias de sexo ou gênero.', u: LEIS + 'decreto/2019/20653/decreto-n-20653-2019-dispoe-sobre-o-uso-do-nome-social-e-o-reconhecimento-da-identidade-de-genero-de-pessoas-trans-e-intersexuais-no-mbito-da-administracao-direta-e-indireta-do-municipio-de-sao-bernardo-do-campo-e-da-outras/' },
+  lei7367_750: { t: 'Lei nº 7.367/2025, arts. 750 e 466', d: 'Divisão de Indicadores Sociais (art. 750): dados socioeconômicos por setor censitário, bairro e região, e "identificar os tipos de dados a serem coletados, disponibilizados e publicados". Vigilância Socioassistencial (art. 466): mapas de vulnerabilidade dos territórios a partir do Cadastro Social.', u: L7367 + '#:~:text=Art.%20750.' },
   atende_pesquisa: { t: 'Pesquisas de satisfação do Atende Bem (2019 a 2024)', d: 'Pesquisa anual publicada. A de 2024 só tem perguntas fechadas (notas de 1 a 5 e sim ou não), conferido nas colunas da planilha.', u: 'https://www.saobernardo.sp.gov.br/web/sbc/pesquisas-de-satisfacao' },
 };
 
 window.PAINEL = {
-  atualizado: '2026-11-13',
+  atualizado: '2026-11-16',
   prazos: { envio: '2026-12-18', interno: '1ª semana de dezembro de 2026' },
 
   // Mapa dos documentos (pedido do usuário, 2026-10-29): o que se propõe criar ou atualizar, por critério, com o processo SB.
@@ -96,7 +99,9 @@ window.PAINEL = {
       { criterio: 'DM2', assunto: 'Quais dados existem (inventário)', documento: 'Nota técnica do DTI com o método do inventário e a planilha-modelo', acao: 'Criar', detalhe: 'ato do DTI, sem decreto', prop: { t: 'ainda não redigida (depende da resposta à DM2-5)' }, refs: ['lei7367_645'], processo: 'Sem processo' },
       { criterio: 'DM3', assunto: 'Como os dados circulam (compartilhamento, pedidos e abertura)', documento: 'Procedimento do DTI, aprovado pelo Comitê de Proteção de Dados (DM3 v01), e formulário de pedido', acao: 'Criar', detalhe: 'ato do DTI, sem decreto; modelo brasileiro: o decreto federal de compartilhamento', prop: { t: 'DM3 v01, o procedimento com 21 artigos e 4 anexos', u: 'dm3-v01-compartilhamento.html' }, refs: ['lei7367_645', 'dec10046'], processo: 'Sem processo' },
       { criterio: 'DM4', assunto: 'Como garantir que os dados estão certos (qualidade e padrões)', documento: 'Guia de Qualidade e Padrões de Dados do DTI, com padrões de campos comuns e formulário de metadados, e formulário "aponte um erro nos dados"', acao: 'Criar', detalhe: 'ato do DTI, sem decreto', prop: { t: 'DM4 v01, o guia com 24 artigos e 5 anexos', u: 'dm4-v01-qualidade.html' }, refs: ['lei7367_645', 'cambridge_dm4'], processo: 'Sem processo' },
-      { criterio: 'DM4', assunto: 'Dados das operadoras de patinetes num padrão aberto (GBFS)', documento: 'Decreto 23.119/2025 (credenciamento de bicicletas e patinetes)', acao: 'Atualizar', detalhe: 'só se a Secretaria de Transporte aceitar', prop: { t: 'sem texto; depende da Secretaria de Transporte (DM4-2)' }, refs: ['dec23119'], processo: 'SB 101678/2025' }
+      { criterio: 'DM4', assunto: 'Dados das operadoras de patinetes num padrão aberto (GBFS)', documento: 'Decreto 23.119/2025 (credenciamento de bicicletas e patinetes)', acao: 'Atualizar', detalhe: 'só se a Secretaria de Transporte aceitar', prop: { t: 'sem texto; depende da Secretaria de Transporte (DM4-2)' }, refs: ['dec23119'], processo: 'SB 101678/2025' },
+      { criterio: 'DM8', assunto: 'Como registrar raça, gênero, idade e deficiência do mesmo jeito em toda a Prefeitura', documento: 'Padrão Municipal de Dados Demográficos, como parte C do Anexo II do Guia de Qualidade (DM4 v01), ou ato próprio', acao: 'Criar', detalhe: 'categorias do IBGE; mantenedora sugerida: Divisão de Indicadores Sociais', prop: { t: 'DM8 v01, a redigir' }, refs: ['lei7367_750', 'dec22452', 'dec20653'], processo: 'Sem processo' },
+      { criterio: 'DM8', assunto: 'Dado da própria Prefeitura por bairro e por grupo da população', documento: 'Uma base publicada no padrão (candidata: matrículas da rede municipal)', acao: 'Criar', detalhe: 'publicação de dados, não norma', prop: { t: 'não se aplica (publicação de dados)' }, refs: ['painel_estatistico'], processo: 'Sem processo' }
     ]
   },
 
@@ -117,6 +122,7 @@ window.PAINEL = {
   // com breve contexto e o que mudou no entendimento. Ajuste de layout ou correção de link do painel não entra.
   // Conferência interna de critério já fechado que não muda nada também não entra (usuário, 2026-10-28: não gerar incerteza na equipe).
   historico: [
+    { data: '2026-11-16', texto: 'DM8: análise validada. Cartão completo, com os cenários de resposta, e passo no roteiro, com os pedidos à equipe (DM8-1 a DM8-6). As categorias de gênero do padrão ficam para o Departamento de Políticas Afirmativas revisar, como fez Cambridge com a comissão LGBTQ+ da cidade; o projeto não propõe lista própria.' },
     { data: '2026-11-16', texto: 'DM8: ficha aberta, em análise. SBC já publica dados por bairro e por grupo da população: o Perfil Socioeconômico por Bairro 2026 traz, para cada bairro, idade, sexo, cor ou raça e vulnerabilidade, a partir do Censo 2022 processado pela Secretaria de Planejamento Urbano, no mesmo modelo do atlas de San Antonio que a WWC cita. Falta formato aberto, falta um dado da própria Prefeitura separado por grupo (hoje só por território) e falta um caso de decisão documentado (DM8.2). O DM8.1 não existe: não há padrão demográfico único, embora a Prefeitura já use o quesito cor ou raça do IBGE nas cotas e o nome social em todos os cadastros. Caminho: um padrão curto com as categorias do IBGE, como parte do Guia de Qualidade do DM4. Classificação: dá para criar até o prazo (2 de 2).' },
     { data: '2026-11-15', texto: 'DM7: análise validada. O exemplo de South Bend, aceito pela WWC, usa um questionário aplicado por instituto externo, sinal de que a WWC aceita o rigor vindo de um parceiro especializado. A leitura completa desse relatório e a Resolução CNS 510/2016 (ética em pesquisa com pessoas) ficam para depois, sem mudar a classificação. Os pedidos à equipe (DM7-1 a DM7-7) entraram no roteiro, entre eles o relatório consolidado do programa, previsto no edital e não encontrado.' },
     { data: '2026-11-14', texto: 'DM7: ficha aberta, em análise. SBC ouve a população de forma regular pelo programa "A Voz da Gente, Cidade pra Frente": no ciclo do PPA 2026–2029, cada uma das 3.398 contribuições teve resposta escrita, e 1.646 das 1.742 pertinentes entraram no plano; em 2026 o ciclo se repetiu para a LOA 2027, com edital que garante Libras e revezamento de falas entre bairros. Isso sustenta o DM7.1, desde que saiam da página oficial as planilhas do PPA com dados pessoais de participantes. O DM7.2 não existe: não há protocolo escrito de pesquisa qualitativa. Caminho: um protocolo de escuta aprovado por ato, baseado no guia do Code for America, que é o modelo da própria WWC. Classificação: dá para criar até o prazo (2 de 2).' },
@@ -938,14 +944,79 @@ window.PAINEL = {
     },
     {
       codigo: 'DM8', area: 'DM', ordem: 10,
+      cenarios: {
+        hoje: { marcar: 'Em andamento', conta: 'O DM8.2 se sustenta em parte; o DM8.1 não existe; o critério pede 2 de 2',
+          texto: 'A Secretaria de Planejamento Urbano publica todo ano o Painel Estatístico do município e, em 2026, o Perfil Socioeconômico por Bairro, com 26 capítulos que trazem, para cada bairro, a população por faixa etária, sexo e cor ou raça, a vulnerabilidade social, os serviços públicos e as matrículas, a partir do Censo 2022 processado por bairro pela Divisão de Indicadores Sociais. A Prefeitura adota o quesito cor ou raça do IBGE, por autodeclaração, e garante o nome social em todos os seus cadastros.',
+          porques: [
+            { p: 'Há padrão demográfico documentado usado em toda a Prefeitura (DM8.1)?', r: 'Ainda não; está em elaboração.' },
+            { p: 'Os dados são compartilhados internamente?', r: 'Sim; o Perfil e o Painel são públicos. [PENDENTE: uso interno, DM8-3]' }
+          ] },
+        melhorias: { marcar: 'Sim', conta: '2 de 2',
+          depende: ['Prefeitura aprova o padrão demográfico, no Guia de Qualidade ou em ato próprio (DM8-5)', 'Tabelas do Perfil por Bairro publicadas em planilha (DM8-2)', 'Uma base da própria Prefeitura publicada por bairro e por grupo (DM8-1)', 'Um caso de decisão documentado (DM8-4)'],
+          texto: 'Todas as secretarias registram e divulgam os dados demográficos conforme o Padrão Municipal de Dados Demográficos [PENDENTE: ato], baseado nas categorias do IBGE, com autodeclaração, resposta voluntária e proteção dos dados sensíveis, publicado em [PENDENTE: link] e incluído na capacitação das equipes. O Perfil Socioeconômico por Bairro está publicado também em formato aberto [PENDENTE: link], e [PENDENTE: base] traz os dados da própria Prefeitura por bairro e por grupo da população. Exemplo de decisão: [PENDENTE: caso].',
+          porques: [
+            { p: 'Dado do censo conta?', r: 'Conta: o atlas de San Antonio, que a WWC cita no DM8, usa dados do censo reprocessados pela prefeitura, ligados à decisão orçamentária. A base própria da Prefeitura reduz o risco de a WWC ver o recorte como só do IBGE.' }
+          ] }
+      },
       titulo: 'Dados desagregados para tomada de decisões',
       definicao: 'A prefeitura coleta e analisa dados separados por território e por grupos da população para apoiar as decisões sobre as principais prioridades do município.',
-      regra: { min: 2, total: 2 }, janela: 'Sem janela', ficha: 'em_analise', plataforma: { resposta: 'Vazio' },
+      regra: { min: 2, total: 2 }, janela: 'Sem janela', plataforma: { resposta: 'Vazio' },
+      ficha: 'rascunho', classificacao: 'criar',
+      resumo: 'SBC já publica dados por bairro e por grupo da população: o Perfil Socioeconômico por Bairro 2026 traz, para cada bairro, idade, sexo, cor ou raça e vulnerabilidade, a partir do Censo 2022 processado pela Secretaria de Planejamento Urbano, no mesmo modelo do atlas de San Antonio que a WWC cita. Faltam formato aberto, um dado da própria Prefeitura separado por grupo (hoje os dados da Prefeitura saem só por bairro) e um caso de decisão documentado. Não há padrão demográfico único, mas as peças existem: o quesito cor ou raça do IBGE, por autodeclaração, nas cotas dos concursos, e o campo de nome social em todos os sistemas. O caminho é um padrão curto com as categorias do IBGE, como parte do Guia de Qualidade do DM4. Essencial na Platina. Pede 2 de 2.',
       subcriterios: [
-        { cod: 'DM8.1', texto: 'A prefeitura tem um padrão documentado de dados demográficos, usado para publicar e compartilhar esses dados no mesmo formato em toda a prefeitura.' },
-        { cod: 'DM8.2', texto: 'A prefeitura coleta e compartilha, interna e externamente, dados separados por território e por grupos da população (como raça, etnia, gênero, idade, deficiência, renda e condição de veterano).' }
+        { cod: 'DM8.1', texto: 'A prefeitura tem um padrão documentado de dados demográficos, usado para publicar e compartilhar esses dados no mesmo formato em toda a prefeitura.', situacao: 'nao_tem', classificacao: 'criar',
+          nota: 'Não há padrão demográfico. Há peças que ele pode juntar: o quesito cor ou raça do IBGE com autodeclaração (cotas), o campo de nome social, a lista oficial de bairros (DM4 v01) e as obrigações federais da saúde e do registro de trabalhadores. Dá para criar: um padrão curto, como o de Cambridge, com as categorias do IBGE, regras de coleta e de divulgação, como parte C do Anexo II do Guia de Qualidade (DM4 v01), mais a publicação dele e a orientação às equipes.', refs: ['dec22452', 'dec20653', 'lei7367_750'] },
+        { cod: 'DM8.2', texto: 'A prefeitura coleta e compartilha, interna e externamente, dados separados por território e por grupos da população (como raça, etnia, gênero, idade, deficiência, renda e condição de veterano).', situacao: 'parcial', classificacao: 'juntando',
+          nota: 'Atende em parte, juntando documentos, com reforço. O Perfil por Bairro e o Painel Estatístico publicam dados por território e por grupo, e a lei prevê os mapas de vulnerabilidade da Vigilância Socioassistencial. Faltam formato aberto (só PDF), dado da própria Prefeitura por grupo (hoje só por território) e um caso documentado de decisão. "Condição de veterano" não se aplica a SBC.', refs: ['perfil_bairros', 'painel_estatistico', 'lei7367_750'] }
       ],
-      evidencias: ['Exemplos de conjuntos desagregados.', 'Padrão demográfico seguido por vários órgãos.', 'Como a equipe acessa o padrão ou é treinada nele.']
+      evidencias: ['Exemplos de conjuntos desagregados.', 'Padrão demográfico seguido por vários órgãos.', 'Como a equipe acessa o padrão ou é treinada nele.'],
+      versoes: [
+        { v: 'v01', data: '—', situacao: 'aguarda', t: 'Padrão Municipal de Dados Demográficos',
+          d: 'A redigir (análise validada em 16/11/2026). Parte C do Anexo II do Guia de Qualidade (DM4 v01), mantida pela Divisão de Indicadores Sociais: variáveis e categorias com a fonte de cada uma (cor ou raça do IBGE por autodeclaração; sexo e identidade de gênero, com o nome social, categorias a revisar com o Departamento de Políticas Afirmativas; idade; deficiência pelas perguntas do Censo 2022; escolaridade; renda; bairro); regras de coleta (prefiro não declarar, resposta voluntária salvo quando a lei obriga, perguntas no fim, aviso de finalidade); proteção dos dados sensíveis e supressão de números pequenos na divulgação; mesmas categorias em toda publicação; publicação do padrão e capacitação.' }
+      ],
+      sbc: {
+        tem: [
+          { titulo: 'Perfil Socioeconômico por Bairro 2026 (Secretaria de Planejamento Urbano)', texto: '26 capítulos no mesmo modelo de 17 tabelas: para cada bairro, população por faixa etária, sexo e cor ou raça, alfabetização, vulnerabilidade (IPVS), serviços, matrículas e equipamentos, a partir do Censo 2022 processado por bairro pela Divisão de Indicadores Sociais. É o dado separado por território e por grupo, compartilhado externamente, no modelo do atlas de San Antonio.', links: [{ t: 'Página do Perfil por Bairro', u: 'https://www.saobernardo.sp.gov.br/web/sbc/perfilsocioeconomicobairros' }] },
+          { titulo: 'Quesito cor ou raça do IBGE e nome social já adotados', texto: 'Nas cotas dos concursos, autodeclaração "conforme o quesito cor ou raça utilizado pela [...] IBGE", com opção de não declarar (Decreto 22.452/2023). Em todos os cadastros e sistemas, o campo de nome social (Decreto 20.653/2019). São peças do padrão, não o padrão.' }
+        ],
+        incompleto: [
+          { titulo: 'Painel Estatístico 2025', texto: 'Cor ou raça e idade por bairro, a partir do Censo; dados da própria Prefeitura por bairro: matrículas da rede municipal, praças, projetos esportivos, pontos de recicláveis.', falta: 'Os dados da Prefeitura saem por território, não por grupo da população; o recorte por raça, sexo e deficiência é só o do IBGE. Só em PDF.' },
+          { titulo: 'Divisão de Indicadores Sociais e Vigilância Socioassistencial (Lei 7.367/2025)', texto: 'A Divisão tem a competência de "identificar os tipos de dados a serem coletados, disponibilizados e publicados" (art. 750); a Vigilância faz mapas de vulnerabilidade a partir do Cadastro Social (art. 466).', falta: 'Não se sabe se os mapas existem nem com quem são compartilhados (DM8-3).' }
+        ],
+        naoTem: [
+          { titulo: 'Padrão demográfico', texto: 'Nenhuma norma fixa categorias demográficas para todos os órgãos (busca no leis.org em 16/11/2026). Cada sistema provavelmente registra do seu jeito; não foi possível conferir sem acesso aos sistemas (DM8-1).' },
+          { titulo: 'Base aberta da Prefeitura por grupo da população', texto: 'Nenhuma base publicada com recorte por raça, sexo ou deficiência.' },
+          { titulo: 'Caso de decisão documentado', texto: 'Não foi achado documento que mostre uma decisão apoiada no Perfil ou no Painel (DM8-4).' }
+        ],
+        naoServe: [
+          { titulo: 'Decretos 23.403 e 23.413/2026', texto: 'Preveem padrões técnicos e fontes de referência, onde o padrão demográfico caberia, mas não falam em desagregação, e os padrões técnicos só saem 90 dias depois da vigência (por volta de maio de 2027).' },
+          { titulo: 'Decreto 23.409/2026 (IA)', texto: 'Equidade, não discriminação e mitigação de vieses (art. 3º). Princípio só.' }
+        ]
+      },
+      modelos: [
+        { nome: 'Cambridge (EUA): bateria demográfica padrão das pesquisas', cobre: ['DM8.1'], texto: 'Exemplo aceito no pacote do Fórum. Oito páginas com as perguntas e as opções de resposta de bairro, idade, gênero, raça e etnia, renda, escolaridade, idioma, moradia, deficiência e emprego, cada uma com a fonte oficial (censo, Grupo de Washington). Perguntas no fim, opcionais, para conferir se quem respondeu representa a população.', u: 'https://drive.google.com/file/d/123O4ouIf1z4MsjyoB758lcr58x0fl6Y0/view' },
+        { nome: 'Portland (EUA): padrão REALD+TA, em português', cobre: ['DM8.1'], texto: 'Modelo do pacote do Fórum. Coleta demográfica como prática padrão, igual em toda a cidade; avaliar antes privacidade, mau uso e dano; categorias em dois níveis (mínimo e abrangente); autodeclaração, várias respostas, respostas voluntárias com registro das recusas; texto ao público com finalidade e aviso de não discriminação.', u: 'https://drive.google.com/file/d/14pnjzsSWdEnzPRLoc0eV8wqmBvIriFV6/view' },
+        { nome: 'San Antonio (EUA): Atlas de Equidade', cobre: ['DM8.2'], texto: 'Citado pela WWC no DM8. Dados do censo reprocessados pela prefeitura por setor censitário, usados por todos os departamentos; cada um entrega com o orçamento anual uma ferramenta de equidade que pode considerar o atlas.', u: 'https://datasmart.hks.harvard.edu/san-antonio-equity-atlas' },
+        { nome: 'OPAS: por que a desagregação de dados é essencial (2020)', cobre: ['DM8.1', 'DM8.2'], texto: 'Recurso da WWC, com versão oficial em português. Conjunto mínimo de desagregação: sexo, idade, escolaridade, renda, origem étnica, território e deficiência; sem interoperabilidade não há análise entre bases.', u: 'https://iris.paho.org/handle/10665.2/52072' }
+      ],
+      plano: [
+        { texto: 'Levantar o que SBC já tem', feito: true },
+        { texto: 'Ler os recursos que a WWC indica', feito: true },
+        { texto: 'Validar a análise internamente', feito: true },
+        { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM8' },
+        { texto: 'Redigir o padrão demográfico (v01), como parte C do Anexo II do Guia de Qualidade', feito: false },
+        { texto: 'Revisar as categorias de gênero e de deficiência com o Departamento de Políticas Afirmativas e aprovar o padrão', feito: false },
+        { texto: 'Publicar em planilha as tabelas do Perfil por Bairro (mesma ação do OD3) e uma base da Prefeitura por bairro e por grupo', feito: false },
+        { texto: 'Reunir as evidências (padrão, página onde ele está, Perfil, base própria e um caso de decisão) e preparar a resposta', feito: false }
+      ],
+      pedidos: [
+        { texto: 'Quais sistemas registram cor ou raça, sexo ou gênero, nome social, deficiência, data de nascimento, renda e bairro, e com que categorias; se o RH registra cor ou raça dos servidores (Estatuto da Igualdade Racial, art. 39, § 8º); qual base poderia sair por bairro e por grupo até 18/12', status: 'a_pedir' },
+        { texto: 'Se a Secretaria de Planejamento Urbano pode publicar em planilha as tabelas do Perfil por Bairro (mesmo pedido do OD3)', refs: ['perfil_bairros'], status: 'a_pedir' },
+        { texto: 'Se a Vigilância Socioassistencial faz os mapas de vulnerabilidade a partir do CadSocial, com quem os compartilha, e um exemplo', refs: ['lei7367_750'], status: 'a_pedir' },
+        { texto: 'Um caso concreto de decisão (orçamento, local de equipamento, programa) apoiada no Perfil, no Painel ou em dados por grupo, com o documento', refs: ['perfil_bairros', 'painel_estatistico'], status: 'a_pedir' },
+        { texto: 'Se a Prefeitura aceita aprovar o padrão demográfico como parte do Guia de Qualidade (DM4 v01) ou em ato próprio, com a Divisão de Indicadores Sociais como mantenedora', refs: ['lei7367_750'], status: 'a_pedir' },
+        { texto: 'Se o Departamento de Políticas Afirmativas (ou os conselhos de igualdade racial e da pessoa com deficiência) pode revisar as categorias de gênero e de deficiência antes da aprovação', status: 'a_pedir' }
+      ]
     },
     {
       codigo: 'DM9', area: 'DM', ordem: 11,
