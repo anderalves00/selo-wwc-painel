@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Segurança da informação DM6 v01</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f71b3'/%3E%3Crect y='26' width='32' height='6' fill='%23ff8200'/%3E%3Cpath d='M8 20l5-6 4 4 7-9' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
+  --laranja: #ff8200; --laranja-esc: #b35b00; --laranja-claro: #fff1e3;
+  --verde: #288827; --verde-claro: #e6f4e6;
+  --texto: #2b2b2b; --texto-suave: #5f6368; --borda: #dde3e8;
+  --fundo: #f3f6f9; --cartao: #ffffff;
+  --raio: 10px; --sombra: 0 1px 3px rgba(15, 40, 70, .08);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 "Open Sans", Arial, sans-serif; }
+a { color: var(--azul); }
+h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
+
+.topo { background: linear-gradient(90deg, var(--azul-esc), var(--azul)); color: #fff; border-bottom: 5px solid var(--laranja); }
+.topo-int { padding: 20px 32px 18px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
+.topo .sobre { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; opacity: .85; font-weight: 600; }
+.topo h1 { font-size: 26px; font-weight: 800; margin-top: 4px; }
+.topo .subtitulo { font-size: 14px; opacity: .9; margin-top: 4px; }
+.topo .voltar { color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; background: rgba(255,255,255,.16); padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
+.topo .voltar:hover { background: rgba(255,255,255,.28); }
+
+.barra { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
+.barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.barra .rot { font-size: 13px; font-weight: 700; color: var(--texto-suave); }
+.grupo { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { border: 1px solid var(--borda); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
+.chip[aria-pressed=true] { background: var(--azul); border-color: var(--azul); color: #fff; }
+.contagem { font-size: 13px; color: var(--texto-suave); margin-left: auto; }
+
+main { padding: 24px 32px 48px; display: grid; gap: 22px; }
+.cartao { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); padding: 20px 22px; }
+.cartao > h2 { font-size: 19px; color: var(--azul-esc); margin-bottom: 10px; }
+.cartao p { margin: 0 0 10px; }
+.cartao p:last-child { margin-bottom: 0; }
+
+.legenda { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 12px; font-size: 14px; }
+.legenda span { display: inline-flex; align-items: center; gap: 8px; }
+.tag { display: inline-block; font: 800 11px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 5px; }
+.tag.novo { background: var(--laranja); color: #fff; }
+.tag.alterado { background: var(--azul); color: #fff; }
+.tag.igual { background: #eef1f4; color: var(--texto-suave); }
+.tag.sub { background: var(--verde-claro); color: var(--verde); }
+
+.subs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 6px; }
+.sub-card { border: 1px solid var(--borda); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.sub-card h3 { font-size: 16px; color: var(--azul-esc); }
+.sub-card .pede { font-size: 14px; }
+.sub-card .linha { font-size: 13.5px; border-radius: 6px; padding: 7px 10px; }
+.sub-card .hoje { background: #f7f9fb; }
+.sub-card .depois { background: var(--laranja-claro); }
+.sub-card .arts { display: flex; flex-wrap: wrap; gap: 6px; }
+.sub-card .arts a { font-size: 13px; font-weight: 700; text-decoration: none; background: var(--azul-claro); padding: 2px 9px; border-radius: 6px; }
+
+.decreto { padding: 0; overflow: hidden; }
+.decreto-cab { padding: 18px 22px; border-bottom: 1px solid var(--borda); background: #fafbfc; }
+.decreto-cab h2 { font-size: 19px; color: var(--azul-esc); }
+.decreto-cab .nota { font-size: 13.5px; color: var(--texto-suave); margin-top: 4px; }
+.ementa { padding: 18px 22px 6px; font-size: 14.5px; }
+.ementa .num { font-weight: 800; }
+.ementa .em { margin: 8px 0 12px auto; max-width: 520px; font-style: italic; }
+.ementa p { margin: 0 0 8px; }
+.capitulo { padding: 14px 22px 6px; font-weight: 800; color: var(--azul-esc); letter-spacing: .03em; text-transform: uppercase; font-size: 13.5px; border-top: 1px solid var(--borda); background: #fafbfc; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+.art { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); border-top: 1px solid var(--borda); }
+.art .texto { padding: 14px 22px; font-size: 14.5px; }
+.art .texto p { margin: 0 0 7px; }
+.art .texto p:last-child { margin-bottom: 0; }
+.art.igual { grid-template-columns: 1fr; }
+.art.igual .texto { color: #555b61; }
+.art .cab { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+.art .cab .id { font-weight: 800; font-size: 13px; color: var(--texto-suave); }
+.art .cab .antigo { font-size: 12.5px; color: var(--texto-suave); }
+.art.novo .texto { background: var(--laranja-claro); border-left: 5px solid var(--laranja); }
+.art.alterado .texto { background: var(--azul-claro); border-left: 5px solid var(--azul); }
+mark.novo { background: #ffd8ad; color: inherit; padding: 1px 3px; border-radius: 3px; }
+del.sup { text-decoration: line-through; text-decoration-thickness: 1.5px; color: #8a2a22; background: #fbe9e7; padding: 1px 3px; border-radius: 3px; }
+.rotulo-red { font: 800 11.5px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; margin: 10px 0 4px; }
+.rotulo-red.sup { color: #8a2a22; margin-top: 0; }
+.rotulo-red.nova { color: var(--laranja-esc); }
+.obs-red { font-size: 13.5px; color: var(--texto-suave); border-top: 1px dashed var(--borda); padding-top: 8px; margin-top: 10px !important; }
+.inc { padding-left: 18px; }
+
+.expl { padding: 14px 20px; background: #fff; border-left: 1px solid var(--borda); display: grid; gap: 10px; align-content: start; font-size: 14px; }
+.expl h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); margin-bottom: 2px; }
+.expl .wwc { background: var(--verde-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .wwc h4 { color: var(--verde); }
+.expl p { margin: 0; }
+
+.assinatura { padding: 14px 22px 20px; border-top: 1px solid var(--borda); font-size: 14.5px; }
+.vazio { padding: 20px 22px; color: var(--texto-suave); display: none; border-top: 1px solid var(--borda); }
+
+.obs ol { margin: 0; padding-left: 20px; display: grid; gap: 10px; }
+.destaque { background: var(--verde-claro); border-left: 5px solid var(--verde); border-radius: 6px; padding: 10px 14px; }
+.fontes ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14px; }
+.rodape { font-size: 13px; color: var(--texto-suave); text-align: center; padding: 0 32px 28px; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 1000px) { .subs { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .topo-int, .barra-int, main { padding-left: 16px; padding-right: 16px; }
+  .barra { position: static; }
+  .art { grid-template-columns: 1fr; }
+  .expl { border-left: 0; border-top: 1px dashed var(--borda); }
+  .art .texto, .expl, .capitulo, .ementa, .assinatura, .decreto-cab { padding-left: 16px; padding-right: 16px; }
+  .contagem { margin-left: 0; width: 100%; }
+}
+@media print {
+  .barra, .topo .voltar { display: none; }
+  body { background: #fff; }
+  .art { break-inside: avoid; }
+}
+.tag.escolha { background: #fde7c4; color: #8a4b00; }
+.aviso { background: var(--laranja-claro); border-left: 5px solid var(--laranja); border-radius: 6px; padding: 12px 16px; }
+.expl .origem { background: var(--azul-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .origem h4 { color: var(--azul-esc); }
+table.anexo { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.anexo td, table.anexo th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+table.anexo td.vaz { color: var(--texto-suave); font-style: italic; }
+main > *, .art .texto, .art .expl { min-width: 0; }
+.rolavel { overflow-x: auto; }
+.rolavel > table { min-width: 520px; }
+table.tabinicio { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.tabinicio td, table.tabinicio th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+.inicio h3 { font-size: 16px; color: var(--azul-esc); margin: 16px 0 6px; }
+details.cartao > summary { list-style: none; cursor: pointer; }
+details.cartao > summary::-webkit-details-marker { display: none; }
+details.cartao > summary h2 { font-size: 19px; color: var(--azul-esc); margin: 0; }
+details.cartao[open] > summary h2 { margin-bottom: 10px; }
+details.cartao.decreto > summary h2 { margin-bottom: 0; }
+details.cartao > summary h2::before { content: "\25B8"; display: inline-block; width: 1.1em; color: var(--azul); transition: transform .15s; }
+details.cartao[open] > summary h2::before { transform: rotate(90deg); }
+details.cartao > summary:focus-visible { outline: 2px solid var(--azul); outline-offset: 4px; border-radius: 4px; }
+.acoes { margin-left: auto; display: flex; gap: 6px; }
+.acoes.solta { margin: 0 0 -8px; justify-content: flex-end; }
+@media (max-width: 600px) { main { padding: 16px 16px 32px; } .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; } .cartao { padding: 16px; } .art .texto { padding: 12px 14px; } }
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-int">
+    <div>
+      <div class="sobre">Painel WWC · SBC · Critério DM6 · Versão v01</div>
+      <h1>Norma Complementar de Segurança da Informação</h1>
+      <div class="subtitulo">Rascunho de indicação técnica · 16/11/2026 · Para análise da equipe, do DTI e da Procuradoria</div>
+    </div>
+    <a class="voltar" href="index.html#DM6" onclick="if (history.length === 1) { window.close(); return false; }">← Voltar ao painel (DM6)</a>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-int">
+    <span class="rot">Subcritério WWC:</span>
+    <div class="grupo" data-filtro="sub">
+      <button class="chip" type="button" data-v="todos" aria-pressed="true">Todos</button>
+      <button class="chip" type="button" data-v="DM6.1" aria-pressed="false">DM6.1</button>
+      <button class="chip" type="button" data-v="DM6.2" aria-pressed="false">DM6.2</button>
+      <button class="chip" type="button" data-v="DM6.3" aria-pressed="false">DM6.3</button>
+      <button class="chip" type="button" data-v="escolha" aria-pressed="false">Só pontos de escolha</button>
+    </div>
+    <span class="contagem" id="contagem"></span>
+    <div class="acoes"><button class="chip" type="button" id="abrir-tudo">Expandir tudo</button><button class="chip" type="button" id="fechar-tudo">Recolher tudo</button></div>
+  </div>
+</div>
+
+<main>
+
+<details class="cartao inicio" open>
+  <summary><h2>O que é esta página</h2></summary>
+  <div class="aviso"><p><b>Rascunho de indicação técnica, não decisão.</b> Esta norma reúne o que os modelos indicados pela WWC fazem para atender ao critério DM6 (segurança dos dados) e retoma o que o próprio DTI escreveu em 2023. Instrumento, cargo e prazos cabem ao município (DTI, Secretaria de Administração e Procuradoria).</p></div>
+  <h3>O que é este documento</h3>
+  <p>Não é lei nem decreto. É uma <b>norma complementar</b> da Política de Segurança da Informação (Decreto 22.453/2023), que a própria Política prevê: editada pelo Departamento de Tecnologia da Informação (DTI) e aprovada pelo(a) Secretário(a) de Administração. Não cria direito nem dever para o cidadão: organiza como a Prefeitura protege os próprios sistemas.</p>
+  <p><b>Para que serve:</b> dar nome a quem responde pela segurança e fazê-lo prestar contas ao Prefeito todo ano; garantir que os serviços essenciais voltem a funcionar depois de uma pane ou de um ataque; avaliar os riscos todo ano; responder a incidentes do mesmo jeito em todos os sistemas; e treinar todos os servidores todo ano. É também o conjunto de "políticas ou práticas documentadas" que o critério DM6 da What Works Cities pede.</p>
+  <h3>Em que normas se apoia</h3>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Norma</th><th>O que dá a este ato</th></tr></thead><tbody><tr><td><b>Decreto Municipal 22.453/2023 (Política de Segurança da Informação), itens 10.3 e 12</b></td><td>A PSI "poderá ser complementada por Normas de Segurança da Informação" (item 12) e cabe ao DTI propor as metodologias de segurança, como a avaliação de risco, e apresentar as atualizações à Secretaria de Administração (item 10.3). É o que permite ao DTI editar a Norma e à Secretaria aprová-la.</td></tr><tr><td><b>Lei Municipal 7.367/2025, arts. 645 a 659</b></td><td>Estrutura do DTI, com as divisões de infraestrutura e de dados e a seção de servidores e segurança. É onde o responsável é designado.</td></tr><tr><td><b>Decreto Municipal 23.409/2026 (inteligência artificial)</b></td><td>Em vigor. Já define o procedimento de resposta a incidentes para IA (art. 32, § 4º) e manda o DTI atualizar as normas complementares da PSI, "inclusive" para incidentes (art. 12, parágrafo único). A Norma usa o mesmo procedimento para todos os sistemas.</td></tr><tr><td><b>Lei Federal 13.709/2018 (LGPD), arts. 46 a 49</b></td><td>Medidas de segurança e comunicação de incidentes com dados pessoais à ANPD e aos titulares. A Norma liga a resposta a incidentes a essas regras.</td></tr></tbody></table></div>
+  <p>Ressalva: a designação do responsável e o relato ao Prefeito dependem de decisão da Secretaria de Administração e da agenda do Prefeito, que esta norma não substitui (observações 2 e 4, no fim da página).</p>
+  <h3>Por que agora</h3>
+  <p>SBC tem a Política de Segurança da Informação, revista todo ano, mas ninguém designado como responsável pela segurança, nenhum relato registrado ao Prefeito, nenhum plano de continuidade e recuperação dos sistemas que já existem, nenhuma avaliação regular de riscos e nenhum registro de treinamento nos últimos 12 meses. O DM6 pede <b>3 de 3 subcritérios</b>, com <b>janela anual</b>: além do texto, o relato, a avaliação e o treinamento precisam acontecer antes do envio (18/12/2026).</p>
+  <h3>De onde vem cada parte</h3>
+  <p>Nada aqui foi inventado do zero: cada parte adapta um modelo já usado por outra cidade, uma norma ou um recurso recomendado pela WWC; o quadro abaixo diz qual. O que é escolha nossa (os prazos, a vedação de acumular com a função de Encarregado e quem designa o responsável) está nas observações 3 e 6.</p>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Modelo</th><th>Por que conta</th><th>O que veio dele</th><th>Onde está neste texto</th></tr></thead><tbody><tr><td><b>Coalizão de CISOs de Cidades / UMBC (EUA), 2020</b></td><td>Modelo do pacote do Fórum da WWC no DM6</td><td>Criar o responsável por norma; orientar a alta gestão pelo menos uma vez por ano; cópias fora do local; continuidade e recuperação; treinamento para todos</td><td>Arts. 3º, 4º, 6º, 7º e 11</td></tr><tr><td><b>Cincinnati (EUA), Política de Segurança da Informação, 2018</b></td><td>Exemplo que a WWC aceitou para o DM6 (pacote do Fórum)</td><td>Responsável pela segurança; plano de continuidade testado todo ano, com relatório; avaliação de riscos antes de projetos e de toda a infraestrutura a cada 3 anos, também por terceiros; relatório pós-incidente; treinamento na admissão e anual, com termo assinado todo ano; phishing simulado</td><td>Arts. 3º, 5º, 8º, 9º, 10 e 11; Anexos I a III</td></tr><tr><td><b>Plano de conscientização (ciberseguridad.com, Espanha)</b></td><td>Recurso indicado pela WWC no DM6</td><td>Programa, não evento: presença obrigatória registrada e revisão anual com métricas</td><td>Art. 11, §§ 3º e 7º</td></tr><tr><td><b>Memphis (EUA), Política de Treinamento em Segurança</b></td><td>Exemplo aceito pela WWC no DM5, lido naquela ficha</td><td>Treinamento de quem entra em 45 dias; anual por função; testes de phishing</td><td>Art. 11</td></tr><tr><td><b>DTI de SBC, versão interna da PSI, 2023 (processo SB 86634/2023)</b></td><td>Texto do próprio DTI que não entrou na versão publicada</td><td>Normas de cópias de segurança, continuidade, incidentes e riscos; plano "testado anualmente"</td><td>Arts. 1º, 6º a 9º</td></tr><tr><td><b>Decreto Municipal 23.409/2026 (SBC)</b></td><td>Norma de SBC em vigor</td><td>O procedimento de resposta a incidentes, com as mesmas etapas</td><td>Art. 10</td></tr></tbody></table></div>
+  <h3>Como ler</h3>
+  <p>A norma responde a cinco perguntas: <b>quem responde pela segurança?</b> (art. 3º desta norma), <b>como o Prefeito fica sabendo?</b> (art. 4º), <b>e se os sistemas pararem?</b> (continuidade e recuperação, arts. 5º a 8º), <b>quais são os riscos?</b> (art. 9º) e <b>como os servidores aprendem?</b> (art. 11). Os artigos citados nesta página são os do texto abaixo, salvo quando outra norma é nomeada. Cada artigo e cada anexo traz ao lado por que foi incluído, a intenção, a origem e a relação com a WWC.</p>
+  <div class="legenda">
+    <span><span class="tag novo">Novo</span> texto proposto</span>
+    <span><span class="tag escolha">Ponto de escolha do município</span> recomendação que o município pode trocar</span>
+    <span><span class="tag sub">DM6.x</span> subcritério da WWC atendido</span>
+  </div>
+</details>
+
+<details class="cartao">
+  <summary><h2>Versões desta recomendação</h2></summary>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Versão</th><th>Data</th><th>O que é</th><th>Situação</th></tr></thead><tbody><tr><td><b>v01</b></td><td>16/11/2026</td><td>Norma Complementar de Segurança da Informação: 15 artigos e 4 anexos (lista de serviços essenciais, conteúdo do plano de continuidade, relatos e relatórios, registro).</td><td>Vigente</td></tr><tr><td><b>v02</b></td><td>—</td><td>Norma com os ajustes da equipe, do DTI e da Procuradoria.</td><td>Aguarda a equipe</td></tr></tbody></table></div>
+</details>
+
+<details class="cartao">
+  <summary><h2>O que a WWC pede e onde o norma responde</h2></summary>
+  <div class="subs">
+    <div class="sub-card">
+      <h3>DM6.1 · Responsável e relato ao Prefeito</h3>
+      <div class="pede">Um responsável pela segurança da informação, ou função equivalente, que orienta o chefe do Executivo pelo menos uma vez por ano.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Não há responsável designado nem registro de relato ao Prefeito; a função existe de fato na direção do DTI, que acumula a de Encarregada.</div>
+      <div class="linha depois"><b>No norma:</b> Responsável pela Segurança da Informação designado por portaria, com atribuições e sem acumular a função de Encarregado, e relato anual registrado ao Prefeito, o primeiro em até 30 dias.</div>
+      <div class="arts"><a href="#art1">Art. 1º</a><a href="#art3">Art. 3º</a><a href="#art4">Art. 4º</a><a href="#art12">Art. 12</a><a href="#anx3">Anexo III</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM6.2 · Plano, continuidade, recuperação e riscos</h3>
+      <div class="pede">Plano ou protocolos de segurança documentados, com continuidade das operações e recuperação, e um processo regular de avaliação de riscos, que pode ser feito por terceiros.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Em parte: a PSI é o protocolo, mas sem plano de continuidade e recuperação para os sistemas existentes e sem avaliação regular de riscos (só a promessa de metodologia).</div>
+      <div class="linha depois"><b>No norma:</b> Lista de serviços essenciais, plano de continuidade e recuperação testado todo ano, cópias fora do local com restauração testada, avaliação anual de riscos com terceiro a cada 3 anos e resposta a incidentes para todos os sistemas.</div>
+      <div class="arts"><a href="#art1">Art. 1º</a><a href="#art5">Art. 5º</a><a href="#art6">Art. 6º</a><a href="#art7">Art. 7º</a><a href="#art8">Art. 8º</a><a href="#art9">Art. 9º</a><a href="#art10">Art. 10</a><a href="#art12">Art. 12</a><a href="#anx1">Anexo I</a><a href="#anx2">Anexo II</a><a href="#anx3">Anexo III</a><a href="#anx4">Anexo IV</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM6.3 · Treinamento anual</h3>
+      <div class="pede">Treinamentos anuais para atualizar os servidores sobre as políticas e os procedimentos de segurança dos dados.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> A PSI manda capacitar todos, sem periodicidade; o Termo de Ciência é assinado só na posse; não há registro de treinamento nos últimos 12 meses.</div>
+      <div class="linha depois"><b>No norma:</b> Treinamento na entrada e todo ano para todos, com registro, renovação anual do Termo de Ciência, trilha por função, exercícios de phishing e primeira turma em até 30 dias.</div>
+      <div class="arts"><a href="#art1">Art. 1º</a><a href="#art11">Art. 11</a><a href="#art12">Art. 12</a></div>
+    </div>
+  </div>
+</details>
+
+<details class="cartao decreto" id="decreto">
+  <summary class="decreto-cab">
+    <h2>Texto do norma</h2>
+    <div class="nota">Use os filtros acima para ver só os artigos de um subcritério ou só os pontos de escolha do município.</div>
+  </summary>
+
+  <div class="ementa" data-bloco="preambulo">
+    <p class="num">NORMA COMPLEMENTAR DE SEGURANÇA DA INFORMAÇÃO Nº …… (instrumento a definir)</p>
+    <p class="em">Complementa a Política de Segurança da Informação com o Responsável pela Segurança da Informação e o relato anual ao Prefeito, a continuidade e a recuperação dos serviços de tecnologia da informação essenciais, as cópias de segurança, a avaliação de riscos, a resposta a incidentes e o treinamento anual dos usuários.</p>
+    <p>O(A) DIRETOR(A) DO DEPARTAMENTO DE TECNOLOGIA DA INFORMAÇÃO DA SECRETARIA DE ADMINISTRAÇÃO, com a aprovação do(a) SECRETÁRIO(A) DE ADMINISTRAÇÃO, no uso de suas atribuições, considerando o que consta do processo administrativo nº ……………;</p>
+    <p>Considerando a Política de Segurança da Informação (PSI), instituída pelo Decreto Municipal nº 22.453, de 26 de outubro de 2023, que poderá ser complementada por Normas de Segurança da Informação (item 12) e atribui ao DTI propor as metodologias de segurança, como a avaliação de risco, e promover a conscientização dos usuários (item 10.3);</p>
+    <p>Considerando o Decreto Municipal nº 23.409, de 2026, que define o procedimento de resposta a incidentes para sistemas de inteligência artificial e determina ao DTI a atualização das normas complementares da PSI (arts. 12, parágrafo único, e 32);</p>
+    <p>Considerando a Lei Federal nº 13.709, de 14 de agosto de 2018 (Lei Geral de Proteção de Dados Pessoais), em especial os arts. 46 a 49;</p>
+    <p>Considerando o inciso XIII do art. 645 da Lei Municipal nº 7.367, de 15 de janeiro de 2025; e</p>
+    <p>Considerando a necessidade de assegurar a continuidade dos serviços públicos que dependem de tecnologia da informação e de reduzir o risco de vazamento, perda ou alteração não autorizada de dados,</p>
+    <p>RESOLVE:</p>
+  </div>
+
+  <div class="capitulo">Capítulo I – Do objeto e das definições</div>
+  <article class="art novo" id="art1" data-tipo="novo" data-sub="DM6.1 DM6.2 DM6.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 1º</span><span class="tag novo">Novo</span><span class="tag sub">DM6.1</span><span class="tag sub">DM6.2</span><span class="tag sub">DM6.3</span></div>
+      <p>Art. 1º Esta Norma Complementar, editada com fundamento no item 12 da Política de Segurança da Informação (PSI), instituída pelo Decreto Municipal nº 22.453, de 26 de outubro de 2023, estabelece:</p><p class="inc">I - o Responsável pela Segurança da Informação e o relato anual ao Prefeito;</p><p class="inc">II - a continuidade e a recuperação dos serviços de tecnologia da informação essenciais;</p><p class="inc">III - as cópias de segurança e os testes de restauração;</p><p class="inc">IV - a avaliação de riscos de segurança da informação;</p><p class="inc">V - a resposta a incidentes de segurança; e</p><p class="inc">VI - o treinamento anual e a renovação do Termo de Ciência e Responsabilidade.</p><p>Parágrafo único. Esta Norma aplica-se a todos os órgãos da Administração Direta e a todos os sistemas e serviços de tecnologia da informação que usam, mantidos pelo Departamento de Tecnologia da Informação (DTI), pelas próprias secretarias ou por contratados.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A PSI é o protocolo de segurança de SBC, mas não tem responsável nomeado, plano de continuidade, avaliação regular de riscos nem periodicidade de treinamento. Ela mesma prevê normas complementares para isso (item 12).</p></div>
+      <div><h4>Intenção</h4><p>Uma norma só, com os seis temas que faltam para o DM6, em vez de uma norma por tema. O parágrafo único inclui os sistemas mantidos pelas secretarias e por fornecedores, porque é neles que costuma faltar cópia e plano.</p></div>
+      <div class="origem"><h4>Origem</h4><p>PSI (Decreto 22.453/2023), itens 4, 9, 10.3 e 12; versão interna do DTI (2023, processo SB 86634/2023, p. 16), que previa normas de gestão de riscos, cópias de segurança, continuidade dos serviços essenciais, incidentes e vulnerabilidades; Coalizão de CISOs de Cidades/UMBC, "O que gestores locais devem saber e fazer" (2020).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM6.1 e DM6.2 e DM6.3</h4><p>Delimita os três subcritérios do DM6, que pede 3 de 3.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art2" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 2º</span><span class="tag novo">Novo</span></div>
+      <p>Art. 2º Para os fins desta Norma, considera-se:</p><p class="inc">I - serviço de tecnologia da informação essencial: serviço cuja interrupção impede a Prefeitura de atender à população, arrecadar, pagar ou cumprir prazo legal;</p><p class="inc">II - plano de continuidade: conjunto de instruções que descreve como as funções essenciais serão mantidas durante um desastre ou uma interrupção, até a volta ao normal;</p><p class="inc">III - plano de recuperação: conjunto de instruções para restabelecer sistemas, dados e infraestrutura depois de uma interrupção;</p><p class="inc">IV - tempo máximo de interrupção: prazo em que o serviço precisa voltar a funcionar;</p><p class="inc">V - perda máxima de dados admitida: intervalo de tempo de dados que se aceita perder, que define a frequência das cópias de segurança;</p><p class="inc">VI - incidente de segurança: evento, confirmado ou suspeito, que comprometa a confidencialidade, a integridade ou a disponibilidade de informação ou de sistema; e</p><p class="inc">VII - avaliação de riscos de segurança: identificação e análise das ameaças, das vulnerabilidades e do impacto sobre os ativos de informação, com a definição do tratamento.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>"Continuidade", "recuperação" e "avaliação de riscos" são os termos do DM6.2; sem definição, cada área entende uma coisa.</p></div>
+      <div><h4>Intenção</h4><p>O inciso II usa a definição de plano de continuidade do glossário da própria plataforma da WWC. Os incisos IV e V dão nome, em português simples, ao que a área de TI chama de RTO e RPO: são eles que dizem com que frequência copiar e em que ordem recuperar.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Glossário da plataforma WWC (plano de continuidade operacional; plano de cibersegurança); PSI, item 2 (conceitos); Cincinnati, Política de Segurança da Informação (2018), seção de recuperação de desastres e continuidade.</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio. Dá ao DM6.2 o vocabulário do glossário da WWC.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo II – Do Responsável pela Segurança da Informação</div>
+  <article class="art novo" id="art3" data-tipo="novo" data-sub="DM6.1 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 3º</span><span class="tag novo">Novo</span><span class="tag sub">DM6.1</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 3º O(A) Secretário(a) de Administração designará, por portaria, por indicação do(a) Diretor(a) do DTI, servidor(a) do DTI como Responsável pela Segurança da Informação, que não acumulará a função de Encarregado(a) pelo Tratamento de Dados Pessoais.</p><p>Parágrafo único. Compete ao Responsável pela Segurança da Informação:</p><p class="inc">I - coordenar a aplicação da PSI e desta Norma em todos os órgãos;</p><p class="inc">II - conduzir a avaliação anual de riscos (art. 9º);</p><p class="inc">III - manter a Lista de Serviços Essenciais e o plano de continuidade e recuperação, e coordenar o teste anual (arts. 5º a 8º);</p><p class="inc">IV - coordenar a resposta a incidentes (art. 10);</p><p class="inc">V - organizar, com a unidade de gestão de pessoas, o treinamento anual (art. 11);</p><p class="inc">VI - propor as atualizações da PSI e desta Norma; e</p><p class="inc">VII - apresentar o relato anual ao Prefeito (art. 4º).</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM6.1 pede um responsável pela segurança da informação, "ou função equivalente". Em SBC, a segurança está espalhada pelo DTI (infraestrutura, servidores, dados) e ninguém responde por ela por nome.</p></div>
+      <div><h4>Intenção</h4><p>Um nome, por portaria, como pede a coalizão de CISOs ("criar por norma e preencher o cargo"), sem criar cargo novo: é uma designação dentro do DTI. A vedação de acumular a função de Encarregado separa quem protege os sistemas de quem orienta sobre os direitos dos titulares, como o próprio GT de 2022 registrou e como o Decreto 23.403 manda examinar (art. 19, parágrafo único). Quem designa e se a vedação fica são escolhas do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Coalizão de CISOs de Cidades/UMBC (2020): criar o cargo por norma, com autoridade sobre toda a infraestrutura; Cincinnati, Política de Segurança da Informação (2018): papéis do Information Security Officer; PSI, item 10.3 (o DTI "adequará a equipe de segurança da informação"); Lei Municipal 7.367/2025, arts. 645 a 659 (estrutura do DTI); Decreto 23.403/2026, art. 19, parágrafo único.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM6.1</h4><p>É a primeira metade do DM6.1 (o responsável).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art4" data-tipo="novo" data-sub="DM6.1 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 4º</span><span class="tag novo">Novo</span><span class="tag sub">DM6.1</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 4º O Responsável pela Segurança da Informação, com o(a) Diretor(a) do DTI, apresentará ao Prefeito, pelo menos uma vez por ano, em reunião registrada, relato sobre:</p><p class="inc">I - as ameaças e os incidentes do período;</p><p class="inc">II - o resultado da avaliação de riscos e o andamento do tratamento;</p><p class="inc">III - o estado dos controles, das cópias de segurança e do plano de continuidade, com o resultado do teste anual;</p><p class="inc">IV - a adesão ao treinamento anual; e</p><p class="inc">V - o que falta e os recursos necessários.</p><p>§ 1º O registro do relato conterá data, participantes e o material apresentado, e será guardado pelo DTI.</p><p>§ 2º O primeiro relato será feito em até 30 (trinta) dias da publicação desta Norma.</p><p>§ 3º Incidente grave será relatado ao Prefeito assim que conhecido, sem prejuízo do relato anual.</p><p>§ 4º Os detalhes de vulnerabilidades e de controles constarão de anexo de acesso restrito, nos termos do item 12 da PSI.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>É a segunda metade do DM6.1: o responsável "orienta o chefe do Executivo pelo menos uma vez por ano". Hoje não há registro de que isso aconteça.</p></div>
+      <div><h4>Intenção</h4><p>A frase da coalizão de CISOs ("orientar os gestores de topo, em sessão executiva, pelo menos uma vez por ano") virou artigo, com pauta mínima. O registro (§ 1º) é a evidência. O § 4º permite falar das falhas ao Prefeito sem expô-las em documento público.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Coalizão de CISOs de Cidades/UMBC (2020): "a equipe de segurança deve orientar os gestores de topo, em sessão executiva, pelo menos uma vez por ano" sobre as ameaças, a preparação e o que falta; Cincinnati (o administrador da cidade responde pelo programa e recebe o relatório pós-incidente); PSI, item 12 (normas técnicas confidenciais só para os autorizados).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM6.1</h4><p>É o DM6.1 em uso: o registro do relato é a prova.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo III – Da continuidade e da recuperação</div>
+  <article class="art novo" id="art5" data-tipo="novo" data-sub="DM6.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 5º</span><span class="tag novo">Novo</span><span class="tag sub">DM6.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 5º O DTI manterá a Lista de Serviços de TI Essenciais (Anexo I), com, para cada serviço, os órgãos usuários, os sistemas, o tempo máximo de interrupção, a perda máxima de dados admitida, as dependências, o responsável e a alternativa de funcionamento durante a interrupção.</p><p>§ 1º A Lista será elaborada em até 60 (sessenta) dias da publicação desta Norma, ouvidas as secretarias, e revista uma vez por ano.</p><p>§ 2º O sistema mantido por secretaria ou por contratado entra na Lista quando o serviço for essencial.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Não se recupera tudo ao mesmo tempo. Sem saber o que é essencial e em quanto tempo precisa voltar, o plano de continuidade não tem ordem.</p></div>
+      <div><h4>Intenção</h4><p>Começar pela lista, como fazem os planos de continuidade: é dela que saem a frequência das cópias (perda máxima de dados) e a ordem de recuperação (tempo máximo de interrupção). As secretarias são ouvidas porque são elas que sabem o que para o atendimento.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Cincinnati (cada departamento identifica dados, sistemas e serviços críticos); versão interna do DTI (2023), "Plano de Continuidade de Serviços Essenciais de TI"; Decreto 23.409/2026, art. 32, § 4º (atendimento alternativo ao cidadão).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM6.2</h4><p>Base do plano de continuidade do DM6.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art6" data-tipo="novo" data-sub="DM6.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 6º</span><span class="tag novo">Novo</span><span class="tag sub">DM6.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 6º O DTI elaborará, em até 90 (noventa) dias da publicação desta Norma, o Plano de Continuidade e Recuperação dos Serviços de TI Essenciais, com o conteúdo mínimo do Anexo II.</p><p>Parágrafo único. A secretaria que mantém sistema essencial próprio elaborará, com o apoio do DTI, a parte do plano referente a ele.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM6.2 pede plano ou protocolo que inclua continuidade das operações e recuperação. A PSI só exige "planos de contingência" na fase de projeto de cada sistema novo; nada cobre os sistemas que já existem.</p></div>
+      <div><h4>Intenção</h4><p>Um plano para os serviços essenciais, com conteúdo mínimo no anexo, em vez de um plano por sistema. A parte das secretarias segue Cincinnati, onde cada departamento tem o seu plano.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Versão interna do DTI (2023, processo SB 86634/2023, p. 26): "um plano de contingência e continuidade do negócio deverá ser implementado e testado anualmente"; PSI, item 9; Cincinnati, seção de recuperação de desastres e continuidade; Coalizão de CISOs (planos de continuidade e recuperação).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM6.2</h4><p>É o plano de continuidade e recuperação do DM6.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art7" data-tipo="novo" data-sub="DM6.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 7º</span><span class="tag novo">Novo</span><span class="tag sub">DM6.2</span></div>
+      <p>Art. 7º As cópias de segurança dos serviços essenciais:</p><p class="inc">I - terão frequência compatível com a perda máxima de dados admitida;</p><p class="inc">II - terão ao menos uma cópia guardada fora do local principal e protegida contra alteração ou exclusão;</p><p class="inc">III - serão protegidas por controle de acesso e, quando contiverem dado pessoal ou sigiloso, por criptografia; e</p><p class="inc">IV - terão a restauração testada no teste anual (art. 8º).</p><p>Parágrafo único. Os contratos de sistemas e serviços essenciais exigirão do contratado as cópias, a restauração e a participação no teste anual.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Sem cópia fora do local e protegida contra alteração, um ataque de sequestro de dados (ransomware) apaga também as cópias. Sem teste de restauração, não se sabe se a cópia serve.</p></div>
+      <div><h4>Intenção</h4><p>Regras de resultado, não de tecnologia: frequência ligada à perda admitida, cópia fora e protegida, restauração testada. O parágrafo único leva a regra aos fornecedores, que a PSI só alcança pela cláusula de confidencialidade (item 4.2).</p></div>
+      <div class="origem"><h4>Origem</h4><p>Coalizão de CISOs (fazer cópia de tudo e guardá-la fora; o caso de Baltimore, 2019); versão interna do DTI (2023): norma de "Geração e Restauração de Cópias de Segurança"; Decreto 23.409/2026, art. 15 (cópias de segurança entre os controles); PSI, item 4.2.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM6.2</h4><p>Parte da "recuperação" do DM6.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art8" data-tipo="novo" data-sub="DM6.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 8º</span><span class="tag novo">Novo</span><span class="tag sub">DM6.2</span></div>
+      <p>Art. 8º O Plano de Continuidade e Recuperação será testado pelo menos uma vez por ano, por exercício simulado ou por restauração real de serviço essencial.</p><p>§ 1º Cada teste terá relatório com o que foi testado, o resultado, as falhas encontradas e o plano de ação (Anexo III, parte B), entregue ao Responsável pela Segurança da Informação e ao(à) Diretor(a) do DTI.</p><p>§ 2º O resultado do teste integra o relato anual ao Prefeito (art. 4º, III).</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Plano que nunca foi testado não se sabe se funciona. O DTI já tinha escrito, em 2023, que o plano "deverá ser implementado e testado anualmente"; a frase não entrou na versão publicada da PSI.</p></div>
+      <div><h4>Intenção</h4><p>Devolver a regra do texto do DTI, com o relatório de Cincinnati, que é a prova de que o teste aconteceu.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Versão interna do DTI (2023, p. 26); Cincinnati (plano testado pelo menos uma vez por ano, com relatório do que se testou, resultado, falhas e plano de ação).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM6.2</h4><p>Torna a continuidade do DM6.2 uma prática verificável, dentro da janela anual.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo IV – Da avaliação de riscos</div>
+  <article class="art novo" id="art9" data-tipo="novo" data-sub="DM6.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 9º</span><span class="tag novo">Novo</span><span class="tag sub">DM6.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 9º O Responsável pela Segurança da Informação conduzirá, pelo menos uma vez por ano, a avaliação de riscos de segurança da informação, que compreende:</p><p class="inc">I - os ativos de informação essenciais, a partir da Lista de Serviços de TI Essenciais e do inventário de sistemas do DTI;</p><p class="inc">II - as ameaças e as vulnerabilidades, inclusive por varredura dos sistemas expostos à internet;</p><p class="inc">III - a probabilidade e o impacto de cada risco;</p><p class="inc">IV - o tratamento de cada risco, com responsável e prazo; e</p><p class="inc">V - o relatório da avaliação (Anexo III, parte C).</p><p>§ 1º Também haverá avaliação antes da implantação de sistema novo ou de mudança relevante, como já exige o item 9 da PSI; a vulnerabilidade grave encontrada será corrigida antes da entrada em produção.</p><p>§ 2º Pelo menos a cada 3 (três) anos, a avaliação será feita ou revisada por terceiro independente, como auditoria, diagnóstico contratado, teste de invasão ou órgão de controle.</p><p>§ 3º A primeira avaliação será concluída em até 60 (sessenta) dias da publicação desta Norma e poderá aproveitar diagnóstico já contratado, como o do Plano Diretor de Tecnologia da Informação e Comunicação 2026–2029, se cobrir a segurança.</p><p>§ 4º O risco que não for tratado será aceito por decisão motivada do(a) Diretor(a) do DTI, nos termos do art. 24, § 1º, IV, do Decreto Municipal nº 23.403, de 2026, e constará do relato ao Prefeito.</p><p>§ 5º O relatório é de acesso restrito; sua síntese integra o relato anual ao Prefeito.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM6.2 pede "um processo regular de avaliação de riscos de segurança, que pode ser feito por terceiros". A PSI só diz que o DTI vai "propor" a metodologia de avaliação de risco.</p></div>
+      <div><h4>Intenção</h4><p>Anual, como o DM6 conta; antes de cada sistema novo, como a PSI e Cincinnati; e com olhar externo a cada 3 anos, como Cincinnati. O § 3º permite usar o diagnóstico do novo PDTIC, contratado em 2026, para não começar do zero. O § 4º usa a categoria de risco residual do Decreto 23.403, para que o risco aceito tenha dono.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Cincinnati, seção de gestão de riscos (antes de todo projeto e de toda mudança grande; toda a infraestrutura no mínimo a cada 3 anos; avaliação externa prevista); PSI, itens 9 e 10.3; versão interna do DTI (2023): normas de gestão de riscos e de vulnerabilidades; PDTIC 2026–2029 (FUNDUNESP, contrato de 27/07/2026); Decreto 23.403/2026, art. 24, § 1º, IV.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM6.2</h4><p>É o "processo regular de avaliação de riscos" do DM6.2.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo V – Da resposta a incidentes</div>
+  <article class="art novo" id="art10" data-tipo="novo" data-sub="DM6.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 10</span><span class="tag novo">Novo</span><span class="tag sub">DM6.2</span></div>
+      <p>Art. 10. Todo incidente de segurança, em qualquer sistema, será tratado pelo procedimento de resposta a incidentes, que registrará identificação, contenção, preservação das evidências, análise de causa raiz, providências adotadas, recuperação, comunicação e revisão dos controles, com critérios de escalonamento e de suspensão segura, garantido o atendimento alternativo ao cidadão.</p><p>§ 1º Qualquer usuário comunicará ao DTI, imediatamente, o incidente ou a suspeita de incidente, como já exige o item 10.1 da PSI.</p><p>§ 2º O incidente que envolva dado pessoal será comunicado no mesmo dia ao(à) Encarregado(a), e a comunicação à Autoridade Nacional de Proteção de Dados e aos titulares, quando cabível, seguirá o art. 48 da LGPD e a Resolução CD/ANPD nº 15, de 24 de abril de 2024.</p><p>§ 3º Encerrado o incidente, o Responsável pela Segurança da Informação elaborará relatório pós-incidente (Anexo III, parte D); o incidente grave será comunicado ao(à) Secretário(a) de Administração e ao Prefeito.</p><p>§ 4º Os incidentes e os testes serão lançados no Registro do Anexo IV.</p><p>§ 5º A divulgação indevida de base de dados segue também o Roteiro de Verificação de Publicação e Compartilhamento Seguro.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O glossário da WWC diz que um plano de cibersegurança inclui "os passos para responder a uma violação". SBC tem esse procedimento escrito só para sistemas de inteligência artificial (Decreto 23.409).</p></div>
+      <div><h4>Intenção</h4><p>Estender a todos os sistemas o procedimento que o Decreto 23.409 já fixou para a IA (art. 32, § 4º), com as mesmas palavras, para não haver dois procedimentos. O relatório pós-incidente é o de Cincinnati. O próprio Decreto 23.409 manda o DTI atualizar as normas complementares da PSI, "inclusive" para incidentes (art. 12, parágrafo único).</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto 23.409/2026, arts. 12, parágrafo único, e 32, §§ 3º e 4º; PSI, itens 10.1 a 10.3; Cincinnati, seção de tratamento de incidentes (relatório pós-incidente ao administrador da cidade); LGPD, art. 48; Resolução CD/ANPD nº 15/2024.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM6.2</h4><p>Completa o plano de segurança do DM6.2 com a resposta a violações, que o glossário da WWC inclui.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo VI – Do treinamento anual</div>
+  <article class="art novo" id="art11" data-tipo="novo" data-sub="DM6.3 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 11</span><span class="tag novo">Novo</span><span class="tag sub">DM6.3</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 11. Todos os usuários receberão treinamento em segurança da informação em até 45 (quarenta e cinco) dias da posse ou do início do acesso e, depois, pelo menos uma vez por ano, organizado pelo DTI com a unidade de gestão de pessoas.</p><p>§ 1º O conteúdo mínimo é:</p><p class="inc">I - a PSI e esta Norma;</p><p class="inc">II - senhas e verificação em duas etapas;</p><p class="inc">III - mensagens falsas (phishing) e engenharia social;</p><p class="inc">IV - uso seguro de e-mail, internet, dispositivos e ferramentas de inteligência artificial;</p><p class="inc">V - como comunicar um incidente; e</p><p class="inc">VI - proteção de dados pessoais, que pode ser dada na mesma turma da capacitação prevista no Roteiro de Verificação de Publicação e Compartilhamento Seguro.</p><p>§ 2º A equipe de TI e os usuários com acesso a informação confidencial terão trilha adicional por função.</p><p>§ 3º Cada turma terá registro de data, conteúdo, material, lista de presença ou de conclusão e avaliação, guardado pela unidade de gestão de pessoas.</p><p>§ 4º No treinamento anual, cada usuário renovará o Termo de Ciência e Responsabilidade da PSI, por meio físico ou eletrônico.</p><p>§ 5º O DTI poderá fazer exercícios de mensagens falsas simuladas, com treinamento adicional para quem não as identificar.</p><p>§ 6º A primeira turma será realizada em até 30 (trinta) dias da publicação desta Norma.</p><p>§ 7º A adesão ao treinamento será medida e informada no relato anual ao Prefeito.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM6.3 pede treinamentos anuais sobre as políticas de segurança, e a evidência sugerida é a prova de que eles acontecem. A PSI manda capacitar todos os usuários, mas não diz quando; o Termo de Ciência é assinado uma vez, na posse.</p></div>
+      <div><h4>Intenção</h4><p>Na entrada e todo ano, como Cincinnati e Memphis; renovação anual do termo junto com o treinamento, como Cincinnati; trilha por função, como Memphis e o Decreto 23.409; exercício de phishing como possibilidade, não obrigação. O inciso VI e o § 6º permitem uma turma só para o DM5 e o DM6. A medição da adesão vem do plano de conscientização indicado pela WWC.</p></div>
+      <div class="origem"><h4>Origem</h4><p>PSI, itens 4 e 4.1 (capacitação de todos; Termo de Ciência na posse) e 10.3 (campanhas, palestras e treinamentos com a Gestão de Pessoas); Cincinnati (briefing na admissão e pelo menos uma vez por ano, com registro, e termo assinado todo ano; phishing simulado com reciclagem); Memphis, Política de Treinamento em Segurança (novos servidores em 45 dias; treinamento anual por função; testes de phishing); ciberseguridad.com, plano de conscientização (presença obrigatória registrada, revisão anual com métricas); Decreto 23.409/2026, art. 33.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM6.3</h4><p>É o DM6.3 inteiro. O registro do § 3º é a "evidência de que os treinamentos anuais estão acontecendo".</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo VII – Das disposições finais</div>
+  <article class="art novo" id="art12" data-tipo="novo" data-sub="DM6.1 DM6.2 DM6.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 12</span><span class="tag novo">Novo</span><span class="tag sub">DM6.1</span><span class="tag sub">DM6.2</span><span class="tag sub">DM6.3</span></div>
+      <p>Art. 12. Esta Norma será revista uma vez por ano, junto com a revisão da PSI prevista no seu item 4, quando o DTI avaliará levar ao texto da própria PSI o responsável, o relato anual, a continuidade, a avaliação de riscos e o treinamento anual.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A PSI manda revisar-se "com periodicidade mínima de 1 (um) ano". É o momento natural para rever também esta Norma.</p></div>
+      <div><h4>Intenção</h4><p>Os pontos desta Norma podem um dia subir para o decreto da PSI, mas isso é reforço, sem prazo: para o DM6, a Norma basta.</p></div>
+      <div class="origem"><h4>Origem</h4><p>PSI, item 4 (revisão anual) e item 10.3 (o DTI apresenta as atualizações da PSI à Secretaria de Administração).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM6.1 e DM6.2 e DM6.3</h4><p>Mantém os três subcritérios em dia a cada ano.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art13" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 13</span><span class="tag novo">Novo</span></div>
+      <p>Art. 13. O plano de continuidade, os relatórios de teste, de avaliação de riscos e pós-incidente e o Registro do Anexo IV são de acesso restrito aos autorizados pelo DTI, nos termos do item 12 da PSI, sem prejuízo da divulgação de sua existência e de sínteses sem informação sensível.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Publicar onde estão as falhas ajuda quem quer atacar.</p></div>
+      <div><h4>Intenção</h4><p>Restringir o detalhe e permitir mostrar que os documentos existem, que é o que a WWC precisa ver.</p></div>
+      <div class="origem"><h4>Origem</h4><p>PSI, item 12 (normas técnicas confidenciais só para os autorizados).</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Permite apresentar a evidência do DM6.2 sem expor vulnerabilidades.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art14" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 14</span><span class="tag novo">Novo</span></div>
+      <p>Art. 14. Integram esta Norma os seguintes anexos:</p><p class="inc">I - Anexo I – Lista de Serviços de TI Essenciais (modelo);</p><p class="inc">II - Anexo II – Conteúdo mínimo do Plano de Continuidade e Recuperação;</p><p class="inc">III - Anexo III – Relatos e relatórios; e</p><p class="inc">IV - Anexo IV – Registro de incidentes e testes.</p><p>Parágrafo único. O DTI poderá atualizar os anexos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Anexos aprovados junto com a Norma viram regra e contam como evidência.</p></div>
+      <div><h4>Intenção</h4><p>Os modelos são a parte que muda com a prática.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Mesmo arranjo das outras versões do projeto (DM3 v01, art. 18; DM5 v01, art. 17).</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio.</p></div>
+    </aside>
+  </article>
+  <article class="art igual" id="art15" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 15</span></div><p>Art. 15. Esta Norma entra em vigor na data de sua publicação.</p></div>
+  </article>
+  <div class="assinatura" data-bloco="assinatura">São Bernardo do Campo, ………..<br><b>Diretor(a) do Departamento de Tecnologia da Informação · Aprovo: Secretário(a) de Administração</b></div>
+  <div class="capitulo">Anexos</div>
+  <article class="art novo" id="anx1" data-tipo="novo" data-sub="DM6.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo I</span><span class="tag novo">Novo</span><span class="tag sub">DM6.2</span></div>
+      <p><b>Anexo I – Lista de Serviços de TI Essenciais (modelo)</b></p><p>Preenchida pelo DTI, ouvidas as secretarias (art. 5º). As linhas abaixo são categorias para orientar o levantamento, não uma lista conferida dos sistemas de SBC.</p><div class="rolavel"><table class="anexo"><thead><tr><th>Serviço</th><th>Órgãos usuários</th><th>Sistemas</th><th>Tempo máximo de interrupção</th><th>Perda máxima de dados admitida</th><th>Dependências</th><th>Responsável</th><th>Alternativa durante a interrupção</th></tr></thead><tbody><tr><td>Rede, internet e acesso aos sistemas</td><td>Todos</td><td>A preencher</td><td>A definir</td><td>A definir</td><td>Energia, data center, provedores</td><td>DTI</td><td>A definir</td></tr><tr><td>Processos e protocolo eletrônico</td><td>Todos</td><td>A preencher</td><td>A definir</td><td>A definir</td><td>A preencher</td><td>A preencher</td><td>A definir</td></tr><tr><td>Arrecadação (tributos e taxas)</td><td>Fazenda</td><td>A preencher</td><td>A definir</td><td>A definir</td><td>A preencher</td><td>A preencher</td><td>A definir</td></tr><tr><td>Folha de pagamento</td><td>Administração</td><td>A preencher</td><td>A definir</td><td>A definir</td><td>A preencher</td><td>A preencher</td><td>A definir</td></tr><tr><td>Atendimento de saúde</td><td>Saúde</td><td>A preencher</td><td>A definir</td><td>A definir</td><td>A preencher</td><td>A preencher</td><td>A definir</td></tr><tr><td>Serviços on-line ao cidadão</td><td>Vários</td><td>A preencher</td><td>A definir</td><td>A definir</td><td>A preencher</td><td>A preencher</td><td>A definir</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A lista é o ponto de partida do plano e da ordem de recuperação.</p></div>
+      <div><h4>Intenção</h4><p>Colunas com o que o plano precisa; as linhas são só categorias típicas de prefeitura, para o DTI e as secretarias confirmarem ou trocarem.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Cincinnati (dados, sistemas e serviços críticos por departamento); versão interna do DTI (2023), plano de continuidade dos serviços essenciais.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM6.2</h4><p>DM6.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx2" data-tipo="novo" data-sub="DM6.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo II</span><span class="tag novo">Novo</span><span class="tag sub">DM6.2</span></div>
+      <p><b>Anexo II – Conteúdo mínimo do Plano de Continuidade e Recuperação</b></p><p>O plano pode ser um documento só, com uma seção por serviço essencial (art. 6º).</p><div class="rolavel"><table class="anexo"><thead><tr><th>Parte</th><th>O que contém</th></tr></thead><tbody><tr><td>A – Serviços e prioridades</td><td>A Lista do Anexo I e a ordem de recuperação, pelo tempo máximo de interrupção</td></tr><tr><td>B – Acionamento</td><td>Quem declara a interrupção, a cadeia de contatos (DTI, secretarias, fornecedores), com substitutos</td></tr><tr><td>C – Continuidade</td><td>Como cada serviço funciona durante a interrupção: alternativa manual, outro local, outro canal, atendimento alternativo ao cidadão</td></tr><tr><td>D – Recuperação</td><td>Passo a passo para restabelecer cada sistema e restaurar os dados a partir das cópias, com o tempo esperado</td></tr><tr><td>E – Comunicação</td><td>O que se informa aos servidores e à população, por quem e por qual canal</td></tr><tr><td>F – Volta ao normal</td><td>Como se confere que o serviço voltou e se registra o ocorrido</td></tr><tr><td>G – Teste e revisão</td><td>Como e quando o plano é testado (art. 8º) e revisto</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM6.2 pede plano que inclua continuidade e recuperação; o anexo garante que as duas partes estejam lá.</p></div>
+      <div><h4>Intenção</h4><p>Sete partes, da lista à revisão, separando continuidade (manter o serviço, C) de recuperação (restabelecer o sistema, D), como faz o glossário da WWC.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Glossário da plataforma WWC (plano de continuidade operacional); Cincinnati (estratégia de recuperação e plano de continuidade por departamento); Decreto 23.409/2026, art. 32, § 4º (atendimento alternativo ao cidadão).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM6.2</h4><p>DM6.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx3" data-tipo="novo" data-sub="DM6.1 DM6.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo III</span><span class="tag novo">Novo</span><span class="tag sub">DM6.1</span><span class="tag sub">DM6.2</span></div>
+      <p><b>Anexo III – Relatos e relatórios</b></p><p>Conteúdo mínimo de cada documento. Os das partes B, C e D são de acesso restrito (art. 13).</p><div class="rolavel"><table class="anexo"><thead><tr><th>Parte</th><th>Documento</th><th>Conteúdo mínimo</th><th>Quem faz</th><th>Quando</th></tr></thead><tbody><tr><td>A</td><td>Relato anual ao Prefeito</td><td>Ameaças e incidentes; síntese da avaliação de riscos e do tratamento; controles, cópias e teste do plano; adesão ao treinamento; o que falta e recursos (art. 4º)</td><td>Responsável pela Segurança da Informação, com o(a) Diretor(a) do DTI</td><td>Uma vez por ano; o primeiro em até 30 dias</td></tr><tr><td>B</td><td>Relatório do teste do plano</td><td>O que foi testado, resultado, falhas, plano de ação (art. 8º)</td><td>Responsável pela Segurança da Informação</td><td>A cada teste, ao menos anual</td></tr><tr><td>C</td><td>Relatório da avaliação de riscos</td><td>Ativos, ameaças e vulnerabilidades, probabilidade e impacto, tratamento com responsável e prazo, riscos aceitos (art. 9º)</td><td>Responsável pela Segurança da Informação; terceiro, a cada 3 anos</td><td>Anual; a primeira em até 60 dias</td></tr><tr><td>D</td><td>Relatório pós-incidente</td><td>O que houve, linha do tempo, causa raiz, providências, comunicação feita e recomendações (art. 10)</td><td>Responsável pela Segurança da Informação</td><td>Ao fim de cada incidente</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Cada documento é a prova de um subcritério: o relato, do DM6.1; os relatórios, do DM6.2.</p></div>
+      <div><h4>Intenção</h4><p>Uma tabela só com os quatro documentos, para que a equipe veja o que precisa existir e quando.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Coalizão de CISOs (pauta do relato anual); Cincinnati (relatório de teste, avaliação de riscos e relatório pós-incidente); Decreto 23.409/2026, art. 32, § 4º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM6.1 e DM6.2</h4><p>DM6.1 e DM6.2: são os documentos que se mostram como evidência.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx4" data-tipo="novo" data-sub="DM6.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo IV</span><span class="tag novo">Novo</span><span class="tag sub">DM6.2</span></div>
+      <p><b>Anexo IV – Registro de incidentes e testes</b></p><p>Interno, de acesso restrito (art. 13). Os números entram no relato anual ao Prefeito.</p><p><b>Parte A – Incidentes</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Nº</th><th>Data</th><th>O que houve</th><th>Sistemas afetados</th><th>Dado pessoal envolvido?</th><th>Contido em</th><th>Recuperado em</th><th>Comunicações feitas</th><th>Relatório pós-incidente</th></tr></thead><tbody><tr><td colspan="9" class="vaz">Preenchido a cada registro.</td></tr></tbody></table></div><p><b>Parte B – Testes e avaliações</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Data</th><th>Tipo (teste do plano, restauração, avaliação de riscos, avaliação externa)</th><th>Escopo</th><th>Resultado</th><th>Falhas</th><th>Plano de ação</th><th>Relatório</th></tr></thead><tbody><tr><td colspan="7" class="vaz">Preenchido a cada registro.</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Sem registro não há números para o relato anual nem prova de que os testes aconteceram.</p></div>
+      <div><h4>Intenção</h4><p>Duas abas numa planilha, no padrão dos registros das outras versões.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Cincinnati (relatórios de teste e pós-incidente); Decreto 23.409/2026, art. 32, § 4º (o procedimento registra cada etapa).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM6.2</h4><p>DM6.2.</p></div>
+    </aside>
+  </article>
+  <div class="vazio" id="vazio">Nenhum item corresponde ao filtro escolhido.</div>
+</details>
+
+<details class="cartao obs">
+  <summary><h2>Observações para quem for decidir</h2></summary>
+  <ol>
+    <li><b>Natureza deste texto.</b> É um rascunho de indicação técnica, para servir de base à equipe e à Procuradoria. A decisão cabe ao município.</li>
+    <li class="destaque"><b>Instrumento (ponto de escolha).</b> O texto está escrito como Norma Complementar da PSI, editada pelo DTI e aprovada pelo(a) Secretário(a) de Administração, porque a PSI admite normas complementares (item 12) e manda o DTI apresentar suas atualizações à Secretaria (item 10.3). Não é preciso alterar o Decreto 22.453: levar estes pontos ao texto da PSI é reforço, na revisão anual (art. 12). A designação do responsável (art. 3º) é por portaria do(a) Secretário(a) de Administração; a equipe pode preferir portaria do próprio DTI. Pedido à equipe: DM6-6.</li>
+    <li><b>Vedação de acumular com a função de Encarregado (art. 3º, ponto de escolha).</b> Hoje a diretora do DTI é também a Encarregada. A WWC não exige a separação; o texto a propõe porque o Decreto 23.403 manda examinar conflitos de interesses (art. 19, parágrafo único) e o GT de LGPD de 2022 registrou a orientação federal de evitar encarregado lotado em TI. Se a equipe preferir, a vedação sai e o restante fica igual.</li>
+    <li><b>Prazo da certificação (18/12/2026).</b> O DM6 pede 3 de 3, com janela anual: não basta publicar a Norma. Até o envio precisam acontecer, com registro, o relato ao Prefeito (DM6.1, pedido DM6-1), a primeira turma de treinamento (DM6.3, pedido DM5-6) e, para o DM6.2, a Norma publicada e, de preferência, uma primeira avaliação de riscos ou um teste de restauração registrado (pedido DM6-3). Os prazos de 30 e 60 dias dos arts. 4º, 9º e 11 são para a rotina; para o selo, essas três coisas precisam caber antes de 18/12. O plano de continuidade completo (90 dias) pode vir depois: a Norma, com o conteúdo mínimo do Anexo II, é o protocolo documentado. A WWC aceitar a Norma sem o plano pronto é uma hipótese, que não há como medir daqui.</li>
+    <li><b>O que o DTI já escreveu.</b> A versão interna da PSI de 2023 (processo SB 86634/2023) previa normas de cópias de segurança, continuidade dos serviços essenciais, incidentes, riscos e vulnerabilidades (p. 16), um plano "testado anualmente" (p. 26) e um Comitê de Segurança da Informação, com reunião ao menos semestral (p. 63–64). Nada disso ficou na versão publicada. Esta Norma retoma as três primeiras; o comitê não foi proposto, porque o DM6 não o pede e o Decreto 23.403 já cria o Comitê de Governança Digital e de Dados.</li>
+    <li><b>Números escolhidos aqui.</b> São propostas, não medidas: 30 dias para o primeiro relato e a primeira turma; 60 dias para a Lista de Serviços Essenciais e para a primeira avaliação de riscos; 90 dias para o plano de continuidade; 45 dias para o treinamento de quem entra (o de Memphis); avaliação por terceiro a cada 3 anos (o de Cincinnati).</li>
+    <li><b>O que ficou de fora.</b> Regras técnicas de configuração, senhas, registros de atividade (logs) e desenvolvimento seguro, que a versão interna de 2023 também previa: não são pedidas pelo DM6 e podem vir em normas complementares próprias. A Lista do Anexo I não foi pré-preenchida com sistemas de SBC porque a lista do PDTIC 2022–2025 tem 130 de 143 sistemas sem dono declarado (ficha DM2).</li>
+  </ol>
+</details>
+
+<details class="cartao fontes">
+  <summary><h2>Fontes</h2></summary>
+  <ul>
+    <li>What Works Cities, critério DM6 (v4): definição, subcritérios, evidência sugerida e glossário (plano de cibersegurança, plano de continuidade operacional); pacote do Fórum (Cincinnati e Coalizão de CISOs de Cidades).</li>
+    <li>Cincinnati, Política de Segurança da Informação, v3.0.1 (2018, 111 p.).</li>
+    <li>Coalizão de CISOs de Cidades/UMBC, "O que gestores locais devem saber e fazer sobre cibersegurança" (2020).</li>
+    <li>Ciberseguridad.com, plano de conscientização em segurança informática; Memphis, Política de Treinamento em Segurança (IT-20), lida no DM5.</li>
+    <li>São Bernardo do Campo: Decreto 22.453/2023 e Anexo Único (PSI); processo SB 86634/2023 (versão interna do DTI e minutas); Decreto 23.409/2026, arts. 12, 15, 32 e 33; Decreto 23.403/2026, arts. 19 e 24; Lei 7.367/2025, arts. 645 a 659.</li>
+    <li>Lei Federal 13.709/2018 (LGPD), arts. 46 a 49; Resolução CD/ANPD nº 15/2024 (citada pelo Decreto 23.409, art. 32, § 3º).</li>
+    <li>Recomendações deste projeto: DM5 v01 (`versoes/DM5-v01.md`); fichas DM6 e DM2.</li>
+  </ul>
+</details>
+
+</main>
+<div class="rodape">Norma preparada para o Painel WWC · SBC. Rascunho de indicação técnica; não substitui a análise da Procuradoria.</div>
+
+<script>
+(function () {
+  var estado = { sub: 'todos' };
+  var arts = Array.prototype.slice.call(document.querySelectorAll('.art'));
+  var caps = Array.prototype.slice.call(document.querySelectorAll('.capitulo'));
+  var blocos = Array.prototype.slice.call(document.querySelectorAll('[data-bloco]'));
+  function aplicar() {
+    var visiveis = 0;
+    arts.forEach(function (a) {
+      var subs = (a.getAttribute('data-sub') || '').split(' ');
+      var ok = estado.sub === 'todos' || subs.indexOf(estado.sub) >= 0;
+      a.hidden = !ok; if (ok) visiveis++;
+    });
+    caps.forEach(function (c) {
+      var el = c.nextElementSibling, algum = false;
+      while (el && el.classList.contains('art')) { if (!el.hidden) algum = true; el = el.nextElementSibling; }
+      c.hidden = !algum;
+    });
+    blocos.forEach(function (b) { b.hidden = estado.sub !== 'todos'; });
+    document.getElementById('vazio').style.display = visiveis ? 'none' : 'block';
+    document.getElementById('contagem').textContent = visiveis + ' de ' + arts.length + ' itens';
+  }
+  document.querySelectorAll('[data-filtro]').forEach(function (g) {
+    g.addEventListener('click', function (ev) {
+      var b = ev.target.closest('button'); if (!b) return;
+      estado.sub = b.getAttribute('data-v');
+      g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      aplicar();
+    });
+  });
+  document.querySelectorAll('.sub-card .arts a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var alvo = document.querySelector(a.getAttribute('href'));
+      if (alvo && alvo.hidden) {
+        estado.sub = 'todos';
+        document.querySelectorAll('[data-filtro] button').forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-v') === 'todos' ? 'true' : 'false'); });
+        aplicar();
+      }
+    });
+  });
+  aplicar();
+})();
+</script>
+<script>
+(function () {
+  var quadros = Array.prototype.slice.call(document.querySelectorAll('details.cartao'));
+  function abrirAte(el) { var d = el && el.closest('details'); while (d) { d.open = true; d = d.parentElement.closest('details'); } }
+  function irPara(hash) { var alvo = hash && hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1))); if (alvo) { abrirAte(alvo); alvo.scrollIntoView(); } }
+  var a = document.getElementById('abrir-tudo'), f = document.getElementById('fechar-tudo');
+  if (a) a.addEventListener('click', function () { quadros.forEach(function (d) { d.open = true; }); });
+  if (f) f.addEventListener('click', function () { quadros.forEach(function (d) { d.open = false; }); });
+  var antes = [];
+  window.addEventListener('beforeprint', function () { antes = quadros.map(function (d) { return d.open; }); quadros.forEach(function (d) { d.open = true; }); });
+  window.addEventListener('afterprint', function () { quadros.forEach(function (d, i) { d.open = antes[i]; }); });
+  document.querySelectorAll('[data-filtro] button').forEach(function (b) { b.addEventListener('click', function () { var d = document.getElementById('decreto'); if (d) d.open = true; }); });
+  document.querySelectorAll('a[href^="#"]').forEach(function (l) { l.addEventListener('click', function () { var h = l.getAttribute('href'); if (h.length > 1) abrirAte(document.getElementById(h.slice(1))); }); });
+  window.addEventListener('hashchange', function () { irPara(location.hash); });
+  irPara(location.hash);
+})();
+</script>
+</body>
+</html>
