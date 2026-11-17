@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Publicação segura DM5 v01</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f71b3'/%3E%3Crect y='26' width='32' height='6' fill='%23ff8200'/%3E%3Cpath d='M8 20l5-6 4 4 7-9' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
+  --laranja: #ff8200; --laranja-esc: #b35b00; --laranja-claro: #fff1e3;
+  --verde: #288827; --verde-claro: #e6f4e6;
+  --texto: #2b2b2b; --texto-suave: #5f6368; --borda: #dde3e8;
+  --fundo: #f3f6f9; --cartao: #ffffff;
+  --raio: 10px; --sombra: 0 1px 3px rgba(15, 40, 70, .08);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 "Open Sans", Arial, sans-serif; }
+a { color: var(--azul); }
+h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
+
+.topo { background: linear-gradient(90deg, var(--azul-esc), var(--azul)); color: #fff; border-bottom: 5px solid var(--laranja); }
+.topo-int { padding: 20px 32px 18px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
+.topo .sobre { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; opacity: .85; font-weight: 600; }
+.topo h1 { font-size: 26px; font-weight: 800; margin-top: 4px; }
+.topo .subtitulo { font-size: 14px; opacity: .9; margin-top: 4px; }
+.topo .voltar { color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; background: rgba(255,255,255,.16); padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
+.topo .voltar:hover { background: rgba(255,255,255,.28); }
+
+.barra { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
+.barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.barra .rot { font-size: 13px; font-weight: 700; color: var(--texto-suave); }
+.grupo { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { border: 1px solid var(--borda); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
+.chip[aria-pressed=true] { background: var(--azul); border-color: var(--azul); color: #fff; }
+.contagem { font-size: 13px; color: var(--texto-suave); margin-left: auto; }
+
+main { padding: 24px 32px 48px; display: grid; gap: 22px; }
+.cartao { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); padding: 20px 22px; }
+.cartao > h2 { font-size: 19px; color: var(--azul-esc); margin-bottom: 10px; }
+.cartao p { margin: 0 0 10px; }
+.cartao p:last-child { margin-bottom: 0; }
+
+.legenda { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 12px; font-size: 14px; }
+.legenda span { display: inline-flex; align-items: center; gap: 8px; }
+.tag { display: inline-block; font: 800 11px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 5px; }
+.tag.novo { background: var(--laranja); color: #fff; }
+.tag.alterado { background: var(--azul); color: #fff; }
+.tag.igual { background: #eef1f4; color: var(--texto-suave); }
+.tag.sub { background: var(--verde-claro); color: var(--verde); }
+
+.subs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 6px; }
+.sub-card { border: 1px solid var(--borda); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.sub-card h3 { font-size: 16px; color: var(--azul-esc); }
+.sub-card .pede { font-size: 14px; }
+.sub-card .linha { font-size: 13.5px; border-radius: 6px; padding: 7px 10px; }
+.sub-card .hoje { background: #f7f9fb; }
+.sub-card .depois { background: var(--laranja-claro); }
+.sub-card .arts { display: flex; flex-wrap: wrap; gap: 6px; }
+.sub-card .arts a { font-size: 13px; font-weight: 700; text-decoration: none; background: var(--azul-claro); padding: 2px 9px; border-radius: 6px; }
+
+.decreto { padding: 0; overflow: hidden; }
+.decreto-cab { padding: 18px 22px; border-bottom: 1px solid var(--borda); background: #fafbfc; }
+.decreto-cab h2 { font-size: 19px; color: var(--azul-esc); }
+.decreto-cab .nota { font-size: 13.5px; color: var(--texto-suave); margin-top: 4px; }
+.ementa { padding: 18px 22px 6px; font-size: 14.5px; }
+.ementa .num { font-weight: 800; }
+.ementa .em { margin: 8px 0 12px auto; max-width: 520px; font-style: italic; }
+.ementa p { margin: 0 0 8px; }
+.capitulo { padding: 14px 22px 6px; font-weight: 800; color: var(--azul-esc); letter-spacing: .03em; text-transform: uppercase; font-size: 13.5px; border-top: 1px solid var(--borda); background: #fafbfc; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+.art { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); border-top: 1px solid var(--borda); }
+.art .texto { padding: 14px 22px; font-size: 14.5px; }
+.art .texto p { margin: 0 0 7px; }
+.art .texto p:last-child { margin-bottom: 0; }
+.art.igual { grid-template-columns: 1fr; }
+.art.igual .texto { color: #555b61; }
+.art .cab { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+.art .cab .id { font-weight: 800; font-size: 13px; color: var(--texto-suave); }
+.art .cab .antigo { font-size: 12.5px; color: var(--texto-suave); }
+.art.novo .texto { background: var(--laranja-claro); border-left: 5px solid var(--laranja); }
+.art.alterado .texto { background: var(--azul-claro); border-left: 5px solid var(--azul); }
+mark.novo { background: #ffd8ad; color: inherit; padding: 1px 3px; border-radius: 3px; }
+del.sup { text-decoration: line-through; text-decoration-thickness: 1.5px; color: #8a2a22; background: #fbe9e7; padding: 1px 3px; border-radius: 3px; }
+.rotulo-red { font: 800 11.5px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; margin: 10px 0 4px; }
+.rotulo-red.sup { color: #8a2a22; margin-top: 0; }
+.rotulo-red.nova { color: var(--laranja-esc); }
+.obs-red { font-size: 13.5px; color: var(--texto-suave); border-top: 1px dashed var(--borda); padding-top: 8px; margin-top: 10px !important; }
+.inc { padding-left: 18px; }
+
+.expl { padding: 14px 20px; background: #fff; border-left: 1px solid var(--borda); display: grid; gap: 10px; align-content: start; font-size: 14px; }
+.expl h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); margin-bottom: 2px; }
+.expl .wwc { background: var(--verde-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .wwc h4 { color: var(--verde); }
+.expl p { margin: 0; }
+
+.assinatura { padding: 14px 22px 20px; border-top: 1px solid var(--borda); font-size: 14.5px; }
+.vazio { padding: 20px 22px; color: var(--texto-suave); display: none; border-top: 1px solid var(--borda); }
+
+.obs ol { margin: 0; padding-left: 20px; display: grid; gap: 10px; }
+.destaque { background: var(--verde-claro); border-left: 5px solid var(--verde); border-radius: 6px; padding: 10px 14px; }
+.fontes ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14px; }
+.rodape { font-size: 13px; color: var(--texto-suave); text-align: center; padding: 0 32px 28px; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 1000px) { .subs { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .topo-int, .barra-int, main { padding-left: 16px; padding-right: 16px; }
+  .barra { position: static; }
+  .art { grid-template-columns: 1fr; }
+  .expl { border-left: 0; border-top: 1px dashed var(--borda); }
+  .art .texto, .expl, .capitulo, .ementa, .assinatura, .decreto-cab { padding-left: 16px; padding-right: 16px; }
+  .contagem { margin-left: 0; width: 100%; }
+}
+@media print {
+  .barra, .topo .voltar { display: none; }
+  body { background: #fff; }
+  .art { break-inside: avoid; }
+}
+.tag.escolha { background: #fde7c4; color: #8a4b00; }
+.aviso { background: var(--laranja-claro); border-left: 5px solid var(--laranja); border-radius: 6px; padding: 12px 16px; }
+.expl .origem { background: var(--azul-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .origem h4 { color: var(--azul-esc); }
+table.anexo { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.anexo td, table.anexo th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+table.anexo td.vaz { color: var(--texto-suave); font-style: italic; }
+main > *, .art .texto, .art .expl { min-width: 0; }
+.rolavel { overflow-x: auto; }
+.rolavel > table { min-width: 520px; }
+table.tabinicio { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.tabinicio td, table.tabinicio th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+.inicio h3 { font-size: 16px; color: var(--azul-esc); margin: 16px 0 6px; }
+details.cartao > summary { list-style: none; cursor: pointer; }
+details.cartao > summary::-webkit-details-marker { display: none; }
+details.cartao > summary h2 { font-size: 19px; color: var(--azul-esc); margin: 0; }
+details.cartao[open] > summary h2 { margin-bottom: 10px; }
+details.cartao.decreto > summary h2 { margin-bottom: 0; }
+details.cartao > summary h2::before { content: "\25B8"; display: inline-block; width: 1.1em; color: var(--azul); transition: transform .15s; }
+details.cartao[open] > summary h2::before { transform: rotate(90deg); }
+details.cartao > summary:focus-visible { outline: 2px solid var(--azul); outline-offset: 4px; border-radius: 4px; }
+.acoes { margin-left: auto; display: flex; gap: 6px; }
+.acoes.solta { margin: 0 0 -8px; justify-content: flex-end; }
+@media (max-width: 600px) { main { padding: 16px 16px 32px; } .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; } .cartao { padding: 16px; } .art .texto { padding: 12px 14px; } }
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-int">
+    <div>
+      <div class="sobre">Painel WWC · SBC · Critério DM5 · Versão v01</div>
+      <h1>Roteiro de Verificação de Publicação e Compartilhamento Seguro</h1>
+      <div class="subtitulo">Rascunho de indicação técnica · 16/11/2026 · Para análise da equipe, do CGPD e da Procuradoria</div>
+    </div>
+    <a class="voltar" href="index.html#DM5" onclick="if (history.length === 1) { window.close(); return false; }">← Voltar ao painel (DM5)</a>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-int">
+    <span class="rot">Subcritério WWC:</span>
+    <div class="grupo" data-filtro="sub">
+      <button class="chip" type="button" data-v="todos" aria-pressed="true">Todos</button>
+      <button class="chip" type="button" data-v="DM5.1" aria-pressed="false">DM5.1</button>
+      <button class="chip" type="button" data-v="DM5.2" aria-pressed="false">DM5.2</button>
+      <button class="chip" type="button" data-v="DM5.3" aria-pressed="false">DM5.3</button>
+      <button class="chip" type="button" data-v="escolha" aria-pressed="false">Só pontos de escolha</button>
+    </div>
+    <span class="contagem" id="contagem"></span>
+    <div class="acoes"><button class="chip" type="button" id="abrir-tudo">Expandir tudo</button><button class="chip" type="button" id="fechar-tudo">Recolher tudo</button></div>
+  </div>
+</div>
+
+<main>
+
+<details class="cartao inicio" open>
+  <summary><h2>O que é esta página</h2></summary>
+  <div class="aviso"><p><b>Rascunho de indicação técnica, não decisão.</b> Este roteiro reúne o que os modelos indicados pela WWC fazem para atender ao critério DM5 (privacidade e sigilo dos dados) e antecipa o roteiro que o Decreto 23.413/2026 manda editar. Instrumento, colegiado e prazos cabem ao município (DTI, CGPD e Procuradoria).</p></div>
+  <h3>O que é este documento</h3>
+  <p>Não é lei nem decreto. É um <b>ato normativo interno</b>: uma instrução do Departamento de Tecnologia da Informação (DTI), aprovada pelo Comitê Gestor de Proteção de Dados (CGPD). Não cria direito nem dever novo para o cidadão: organiza, num passo a passo para as secretarias, o que a LGPD, a Política de Segurança da Informação e os decretos de 2026 já exigem.</p>
+  <p><b>Para que serve:</b> fazer com que nenhuma base de dados seja publicada ou compartilhada sem que alguém confira, antes, se ela expõe pessoas; dizer o que fazer quando algo sair por engano; garantir que os servidores sejam treinados todo ano; e abrir as práticas de privacidade à opinião do público. É também o "processo documentado" que o critério DM5 da What Works Cities pede.</p>
+  <h3>Em que normas se apoia</h3>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Norma</th><th>O que dá a este ato</th></tr></thead><tbody><tr><td><b>Lei Municipal 7.367/2025, art. 645, XIII</b></td><td>Dá ao DTI a competência de "definir a estratégia de dados do Município, estabelecendo princípios, padrões e políticas para a gestão de dados". É o que permite ao DTI editar o ato.</td></tr><tr><td><b>Decreto Municipal 22.963/2025 (Programa de Proteção de Dados)</b></td><td>Prevê que o Programa produza procedimentos (art. 2º, II) e que as secretarias capacitem os servidores "conforme as orientações do Comitê Gestor de Proteção de Dados" (art. 5º, II, "c"). É o que permite ao CGPD aprovar o ato e fixar a capacitação anual sem mudar o decreto.</td></tr><tr><td><b>Decreto Municipal 22.453/2023 (Política de Segurança da Informação)</b></td><td>Manda classificar a informação e capacitar todos os usuários, e admite normas complementares (§ 12). O ato diz como classificar e quando capacitar.</td></tr><tr><td><b>Decretos Municipais 23.403/2026 e 23.413/2026</b></td><td>Publicados, vigoram em 04/02/2027. O 23.413 exige a verificação de publicação segura com segundo agente e orientação da Encarregada (art. 9º) e a retirada imediata do que sair por engano (art. 10), e manda editar o roteiro nos padrões técnicos (art. 21, III). O ato antecipa esse roteiro.</td></tr><tr><td><b>Decreto Municipal 23.409/2026 (inteligência artificial)</b></td><td>Em vigor. Proíbe inserir dado pessoal em ferramenta de IA não autorizada (art. 6º, III) e cria capacitação contínua com registro e avaliação (art. 33). O ato inclui o tema na capacitação anual.</td></tr><tr><td><b>Lei Federal 13.709/2018 (LGPD), arts. 6º, 46 e 50</b></td><td>Princípios de segurança e prevenção, medidas para proteger os dados de "situações acidentais" e programas de boas práticas. O ato é uma dessas medidas.</td></tr></tbody></table></div>
+  <p>Ressalva: para obrigar as demais secretarias a seguir o roteiro, a equipe e a Procuradoria podem preferir outro instrumento, como portaria do Secretário de Administração ou resolução do CGPD (observação 2, no fim da página).</p>
+  <h3>Por que agora</h3>
+  <p>SBC tem o Programa de Proteção de Dados, Encarregada e Comitê, mas nenhum passo a passo para conferir uma base antes de publicá-la ou compartilhá-la, e nenhum registro de treinamento em privacidade nos últimos 12 meses. Os Decretos 23.403 e 23.413 exigem a verificação, mas só a partir de 04/02/2027, com o roteiro editado até cerca de 05/05/2027. O DM5 pede <b>2 de 3 subcritérios</b>, com <b>janela anual</b>: o que conta é o que aconteceu nos últimos 12 meses antes do envio (18/12/2026).</p>
+  <h3>De onde vem cada parte</h3>
+  <p>Nada aqui foi inventado do zero: cada parte adapta um modelo já usado por outra cidade, uma norma ou um recurso recomendado pela WWC; o quadro abaixo diz qual. O que é escolha nossa (o mínimo de 5 pessoas por célula, os prazos e a verificação simplificada) está na observação 6.</p>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Modelo</th><th>Por que conta</th><th>O que veio dele</th><th>Onde está neste texto</th></tr></thead><tbody><tr><td><b>DataSF (São Francisco, EUA): kit de lançamento de dados abertos</b></td><td>Recurso indicado pela WWC no DM5</td><td>Os passos da verificação, o formulário que registra a decisão, as escalas de risco e a data da próxima revisão; a Edição de Segurança para bases sem pessoa</td><td>Arts. 5º a 7º; Anexos II e III</td></tr><tr><td><b>Future of Privacy Forum: avaliação de riscos de dados abertos de Seattle (EUA), 2018</b></td><td>Recurso indicado pela WWC no DM5</td><td>Pesar valor e risco; rever as bases já publicadas; avisar na coleta; consulta pública e conselho; tamanho mínimo de célula; oficina de capacitação</td><td>Arts. 6º, 9º, 11, 13, 14 e 15</td></tr><tr><td><b>GovEx (Johns Hopkins): Matriz de Privacidade, 2016</b></td><td>Recurso indicado pela WWC no DM5</td><td>Como a sensibilidade muda quando dois campos aparecem juntos (efeito mosaico)</td><td>Anexo II, parte B</td></tr><tr><td><b>Washington, DC (EUA): Política de Dados, Ordem 2017-115</b></td><td>Recurso indicado pela WWC no DM5</td><td>Cinco níveis com a justificativa publicada no inventário; retirada pronta do que sair por engano; opinião do público respondida</td><td>Arts. 3º, 4º, 10, 12 e 15</td></tr><tr><td><b>Memphis (EUA): políticas de sensibilidade, privacidade e treinamento</b></td><td>Exemplo que a WWC aceitou para o DM5 (pacote do Fórum)</td><td>Classificação da informação; aviso antes da coleta; treinamento anual por função para quem acessa dado confidencial</td><td>Arts. 3º, 13 e 14</td></tr><tr><td><b>São Francisco (EUA): Norma de Classificação de Dados, 2017</b></td><td>Achada na leitura do DataSF</td><td>Rever a classificação quando a base é combinada, agregada ou desidentificada</td><td>Art. 4º</td></tr><tr><td><b>Decreto Municipal 23.413/2026 (SBC)</b></td><td>Norma de SBC já publicada, que vigora em 2027</td><td>Verificação antes de cada publicação, segundo agente, papel da Encarregada, retirada imediata</td><td>Arts. 5º, 7º, 8º e 12</td></tr></tbody></table></div>
+  <h3>Como ler</h3>
+  <p>O roteiro responde a quatro perguntas: <b>quão sensível é a base?</b> (níveis, art. 3º deste roteiro), <b>o que conferir antes de publicar?</b> (os cinco passos, art. 6º), <b>o que decidir?</b> (art. 7º) e <b>o que fazer se algo sair por engano?</b> (art. 12). Os artigos citados nesta página são os do texto abaixo, salvo quando outra norma é nomeada. Cada artigo e cada anexo traz ao lado por que foi incluído, a intenção, a origem e a relação com a WWC.</p>
+  <div class="legenda">
+    <span><span class="tag novo">Novo</span> texto proposto</span>
+    <span><span class="tag escolha">Ponto de escolha do município</span> recomendação que o município pode trocar</span>
+    <span><span class="tag sub">DM5.x</span> subcritério da WWC atendido</span>
+  </div>
+</details>
+
+<details class="cartao">
+  <summary><h2>Versões desta recomendação</h2></summary>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Versão</th><th>Data</th><th>O que é</th><th>Situação</th></tr></thead><tbody><tr><td><b>v01</b></td><td>16/11/2026</td><td>Roteiro de verificação de publicação e compartilhamento seguro: 19 artigos e 4 anexos (níveis de sensibilidade; campos, combinações e tratamentos; formulário de verificação; registro).</td><td>Vigente</td></tr><tr><td><b>v02</b></td><td>—</td><td>Roteiro com os ajustes da equipe, do CGPD e da Procuradoria.</td><td>Aguarda a equipe</td></tr></tbody></table></div>
+</details>
+
+<details class="cartao">
+  <summary><h2>O que a WWC pede e onde o roteiro responde</h2></summary>
+  <div class="subs">
+    <div class="sub-card">
+      <h3>DM5.1 · Público nas práticas de privacidade</h3>
+      <div class="pede">Processo para envolver moradores e outros interessados externos nas práticas de gestão de riscos à privacidade.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Não há. O canal por e-mail do sítio LGPD é para o titular exercer direitos e denunciar, não para opinar sobre as práticas.</div>
+      <div class="linha depois"><b>No roteiro:</b> Consulta pública de pelo menos 15 dias sobre o roteiro a cada revisão anual (a primeira pode ser sobre a minuta), canal permanente para opinar, com resposta em 30 dias, e relatório anual levado a conselho.</div>
+      <div class="arts"><a href="#art15">Art. 15</a><a href="#art16">Art. 16</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM5.2 · Evitar divulgação por engano</h3>
+      <div class="pede">Processo documentado para reduzir a chance de divulgar por engano dados privados, sensíveis ou sigilosos, nas bases compartilhadas internamente e nas publicadas.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> No texto e não vigente: o Decreto 23.413 (art. 9º) exige a verificação antes de publicar, a partir de 04/02/2027, com o roteiro só em 2027. Para o compartilhamento interno, só princípios (Decreto 23.403, art. 26).</div>
+      <div class="linha depois"><b>No roteiro:</b> Cinco níveis de sensibilidade, verificação em cinco passos com formulário, segundo verificador, decisão registrada com data de revisão, supressão de células pequenas, revisão das bases já publicadas e retirada imediata.</div>
+      <div class="arts"><a href="#art1">Art. 1º</a><a href="#art3">Art. 3º</a><a href="#art4">Art. 4º</a><a href="#art5">Art. 5º</a><a href="#art6">Art. 6º</a><a href="#art7">Art. 7º</a><a href="#art8">Art. 8º</a><a href="#art9">Art. 9º</a><a href="#art10">Art. 10</a><a href="#art11">Art. 11</a><a href="#art12">Art. 12</a><a href="#art13">Art. 13</a><a href="#art16">Art. 16</a><a href="#anx1">Anexo I</a><a href="#anx2">Anexo II</a><a href="#anx3">Anexo III</a><a href="#anx4">Anexo IV</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM5.3 · Capacitação anual</h3>
+      <div class="pede">Informação e treinamento aos servidores, pelo menos uma vez por ano, sobre como avaliar e reduzir os riscos à privacidade e outros riscos dos dados.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> As normas mandam capacitar (Decreto 22.963, PSI, Decreto 23.409), sem periodicidade; não há registro de treinamento em privacidade nos últimos 12 meses.</div>
+      <div class="linha depois"><b>No roteiro:</b> Capacitação anual obrigatória por função, com conteúdo mínimo, registro com lista de presença e avaliação, primeira turma em até 30 dias e material permanente à disposição dos servidores.</div>
+      <div class="arts"><a href="#art14">Art. 14</a><a href="#art16">Art. 16</a></div>
+    </div>
+  </div>
+</details>
+
+<details class="cartao decreto" id="decreto">
+  <summary class="decreto-cab">
+    <h2>Texto do roteiro</h2>
+    <div class="nota">Use os filtros acima para ver só os artigos de um subcritério ou só os pontos de escolha do município.</div>
+  </summary>
+
+  <div class="ementa" data-bloco="preambulo">
+    <p class="num">INSTRUÇÃO Nº …………… (instrumento a definir)</p>
+    <p class="em">Institui o Roteiro de Verificação de Publicação e Compartilhamento Seguro de bases de dados no Poder Executivo Municipal, com a classificação das bases por nível de sensibilidade, a revisão das bases publicadas, a capacitação anual dos servidores e a participação do público, e aprova os modelos de níveis, campos e tratamentos, formulário de verificação e registro.</p>
+    <p>O(A) DIRETOR(A) DO DEPARTAMENTO DE TECNOLOGIA DA INFORMAÇÃO DA SECRETARIA DE ADMINISTRAÇÃO, com a aprovação do COMITÊ GESTOR DE PROTEÇÃO DE DADOS – CGPD, no uso de suas atribuições, considerando o que consta do processo administrativo nº ……………;</p>
+    <p>Considerando a Lei Federal nº 13.709, de 14 de agosto de 2018 (Lei Geral de Proteção de Dados Pessoais), em especial os arts. 6º, 46 e 50;</p>
+    <p>Considerando o Decreto Municipal nº 22.963, de 5 de junho de 2025, que institui o Programa de Proteção de Dados, com a elaboração de procedimentos (art. 2º, II) e a capacitação dos servidores conforme as orientações do CGPD (art. 5º, II, "c");</p>
+    <p>Considerando a Política de Segurança da Informação instituída pelo Decreto Municipal nº 22.453, de 26 de outubro de 2023, que manda classificar a informação e capacitar os usuários;</p>
+    <p>Considerando os Decretos Municipais nº 23.403, de 4 de novembro de 2026, e nº 23.413, de 12 de novembro de 2026, que exigirão, a partir de sua vigência, a verificação de publicação segura antes de cada publicação de base de dados;</p>
+    <p>Considerando o inciso XIII do art. 645 da Lei Municipal nº 7.367, de 15 de janeiro de 2025; e</p>
+    <p>Considerando a necessidade de reduzir o risco de divulgação indevida de dados pessoais e sigilosos nas bases publicadas e compartilhadas pela Prefeitura,</p>
+    <p>RESOLVE:</p>
+  </div>
+
+  <div class="capitulo">Capítulo I – Do objeto e das definições</div>
+  <article class="art novo" id="art1" data-tipo="novo" data-sub="DM5.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 1º</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span></div>
+      <p>Art. 1º Este ato institui o Roteiro de Verificação de Publicação e Compartilhamento Seguro, a ser seguido pelos órgãos da Administração Direta do Poder Executivo Municipal antes de publicar ou de compartilhar bases de dados, e estabelece:</p><p class="inc">I - a classificação das bases de dados por nível de sensibilidade;</p><p class="inc">II - a verificação de publicação e compartilhamento seguro, com o registro da decisão;</p><p class="inc">III - a revisão das bases já publicadas e a retirada de dado divulgado indevidamente;</p><p class="inc">IV - a capacitação anual dos servidores sobre os riscos à privacidade; e</p><p class="inc">V - a participação do público nas práticas de privacidade.</p><p>§ 1º Considera-se publicação a disponibilização de base de dados ao público por qualquer meio, inclusive portal de dados abertos, GeoPortal, painéis, sítios da Prefeitura e planilhas anexas a páginas, editais, consultas e relatórios.</p><p>§ 2º Este ato não altera:</p><p class="inc">I - os pedidos de acesso à informação, que seguem a Lei Federal nº 12.527, de 18 de novembro de 2011, e o Decreto Municipal nº 18.882, de 28 de abril de 2014;</p><p class="inc">II - as atribuições do Comitê Gestor de Proteção de Dados (CGPD) e do(a) Encarregado(a) pelo Tratamento de Dados Pessoais previstas no Decreto Municipal nº 22.963, de 5 de junho de 2025; e</p><p class="inc">III - o procedimento de compartilhamento, pedidos e abertura de dados editado pelo DTI, ao qual este roteiro se integra como etapa de verificação.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM5.2 pede um processo documentado para reduzir a chance de divulgar por engano dados privados ou sigilosos, "tanto nas bases compartilhadas internamente quanto nas compartilhadas com o público". O ato precisa dizer logo que cobre os dois lados e também as planilhas soltas, que é onde o erro costuma acontecer.</p></div>
+      <div><h4>Intenção</h4><p>O § 1º tira a dúvida de que planilha anexada a página ou a edital também é publicação: foi por aí que a planilha da consulta do PPA saiu com nome, idade, bairro e escolaridade de respondentes. O § 2º encaixa o roteiro no procedimento de compartilhamento (DM3 v01), em vez de criar um caminho paralelo.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto 23.413/2026, arts. 2º, XII (publicação segura), 9º, § 2º (verificação antes de cada publicação), e 21, III (roteiro nos padrões técnicos); DataSF, kit de lançamento de dados abertos, Edição de Privacidade; Future of Privacy Forum (FPF), avaliação de riscos de dados abertos de Seattle (2018).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>Delimita o processo do DM5.2 nos dois lados que ele cita: bases compartilhadas internamente e com o público.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art2" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 2º</span><span class="tag novo">Novo</span></div>
+      <p>Art. 2º Para os fins deste ato, considera-se:</p><p class="inc">I - responsável pela base: agente designado pelo titular do órgão que produz ou custodia a base para manter sua qualidade, documentação e atualização, sem transferência de competência decisória;</p><p class="inc">II - identificador direto: campo que identifica uma pessoa sozinho, como nome, CPF, RG, número do Cartão Nacional de Saúde, Número de Identificação Social (NIS), matrícula, telefone, e-mail, placa de veículo e endereço residencial;</p><p class="inc">III - quase identificador: campo que não identifica uma pessoa sozinho, mas pode identificá-la quando combinado com outros, como data de nascimento, idade, sexo, cor ou raça, escolaridade, ocupação, bairro, escola, unidade de atendimento, data de um atendimento e coordenada geográfica;</p><p class="inc">IV - dado pessoal sensível: o definido no art. 5º, II, da Lei Federal nº 13.709, de 14 de agosto de 2018 (LGPD);</p><p class="inc">V - reidentificação: identificação de pessoa a partir de base anonimizada, agregada ou tratada, inclusive pelo cruzamento com outras bases publicadas ou de fácil acesso;</p><p class="inc">VI - célula pequena: contagem ou valor agregado que represente menos pessoas do que o mínimo do art. 9º;</p><p class="inc">VII - verificação de publicação e compartilhamento seguro: análise prevista no Capítulo III, registrada no formulário do Anexo III; e</p><p class="inc">VIII - verificador: servidor, distinto de quem preparou a base, que confere a verificação.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>"Quase identificador" e "reidentificação" não têm definição legal. Sem elas, o formulário não se aplica, porque o servidor não sabe o que procurar.</p></div>
+      <div><h4>Intenção</h4><p>Os exemplos usam os cadastros brasileiros (CPF, Cartão Nacional de Saúde, NIS), para o servidor reconhecer o campo na própria base. "Responsável pela base" é a definição do Decreto 23.413 (art. 2º, X), para que este ato e os padrões técnicos de 2027 falem a mesma língua; no procedimento do DM3 v01, o órgão dele é a "secretaria dona do dado".</p></div>
+      <div class="origem"><h4>Origem</h4><p>DataSF, formulário de lançamento (identificadores, quase identificadores e campos de localização); Matriz de Privacidade do GovEx (2016); LGPD, art. 5º, II e III; Decreto 23.413/2026, art. 2º, X e XI.</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio. Dá nome aos "dados privados, sensíveis ou sigilosos (como dados que identificam pessoas)" do DM5.2.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo II – Da classificação das bases</div>
+  <article class="art novo" id="art3" data-tipo="novo" data-sub="DM5.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 3º</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span></div>
+      <p>Art. 3º O responsável pela base classificará cada base de dados num dos níveis de sensibilidade do Anexo I:</p><p class="inc">I - nível 0, aberta: sem dado pessoal, informação sigilosa ou risco à segurança, publicável como dado aberto;</p><p class="inc">II - nível 1, pública sob pedido: acessível ao público, mas ainda não publicada, por depender de preparo ou de verificação;</p><p class="inc">III - nível 2, uso interno: sem dado pessoal nem sigilo legal, mas cuja divulgação detalhada traria risco à segurança de pessoas, bens, serviços ou sistemas;</p><p class="inc">IV - nível 3, pessoal ou sigilosa: contém dado pessoal ou informação protegida por sigilo legal; e</p><p class="inc">V - nível 4, restrita: contém dado pessoal sensível, dado de criança ou de adolescente, informação classificada nos termos da Lei Federal nº 12.527, de 2011, ou dado cuja divulgação indevida causaria dano grave a pessoa ou grupo.</p><p>§ 1º Os níveis correspondem às classes de acesso do procedimento de compartilhamento (aberta: níveis 0 e 1; restrita: níveis 2 a 4; indisponível: quando houver vedação legal) e aos rótulos da Política de Segurança da Informação (público: níveis 0 e 1; uso interno: nível 2; confidencial: níveis 3 e 4).</p><p>§ 2º A base com partes em níveis diferentes é classificada pela parte de nível mais alto; as partes de nível 0 ou 1 podem ser abertas separadamente, depois da verificação.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A Política de Segurança da Informação já manda dar a toda informação "mecanismos de proteção e classificação" e usa os rótulos "uso interno" e "confidencial", mas não diz como classificar. Sem nível, cada secretaria decide caso a caso, e a verificação não sabe por onde começar.</p></div>
+      <div><h4>Intenção</h4><p>Cinco níveis, como Washington, DC, e São Francisco, mas ligados às três classes da DM3 v01 e aos rótulos da PSI (§ 1º), para não haver duas classificações concorrentes. O nível 1 separa o que é público mas ainda não foi preparado, que entra na lista de abertura. O nível 2 cobre o que o DataSF trata na Edição de Segurança: bases sem pessoa, mas perigosas em detalhe, como plantas de prédios.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Washington, DC, Ordem 2017-115 (níveis 0 a 4); São Francisco, Norma de Classificação de Dados (2017, 5 níveis); Memphis, Política de Sensibilidade da Informação (exemplo aceito pela WWC no DM5); DataSF, Edição de Segurança; PSI (Decreto 22.453/2023), classificação e rótulos; DM3 v01, art. 7º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>É a base do DM5.2. A política de sensibilidade é a evidência do exemplo aceito (Memphis).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art4" data-tipo="novo" data-sub="DM5.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 4º</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span></div>
+      <p>Art. 4º A classificação:</p><p class="inc">I - será feita com a orientação do(a) Encarregado(a) quando a base contiver dado pessoal;</p><p class="inc">II - será registrada no inventário de bases de dados, com o fundamento legal ou técnico dos níveis 2 a 4, sem revelar conteúdo protegido;</p><p class="inc">III - constará da versão pública do inventário, com o nome da base, o nível e o motivo, também para as bases não publicadas; e</p><p class="inc">IV - será revista uma vez por ano e sempre que a base for combinada com outra, agregada, anonimizada ou receber campos novos.</p><p>Parágrafo único. Enquanto não houver inventário, a classificação será registrada no Registro do Anexo IV, na primeira verificação que envolver a base.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Classificar sem registrar não deixa prova nem permite rever. O motivo público é o que dá transparência às bases que não se abrem.</p></div>
+      <div><h4>Intenção</h4><p>Washington, DC, publica a justificativa da classificação no inventário anual; São Francisco manda rever a classificação quando a base é desidentificada, combinada ou agregada, que é justamente quando o nível muda (IV). O inciso III é a mesma versão pública do inventário do DM2.4: nome e motivo para o que é restrito.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Washington, DC, Ordem 2017-115 (classificação e justificativa no inventário anual; revisão periódica); São Francisco, Norma de Classificação de Dados (revisão anual e quando a base for desidentificada, combinada ou agregada); GovEx e São Francisco, no DM2 (as bases restritas entram no inventário com o motivo); ficha DM2, §5.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>DM5.2. A classificação pública também ajuda o DM2.4 (inventário público) e o OD1.4 (explicar o que não se abre).</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo III – Da verificação de publicação e compartilhamento seguro</div>
+  <article class="art novo" id="art5" data-tipo="novo" data-sub="DM5.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 5º</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 5º A verificação será feita, no formulário do Anexo III:</p><p class="inc">I - antes da primeira publicação de cada base;</p><p class="inc">II - antes de alteração relevante de base publicada, como inclusão de campo, maior detalhamento de território ou de tempo, ou mudança de periodicidade;</p><p class="inc">III - antes de compartilhar base de nível 2 a 4 com outro órgão ou com terceiros, nos termos do procedimento de compartilhamento; e</p><p class="inc">IV - na data de revisão fixada na verificação anterior.</p><p>§ 1º A base de nível 0 sem quase identificador terá verificação simplificada, com o preenchimento só das partes A, B e F do formulário.</p><p>§ 2º A atualização periódica de base já verificada, sem alteração de campos nem de recorte, dispensa nova verificação até a data de revisão.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O Decreto 23.413 exige a verificação "antes de cada publicação ou alteração relevante de base" (art. 9º, § 2º), mas só vigora em 04/02/2027, e o roteiro só vem nos padrões técnicos, até 90 dias depois. O DM5.2 pede o processo agora, e também para as bases compartilhadas.</p></div>
+      <div><h4>Intenção</h4><p>Os gatilhos do Decreto 23.413, mais o compartilhamento interno (III) e a data de revisão (IV), como no DataSF. Os §§ 1º e 2º evitam que a verificação vire burocracia para tabela sem pessoa e para a atualização mensal da mesma base.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto 23.413/2026, arts. 9º, § 2º, 21, III, e 28, II; DataSF, formulário (data da próxima revisão) e processo de publicação (a revisão é disparada quando a base é classificada como sensível ou protegida); FPF, Seattle (gatilho de reavaliação).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>É o "processo documentado" do DM5.2, nos dois lados: publicar e compartilhar.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art6" data-tipo="novo" data-sub="DM5.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 6º</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span></div>
+      <p>Art. 6º A verificação segue cinco passos:</p><p class="inc">I - identificar os campos: identificadores diretos, quase identificadores, dados pessoais sensíveis e campos de localização (Anexo II, parte A);</p><p class="inc">II - avaliar o valor da publicação ou do compartilhamento para a população e para as políticas públicas;</p><p class="inc">III - avaliar o risco de identificação, considerando a expectativa de privacidade das pessoas, o dano que a divulgação causaria, a combinação dos campos da própria base (Anexo II, parte B) e o cruzamento com bases já publicadas pela Prefeitura ou de fácil acesso;</p><p class="inc">IV - aplicar o tratamento que reduza o risco, como retirar campo, generalizar, agregar, suprimir células pequenas ou deslocar coordenadas (Anexo II, parte C); e</p><p class="inc">V - avaliar o risco que resta depois do tratamento e se a base tratada ainda é útil.</p><p>Parágrafo único. Na base sem dado pessoal, o passo III avalia o risco à segurança de pessoas, bens, serviços ou sistemas, como plantas de prédios, localização de equipamentos sensíveis e detalhes de redes.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O erro típico não é publicar o CPF: é publicar campos que, juntos, identificam alguém, como bairro, idade e escolaridade na mesma linha. O passo a passo existe para que isso seja visto antes de publicar.</p></div>
+      <div><h4>Intenção</h4><p>Os quatro passos do DataSF, com o valor da publicação separado, como no FPF, para que a decisão pese benefício e risco. O passo III olha o cruzamento com outras bases, que o Decreto 23.413 manda avaliar. O parágrafo único é a Edição de Segurança do DataSF.</p></div>
+      <div class="origem"><h4>Origem</h4><p>DataSF, Edição de Privacidade (identificar dados sensíveis, avaliar o risco de identificação, aplicar a solução, avaliar o risco de acesso) e Edição de Segurança; FPF, Seattle (o que a base contém, benefícios, riscos, matriz e decisão); Matriz de Privacidade do GovEx (efeito mosaico); Harvard, "Como São Francisco abre mais dados com prêmio sobre privacidade" (2017): a biblioteca descobriu que publicar distrito e bairro juntos criava recortes pequenos demais; Decreto 23.413/2026, art. 9º, § 2º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>É o "como" do DM5.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art7" data-tipo="novo" data-sub="DM5.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 7º</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 7º A verificação concluirá por uma das seguintes decisões, registradas no formulário:</p><p class="inc">I - publicar como dado aberto;</p><p class="inc">II - publicar depois do tratamento indicado;</p><p class="inc">III - compartilhar com controles, na forma mais protegida que atenda à finalidade, nos termos do procedimento de compartilhamento; ou</p><p class="inc">IV - não publicar nem compartilhar, com o motivo registrado e publicado sem revelar conteúdo protegido.</p><p>§ 1º As conclusões distinguirão impedimento, condição indispensável, recomendação e risco residual, nos termos do art. 24, § 1º, do Decreto Municipal nº 23.403, de 2026; o risco residual só será aceito por decisão motivada do titular do órgão, com as salvaguardas e o monitoramento indicados, e nunca dispensará obrigação legal.</p><p>§ 2º Dado pessoal só será publicado quando houver previsão legal de divulgação e nos limites dessa previsão.</p><p>§ 3º A decisão fixará a data da próxima revisão: no máximo 1 (um) ano para as bases de nível 3 ou 4 publicadas depois de tratamento ou compartilhadas, e 2 (dois) anos nos demais casos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Sem decisão registrada, não há como provar que o processo existe nem como rever depois. O DataSF termina em "aberta, acesso limitado ou fechada"; o Decreto 23.403 já define como se escrevem as conclusões.</p></div>
+      <div><h4>Intenção</h4><p>Quatro saídas, e a terceira usa a "escada" do procedimento de compartilhamento (DM3 v01, art. 8º) em vez de repeti-la. O § 1º antecipa o que o Decreto 23.413 exige (art. 9º, § 5º), para que a verificação feita agora sirva depois da vigência. O § 2º repete o art. 9º, § 1º, do mesmo decreto. Os prazos de revisão partem do formulário do DataSF (6 meses ou 1 ano), alongados para as bases de menor risco.</p></div>
+      <div class="origem"><h4>Origem</h4><p>DataSF, formulário (decisão aberta, acesso limitado ou fechada; data da próxima revisão); FPF, Seattle (abrir, limitar o acesso, triagem adicional ou não publicar; fatores que justificam publicar mesmo com risco, sempre documentados); Decreto 23.403/2026, art. 24, §§ 1º a 3º; Decreto 23.413/2026, art. 9º, §§ 1º e 5º; DM3 v01, arts. 8º e 16.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>DM5.2: a decisão documentada. O motivo publicado (IV) também ajuda o OD1.4.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art8" data-tipo="novo" data-sub="DM5.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 8º</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 8º Na verificação:</p><p class="inc">I - o responsável pela base prepara a base e preenche o formulário;</p><p class="inc">II - o verificador confere o formulário e a base tratada, sempre que viável;</p><p class="inc">III - o(a) Encarregado(a) orienta sobre anonimização e riscos aos titulares quando houver dado pessoal ou dúvida, sem substituir a decisão; e</p><p class="inc">IV - o titular do órgão decide e assina a decisão nos casos de risco residual ou de publicação de dado pessoal.</p><p>Parágrafo único. Quando o órgão não tiver servidor em condições de verificar, a Divisão de Dados do DTI indicará o verificador.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A divulgação por engano costuma ser erro de quem preparou a base e não viu o risco. Um segundo olhar é a defesa mais barata.</p></div>
+      <div><h4>Intenção</h4><p>É o que o Decreto 23.413 já diz (art. 9º, §§ 3º e 4º), antecipado para agora. O parágrafo único evita que a falta de pessoal numa secretaria pequena vire dispensa; a Divisão de Dados já tem, na lei de estrutura, as "estratégias de segurança e privacidade dos dados".</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto 23.413/2026, art. 9º, §§ 3º e 4º; Decreto 23.403/2026, art. 19, parágrafo único; Lei Municipal 7.367/2025, arts. 645 a 659 (Divisão de Dados do DTI); Washington, DC, Ordem 2017-115 (responsável por dados em cada órgão).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>DM5.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art9" data-tipo="novo" data-sub="DM5.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 9º</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 9º Na publicação de dados agregados sobre pessoas, a célula que represente de 1 (uma) a 4 (quatro) pessoas será suprimida e marcada com o código "s" do Guia de Qualidade e Padrões de Dados, com a supressão complementar necessária para que o valor suprimido não possa ser calculado a partir dos totais.</p><p>Parágrafo único. O responsável pela base adotará mínimo maior quando o tema for sensível ou o território pequeno, registrando-o no formulário.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Uma tabela por bairro, idade e sexo parece anônima, mas uma célula com uma ou duas pessoas num bairro pequeno identifica alguém. Sem número fixo, cada secretaria escolhe o seu, ou nenhum.</p></div>
+      <div><h4>Intenção</h4><p>Mínimo de 5, a ponta de baixo da faixa citada pelo FPF. A supressão complementar existe porque, sem ela, o valor escondido se recalcula pelo total da linha. O código "s" é o da DM4 v01 (Anexo II). A regra vale também para os dados demográficos do DM8.</p></div>
+      <div class="origem"><h4>Origem</h4><p>FPF, Seattle, p. 44 ("especialistas recomendam tamanhos mínimos de célula de 5 a 10 registros"); DM4 v01, Anexo II (código "s" para valor suprimido); Portland, supressão de células pequenas nos dados demográficos (recurso do DM8).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>DM5.2. Reforça o DM8.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art10" data-tipo="novo" data-sub="DM5.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 10</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span></div>
+      <p>Art. 10. O formulário preenchido e a base tratada serão guardados pelo órgão responsável pela base.</p><p>Parágrafo único. O DTI manterá o Registro de Verificações e Retiradas (Anexo IV), cuja parte A, sem dados pessoais, será publicada na página de Dados Abertos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A WWC pede evidência de que o processo é aplicado. O formulário guardado e o registro são essa prova.</p></div>
+      <div><h4>Intenção</h4><p>Uma linha pública por base verificada (nível, decisão, data de revisão), como a justificativa que Washington, DC, publica no inventário. As retiradas por divulgação indevida ficam na parte interna, porque podem apontar a falha antes de corrigida.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Washington, DC, Ordem 2017-115 (justificativa publicada no inventário); DataSF (o formulário documenta a decisão); LGPD, art. 37 (registro das operações de tratamento).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>DM5.2: é a evidência de que o processo está em uso.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo IV – Das bases já publicadas e da divulgação indevida</div>
+  <article class="art novo" id="art11" data-tipo="novo" data-sub="DM5.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 11</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 11. Em até 90 (noventa) dias da publicação deste ato, os órgãos farão a verificação das bases e planilhas que já publicaram, começando por:</p><p class="inc">I - as apontadas no Diagnóstico Preliminar de Exposição de Dados Pessoais;</p><p class="inc">II - as planilhas com respostas individuais de consultas, pesquisas e audiências públicas;</p><p class="inc">III - as bases com quase identificadores por bairro, escola ou unidade de atendimento; e</p><p class="inc">IV - as demais, começando pelas mais acessadas.</p><p>Parágrafo único. Encontrada base em desacordo com este roteiro, aplica-se o art. 12.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O risco não está só no que vai ser publicado: o que já está no ar saiu sem verificação.</p></div>
+      <div><h4>Intenção</h4><p>Começar pelo que a própria Prefeitura já mapeou (o Diagnóstico Preliminar de Exposição de Dados Pessoais) e pelo tipo de arquivo em que o erro já aconteceu (planilhas de respostas de consulta, II).</p></div>
+      <div class="origem"><h4>Origem</h4><p>FPF, Seattle (avaliar também as bases já publicadas); Diagnóstico Preliminar de Exposição de Dados Pessoais, citado na proposta técnica do processo SB 101842/2026; ficha DM5, §3 (planilha da consulta do PPA).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>DM5.2: "reduzir a chance de divulgar por engano" inclui o que já foi divulgado.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art12" data-tipo="novo" data-sub="DM5.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 12</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span></div>
+      <p>Art. 12. Constatada a divulgação indevida de dado pessoal ou de informação sigilosa, o responsável pela base:</p><p class="inc">I - retirará a publicação imediatamente, diretamente ou por meio do DTI;</p><p class="inc">II - comunicará o fato ao(à) Encarregado(a) no mesmo dia útil;</p><p class="inc">III - registrará o caso no Anexo IV, parte B; e</p><p class="inc">IV - só republicará a base depois de nova verificação.</p><p>§ 1º Qualquer servidor ou pessoa que identificar a divulgação indevida poderá comunicá-la pelo canal do art. 15, II, ou diretamente ao(à) Encarregado(a).</p><p>§ 2º A comunicação à Autoridade Nacional de Proteção de Dados e aos titulares, quando cabível, segue o art. 48 da LGPD e os procedimentos de resposta a incidentes.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O Decreto 23.413 manda retirar e comunicar (art. 10), mas só vigora em fevereiro de 2027. Até lá, não há regra escrita.</p></div>
+      <div><h4>Intenção</h4><p>Antecipar o art. 10 do Decreto 23.413 com passos concretos e prazo para avisar a Encarregada. O § 2º lembra que retirar não dispensa avisar a ANPD e os titulares quando o incidente puder causar risco ou dano relevante.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto 23.413/2026, art. 10; Washington, DC, Ordem 2017-115 (retirada pronta de dado protegido publicado por engano); LGPD, art. 48; Decreto 23.403/2026, art. 28, parágrafo único.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>DM5.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art13" data-tipo="novo" data-sub="DM5.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 13</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span></div>
+      <p>Art. 13. Os formulários de consulta, pesquisa e cadastro informarão, no momento da coleta, a finalidade, se os dados poderão ser publicados de forma agregada ou anonimizada e que os dados pessoais não serão publicados, salvo previsão legal.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O problema de uma planilha de consulta publicada com dados de quem respondeu começa na coleta: a pessoa não foi avisada do que seria feito com a resposta.</p></div>
+      <div><h4>Intenção</h4><p>Aviso curto no momento da coleta, como recomenda o FPF e exige a política de privacidade de Memphis. Aplica o princípio da transparência da LGPD.</p></div>
+      <div class="origem"><h4>Origem</h4><p>FPF, Seattle (avisar, na coleta, que o dado pode ser publicado); Memphis, Política de Privacidade (aviso antes da coleta); LGPD, arts. 6º, VI, e 9º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>Apoio ao DM5.2: previne a divulgação indevida na origem.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo V – Da capacitação e da informação aos servidores</div>
+  <article class="art novo" id="art14" data-tipo="novo" data-sub="DM5.3 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 14</span><span class="tag novo">Novo</span><span class="tag sub">DM5.3</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 14. Os servidores receberão, pelo menos uma vez por ano, capacitação sobre como avaliar e reduzir os riscos à privacidade e outros riscos ligados aos dados, conforme as orientações do CGPD (Decreto Municipal nº 22.963, de 2025, art. 5º, II, "c").</p><p>§ 1º A capacitação é obrigatória para os responsáveis pelas bases, os verificadores, os pontos focais de dados e os servidores que publicam conteúdo nos sítios da Prefeitura, e aberta aos demais.</p><p>§ 2º O conteúdo mínimo é:</p><p class="inc">I - a LGPD, os dados pessoais e os dados pessoais sensíveis;</p><p class="inc">II - este roteiro, com exercício prático no formulário do Anexo III;</p><p class="inc">III - identificadores, quase identificadores e cruzamento de bases;</p><p class="inc">IV - o uso de ferramentas de inteligência artificial com dados pessoais, nos termos do Decreto Municipal nº 23.409, de 2026; e</p><p class="inc">V - o que fazer em caso de divulgação indevida (art. 12).</p><p>§ 3º Cada turma terá registro de data, conteúdo, material, lista de presença e avaliação, guardado pelo órgão de gestão de pessoas.</p><p>§ 4º A primeira turma será realizada em até 30 (trinta) dias da publicação deste ato.</p><p>§ 5º Este roteiro, o material da capacitação e as orientações do(a) Encarregado(a) ficarão à disposição dos servidores na intranet ou no sítio LGPD da Prefeitura.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM5.3 pede informação e treinamento pelo menos uma vez por ano, e a evidência sugerida é a prova de que o treinamento acontece. As normas de SBC mandam capacitar, mas não dizem quando, para quem nem como registrar.</p></div>
+      <div><h4>Intenção</h4><p>Fixar a periodicidade pelo caminho que o Decreto 22.963 já abre (as orientações do CGPD), sem mudar decreto. Obrigatoriedade por função, como em Memphis; conteúdo amarrado ao roteiro, como a oficina de Seattle; registro com avaliação, como o Decreto 23.409 já exige para a capacitação em IA (art. 33). O § 4º põe a primeira turma perto da publicação. O § 5º é a "informação" que o DM5.3 pede junto com o treinamento.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto 22.963/2025, art. 5º, II, "c"; PSI (Decreto 22.453/2023: todos os usuários devem passar por capacitação e conscientização); Decreto 23.409/2026, arts. 6º, III, 33 e 34, § 1º, VI; Memphis, Política de Treinamento em Segurança (treinamento anual por função para quem acessa dado confidencial); FPF, Seattle (oficina "Data Camp" sobre qualidade, privacidade, equidade e divulgação); Plano de Ação Emergencial LGPD (2025): capacitação contínua no calendário da Escola de Governo.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.3</h4><p>É o DM5.3 inteiro. O registro do § 3º é a "evidência de que os treinamentos anuais estão acontecendo".</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo VI – Da participação do público</div>
+  <article class="art novo" id="art15" data-tipo="novo" data-sub="DM5.1 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 15</span><span class="tag novo">Novo</span><span class="tag sub">DM5.1</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 15. O público participará das práticas de privacidade da Prefeitura:</p><p class="inc">I - por consulta pública de pelo menos 15 (quinze) dias sobre este roteiro, antes de cada revisão anual, com as contribuições e as respostas publicadas;</p><p class="inc">II - por canal permanente no sítio LGPD da Prefeitura para opinar sobre as práticas de privacidade e comunicar dado publicado indevidamente, com resposta em até 30 (trinta) dias; e</p><p class="inc">III - pela apresentação anual do relatório do art. 16 a conselho municipal pertinente, quando houver.</p><p>Parágrafo único. A primeira consulta pública poderá ser feita sobre a minuta deste ato, antes de sua aprovação.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM5.1 pede um processo para envolver moradores e interessados externos na gestão dos riscos à privacidade. SBC tem um canal para o titular exercer direitos e denunciar, não para opinar sobre as práticas.</p></div>
+      <div><h4>Intenção</h4><p>Seattle levou o método de avaliação de riscos a um conselho e o deixou 45 dias em consulta pública; Washington, DC, manda o diretor de dados receber e responder à opinião do público. Os 15 dias são o prazo que o Decreto 23.413 já usa para a consulta do Plano de Dados Abertos. O parágrafo único deixa a primeira consulta ser a da própria minuta, o caminho mais curto.</p></div>
+      <div class="origem"><h4>Origem</h4><p>FPF, Seattle (conselho comunitário de tecnologia e 45 dias de consulta pública sobre o método); Washington, DC, Ordem 2017-115 (o diretor de dados recebe e responde à opinião do público; grupo consultivo com representantes do público); Decreto 23.413/2026, art. 18, § 2º; sítio LGPD da Prefeitura (canal por e-mail).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.1</h4><p>É o DM5.1 inteiro.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo VII – Das disposições finais</div>
+  <article class="art novo" id="art16" data-tipo="novo" data-sub="DM5.1 DM5.2 DM5.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 16</span><span class="tag novo">Novo</span><span class="tag sub">DM5.1</span><span class="tag sub">DM5.2</span><span class="tag sub">DM5.3</span></div>
+      <p>Art. 16. O DTI apresentará ao CGPD, uma vez por ano, e publicará relatório com o número de verificações e suas decisões, as retiradas por divulgação indevida, as turmas de capacitação e as contribuições do público, com proposta de revisão deste roteiro.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM5 tem janela anual: conta o que aconteceu nos últimos 12 meses. Um relatório por ano junta a prova dos três subcritérios e obriga a rever o roteiro.</p></div>
+      <div><h4>Intenção</h4><p>O mesmo relatório anual que o procedimento de compartilhamento manda apresentar ao CGPD (DM3 v01, art. 5º, VI), agora com os números de privacidade. É o que se leva ao conselho (art. 15, III).</p></div>
+      <div class="origem"><h4>Origem</h4><p>FPF, Seattle (a política de dados abertos manda fazer avaliação anual de riscos); DM3 v01, art. 5º, VI; Decreto 22.963/2025, arts. 3º e 4º (CGPD).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.1 e DM5.2 e DM5.3</h4><p>Sustenta a janela anual do DM5 e o DM5.1 (devolutiva ao público).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art17" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 17</span><span class="tag novo">Novo</span></div>
+      <p>Art. 17. Integram este ato os seguintes anexos:</p><p class="inc">I - Anexo I – Níveis de sensibilidade;</p><p class="inc">II - Anexo II – Campos, combinações e tratamentos;</p><p class="inc">III - Anexo III – Formulário de verificação; e</p><p class="inc">IV - Anexo IV – Registro de verificações e retiradas.</p><p>Parágrafo único. O DTI poderá atualizar os anexos, ouvido(a) o(a) Encarregado(a).</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Anexos aprovados junto com o ato viram norma e contam como evidência.</p></div>
+      <div><h4>Intenção</h4><p>Os anexos são a parte que muda com a prática; o DTI os atualiza sem novo ato, com a Encarregada.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Mesmo arranjo do procedimento de compartilhamento (DM3 v01, art. 18).</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art18" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 18</span><span class="tag novo">Novo</span></div>
+      <p>Art. 18. Este roteiro é oferecido como base do roteiro de verificação de publicação segura dos padrões técnicos de dados abertos previstos no art. 21, III, do Decreto Municipal nº 23.413, de 2026, e passará a integrá-los quando editados.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O Decreto 23.413 manda a Secretaria de Administração editar um roteiro de verificação, ouvidos o DTI e a Encarregada, em até 90 dias da vigência (cerca de 05/05/2027). Sem esta regra, haveria dois roteiros.</p></div>
+      <div><h4>Intenção</h4><p>Este ato vale já, pelo Decreto 22.963 e pela PSI, e vira o rascunho do roteiro de 2027. É a mesma lógica do Guia de Qualidade (DM4 v01) e do procedimento de compartilhamento (DM3 v01).</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto 23.413/2026, arts. 12, II, 21, III, e 28, II; Decreto 23.403/2026, art. 25.</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Garante que a resposta "Sim" de 2026 continue valendo depois da vigência dos decretos.</p></div>
+    </aside>
+  </article>
+  <article class="art igual" id="art19" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 19</span></div><p>Art. 19. Este ato entra em vigor na data de sua publicação.</p></div>
+  </article>
+  <div class="assinatura" data-bloco="assinatura">São Bernardo do Campo, ………..<br><b>Diretor(a) do Departamento de Tecnologia da Informação</b></div>
+  <div class="capitulo">Anexos</div>
+  <article class="art novo" id="anx1" data-tipo="novo" data-sub="DM5.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo I</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span></div>
+      <p><b>Anexo I – Níveis de sensibilidade</b></p><p>Os exemplos são indicativos; a classificação de cada base é do responsável por ela (art. 3º).</p><div class="rolavel"><table class="anexo"><thead><tr><th>Nível</th><th>O que é</th><th>Exemplos em SBC</th><th>Classe de acesso (procedimento de compartilhamento)</th><th>Rótulo da PSI</th><th>Publicação</th><th>Compartilhamento</th></tr></thead><tbody><tr><td>0 – Aberta</td><td>Sem pessoa, sigilo ou risco à segurança</td><td>Orçamento executado, linhas de ônibus, equipamentos públicos, camadas do GeoPortal sem dado pessoal</td><td>Aberta</td><td>Público</td><td>Dado aberto</td><td>Sem instrumento</td></tr><tr><td>1 – Pública sob pedido</td><td>Acessível pela LAI, ainda não preparada para publicação</td><td>Séries antigas em papel ou PDF; bases em preparo</td><td>Aberta</td><td>Público</td><td>Entra na lista de abertura</td><td>Sem instrumento</td></tr><tr><td>2 – Uso interno</td><td>Sem pessoa nem sigilo legal, mas com risco à segurança em detalhe</td><td>Plantas de prédios públicos, rede de dados, localização de reservatórios e de equipamentos de segurança</td><td>Restrita</td><td>Uso interno</td><td>Só agregada ou genérica</td><td>Formulário de pedido</td></tr><tr><td>3 – Pessoal ou sigilosa</td><td>Dado pessoal ou sigilo legal</td><td>Cadastro de contribuintes com nome, solicitações de serviço com nome de pessoa física, dados funcionais de servidores além do que a lei manda publicar</td><td>Restrita</td><td>Confidencial</td><td>Só depois de anonimização ou agregação, ou por previsão legal</td><td>Formulário ou termo de uso, com a Encarregada ouvida</td></tr><tr><td>4 – Restrita</td><td>Dado pessoal sensível, de criança ou adolescente, informação classificada, dano grave</td><td>Prontuários de saúde, CadSocial, matrículas escolares nominais, atendimento socioassistencial, registros de violência</td><td>Restrita ou indisponível</td><td>Confidencial</td><td>Só agregada, com supressão de células (art. 9º)</td><td>Termo de uso com controles reforçados; Encarregada sempre ouvida</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O servidor precisa de exemplos da própria Prefeitura para classificar sem errar.</p></div>
+      <div><h4>Intenção</h4><p>Uma linha por nível, com a correspondência às classes do procedimento de compartilhamento e aos rótulos da PSI, para que as três normas digam a mesma coisa.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Washington, DC, Ordem 2017-115; São Francisco, Norma de Classificação de Dados; Memphis, Política de Sensibilidade da Informação; DataSF, Edição de Segurança (reservatórios e plantas de prédios como exemplo de base sem pessoa e com risco); PSI; DM3 v01, art. 7º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>DM5.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx2" data-tipo="novo" data-sub="DM5.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo II</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span></div>
+      <p><b>Anexo II – Campos, combinações e tratamentos</b></p><p>A parte A ajuda no passo I (art. 6º), a parte B no passo III e a parte C no passo IV. A parte B adapta a Matriz de Privacidade do GovEx (2016) à LGPD: onde a matriz é mais permissiva que a lei brasileira, vale a coluna da direita.</p><p><b>Parte A – Campos que exigem atenção</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Tipo</th><th>Exemplos</th><th>Regra geral</th></tr></thead><tbody><tr><td>Identificador direto</td><td>Nome, CPF, RG, Cartão Nacional de Saúde, NIS, matrícula, telefone, e-mail, placa, endereço residencial</td><td>Não publicar, salvo previsão legal; retirar antes de compartilhar, salvo se a finalidade exigir</td></tr><tr><td>Quase identificador</td><td>Data de nascimento, idade, sexo, cor ou raça, escolaridade, ocupação, bairro, escola, unidade de atendimento, data do atendimento</td><td>Publicar generalizado; conferir as combinações (parte B) e as células pequenas (art. 9º)</td></tr><tr><td>Dado pessoal sensível</td><td>Saúde, deficiência, origem racial ou étnica ligada à pessoa, religião, opinião política, vida sexual, dado genético ou biométrico</td><td>Só agregado, com supressão de células</td></tr><tr><td>Localização</td><td>Coordenada de residência ou de ocorrência, endereço com número</td><td>Deslocar para o centro da quadra ou do bairro; coordenada de imóvel ou equipamento público é aberta</td></tr><tr><td>Imagem e vídeo</td><td>Câmeras de monitoramento</td><td>Não publicar; imagem de vistoria ou evento pode ser aberta sem pessoa identificável</td></tr></tbody></table></div><p><b>Parte B – Combinações</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Combinação</th><th>Na matriz do GovEx</th><th>Neste roteiro</th></tr></thead><tbody><tr><td>Coordenada de imóvel ou equipamento público</td><td>Aberta</td><td>Aberta</td></tr><tr><td>Coordenada + idade, nome ou endereço residencial</td><td>Sensível</td><td>Restrita: deslocar para quadra ou bairro antes de publicar</td></tr><tr><td>Endereço residencial, sozinho</td><td>Sensível</td><td>Pessoal (nível 3): publicar só o logradouro ou o bairro</td></tr><tr><td>Endereço residencial + nome ou idade</td><td>Sensível</td><td>Restrita: não publicar junto</td></tr><tr><td>Data de nascimento</td><td>Restrita</td><td>Restrita: usar idade ou faixa etária</td></tr><tr><td>Consumo de água ou energia + endereço residencial</td><td>Sensível</td><td>Restrita: agregar por bairro</td></tr><tr><td>Saúde, conta bancária ou documento de identidade, com qualquer campo</td><td>Restrita</td><td>Restrita</td></tr><tr><td>Imagem de câmera de monitoramento</td><td>Sensível</td><td>Não publicar</td></tr><tr><td>Nome de quem pediu serviço ou alvará</td><td>Aberta</td><td>Pessoa jurídica: aberto; pessoa física: retirar (dado pessoal pela LGPD)</td></tr><tr><td>Idade, sexo, cor ou raça, escolaridade e bairro na mesma linha</td><td>Sem par na matriz</td><td>Generalizar a idade em faixas e conferir as células pequenas (art. 9º)</td></tr></tbody></table></div><p><b>Parte C – Tratamentos</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Técnica</th><th>O que faz</th><th>Quando usar</th></tr></thead><tbody><tr><td>Retirar campo</td><td>Apaga a coluna</td><td>Identificadores diretos</td></tr><tr><td>Generalizar</td><td>Troca o valor exato por faixa ou categoria mais ampla: idade em faixas de 5 ou 10 anos, data em mês ou ano, endereço em bairro</td><td>Quase identificadores</td></tr><tr><td>Agregar</td><td>Publica contagens, somas ou médias em vez de registros</td><td>Bases de nível 3 ou 4</td></tr><tr><td>Suprimir célula pequena</td><td>Marca com "s" a contagem de 1 a 4 pessoas, com supressão complementar</td><td>Toda tabela agregada sobre pessoas (art. 9º)</td></tr><tr><td>Deslocar localização</td><td>Leva a coordenada para o centro da quadra ou do bairro</td><td>Ocorrências ligadas a residência ou a pessoa</td></tr><tr><td>Pseudonimizar</td><td>Troca o identificador por código sem a chave</td><td>Compartilhamento para análise; continua sendo dado pessoal (LGPD, art. 13, § 4º) e não serve para publicar</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Os passos do art. 6º só funcionam se o servidor souber reconhecer o campo, a combinação perigosa e o tratamento certo.</p></div>
+      <div><h4>Intenção</h4><p>A parte B mantém a coluna do GovEx, que é o recurso da WWC, e mostra onde a LGPD pede mais: o GovEx trata o nome de quem pediu um serviço como aberto, e a lei brasileira trata nome de pessoa física como dado pessoal. A linha final é o caso da planilha da consulta do PPA, que a matriz não cobre.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Matriz de Privacidade do GovEx (2016), abas README e Privacy Matrix; DataSF, formulário (níveis de identificabilidade: identificável, mascarado, ofuscado e agregado); FPF, Seattle, p. 44 (agregação e tamanho mínimo de célula); LGPD, arts. 5º, I e II, e 13, § 4º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>DM5.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx3" data-tipo="novo" data-sub="DM5.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo III</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span></div>
+      <p><b>Anexo III – Formulário de verificação</b></p><p>Um formulário por base, preenchido pelo responsável e conferido pelo verificador (art. 8º). Na verificação simplificada (art. 5º, § 1º), só as partes A, B e F.</p><div class="rolavel"><table class="anexo"><thead><tr><th>Parte</th><th>O que se informa</th></tr></thead><tbody><tr><td>A – Identificação</td><td>Órgão; responsável pela base; nome da base; nível (art. 3º); finalidade; onde será publicada ou com quem será compartilhada; data</td></tr><tr><td>B – Campos (passo I)</td><td>Identificadores diretos; quase identificadores; dados pessoais sensíveis; campos de localização (Anexo II, parte A)</td></tr><tr><td>C – Valor (passo II)</td><td>Baixo, médio ou alto, e por quê; quem usa ou pediu a base</td></tr><tr><td>D – Risco (passo III)</td><td>Expectativa de privacidade (baixa, média, alta); dano possível (nenhum, leve, moderado, grave); chance de tentativa de identificação (rara, improvável, possível, provável); combinações encontradas (Anexo II, parte B); bases já publicadas com que pode ser cruzada; para base sem pessoa, o risco à segurança</td></tr><tr><td>E – Tratamento (passo IV)</td><td>Técnicas aplicadas (Anexo II, parte C); mínimo de célula usado (art. 9º)</td></tr><tr><td>F – Decisão (passo V e art. 7º)</td><td>Risco que resta; utilidade da base tratada; decisão (publicar, publicar tratada, compartilhar com controles, não publicar); impedimentos, condições, recomendações e risco residual aceito, com quem aceitou e por quê; data da próxima revisão</td></tr><tr><td>G – Assinaturas</td><td>Quem preparou; verificador; Encarregada, quando ouvida; titular do órgão, quando exigido (art. 8º, IV)</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A decisão precisa ficar escrita para ser conferida, revista e mostrada como evidência.</p></div>
+      <div><h4>Intenção</h4><p>As partes seguem os passos do art. 6º e as escalas do formulário do DataSF, traduzidas; a parte F usa as categorias de conclusão do Decreto 23.403. Formulário curto, que cabe numa página.</p></div>
+      <div class="origem"><h4>Origem</h4><p>DataSF, formulário de lançamento de dados abertos, Edição de Privacidade (passos 1 a 4, escalas de impacto e de probabilidade, decisão e data de revisão); Decreto 23.403/2026, art. 24, § 1º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>DM5.2: é o "processo documentado" em uso; os formulários preenchidos são a evidência.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx4" data-tipo="novo" data-sub="DM5.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo IV</span><span class="tag novo">Novo</span><span class="tag sub">DM5.2</span></div>
+      <p><b>Anexo IV – Registro de verificações e retiradas</b></p><p>A parte A é publicada na página de Dados Abertos; a parte B é interna (art. 10).</p><p><b>Parte A – Verificações (pública)</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Base</th><th>Órgão</th><th>Nível</th><th>Decisão</th><th>Motivo, se não publicada</th><th>Data</th><th>Próxima revisão</th></tr></thead><tbody><tr><td colspan="7" class="vaz">Preenchido a cada registro.</td></tr></tbody></table></div><p><b>Parte B – Retiradas por divulgação indevida (interna)</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Data</th><th>Base</th><th>O que foi divulgado</th><th>Como foi constatado</th><th>Retirada em</th><th>Encarregada comunicada em</th><th>Republicada em</th></tr></thead><tbody><tr><td colspan="7" class="vaz">Preenchido a cada registro.</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Sem registro não há prova de que o roteiro funciona nem números para o relatório anual (art. 16).</p></div>
+      <div><h4>Intenção</h4><p>Duas abas numa planilha: a pública, com a decisão de cada base, e a interna, com as retiradas.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Washington, DC, Ordem 2017-115 (justificativa no inventário público); NNIP, registro de dados confidenciais (modelo do Anexo IV da DM3 v01).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM5.2</h4><p>DM5.2 (evidência) e base do relatório anual que alimenta o DM5.1.</p></div>
+    </aside>
+  </article>
+  <div class="vazio" id="vazio">Nenhum item corresponde ao filtro escolhido.</div>
+</details>
+
+<details class="cartao obs">
+  <summary><h2>Observações para quem for decidir</h2></summary>
+  <ol>
+    <li><b>Natureza deste texto.</b> É um rascunho de indicação técnica, para servir de base à equipe e à Procuradoria. A decisão cabe ao município.</li>
+    <li class="destaque"><b>Instrumento (ponto de escolha).</b> O texto está escrito como ato do DTI aprovado pelo CGPD, como o procedimento de compartilhamento (DM3 v01), com base no Decreto 22.963/2025 (procedimentos do Programa, art. 2º, II; capacitação conforme o CGPD, art. 5º, II, "c") e na PSI, que admite normas complementares (§ 12). Para obrigar todas as secretarias, a equipe e a Procuradoria podem preferir portaria do Secretário de Administração ou resolução do CGPD. Quando a Secretaria de Administração editar os padrões técnicos do Decreto 23.413 (até cerca de 05/05/2027), o roteiro passa a fazer parte deles (art. 18). Pedido à equipe: DM5-3.</li>
+    <li><b>Encaixe com as outras versões.</b> Os cinco níveis (art. 3º) correspondem às três classes de acesso do procedimento de compartilhamento (DM3 v01, art. 7º); a decisão "compartilhar com controles" usa a escada daquele procedimento (art. 8º); a verificação antes de abrir uma base (DM3 v01, art. 16) passa a ser feita neste formulário; o código "s" é o do Guia de Qualidade (DM4 v01); a regra de células pequenas (art. 9º) serve também ao padrão demográfico do DM8. Os atos do DTI do DM2 ao DM5 e o do DM9 tratam do mesmo assunto e podem virar um documento só.</li>
+    <li><b>Prazo da certificação (18/12/2026).</b> O DM5 pede 2 de 3, com janela anual. Publicado antes do envio, o ato sustenta o DM5.2 sem depender da vigência do Decreto 23.413. O DM5.3 conta quando a primeira turma acontecer e for registrada, até 18/12 (pedido DM5-6). O DM5.1 conta se a consulta pública começar até cerca de 03/12 (pedido DM5-5). Sem o ato, a resposta "Em andamento" da ficha continua valendo.</li>
+    <li><b>Conflito de funções.</b> A Encarregada é também a diretora do DTI, que edita este ato e indica o verificador quando a secretaria não tiver um (art. 8º, parágrafo único). A WWC não pergunta isso, mas o Decreto 23.403 manda examinar conflitos de interesses (art. 19, parágrafo único). Sugestão: o verificador indicado pelo DTI não ser a própria Encarregada.</li>
+    <li><b>Números escolhidos aqui.</b> São propostas, não medidas: mínimo de 5 pessoas por célula (a ponta de baixo da faixa de 5 a 10 citada pelo FPF, p. 44); 15 dias de consulta (o prazo do Decreto 23.413, art. 18, § 2º; Seattle usou 45); 30 dias para responder ao canal (os 20 + 10 da LAI municipal); primeira turma de capacitação em até 30 dias; 90 dias para rever as bases já publicadas; revisão da decisão em 1 ano para as bases de nível 3 ou 4 tratadas ou compartilhadas (o formulário do DataSF oferece 6 meses ou 1 ano) e 2 anos nos demais casos; verificação simplificada para a base de nível 0 sem quase identificador.</li>
+    <li><b>O que ficou de fora.</b> Técnicas formais como o k-anonimato e a privacidade diferencial, que o FPF descreve, porque exigem especialista; podem entrar numa revisão. O relatório de impacto dos sistemas de videomonitoramento (pedido DM5-4) e a classificação de informação sigilosa da LAI (Decreto 18.882) seguem as normas próprias.</li>
+    <li><b>Primeiro caso do art. 11.</b> A planilha da consulta do PPA 2026–2029, publicada com nome, idade, bairro e escolaridade de respondentes, é a primeira a verificar e retirar, se ainda estiver no ar (pedido DM5-2).</li>
+  </ol>
+</details>
+
+<details class="cartao fontes">
+  <summary><h2>Fontes</h2></summary>
+  <ul>
+    <li>What Works Cities, critério DM5 (v4): definição, subcritérios, evidência sugerida e glossário; pacote do Fórum (Memphis: Política de Sensibilidade da Informação, Política de Privacidade e Política de Treinamento em Segurança).</li>
+    <li>Future of Privacy Forum, avaliação de riscos de dados abertos de Seattle (2018, 92 p.).</li>
+    <li>DataSF (São Francisco): kit de lançamento de dados abertos (Edição de Privacidade: formulário e resumo; Edição de Segurança); processo de publicação; Norma de Classificação de Dados (COIT, 2017).</li>
+    <li>GovEx (Johns Hopkins): Matriz de Privacidade (2016) e texto sobre sensibilidade dos dados.</li>
+    <li>Harvard Data-Smart, "Como São Francisco abre mais dados com prêmio sobre privacidade" (2017).</li>
+    <li>Washington, DC: Política de Dados, Ordem do Prefeito 2017-115.</li>
+    <li>Lei Federal 13.709/2018 (LGPD), arts. 5º, 6º, 9º, 13, 37, 46, 48 e 50; Lei Federal 12.527/2011.</li>
+    <li>São Bernardo do Campo: Decreto 22.963/2025; Decreto 22.453/2023 (PSI); Decretos 23.403/2026, 23.409/2026 e 23.413/2026; Lei 7.367/2025, arts. 645 a 659; Decreto 18.882/2014; sítio LGPD da Prefeitura; Plano de Ação Emergencial LGPD (2025, processo 72089/2019).</li>
+    <li>Recomendações deste projeto: DM3 v01 (`versoes/DM3-v01.md`), DM4 v01 (`versoes/DM4-v01.md`); ficha DM5 (`fichas/DM5.md`).</li>
+  </ul>
+</details>
+
+</main>
+<div class="rodape">Roteiro preparado para o Painel WWC · SBC. Rascunho de indicação técnica; não substitui a análise da Procuradoria.</div>
+
+<script>
+(function () {
+  var estado = { sub: 'todos' };
+  var arts = Array.prototype.slice.call(document.querySelectorAll('.art'));
+  var caps = Array.prototype.slice.call(document.querySelectorAll('.capitulo'));
+  var blocos = Array.prototype.slice.call(document.querySelectorAll('[data-bloco]'));
+  function aplicar() {
+    var visiveis = 0;
+    arts.forEach(function (a) {
+      var subs = (a.getAttribute('data-sub') || '').split(' ');
+      var ok = estado.sub === 'todos' || subs.indexOf(estado.sub) >= 0;
+      a.hidden = !ok; if (ok) visiveis++;
+    });
+    caps.forEach(function (c) {
+      var el = c.nextElementSibling, algum = false;
+      while (el && el.classList.contains('art')) { if (!el.hidden) algum = true; el = el.nextElementSibling; }
+      c.hidden = !algum;
+    });
+    blocos.forEach(function (b) { b.hidden = estado.sub !== 'todos'; });
+    document.getElementById('vazio').style.display = visiveis ? 'none' : 'block';
+    document.getElementById('contagem').textContent = visiveis + ' de ' + arts.length + ' itens';
+  }
+  document.querySelectorAll('[data-filtro]').forEach(function (g) {
+    g.addEventListener('click', function (ev) {
+      var b = ev.target.closest('button'); if (!b) return;
+      estado.sub = b.getAttribute('data-v');
+      g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      aplicar();
+    });
+  });
+  document.querySelectorAll('.sub-card .arts a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var alvo = document.querySelector(a.getAttribute('href'));
+      if (alvo && alvo.hidden) {
+        estado.sub = 'todos';
+        document.querySelectorAll('[data-filtro] button').forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-v') === 'todos' ? 'true' : 'false'); });
+        aplicar();
+      }
+    });
+  });
+  aplicar();
+})();
+</script>
+<script>
+(function () {
+  var quadros = Array.prototype.slice.call(document.querySelectorAll('details.cartao'));
+  function abrirAte(el) { var d = el && el.closest('details'); while (d) { d.open = true; d = d.parentElement.closest('details'); } }
+  function irPara(hash) { var alvo = hash && hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1))); if (alvo) { abrirAte(alvo); alvo.scrollIntoView(); } }
+  var a = document.getElementById('abrir-tudo'), f = document.getElementById('fechar-tudo');
+  if (a) a.addEventListener('click', function () { quadros.forEach(function (d) { d.open = true; }); });
+  if (f) f.addEventListener('click', function () { quadros.forEach(function (d) { d.open = false; }); });
+  var antes = [];
+  window.addEventListener('beforeprint', function () { antes = quadros.map(function (d) { return d.open; }); quadros.forEach(function (d) { d.open = true; }); });
+  window.addEventListener('afterprint', function () { quadros.forEach(function (d, i) { d.open = antes[i]; }); });
+  document.querySelectorAll('[data-filtro] button').forEach(function (b) { b.addEventListener('click', function () { var d = document.getElementById('decreto'); if (d) d.open = true; }); });
+  document.querySelectorAll('a[href^="#"]').forEach(function (l) { l.addEventListener('click', function () { var h = l.getAttribute('href'); if (h.length > 1) abrirAte(document.getElementById(h.slice(1))); }); });
+  window.addEventListener('hashchange', function () { irPara(location.hash); });
+  irPara(location.hash);
+})();
+</script>
+</body>
+</html>
