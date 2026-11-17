@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Dados demográficos DM8 v01</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f71b3'/%3E%3Crect y='26' width='32' height='6' fill='%23ff8200'/%3E%3Cpath d='M8 20l5-6 4 4 7-9' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
+  --laranja: #ff8200; --laranja-esc: #b35b00; --laranja-claro: #fff1e3;
+  --verde: #288827; --verde-claro: #e6f4e6;
+  --texto: #2b2b2b; --texto-suave: #5f6368; --borda: #dde3e8;
+  --fundo: #f3f6f9; --cartao: #ffffff;
+  --raio: 10px; --sombra: 0 1px 3px rgba(15, 40, 70, .08);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 "Open Sans", Arial, sans-serif; }
+a { color: var(--azul); }
+h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
+
+.topo { background: linear-gradient(90deg, var(--azul-esc), var(--azul)); color: #fff; border-bottom: 5px solid var(--laranja); }
+.topo-int { padding: 20px 32px 18px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
+.topo .sobre { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; opacity: .85; font-weight: 600; }
+.topo h1 { font-size: 26px; font-weight: 800; margin-top: 4px; }
+.topo .subtitulo { font-size: 14px; opacity: .9; margin-top: 4px; }
+.topo .voltar { color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; background: rgba(255,255,255,.16); padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
+.topo .voltar:hover { background: rgba(255,255,255,.28); }
+
+.barra { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
+.barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.barra .rot { font-size: 13px; font-weight: 700; color: var(--texto-suave); }
+.grupo { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { border: 1px solid var(--borda); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
+.chip[aria-pressed=true] { background: var(--azul); border-color: var(--azul); color: #fff; }
+.contagem { font-size: 13px; color: var(--texto-suave); margin-left: auto; }
+
+main { padding: 24px 32px 48px; display: grid; gap: 22px; }
+.cartao { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); padding: 20px 22px; }
+.cartao > h2 { font-size: 19px; color: var(--azul-esc); margin-bottom: 10px; }
+.cartao p { margin: 0 0 10px; }
+.cartao p:last-child { margin-bottom: 0; }
+
+.legenda { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 12px; font-size: 14px; }
+.legenda span { display: inline-flex; align-items: center; gap: 8px; }
+.tag { display: inline-block; font: 800 11px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 5px; }
+.tag.novo { background: var(--laranja); color: #fff; }
+.tag.alterado { background: var(--azul); color: #fff; }
+.tag.igual { background: #eef1f4; color: var(--texto-suave); }
+.tag.sub { background: var(--verde-claro); color: var(--verde); }
+
+.subs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 6px; }
+.sub-card { border: 1px solid var(--borda); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.sub-card h3 { font-size: 16px; color: var(--azul-esc); }
+.sub-card .pede { font-size: 14px; }
+.sub-card .linha { font-size: 13.5px; border-radius: 6px; padding: 7px 10px; }
+.sub-card .hoje { background: #f7f9fb; }
+.sub-card .depois { background: var(--laranja-claro); }
+.sub-card .arts { display: flex; flex-wrap: wrap; gap: 6px; }
+.sub-card .arts a { font-size: 13px; font-weight: 700; text-decoration: none; background: var(--azul-claro); padding: 2px 9px; border-radius: 6px; }
+
+.decreto { padding: 0; overflow: hidden; }
+.decreto-cab { padding: 18px 22px; border-bottom: 1px solid var(--borda); background: #fafbfc; }
+.decreto-cab h2 { font-size: 19px; color: var(--azul-esc); }
+.decreto-cab .nota { font-size: 13.5px; color: var(--texto-suave); margin-top: 4px; }
+.ementa { padding: 18px 22px 6px; font-size: 14.5px; }
+.ementa .num { font-weight: 800; }
+.ementa .em { margin: 8px 0 12px auto; max-width: 520px; font-style: italic; }
+.ementa p { margin: 0 0 8px; }
+.capitulo { padding: 14px 22px 6px; font-weight: 800; color: var(--azul-esc); letter-spacing: .03em; text-transform: uppercase; font-size: 13.5px; border-top: 1px solid var(--borda); background: #fafbfc; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+.art { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); border-top: 1px solid var(--borda); }
+.art .texto { padding: 14px 22px; font-size: 14.5px; }
+.art .texto p { margin: 0 0 7px; }
+.art .texto p:last-child { margin-bottom: 0; }
+.art.igual { grid-template-columns: 1fr; }
+.art.igual .texto { color: #555b61; }
+.art .cab { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+.art .cab .id { font-weight: 800; font-size: 13px; color: var(--texto-suave); }
+.art .cab .antigo { font-size: 12.5px; color: var(--texto-suave); }
+.art.novo .texto { background: var(--laranja-claro); border-left: 5px solid var(--laranja); }
+.art.alterado .texto { background: var(--azul-claro); border-left: 5px solid var(--azul); }
+mark.novo { background: #ffd8ad; color: inherit; padding: 1px 3px; border-radius: 3px; }
+del.sup { text-decoration: line-through; text-decoration-thickness: 1.5px; color: #8a2a22; background: #fbe9e7; padding: 1px 3px; border-radius: 3px; }
+.rotulo-red { font: 800 11.5px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; margin: 10px 0 4px; }
+.rotulo-red.sup { color: #8a2a22; margin-top: 0; }
+.rotulo-red.nova { color: var(--laranja-esc); }
+.obs-red { font-size: 13.5px; color: var(--texto-suave); border-top: 1px dashed var(--borda); padding-top: 8px; margin-top: 10px !important; }
+.inc { padding-left: 18px; }
+
+.expl { padding: 14px 20px; background: #fff; border-left: 1px solid var(--borda); display: grid; gap: 10px; align-content: start; font-size: 14px; }
+.expl h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); margin-bottom: 2px; }
+.expl .wwc { background: var(--verde-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .wwc h4 { color: var(--verde); }
+.expl p { margin: 0; }
+
+.assinatura { padding: 14px 22px 20px; border-top: 1px solid var(--borda); font-size: 14.5px; }
+.vazio { padding: 20px 22px; color: var(--texto-suave); display: none; border-top: 1px solid var(--borda); }
+
+.obs ol { margin: 0; padding-left: 20px; display: grid; gap: 10px; }
+.destaque { background: var(--verde-claro); border-left: 5px solid var(--verde); border-radius: 6px; padding: 10px 14px; }
+.fontes ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14px; }
+.rodape { font-size: 13px; color: var(--texto-suave); text-align: center; padding: 0 32px 28px; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 1000px) { .subs { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .topo-int, .barra-int, main { padding-left: 16px; padding-right: 16px; }
+  .barra { position: static; }
+  .art { grid-template-columns: 1fr; }
+  .expl { border-left: 0; border-top: 1px dashed var(--borda); }
+  .art .texto, .expl, .capitulo, .ementa, .assinatura, .decreto-cab { padding-left: 16px; padding-right: 16px; }
+  .contagem { margin-left: 0; width: 100%; }
+}
+@media print {
+  .barra, .topo .voltar { display: none; }
+  body { background: #fff; }
+  .art { break-inside: avoid; }
+}
+.tag.escolha { background: #fde7c4; color: #8a4b00; }
+.aviso { background: var(--laranja-claro); border-left: 5px solid var(--laranja); border-radius: 6px; padding: 12px 16px; }
+.expl .origem { background: var(--azul-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .origem h4 { color: var(--azul-esc); }
+table.anexo { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.anexo td, table.anexo th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+table.anexo td.vaz { color: var(--texto-suave); font-style: italic; }
+main > *, .art .texto, .art .expl { min-width: 0; }
+.rolavel { overflow-x: auto; }
+.rolavel > table { min-width: 520px; }
+table.tabinicio { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.tabinicio td, table.tabinicio th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+.inicio h3 { font-size: 16px; color: var(--azul-esc); margin: 16px 0 6px; }
+details.cartao > summary { list-style: none; cursor: pointer; }
+details.cartao > summary::-webkit-details-marker { display: none; }
+details.cartao > summary h2 { font-size: 19px; color: var(--azul-esc); margin: 0; }
+details.cartao[open] > summary h2 { margin-bottom: 10px; }
+details.cartao.decreto > summary h2 { margin-bottom: 0; }
+details.cartao > summary h2::before { content: "\25B8"; display: inline-block; width: 1.1em; color: var(--azul); transition: transform .15s; }
+details.cartao[open] > summary h2::before { transform: rotate(90deg); }
+details.cartao > summary:focus-visible { outline: 2px solid var(--azul); outline-offset: 4px; border-radius: 4px; }
+.acoes { margin-left: auto; display: flex; gap: 6px; }
+.acoes.solta { margin: 0 0 -8px; justify-content: flex-end; }
+@media (max-width: 600px) { main { padding: 16px 16px 32px; } .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; } .cartao { padding: 16px; } .art .texto { padding: 12px 14px; } }
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-int">
+    <div>
+      <div class="sobre">Painel WWC · SBC · Critério DM8 · Versão v01</div>
+      <h1>Padrão Municipal de Dados Demográficos</h1>
+      <div class="subtitulo">Rascunho de indicação técnica · 16/11/2026 · Para análise da equipe, do DTI, da Secretaria de Planejamento Urbano e da Procuradoria</div>
+    </div>
+    <a class="voltar" href="index.html#DM8" onclick="if (history.length === 1) { window.close(); return false; }">← Voltar ao painel (DM8)</a>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-int">
+    <span class="rot">Subcritério WWC:</span>
+    <div class="grupo" data-filtro="sub">
+      <button class="chip" type="button" data-v="todos" aria-pressed="true">Todos</button>
+      <button class="chip" type="button" data-v="DM8.1" aria-pressed="false">DM8.1</button>
+      <button class="chip" type="button" data-v="DM8.2" aria-pressed="false">DM8.2</button>
+      <button class="chip" type="button" data-v="escolha" aria-pressed="false">Só pontos de escolha</button>
+    </div>
+    <span class="contagem" id="contagem"></span>
+    <div class="acoes"><button class="chip" type="button" id="abrir-tudo">Expandir tudo</button><button class="chip" type="button" id="fechar-tudo">Recolher tudo</button></div>
+  </div>
+</div>
+
+<main>
+
+<details class="cartao inicio" open>
+  <summary><h2>O que é esta página</h2></summary>
+  <div class="aviso"><p><b>Rascunho de indicação técnica, não decisão.</b> Este padrão reúne o que os modelos indicados pela WWC fazem para atender ao critério DM8 (dados desagregados) e as categorias que o IBGE e as leis federais já fixam. Instrumento, mantenedora, categorias de gênero e prazos cabem ao município (DTI, Secretaria de Planejamento Urbano, Departamento de Políticas Afirmativas e Procuradoria).</p></div>
+  <h3>O que é este documento</h3>
+  <p>Não é lei nem decreto. É uma <b>parte do Guia de Qualidade e Padrões de Dados</b> do Departamento de Tecnologia da Informação (DTI), ou um ato próprio do DTI, com a concordância da Secretaria de Planejamento Urbano. Não cria direito nem dever novo para o cidadão: organiza como as secretarias registram e divulgam idade, sexo, gênero, cor ou raça, deficiência, escolaridade, renda e bairro.</p>
+  <p><b>Para que serve:</b> fazer todas as secretarias perguntarem e publicarem esses dados do mesmo jeito, com as categorias do IBGE, para que bases diferentes possam ser comparadas e usadas nas decisões, protegendo quem responde. É também o "padrão documentado de dados demográficos" que o critério DM8 da What Works Cities pede.</p>
+  <h3>Em que normas se apoia</h3>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Norma</th><th>O que dá a este ato</th></tr></thead><tbody><tr><td><b>Lei Municipal 7.367/2025, arts. 645, XIII, e 750</b></td><td>O DTI define "princípios, padrões e políticas para a gestão de dados" (art. 645, XIII); a Divisão de Indicadores Sociais produz dados em "diferentes níveis de desagregação" e identifica "os tipos de dados a serem coletados, disponibilizados e publicados" (art. 750). É o que permite ao DTI editar o Padrão e à Divisão mantê-lo.</td></tr><tr><td><b>Lei Federal 12.288/2010 (Estatuto da Igualdade Racial), arts. 1º e 39, §§ 8º e 9º (Lei 14.553/2023)</b></td><td>Define população negra pelo quesito cor ou raça do IBGE e manda os registros administrativos de trabalhadores terem campo de cor ou raça por autoclassificação. O Padrão usa as mesmas categorias.</td></tr><tr><td><b>Portaria MS 344/2017</b></td><td>Torna obrigatório o quesito raça/cor, por autodeclaração e nas cinco categorias do IBGE, nos sistemas de informação em saúde. O Padrão estende a categoria a toda a Prefeitura.</td></tr><tr><td><b>Decretos Municipais 20.653/2019 e 22.452/2023</b></td><td>Nome social em todos os cadastros e quesito cor ou raça do IBGE, por autodeclaração e com opção de não declarar, nos concursos. São as peças municipais que o Padrão junta.</td></tr><tr><td><b>Lei Federal 13.709/2018 (LGPD), arts. 5º, II, 6º e 11</b></td><td>Dados sensíveis, necessidade e tratamento de dados sensíveis. O Padrão aplica essas regras à coleta e à divulgação.</td></tr></tbody></table></div>
+  <p>Ressalva: o padrão fecha o DM8.1, mas o DM8.2 depende de publicar dados (as tabelas do Perfil em formato aberto, uma base da própria Prefeitura por grupo e um caso de decisão), o que este texto não substitui (observação 3, no fim da página).</p>
+  <h3>Por que agora</h3>
+  <p>SBC publica dados por bairro e por grupo da população no Perfil Socioeconômico por Bairro e no Painel Estatístico, a partir do Censo, mas só em PDF, e não tem regra que faça as secretarias registrarem raça, gênero, idade ou deficiência do mesmo jeito. O DM8 pede <b>2 de 2 subcritérios</b>, sem janela de tempo, e é <b>essencial na Platina</b>.</p>
+  <h3>De onde vem cada parte</h3>
+  <p>Nada aqui foi inventado do zero: cada parte adapta um modelo já usado por outra cidade, uma norma ou um recurso recomendado pela WWC; o quadro abaixo diz qual. O que é escolha nossa (o instrumento, a mantenedora, quem define as categorias de gênero, o método para deficiência e os prazos) está nas observações 2, 5 e 6.</p>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Modelo</th><th>Por que conta</th><th>O que veio dele</th><th>Onde está neste texto</th></tr></thead><tbody><tr><td><b>Cambridge (EUA), bateria demográfica padrão das pesquisas</b></td><td>Exemplo aceito pela WWC no DM8 (pacote do Fórum)</td><td>Perguntas prontas para qualquer pesquisa da cidade, cada uma com a fonte oficial; perguntas no fim e opcionais; gênero definido com a comissão LGBTQ+; deficiência pelo Grupo de Washington</td><td>Arts. 3º a 6º e 8º; Anexos I e II</td></tr><tr><td><b>Portland (EUA), padrões REALD+TA, 2021</b></td><td>Modelo do pacote do Fórum da WWC no DM8, com versão em português</td><td>Prática padrão com salvaguardas e igual em toda a cidade; níveis mínimo e abrangente; autoidentificação; respostas voluntárias com registro das recusas; avaliação de riscos antes de coletar; texto ao público</td><td>Arts. 1º, 2º, 8º, 10 e 13; Anexos II e III</td></tr><tr><td><b>OPAS, 2020</b></td><td>Recurso indicado na página do DM8; dá a definição de dados desagregados</td><td>Conjunto mínimo de desagregação (sexo, idade, escolaridade, renda, origem étnica, território e deficiência); interoperabilidade</td><td>Arts. 2º, 3º e 10; Anexo I</td></tr><tr><td><b>San Antonio (EUA), Atlas de Equidade</b></td><td>Recurso indicado na página do DM8 (Data-Smart, Harvard)</td><td>Dados do censo processados pela prefeitura por setor censitário, usados por todos os departamentos no orçamento</td><td>Arts. 7º, 11 e 12</td></tr><tr><td><b>IBGE, Censo 2022, e normas federais</b></td><td>Categorias oficiais brasileiras</td><td>Cinco categorias de cor ou raça; deficiência pelos domínios de dificuldade funcional; nível de instrução</td><td>Arts. 4º e 6º; Anexo I</td></tr><tr><td><b>Guia de Qualidade e Padrões de Dados (DM4 v01)</b></td><td>Proposta deste projeto para o DM4, de que este Padrão é a Parte C do Anexo II</td><td>Campos comuns, códigos de valor ausente, ficha de regras da base e órgão mantenedor</td><td>Arts. 1º, 7º, 8º, 10 e 13; Anexo I</td></tr></tbody></table></div>
+  <h3>Como ler</h3>
+  <p>O padrão responde a cinco perguntas: <b>que dados e com que categorias?</b> (arts. 3º a 7º deste padrão e Anexo I), <b>como perguntar?</b> (art. 8º e Anexo II), <b>como proteger e publicar?</b> (arts. 9º e 10), <b>como os dados chegam a quem decide?</b> (arts. 11 e 12) e <b>quem cuida e como a equipe aprende?</b> (arts. 13 e 14). Os artigos citados nesta página são os do texto abaixo, salvo quando outra norma é nomeada. Cada artigo e cada anexo traz ao lado por que foi incluído, a intenção, a origem e a relação com a WWC.</p>
+  <div class="legenda">
+    <span><span class="tag novo">Novo</span> texto proposto</span>
+    <span><span class="tag escolha">Ponto de escolha do município</span> recomendação que o município pode trocar</span>
+    <span><span class="tag sub">DM8.x</span> subcritério da WWC atendido</span>
+  </div>
+</details>
+
+<details class="cartao">
+  <summary><h2>Versões desta recomendação</h2></summary>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Versão</th><th>Data</th><th>O que é</th><th>Situação</th></tr></thead><tbody><tr><td><b>v01</b></td><td>16/11/2026</td><td>Padrão Municipal de Dados Demográficos: 17 artigos e 4 anexos (variáveis e categorias, aviso e perguntas-modelo, lista de verificação, registro de adoção).</td><td>Vigente</td></tr><tr><td><b>v02</b></td><td>—</td><td>Padrão com os ajustes da equipe, do DTI, da Secretaria de Planejamento Urbano, do Departamento de Políticas Afirmativas e da Procuradoria.</td><td>Aguarda a equipe</td></tr></tbody></table></div>
+</details>
+
+<details class="cartao">
+  <summary><h2>O que a WWC pede e onde o padrão responde</h2></summary>
+  <div class="subs">
+    <div class="sub-card">
+      <h3>DM8.1 · Padrão demográfico documentado</h3>
+      <div class="pede">A prefeitura tem um padrão documentado de dados demográficos, usado para publicar e compartilhar esses dados no mesmo formato em toda a prefeitura.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Não há padrão. Há peças soltas: o quesito cor ou raça do IBGE com autodeclaração nas cotas, o nome social em todos os cadastros e as obrigações federais da saúde e do registro de trabalhadores.</div>
+      <div class="linha depois"><b>No padrão:</b> Variáveis e categorias do IBGE em dois níveis, regras de coleta (voluntária, autodeclarada, no fim, com "prefiro não declarar"), proteção, divulgação nas mesmas categorias, mantenedora, perguntas-modelo e orientação às equipes.</div>
+      <div class="arts"><a href="#art1">Art. 1º</a><a href="#art3">Art. 3º</a><a href="#art4">Art. 4º</a><a href="#art5">Art. 5º</a><a href="#art6">Art. 6º</a><a href="#art7">Art. 7º</a><a href="#art8">Art. 8º</a><a href="#art9">Art. 9º</a><a href="#art10">Art. 10</a><a href="#art13">Art. 13</a><a href="#art14">Art. 14</a><a href="#art15">Art. 15</a><a href="#anx1">Anexo I</a><a href="#anx2">Anexo II</a><a href="#anx3">Anexo III</a><a href="#anx4">Anexo IV</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM8.2 · Dados por território e por grupo da população</h3>
+      <div class="pede">A prefeitura coleta e compartilha, interna e externamente, dados separados por território e por grupos da população (como raça, etnia, gênero, idade, deficiência e renda).</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Em parte: o Perfil por Bairro e o Painel Estatístico trazem dados por bairro e por grupo, a partir do Censo, só em PDF; os dados da própria Prefeitura saem só por bairro.</div>
+      <div class="linha depois"><b>No padrão:</b> Tabelas do Perfil e do Painel em formato aberto, cruzamento de território com grupo nas publicações, cadastros da Prefeitura na fila de abertura e registro do uso dos dados nas decisões.</div>
+      <div class="arts"><a href="#art1">Art. 1º</a><a href="#art4">Art. 4º</a><a href="#art5">Art. 5º</a><a href="#art6">Art. 6º</a><a href="#art7">Art. 7º</a><a href="#art9">Art. 9º</a><a href="#art10">Art. 10</a><a href="#art11">Art. 11</a><a href="#art12">Art. 12</a><a href="#anx1">Anexo I</a><a href="#anx3">Anexo III</a></div>
+    </div>
+  </div>
+</details>
+
+<details class="cartao decreto" id="decreto">
+  <summary class="decreto-cab">
+    <h2>Texto do padrão</h2>
+    <div class="nota">Use os filtros acima para ver só os artigos de um subcritério ou só os pontos de escolha do município.</div>
+  </summary>
+
+  <div class="ementa" data-bloco="preambulo">
+    <p class="num">PADRÃO MUNICIPAL DE DADOS DEMOGRÁFICOS – Parte C do Anexo II do Guia de Qualidade e Padrões de Dados, ou ato próprio (instrumento a definir)</p>
+    <p class="em">Estabelece o Padrão Municipal de Dados Demográficos, com as variáveis e as categorias, as regras de coleta, de proteção, de divulgação e de compartilhamento, a mantenedora e a orientação às equipes, como Parte C do Anexo II do Guia de Qualidade e Padrões de Dados.</p>
+    <p>O(A) DIRETOR(A) DO DEPARTAMENTO DE TECNOLOGIA DA INFORMAÇÃO DA SECRETARIA DE ADMINISTRAÇÃO, com a concordância do(a) SECRETÁRIO(A) DE PLANEJAMENTO URBANO, no uso de suas atribuições, considerando o que consta do processo administrativo nº ……………;</p>
+    <p>Considerando o inciso XIII do art. 645 da Lei Municipal nº 7.367, de 15 de janeiro de 2025, que atribui ao DTI definir princípios, padrões e políticas para a gestão de dados, e o art. 750 da mesma Lei, que atribui à Divisão de Indicadores Sociais identificar os tipos de dados a serem coletados, disponibilizados e publicados, em diferentes níveis de desagregação;</p>
+    <p>Considerando o Guia de Qualidade e Padrões de Dados do DTI, cujo Anexo II fixa os padrões dos campos comuns;</p>
+    <p>Considerando a Lei Federal nº 12.288, de 20 de julho de 2010 (Estatuto da Igualdade Racial), em especial o art. 39, §§ 8º e 9º, incluídos pela Lei Federal nº 14.553, de 20 de abril de 2023, e a Portaria do Ministério da Saúde nº 344, de 1º de fevereiro de 2017;</p>
+    <p>Considerando os Decretos Municipais nº 20.653, de 2019 (nome social), e nº 22.452, de 2023 (quesito cor ou raça do IBGE nos concursos públicos);</p>
+    <p>Considerando a Lei Federal nº 13.709, de 14 de agosto de 2018 (Lei Geral de Proteção de Dados Pessoais), que trata como sensíveis os dados sobre origem racial ou étnica e sobre saúde (art. 5º, II); e</p>
+    <p>Considerando a necessidade de que os órgãos registrem e divulguem os dados demográficos da mesma forma, para que bases diferentes possam ser comparadas e usadas nas decisões,</p>
+    <p>RESOLVE:</p>
+  </div>
+
+  <div class="capitulo">Capítulo I – Do objeto e das definições</div>
+  <article class="art novo" id="art1" data-tipo="novo" data-sub="DM8.1 DM8.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 1º</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span><span class="tag sub">DM8.2</span></div>
+      <p>Art. 1º Este Padrão estabelece as variáveis, as categorias e as regras de coleta, de proteção, de divulgação e de compartilhamento dos dados demográficos e territoriais nos órgãos da Administração Direta do Poder Executivo Municipal.</p><p>§ 1º O Padrão aplica-se aos cadastros, formulários, prontuários, pesquisas, escutas e sistemas que registrem dado demográfico de pessoa, e às publicações e compartilhamentos de dados sobre pessoas, inclusive quando feitos por contratado.</p><p>§ 2º O Padrão não obriga a colher variável que a finalidade do cadastro não exija; quando a variável for colhida, será colhida conforme este Padrão.</p><p>§ 3º Este Padrão integra, como Parte C, o Anexo II do Guia de Qualidade e Padrões de Dados, e observa as suas regras para campos comuns e valores ausentes.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM8.1 pede um padrão documentado de dados demográficos, usado para publicar e compartilhar esses dados no mesmo formato em toda a Prefeitura. Em SBC há peças soltas (o quesito do IBGE nas cotas, o nome social em todos os cadastros), mas nenhuma regra comum.</p></div>
+      <div><h4>Intenção</h4><p>Um padrão para todos os órgãos e para os contratados, sem obrigar ninguém a perguntar mais do que precisa (§ 2º, princípio da necessidade da LGPD). O § 3º encaixa o Padrão no anexo de campos comuns do Guia da DM4 v01, sem ato novo; se o Guia não for aprovado, o § 3º sai e o texto vale como ato próprio.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Definição do DM8.1 (WWC v4); Portland, padrões REALD+TA (2021: práticas comuns em toda a cidade); Cambridge, bateria demográfica padrão (perguntas para qualquer pesquisa da cidade); OPAS (2020: interoperabilidade como condição); LGPD, art. 6º, III; DM4 v01, art. 15 e Anexo II.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1 e DM8.2</h4><p>Delimita o padrão do DM8.1 e o alcance do compartilhamento do DM8.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art2" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 2º</span><span class="tag novo">Novo</span></div>
+      <p>Art. 2º Para os fins deste Padrão, considera-se:</p><p class="inc">I - dado demográfico: informação sobre característica de pessoa, como idade, sexo, identidade de gênero, cor ou raça, deficiência, escolaridade e renda;</p><p class="inc">II - dado desagregado: dado resumido dividido por território e por grupo da população, como idade, sexo ou gênero, território, escolaridade, cor ou raça e outros fatores;</p><p class="inc">III - autodeclaração: informação prestada pela própria pessoa sobre si, ou pelo responsável legal, quando a pessoa não puder prestá-la;</p><p class="inc">IV - nível mínimo: categorias que todo órgão usa quando colhe a variável;</p><p class="inc">V - nível ampliado: detalhamento opcional que, somado, volta às categorias do nível mínimo; e</p><p class="inc">VI - célula pequena: valor de tabela publicada que represente de 1 (uma) a 4 (quatro) pessoas.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A página do DM8 define dados desagregados com a definição da OPAS. As demais definições dão nome às regras do Padrão.</p></div>
+      <div><h4>Intenção</h4><p>O inciso II segue a definição da página. Os níveis mínimo e ampliado vêm de Portland: quem precisa de mais detalhe pode tê-lo, desde que dê para somar de volta às categorias comuns. O inciso VI usa a mesma régua do Roteiro de Verificação (DM5 v01).</p></div>
+      <div class="origem"><h4>Origem</h4><p>Página do DM8 na plataforma WWC (glossário: dados desagregados, definição da OPAS); Portland, REALD+TA (níveis mínimo e abrangente); DM5 v01, art. 9º (supressão de 1 a 4 pessoas).</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio. Dá ao DM8.1 o vocabulário do critério.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo II – Das variáveis e das categorias</div>
+  <article class="art novo" id="art3" data-tipo="novo" data-sub="DM8.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 3º</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span></div>
+      <p>Art. 3º As variáveis demográficas e territoriais, as categorias de cada nível, a fonte e o nome da coluna em dados abertos são os do Anexo I.</p><p>§ 1º As categorias seguem as do Instituto Brasileiro de Geografia e Estatística (IBGE) sempre que houver, para que os dados da Prefeitura possam ser comparados com os do Censo.</p><p>§ 2º Quando lei ou sistema nacional fixar categoria própria, como no Censo Escolar, no Cadastro Único ou nos sistemas de informação em saúde, o órgão usa a categoria exigida e a converte para o Anexo I na publicação e no compartilhamento.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Sem as mesmas categorias, não dá para somar nem comparar bases de órgãos diferentes, que é o problema que o DM8.1 resolve.</p></div>
+      <div><h4>Intenção</h4><p>Usar o IBGE como fonte, como Cambridge usa o Census Bureau: as categorias já existem prontas e são as do Perfil por Bairro e do Painel Estatístico. O § 2º respeita os sistemas nacionais, que a Prefeitura não pode mudar, e pede só a conversão na saída, como o Guia da DM4 v01 faz com os campos comuns.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Cambridge (cada pergunta com a fonte oficial: censo, ACS, Grupo de Washington); Devex (2020: a dificuldade de padronizar conceitos e variáveis entre órgãos); Portaria MS 344/2017, art. 1º; DM4 v01, art. 15, § 2º.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1</h4><p>É o "padrão documentado" do DM8.1, com campos iguais em toda a Prefeitura.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art4" data-tipo="novo" data-sub="DM8.1 DM8.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 4º</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span><span class="tag sub">DM8.2</span></div>
+      <p>Art. 4º A cor ou raça é registrada por autodeclaração, nas cinco categorias do IBGE (branca, preta, parda, amarela e indígena), com a opção "prefiro não declarar".</p><p>§ 1º A soma das pessoas que se declaram pretas e pardas corresponde à população negra, conforme o Estatuto da Igualdade Racial.</p><p>§ 2º O servidor não atribui cor ou raça à pessoa; a verificação da autodeclaração só ocorre quando prevista em norma própria.</p><p>§ 3º O campo de cor ou raça existirá e será preenchido por autodeclaração sempre que a lei o exigir, como nos sistemas de informação em saúde e nos registros administrativos de admissão e desligamento de servidores.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Cor ou raça é a variável em que a Prefeitura já tem regra (cotas nos concursos) e em que a lei federal já obriga (saúde e registros de trabalhadores), mas cada sistema pode registrar de um jeito.</p></div>
+      <div><h4>Intenção</h4><p>Fixar para todos o que o Decreto 22.452 já faz num processo: categoria do IBGE e autodeclaração, com opção de não declarar. O § 2º proíbe que o servidor classifique a pessoa pela aparência, o que distorce o dado.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto 22.452/2023, art. 3º e § 2º; Lei 12.288/2010 (Estatuto da Igualdade Racial), art. 1º, parágrafo único, IV, e art. 39, §§ 8º e 9º (incluídos pela Lei 14.553/2023); Portaria MS 344/2017, art. 1º; Portland (autoidentificação como princípio central).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1 e DM8.2</h4><p>DM8.1 (campo igual em toda a Prefeitura) e DM8.2 (raça é um dos grupos citados).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art5" data-tipo="novo" data-sub="DM8.1 DM8.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 5º</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span><span class="tag sub">DM8.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 5º Sexo, identidade de gênero e nome social observam o seguinte:</p><p class="inc">I - o nome social é registrado em campo próprio, conforme o Decreto Municipal nº 20.653, de 2019, em todos os cadastros;</p><p class="inc">II - o sexo é registrado nas categorias do IBGE quando exigido por lei ou por sistema nacional; e</p><p class="inc">III - a identidade de gênero, quando colhida, é registrada por autodeclaração, nas categorias que a mantenedora definir com o Departamento de Políticas Afirmativas, ouvidos os conselhos municipais pertinentes, em até 60 (sessenta) dias da publicação deste Padrão.</p><p>Parágrafo único. Até a definição prevista no inciso III, o órgão que já colhe identidade de gênero mantém as suas categorias e as informa à mantenedora.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O Decreto 20.653 já dá regra única para o nome social, mas não fixa categorias de sexo nem de gênero. Categorias de gênero mudam com o tempo e dependem de quem é representado por elas.</p></div>
+      <div><h4>Intenção</h4><p>Não propor categorias de gênero por conta deste projeto: elas ficam com o Departamento de Políticas Afirmativas, como Cambridge fez com a comissão LGBTQ+ da cidade. Quem define e o prazo são escolha do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto 20.653/2019, arts. 3º e 6º; Cambridge (opções de gênero definidas pela comissão LGBTQ+ da cidade); Lei Municipal 7.367/2025 (Departamento de Políticas Afirmativas); Portland (gênero fora do padrão inicial, a discutir).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1 e DM8.2</h4><p>DM8.1; gênero é um dos grupos do DM8.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art6" data-tipo="novo" data-sub="DM8.1 DM8.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 6º</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span><span class="tag sub">DM8.2</span></div>
+      <p>Art. 6º A deficiência é identificada pelas perguntas de dificuldade funcional do Censo Demográfico 2022 do IBGE, baseadas nas recomendações do Grupo de Washington, nos domínios do Anexo I.</p><p>§ 1º Para fins estatísticos, é considerada pessoa com deficiência quem responde ter muita dificuldade ou não conseguir de modo algum em ao menos um domínio.</p><p>§ 2º O registro de deficiência para concessão de direito ou de benefício segue a norma própria e não se confunde com a classificação estatística deste artigo.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A pergunta direta ("você tem deficiência?") depende de a pessoa se identificar com o termo, e o resultado não se compara com o Censo, que desde 2022 usa as perguntas do Grupo de Washington.</p></div>
+      <div><h4>Intenção</h4><p>Usar o mesmo método do Censo, para que a Prefeitura compare os seus dados com os do IBGE, como Cambridge faz com o Grupo de Washington. Portland prefere a pergunta de identificação; aqui se escolheu a do Censo pela comparação. O § 2º separa a estatística da avaliação para direitos, que tem regra própria.</p></div>
+      <div class="origem"><h4>Origem</h4><p>IBGE, Censo 2022, pessoas com deficiência (cinco domínios de dificuldade funcional; pessoa com deficiência é quem tem muita dificuldade ou não consegue em ao menos um, segundo o Grupo de Washington); Cambridge (perguntas do Grupo de Washington e do ACS); Portland (pergunta de identificação e tipos); OPAS (deficiência no conjunto mínimo).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1 e DM8.2</h4><p>DM8.1; deficiência é um dos grupos do DM8.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art7" data-tipo="novo" data-sub="DM8.1 DM8.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 7º</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span><span class="tag sub">DM8.2</span></div>
+      <p>Art. 7º O território é registrado pelo endereço, conforme a Parte A do Anexo II do Guia de Qualidade e Padrões de Dados, e divulgado por bairro da lista oficial e, quando houver coordenada, também por setor censitário do IBGE.</p><p>Parágrafo único. A divulgação por grupo de bairros usa os agrupamentos do Perfil Socioeconômico por Bairro, para permitir a comparação.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM8.2 pede dados separados por território e por grupo. O território já tem padrão no Guia da DM4 v01 (logradouro com código e 34 bairros); falta dizer em que recorte se divulga.</p></div>
+      <div><h4>Intenção</h4><p>Divulgar por bairro, que é o recorte que a população entende e o do Perfil, e por setor censitário quando der, que é o do Censo e o do atlas de San Antonio.</p></div>
+      <div class="origem"><h4>Origem</h4><p>DM4 v01, Anexo II, Parte A (logradouro, bairro, coordenadas); Perfil Socioeconômico por Bairro 2026 (26 capítulos, por bairro ou grupo de bairros); San Antonio, Atlas de Equidade (setor censitário); Lei 7.367/2025, art. 750 (setor censitário, bairro e região).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1 e DM8.2</h4><p>DM8.2 (por território).</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo III – Da coleta</div>
+  <article class="art novo" id="art8" data-tipo="novo" data-sub="DM8.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 8º</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span></div>
+      <p>Art. 8º Na coleta de dado demográfico:</p><p class="inc">I - a resposta é voluntária, salvo quando a lei a exige, e a recusa não impede o atendimento;</p><p class="inc">II - toda pergunta tem a opção "prefiro não declarar", registrada de forma distinta do campo não preenchido;</p><p class="inc">III - a resposta é dada pela própria pessoa ou, quando ela não puder, pelo responsável legal, registrando-se quem respondeu;</p><p class="inc">IV - nos formulários, nas pesquisas e nas escutas, as perguntas demográficas ficam no fim; e</p><p class="inc">V - o formulário traz o aviso do Anexo II, com a finalidade, o caráter voluntário, o compromisso de não discriminação e a proteção dos dados.</p><p>Parágrafo único. Antes de incluir variável demográfica em cadastro ou formulário novo, o órgão registra, na ficha de regras da base do Guia de Qualidade e Padrões de Dados, a finalidade, os riscos de mau uso ou de dano e como serão evitados.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O jeito de perguntar muda a resposta. E a recusa misturada com o campo vazio esconde se o problema é a pessoa não querer responder ou o servidor não perguntar.</p></div>
+      <div><h4>Intenção</h4><p>As regras de Portland e de Cambridge, em ordem: voluntário, autodeclarado, com recusa registrada, perguntas no fim e aviso ao público. O parágrafo único é a avaliação prévia de Portland, feita na ficha que o Guia da DM4 v01 já prevê, sem formulário novo.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Portland, REALD+TA (autoidentificação; respostas voluntárias com registro das recusas e dos campos em branco; perguntas no fim; avaliar privacidade, uso indevido e dano antes de coletar; texto ao público); Cambridge (perguntas no fim; aviso de que são opcionais); Decreto 22.452/2023, art. 3º, § 2º; DM4 v01, Anexo I (ficha de regras da base); DM5 v01, art. 13.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1</h4><p>DM8.1 (regras do padrão); prepara o DM8.2 com dado colhido do mesmo jeito.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo IV – Da proteção, da divulgação e do compartilhamento</div>
+  <article class="art novo" id="art9" data-tipo="novo" data-sub="DM8.1 DM8.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 9º</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span><span class="tag sub">DM8.2</span></div>
+      <p>Art. 9º Os dados de cor ou raça, de saúde e de deficiência, e os demais dados pessoais sensíveis, têm acesso restrito a quem deles precisa para a finalidade declarada, e só são compartilhados entre órgãos nos termos da LGPD e do procedimento de compartilhamento de dados da Prefeitura.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Origem racial ou étnica e dado de saúde são dados pessoais sensíveis pela LGPD. Colher mais dado demográfico sem protegê-lo aumenta o risco para as pessoas que o Padrão quer enxergar.</p></div>
+      <div><h4>Intenção</h4><p>Remeter às regras que já existem (LGPD e procedimento de compartilhamento da DM3 v01), sem criar outra.</p></div>
+      <div class="origem"><h4>Origem</h4><p>LGPD, arts. 5º, II, e 11; DM3 v01, arts. 3º e 7º (princípios e classes de acesso); Portland (coleta com salvaguardas; risco de reproduzir discriminação).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1 e DM8.2</h4><p>DM8.1 e DM8.2 (compartilhar internamente com segurança).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art10" data-tipo="novo" data-sub="DM8.1 DM8.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 10</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span><span class="tag sub">DM8.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 10. Na divulgação e no compartilhamento de dados agregados:</p><p class="inc">I - usam-se as categorias do nível mínimo do Anexo I, para que bases de órgãos diferentes possam ser comparadas;</p><p class="inc">II - a célula pequena é suprimida e marcada com o código "s", com a supressão complementar prevista no Roteiro de Verificação de Publicação e Compartilhamento Seguro;</p><p class="inc">III - sempre que o tamanho da base permitir, publica-se o cruzamento do território com ao menos um grupo da população, e de grupos entre si, como cor ou raça por sexo; e</p><p class="inc">IV - a tabela informa a fonte, a data de referência e a proporção de "prefiro não declarar" e de campos vazios.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM8.1 pede que os dados sejam publicados e compartilhados "no mesmo formato em toda a prefeitura". Publicar com categorias diferentes anula o padrão; publicar células de 2 ou 3 pessoas expõe quem está nelas.</p></div>
+      <div><h4>Intenção</h4><p>Mesmas categorias na saída, a mesma régua de supressão do DM5 v01 e o cruzamento entre grupos, como recomendam a OPAS e o instituto de estatística colombiano. O inciso IV mostra a qualidade do dado: muita recusa muda a leitura da tabela. A régua de 1 a 4 é escolha do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Definição do DM8.1; DM5 v01, art. 9º; DM4 v01, Anexo II (código "s"); OPAS (2020: desagregar sempre que possível); Devex (2020: enfoque interseccional do DANE); Portland (registro das recusas).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1 e DM8.2</h4><p>DM8.1 (mesmo formato) e DM8.2 (dados separados por território e por grupo).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art11" data-tipo="novo" data-sub="DM8.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 11</span><span class="tag novo">Novo</span><span class="tag sub">DM8.2</span></div>
+      <p>Art. 11. A Divisão de Indicadores Sociais publicará na página de Dados Abertos, em formato aberto, as tabelas por bairro do Perfil Socioeconômico por Bairro e do Painel Estatístico, nas categorias deste Padrão, a cada nova edição.</p><p>Parágrafo único. Os órgãos que mantêm cadastro com dado demográfico avaliarão, na lista anual de bases candidatas à abertura, a publicação de dados agregados por bairro e por grupo da população.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O Perfil por Bairro e o Painel Estatístico já trazem dados por território e por grupo, mas só em PDF. E os dados da própria Prefeitura saem só por bairro, não por grupo da população.</p></div>
+      <div><h4>Intenção</h4><p>Transformar em regra a ação do OD3 (tabelas em formato aberto) e pôr os cadastros da Prefeitura na fila de abertura que o procedimento da DM3 v01 já prevê, em vez de criar uma lista nova.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Ficha DM8, §3 (Perfil por Bairro e Painel Estatístico); ficha OD3 (tabelas em CSV); DM3 v01, art. 15 (lista anual de bases candidatas à abertura); San Antonio (dado do censo processado pela prefeitura, usado por todos os departamentos).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.2</h4><p>DM8.2 (compartilhar externamente).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art12" data-tipo="novo" data-sub="DM8.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 12</span><span class="tag novo">Novo</span><span class="tag sub">DM8.2</span></div>
+      <p>Art. 12. A Divisão de Indicadores Sociais disponibilizará aos órgãos os dados por bairro e por grupo da população e apoiará o seu uso na elaboração de planos, programas e orçamentos, na escolha de local de equipamento público e na avaliação de serviços.</p><p>Parágrafo único. O órgão que usar esses dados numa decisão registrará o uso no processo correspondente.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A definição do DM8 diz "para apoiar as decisões". O atlas de San Antonio só conta porque cada departamento o considera no orçamento.</p></div>
+      <div><h4>Intenção</h4><p>Oferecer o dado a quem decide e registrar quando ele foi usado, o que gera o caso de decisão que a WWC quer ver (pedido DM8-4), sem obrigar toda decisão a usar o recorte.</p></div>
+      <div class="origem"><h4>Origem</h4><p>San Antonio, Atlas de Equidade (ferramenta de equidade entregue com o orçamento de cada departamento); Route Fifty (2022: Newark, aluguel acessível calculado pela renda dos inquilinos); Lei 7.367/2025, arts. 466 (mapas de vulnerabilidade a partir do Cadastro Social) e 750; DM1 v02, art. 34 (indicadores desagregados, quando pertinente).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.2</h4><p>DM8.2, na parte "para apoiar as decisões" da definição.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo V – Da manutenção, do acesso e da orientação</div>
+  <article class="art novo" id="art13" data-tipo="novo" data-sub="DM8.1 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 13</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 13. A Divisão de Indicadores Sociais da Secretaria de Planejamento Urbano é a mantenedora deste Padrão e:</p><p class="inc">I - atualiza o Anexo I quando o IBGE mudar categoria ou método, comunicando os órgãos;</p><p class="inc">II - responde às dúvidas dos órgãos e registra as conversões aceitas para os sistemas nacionais (art. 3º, § 2º);</p><p class="inc">III - mantém o Registro de Adoção do Anexo IV, com os sistemas que colhem cada variável e a situação de cada um; e</p><p class="inc">IV - propõe ao DTI a revisão anual do Padrão.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Padrão sem dono envelhece. A Lei 7.367/2025 dá à Divisão de Indicadores Sociais a tarefa de "identificar os tipos de dados a serem coletados, disponibilizados e publicados", em diferentes níveis de desagregação.</p></div>
+      <div><h4>Intenção</h4><p>A mantenedora é quem já trabalha com o Censo por bairro e faz o Perfil e o Painel. O DTI edita o Padrão, pela sua competência sobre padrões de dados, e a Divisão o mantém, como cada lista de referência do Guia da DM4 v01 tem um órgão mantenedor. A escolha da mantenedora é do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Lei 7.367/2025, arts. 645, XIII, e 750; DM4 v01, art. 16 (órgão mantenedor de cada lista de referência); Portland (o Escritório de Equidade e Direitos Humanos mantém o padrão da cidade).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1</h4><p>DM8.1 (padrão seguido por vários órgãos, com quem o mantenha).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art14" data-tipo="novo" data-sub="DM8.1 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 14</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 14. O Padrão será publicado na página de Dados Abertos, com o aviso e as perguntas-modelo do Anexo II e a lista de verificação do Anexo III.</p><p>§ 1º O conteúdo do Padrão integra a capacitação anual em privacidade e proteção de dados prevista no Roteiro de Verificação de Publicação e Compartilhamento Seguro.</p><p>§ 2º A mantenedora fará, em até 60 (sessenta) dias da publicação deste Padrão, orientação às equipes dos órgãos que mais colhem dado demográfico, como saúde, educação, assistência social, gestão de pessoas e atendimento ao cidadão, com registro de data, participantes e material.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O terceiro item de evidência do DM8 são documentos que mostrem como a equipe acessa o padrão ou é treinada para usá-lo.</p></div>
+      <div><h4>Intenção</h4><p>Publicar e ensinar com o que já existe: a página de Dados Abertos e a capacitação anual da DM5 v01. A orientação inicial vai a quem mais colhe dado demográfico. O prazo é escolha do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Evidência sugerida do DM8 (3º item); DM5 v01, art. 14 (capacitação anual); Cambridge (bateria pronta para qualquer pesquisa da cidade); ficha DM8, §6, item 1.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1</h4><p>DM8.1: é o 3º item de evidência.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo VI – Das disposições finais</div>
+  <article class="art novo" id="art15" data-tipo="novo" data-sub="DM8.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 15</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span></div>
+      <p>Art. 15. Este Padrão será revisto uma vez por ano e é oferecido como base dos padrões técnicos de dados abertos previstos no art. 21 do Decreto Municipal nº 23.413, de 2026, e da regulamentação de dados prevista no art. 25 do Decreto Municipal nº 23.403, de 2026.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Os dois decretos de novembro de 2026 preveem padrões técnicos e fontes de referência, mas só vigoram em 04/02/2027, e os padrões técnicos têm 90 dias depois disso. Nenhum dos dois fala em desagregação.</p></div>
+      <div><h4>Intenção</h4><p>Não esperar os decretos e não criar regra paralela: quando os padrões técnicos vierem, este Padrão entra neles.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto 23.413/2026, arts. 12, II, 21 e 28, II; Decreto 23.403/2026, art. 25; DM4 v01, art. 23; DM5 v01, art. 18.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1</h4><p>Mantém o DM8.1 em dia.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art16" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 16</span><span class="tag novo">Novo</span></div>
+      <p>Art. 16. Integram este Padrão os seguintes anexos:</p><p class="inc">I - Anexo I – Variáveis e categorias;</p><p class="inc">II - Anexo II – Aviso e perguntas-modelo;</p><p class="inc">III - Anexo III – Lista de verificação; e</p><p class="inc">IV - Anexo IV – Registro de Adoção.</p><p>Parágrafo único. A mantenedora poderá atualizar os anexos, publicando a nova versão com a data e o que mudou.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Anexos aprovados junto com o Padrão viram regra e contam como evidência.</p></div>
+      <div><h4>Intenção</h4><p>O Anexo I é o padrão propriamente dito, como a bateria de Cambridge; os demais são a parte prática.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Mesmo arranjo das outras versões do projeto (DM4 v01, art. 21; DM5 v01, art. 17).</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio.</p></div>
+    </aside>
+  </article>
+  <article class="art igual" id="art17" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 17</span></div><p>Art. 17. Este Padrão entra em vigor na data de sua publicação.</p></div>
+  </article>
+  <div class="assinatura" data-bloco="assinatura">São Bernardo do Campo, ………..<br><b>Diretor(a) do Departamento de Tecnologia da Informação · De acordo: Secretário(a) de Planejamento Urbano</b></div>
+  <div class="capitulo">Anexos</div>
+  <article class="art novo" id="anx1" data-tipo="novo" data-sub="DM8.1 DM8.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo I</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span><span class="tag sub">DM8.2</span></div>
+      <p><b>Anexo I – Variáveis e categorias (Parte C do Anexo II do Guia de Qualidade)</b></p><p>Nível mínimo: usado por todo órgão que colhe a variável e em toda publicação. Nível ampliado: opcional, desde que some de volta ao mínimo. Os valores ausentes seguem o Guia de Qualidade: vazio quando não informado, "na" quando não se aplica e "s" quando suprimido; "prefiro não declarar" é uma categoria, e não um vazio.</p><div class="rolavel"><table class="anexo"><thead><tr><th>Variável</th><th>Nível mínimo</th><th>Nível ampliado (opcional)</th><th>Fonte</th><th>Coluna em dados abertos</th></tr></thead><tbody><tr><td>Cor ou raça</td><td>Branca; Preta; Parda; Amarela; Indígena; Prefiro não declarar</td><td>Agregado "população negra" (preta + parda); para indígena, povo ou etnia, quando a política pedir</td><td>IBGE; Lei 12.288/2010; Portaria MS 344/2017</td><td>cor_raca</td></tr><tr><td>Sexo</td><td>Masculino; Feminino (quando exigido por lei ou sistema nacional)</td><td>—</td><td>IBGE</td><td>sexo</td></tr><tr><td>Identidade de gênero</td><td>A definir pela mantenedora com o Departamento de Políticas Afirmativas (art. 5º, III); sempre com "prefiro não declarar"</td><td>A definir</td><td>Departamento de Políticas Afirmativas; conselhos municipais</td><td>genero</td></tr><tr><td>Nome social</td><td>Campo próprio, por solicitação da pessoa</td><td>—</td><td>Decreto 20.653/2019</td><td>Não se publica</td></tr><tr><td>Idade</td><td>Data de nascimento no registro (AAAA-MM-DD); na divulgação, grupos de 5 anos (0 a 4, 5 a 9, 10 a 14…), com o último grupo aberto igual ao da tabela do IBGE usada para comparar</td><td>Faixas das políticas: criança (0 a 11), adolescente (12 a 17), jovem (15 a 29), pessoa idosa (60 ou mais)</td><td>IBGE; Lei 8.069/1990 (ECA); Lei 12.852/2013 (Estatuto da Juventude); Lei 10.741/2003 (Estatuto da Pessoa Idosa)</td><td>faixa_idade</td></tr><tr><td>Deficiência</td><td>Em cada domínio (enxergar; ouvir; andar ou subir degraus; coordenação motora fina; cognição e comunicação): nenhuma dificuldade; alguma dificuldade; muita dificuldade; não consegue de modo algum. Pessoa com deficiência: muita dificuldade ou não consegue em ao menos um domínio</td><td>Diagnóstico de transtorno do espectro autista, em quesito próprio, como no Censo 2022</td><td>IBGE, Censo 2022 (Grupo de Washington)</td><td>pcd (sim ou não) e uma coluna por domínio</td></tr><tr><td>Escolaridade</td><td>Sem instrução e fundamental incompleto; Fundamental completo e médio incompleto; Médio completo e superior incompleto; Superior completo</td><td>Etapa ou curso concluído</td><td>IBGE (nível de instrução)</td><td>escolaridade</td></tr><tr><td>Renda</td><td>Faixas de renda familiar por pessoa do Cadastro Único, nos valores vigentes (extrema pobreza; pobreza; baixa renda; acima da baixa renda)</td><td>Valor declarado (não se publica)</td><td>Cadastro Único</td><td>faixa_renda</td></tr><tr><td>Território</td><td>Bairro da lista oficial (34 bairros)</td><td>Setor censitário do IBGE, quando houver coordenada; grupo de bairros do Perfil Socioeconômico por Bairro</td><td>Guia de Qualidade, Anexo II, Parte A; IBGE</td><td>bairro; setor_censitario</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O padrão precisa ser concreto: que pergunta, que categorias, que fonte. É isso que a bateria de Cambridge, exemplo aceito pela WWC, faz em oito páginas.</p></div>
+      <div><h4>Intenção</h4><p>Uma linha por variável, com as categorias que SBC já usa ou que a lei federal já impõe. As faixas de idade das políticas vêm das leis que definem criança, adolescente, jovem e pessoa idosa; o grupo "jovem" se sobrepõe aos outros de propósito, porque é usado em política própria. As categorias de gênero ficam em aberto (art. 5º). Os cinco domínios de deficiência e o critério de "muita dificuldade" são os da publicação do IBGE sobre o Censo 2022; o texto das perguntas deve ser conferido pela mantenedora no questionário do IBGE.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Cambridge, bateria demográfica (pergunta, opções e fonte); Portland, REALD+TA (níveis mínimo e abrangente); OPAS (2020: sexo, idade, escolaridade, renda, origem étnica, território e deficiência); IBGE, Censo 2022, pessoas com deficiência; Portaria MS 344/2017, art. 1º; DM4 v01, Anexo II.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1 e DM8.2</h4><p>É o DM8.1: padrão demográfico documentado, com campos iguais em toda a Prefeitura.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx2" data-tipo="novo" data-sub="DM8.1">
+    <div class="texto"><div class="cab"><span class="id">Anexo II</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span></div>
+      <p><b>Anexo II – Aviso e perguntas-modelo</b></p><p>Parte A – Aviso, antes das perguntas demográficas:</p><p>"As perguntas a seguir são opcionais. Elas servem para a Prefeitura saber se atende todos os grupos da população da mesma forma e se quem respondeu representa a população. Você pode escolher 'prefiro não declarar'. As respostas não serão usadas para discriminar ninguém nem afetarão o seu atendimento; serão tratadas conforme a Lei Geral de Proteção de Dados e divulgadas só de forma agregada, sem identificar ninguém. Mais informações: [página de Dados Abertos]."</p><p>Parte B – Perguntas-modelo (ficam no fim do formulário; todas com a opção "prefiro não declarar"):</p><div class="rolavel"><table class="anexo"><thead><tr><th>Variável</th><th>Pergunta</th><th>Opções</th></tr></thead><tbody><tr><td>Território</td><td>Em que bairro você mora?</td><td>Lista dos 34 bairros oficiais; "não moro em São Bernardo do Campo"</td></tr><tr><td>Idade</td><td>Qual é a sua data de nascimento? (ou: Qual é a sua idade?)</td><td>Data ou número de anos</td></tr><tr><td>Cor ou raça</td><td>Qual é a sua cor ou raça?</td><td>Branca; Preta; Parda; Amarela; Indígena</td></tr><tr><td>Identidade de gênero</td><td>A definir (art. 5º, III)</td><td>A definir</td></tr><tr><td>Deficiência</td><td>Você tem dificuldade permanente para enxergar, mesmo usando óculos ou lentes de contato? (repetir para os outros quatro domínios, com o texto do questionário do Censo 2022)</td><td>Não, nenhuma dificuldade; Sim, alguma dificuldade; Sim, muita dificuldade; Sim, não consegue de modo algum</td></tr><tr><td>Escolaridade</td><td>Até que etapa você estudou?</td><td>As quatro categorias do Anexo I</td></tr><tr><td>Renda (opcional)</td><td>Somando a renda de todos que moram na sua casa, qual é a renda mensal da família? Quantas pessoas moram na casa?</td><td>Valor ou faixas; a faixa por pessoa do Anexo I é calculada pela Prefeitura</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O Padrão só é seguido se a equipe tiver a pergunta pronta para copiar, como Cambridge oferece às secretarias de lá.</p></div>
+      <div><h4>Intenção</h4><p>O aviso junta os cinco elementos que Portland manda dizer ao público: finalidade, caráter voluntário, não discriminação, confidencialidade e onde saber mais. As perguntas seguem as categorias do Anexo I.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Portland, REALD+TA (o que dizer ao público); Cambridge (perguntas prontas, aviso de que são opcionais e servem para conferir a representatividade); IBGE, Censo 2022 (perguntas de dificuldade funcional); DM5 v01, art. 13.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1</h4><p>DM8.1 (como a equipe acessa o padrão: 3º item de evidência).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx3" data-tipo="novo" data-sub="DM8.1 DM8.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo III</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span><span class="tag sub">DM8.2</span></div>
+      <p><b>Anexo III – Lista de verificação</b></p><p>Usada por quem cria cadastro, formulário ou pesquisa, por quem contrata sistema e por quem publica ou compartilha dados sobre pessoas.</p><div class="rolavel"><table class="anexo"><thead><tr><th>Momento</th><th>Verificar</th></tr></thead><tbody><tr><td>Antes de colher</td><td>A finalidade exige a variável? A ficha de regras da base registra finalidade e riscos (art. 8º, parágrafo único)? As categorias são as do Anexo I? Há "prefiro não declarar"? As perguntas estão no fim? O aviso do Anexo II está no formulário?</td></tr><tr><td>Ao contratar sistema</td><td>O termo de referência exige as categorias do Anexo I, o campo de nome social e a exportação dos dados nessas categorias?</td></tr><tr><td>Antes de publicar</td><td>As categorias são as do nível mínimo? As células pequenas foram suprimidas, com supressão complementar? A tabela informa fonte, data e proporção de "prefiro não declarar" e de vazios? A base passou pelo Roteiro de Verificação de Publicação e Compartilhamento Seguro?</td></tr><tr><td>Ao compartilhar</td><td>O compartilhamento segue o procedimento de compartilhamento de dados? O dado sensível vai só a quem precisa dele para a finalidade declarada?</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Uma lista curta é o jeito mais simples de fazer o Padrão chegar ao dia a dia, e serve de material na orientação às equipes.</p></div>
+      <div><h4>Intenção</h4><p>Quatro momentos, do formulário à publicação, cada um com as perguntas que evitam os erros mais comuns.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Portland, REALD+TA (avaliação antes de coletar; regras de coleta); DM5 v01 (roteiro de verificação antes de publicar); DM3 v01 (compartilhamento); Decreto 23.413/2026, art. 24 (exigências nos contratos de sistemas).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1 e DM8.2</h4><p>DM8.1 (orientação às equipes) e DM8.2 (publicação e compartilhamento no padrão).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx4" data-tipo="novo" data-sub="DM8.1">
+    <div class="texto"><div class="cab"><span class="id">Anexo IV</span><span class="tag novo">Novo</span><span class="tag sub">DM8.1</span></div>
+      <p><b>Anexo IV – Registro de Adoção</b></p><p>Mantido pela mantenedora (art. 13, III). As linhas abaixo são os cadastros em que a lei federal já impõe categoria; os sistemas, as categorias usadas hoje e a situação dependem da resposta da equipe (pedido DM8-1).</p><div class="rolavel"><table class="anexo"><thead><tr><th>Órgão</th><th>Cadastro ou sistema</th><th>Variáveis colhidas</th><th>Categorias usadas hoje</th><th>Conforme ao Padrão?</th><th>Ajuste ou conversão</th><th>Prazo</th></tr></thead><tbody><tr><td>Saúde</td><td>Sistemas de informação em saúde</td><td>Cor ou raça (obrigatória, Portaria MS 344/2017), sexo, idade, endereço</td><td>A confirmar</td><td>A confirmar</td><td>A definir</td><td>A definir</td></tr><tr><td>Educação</td><td>Cadastro de alunos (Censo Escolar)</td><td>Cor ou raça, sexo, idade, deficiência, endereço</td><td>A confirmar</td><td>A confirmar</td><td>Conversão na publicação (art. 3º, § 2º)</td><td>A definir</td></tr><tr><td>Assistência social</td><td>Cadastro Único e Cadastro Social</td><td>Renda, cor ou raça, sexo, idade, deficiência, endereço</td><td>A confirmar</td><td>A confirmar</td><td>Conversão na publicação (art. 3º, § 2º)</td><td>A definir</td></tr><tr><td>Gestão de pessoas</td><td>Cadastro de servidores (admissão e desligamento)</td><td>Cor ou raça (campo obrigatório, Lei 14.553/2023), sexo, nome social, idade, deficiência</td><td>A confirmar</td><td>A confirmar</td><td>A definir</td><td>A definir</td></tr><tr><td>Atendimento ao cidadão</td><td>Cadastro do cidadão</td><td>A confirmar</td><td>A confirmar</td><td>A confirmar</td><td>A definir</td><td>A definir</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A evidência do DM8 pede padrões "seguidos por vários órgãos". O Registro mostra quais já seguem e quais estão em adaptação.</p></div>
+      <div><h4>Intenção</h4><p>Começar pelos cadastros em que a lei federal já obriga alguma variável, porque é onde o dado já existe. As colunas vazias são o pedido DM8-1 à equipe.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Portaria MS 344/2017; Lei 14.553/2023; ficha DM8, §§ 3 e 7 (DM8-1); Decreto 22.403/2023 (cadastro do cidadão); mesmo arranjo dos registros das outras versões do projeto.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM8.1</h4><p>DM8.1 (padrão seguido por vários órgãos, com campos iguais).</p></div>
+    </aside>
+  </article>
+  <div class="vazio" id="vazio">Nenhum item corresponde ao filtro escolhido.</div>
+</details>
+
+<details class="cartao obs">
+  <summary><h2>Observações para quem for decidir</h2></summary>
+  <ol>
+    <li><b>Natureza deste texto.</b> É um rascunho de indicação técnica, para servir de base à equipe e à Procuradoria. A decisão cabe ao município.</li>
+    <li class="destaque"><b>Instrumento (ponto de escolha).</b> O texto está escrito para entrar como Parte C do Anexo II do Guia de Qualidade e Padrões de Dados (DM4 v01), ato do DTI, com a concordância da Secretaria de Planejamento Urbano, a que pertence a mantenedora. Se o Guia não for aprovado a tempo, o mesmo texto vale como ato próprio do DTI, sem o art. 1º, § 3º. Para obrigar com mais força todas as secretarias, a equipe e a Procuradoria podem preferir portaria do(a) Secretário(a) de Administração. Pedido à equipe: DM8-5.</li>
+    <li><b>Prazo da certificação (18/12/2026).</b> O DM8 não tem janela de tempo, mas pede 2 de 2. O Padrão publicado, com a orientação às equipes registrada, fecha o DM8.1. O DM8.2 depende de publicar: as tabelas do Perfil por Bairro em formato aberto (art. 11; pedido DM8-2), uma base da própria Prefeitura por bairro e por grupo (candidata: matrículas da rede municipal; pedido DM8-1) e um caso de decisão apoiada nesses dados (art. 12; pedido DM8-4). A WWC pode ver o recorte demográfico só do IBGE como "não coletado" pela Prefeitura; a base própria reduz esse risco, que não há como medir daqui.</li>
+    <li><b>Platina.</b> O DM8 é critério essencial na Platina e é revalidado na avaliação. Na Prata e no Ouro, conta como os outros.</li>
+    <li><b>Gênero e deficiência (ponto de escolha).</b> As categorias de identidade de gênero não são propostas por este projeto: ficam com o Departamento de Políticas Afirmativas e os conselhos municipais, como Cambridge fez com a comissão LGBTQ+ da cidade (art. 5º; pedido DM8-6). Para deficiência, o texto escolhe o método do Censo 2022, pela comparação com o IBGE; a revisão pelo conselho da pessoa com deficiência é recomendada antes da aprovação.</li>
+    <li><b>Números escolhidos aqui.</b> São propostas, não medidas: 60 dias para definir as categorias de gênero e para a primeira orientação às equipes; célula pequena de 1 a 4 pessoas (a do DM5 v01); grupos de idade de 5 anos (os do IBGE).</li>
+    <li><b>O que ficou de fora.</b> Orientação sexual, religião, idioma falado em casa e situação migratória: não estão no conjunto mínimo da OPAS, são dados sensíveis ou pouco usados nos cadastros de SBC, e podem entrar no nível ampliado numa revisão. A "condição de veterano" do original em inglês não se aplica a SBC.</li>
+    <li><b>Ligação com outros critérios.</b> O mesmo Padrão serve ao DM7 (comparar quem participou da escuta com a população; DM7 v01, art. 7º, § 2º), ao OD3.2 (dados abertos desagregados) e ao DM4.3 (campos comuns). O art. 34 da DM1 v02 pede a desagregação nos indicadores.</li>
+  </ol>
+</details>
+
+<details class="cartao fontes">
+  <summary><h2>Fontes</h2></summary>
+  <ul>
+    <li>What Works Cities, critério DM8 (v4): definição, subcritérios, evidência sugerida e glossário (dados desagregados; viés demográfico; viés geográfico); pacote do Fórum (Cambridge como exemplo; Portland como modelo).</li>
+    <li>Portland, padrões REALD+TA (2021, em português e em inglês); Cambridge, Standard Demographic Battery for Cambridge Surveys.</li>
+    <li>OPAS, "Por que a desagregação de dados é essencial durante pandemias" (2020); Data-Smart, "The San Antonio Equity Atlas" (2022); Route Fifty (2022); Devex (2020).</li>
+    <li>IBGE, Censo Demográfico 2022, pessoas com deficiência e com transtorno do espectro autista (ficha da publicação, 2025).</li>
+    <li>Lei Federal 12.288/2010 (Estatuto da Igualdade Racial), arts. 1º e 39; Lei Federal 14.553/2023; Portaria MS 344/2017; Lei Federal 13.709/2018 (LGPD), arts. 5º, 6º e 11; Leis Federais 8.069/1990, 10.741/2003 e 12.852/2013 (faixas de idade das políticas).</li>
+    <li>São Bernardo do Campo: Perfil Socioeconômico por Bairro 2026; Painel Estatístico 2025; Lei 7.367/2025, arts. 466, 645 e 750; Decretos 20.653/2019, 22.452/2023, 23.403/2026 e 23.413/2026.</li>
+    <li>Recomendações deste projeto: DM4 v01, DM3 v01, DM5 v01 e DM1 v02 (`versoes/`); fichas DM8 e OD3.</li>
+  </ul>
+</details>
+
+</main>
+<div class="rodape">Padrão preparado para o Painel WWC · SBC. Rascunho de indicação técnica; não substitui a análise da Procuradoria.</div>
+
+<script>
+(function () {
+  var estado = { sub: 'todos' };
+  var arts = Array.prototype.slice.call(document.querySelectorAll('.art'));
+  var caps = Array.prototype.slice.call(document.querySelectorAll('.capitulo'));
+  var blocos = Array.prototype.slice.call(document.querySelectorAll('[data-bloco]'));
+  function aplicar() {
+    var visiveis = 0;
+    arts.forEach(function (a) {
+      var subs = (a.getAttribute('data-sub') || '').split(' ');
+      var ok = estado.sub === 'todos' || subs.indexOf(estado.sub) >= 0;
+      a.hidden = !ok; if (ok) visiveis++;
+    });
+    caps.forEach(function (c) {
+      var el = c.nextElementSibling, algum = false;
+      while (el && el.classList.contains('art')) { if (!el.hidden) algum = true; el = el.nextElementSibling; }
+      c.hidden = !algum;
+    });
+    blocos.forEach(function (b) { b.hidden = estado.sub !== 'todos'; });
+    document.getElementById('vazio').style.display = visiveis ? 'none' : 'block';
+    document.getElementById('contagem').textContent = visiveis + ' de ' + arts.length + ' itens';
+  }
+  document.querySelectorAll('[data-filtro]').forEach(function (g) {
+    g.addEventListener('click', function (ev) {
+      var b = ev.target.closest('button'); if (!b) return;
+      estado.sub = b.getAttribute('data-v');
+      g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      aplicar();
+    });
+  });
+  document.querySelectorAll('.sub-card .arts a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var alvo = document.querySelector(a.getAttribute('href'));
+      if (alvo && alvo.hidden) {
+        estado.sub = 'todos';
+        document.querySelectorAll('[data-filtro] button').forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-v') === 'todos' ? 'true' : 'false'); });
+        aplicar();
+      }
+    });
+  });
+  aplicar();
+})();
+</script>
+<script>
+(function () {
+  var quadros = Array.prototype.slice.call(document.querySelectorAll('details.cartao'));
+  function abrirAte(el) { var d = el && el.closest('details'); while (d) { d.open = true; d = d.parentElement.closest('details'); } }
+  function irPara(hash) { var alvo = hash && hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1))); if (alvo) { abrirAte(alvo); alvo.scrollIntoView(); } }
+  var a = document.getElementById('abrir-tudo'), f = document.getElementById('fechar-tudo');
+  if (a) a.addEventListener('click', function () { quadros.forEach(function (d) { d.open = true; }); });
+  if (f) f.addEventListener('click', function () { quadros.forEach(function (d) { d.open = false; }); });
+  var antes = [];
+  window.addEventListener('beforeprint', function () { antes = quadros.map(function (d) { return d.open; }); quadros.forEach(function (d) { d.open = true; }); });
+  window.addEventListener('afterprint', function () { quadros.forEach(function (d, i) { d.open = antes[i]; }); });
+  document.querySelectorAll('[data-filtro] button').forEach(function (b) { b.addEventListener('click', function () { var d = document.getElementById('decreto'); if (d) d.open = true; }); });
+  document.querySelectorAll('a[href^="#"]').forEach(function (l) { l.addEventListener('click', function () { var h = l.getAttribute('href'); if (h.length > 1) abrirAte(document.getElementById(h.slice(1))); }); });
+  window.addEventListener('hashchange', function () { irPara(location.hash); });
+  irPara(location.hash);
+})();
+</script>
+</body>
+</html>

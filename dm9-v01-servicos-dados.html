@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Serviços de dados DM9 v01</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f71b3'/%3E%3Crect y='26' width='32' height='6' fill='%23ff8200'/%3E%3Cpath d='M8 20l5-6 4 4 7-9' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
+  --laranja: #ff8200; --laranja-esc: #b35b00; --laranja-claro: #fff1e3;
+  --verde: #288827; --verde-claro: #e6f4e6;
+  --texto: #2b2b2b; --texto-suave: #5f6368; --borda: #dde3e8;
+  --fundo: #f3f6f9; --cartao: #ffffff;
+  --raio: 10px; --sombra: 0 1px 3px rgba(15, 40, 70, .08);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 "Open Sans", Arial, sans-serif; }
+a { color: var(--azul); }
+h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
+
+.topo { background: linear-gradient(90deg, var(--azul-esc), var(--azul)); color: #fff; border-bottom: 5px solid var(--laranja); }
+.topo-int { padding: 20px 32px 18px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
+.topo .sobre { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; opacity: .85; font-weight: 600; }
+.topo h1 { font-size: 26px; font-weight: 800; margin-top: 4px; }
+.topo .subtitulo { font-size: 14px; opacity: .9; margin-top: 4px; }
+.topo .voltar { color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; background: rgba(255,255,255,.16); padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
+.topo .voltar:hover { background: rgba(255,255,255,.28); }
+
+.barra { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
+.barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.barra .rot { font-size: 13px; font-weight: 700; color: var(--texto-suave); }
+.grupo { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { border: 1px solid var(--borda); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
+.chip[aria-pressed=true] { background: var(--azul); border-color: var(--azul); color: #fff; }
+.contagem { font-size: 13px; color: var(--texto-suave); margin-left: auto; }
+
+main { padding: 24px 32px 48px; display: grid; gap: 22px; }
+.cartao { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); padding: 20px 22px; }
+.cartao > h2 { font-size: 19px; color: var(--azul-esc); margin-bottom: 10px; }
+.cartao p { margin: 0 0 10px; }
+.cartao p:last-child { margin-bottom: 0; }
+
+.legenda { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 12px; font-size: 14px; }
+.legenda span { display: inline-flex; align-items: center; gap: 8px; }
+.tag { display: inline-block; font: 800 11px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 5px; }
+.tag.novo { background: var(--laranja); color: #fff; }
+.tag.alterado { background: var(--azul); color: #fff; }
+.tag.igual { background: #eef1f4; color: var(--texto-suave); }
+.tag.sub { background: var(--verde-claro); color: var(--verde); }
+
+.subs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 6px; }
+.sub-card { border: 1px solid var(--borda); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.sub-card h3 { font-size: 16px; color: var(--azul-esc); }
+.sub-card .pede { font-size: 14px; }
+.sub-card .linha { font-size: 13.5px; border-radius: 6px; padding: 7px 10px; }
+.sub-card .hoje { background: #f7f9fb; }
+.sub-card .depois { background: var(--laranja-claro); }
+.sub-card .arts { display: flex; flex-wrap: wrap; gap: 6px; }
+.sub-card .arts a { font-size: 13px; font-weight: 700; text-decoration: none; background: var(--azul-claro); padding: 2px 9px; border-radius: 6px; }
+
+.decreto { padding: 0; overflow: hidden; }
+.decreto-cab { padding: 18px 22px; border-bottom: 1px solid var(--borda); background: #fafbfc; }
+.decreto-cab h2 { font-size: 19px; color: var(--azul-esc); }
+.decreto-cab .nota { font-size: 13.5px; color: var(--texto-suave); margin-top: 4px; }
+.ementa { padding: 18px 22px 6px; font-size: 14.5px; }
+.ementa .num { font-weight: 800; }
+.ementa .em { margin: 8px 0 12px auto; max-width: 520px; font-style: italic; }
+.ementa p { margin: 0 0 8px; }
+.capitulo { padding: 14px 22px 6px; font-weight: 800; color: var(--azul-esc); letter-spacing: .03em; text-transform: uppercase; font-size: 13.5px; border-top: 1px solid var(--borda); background: #fafbfc; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+.art { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); border-top: 1px solid var(--borda); }
+.art .texto { padding: 14px 22px; font-size: 14.5px; }
+.art .texto p { margin: 0 0 7px; }
+.art .texto p:last-child { margin-bottom: 0; }
+.art.igual { grid-template-columns: 1fr; }
+.art.igual .texto { color: #555b61; }
+.art .cab { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+.art .cab .id { font-weight: 800; font-size: 13px; color: var(--texto-suave); }
+.art .cab .antigo { font-size: 12.5px; color: var(--texto-suave); }
+.art.novo .texto { background: var(--laranja-claro); border-left: 5px solid var(--laranja); }
+.art.alterado .texto { background: var(--azul-claro); border-left: 5px solid var(--azul); }
+mark.novo { background: #ffd8ad; color: inherit; padding: 1px 3px; border-radius: 3px; }
+del.sup { text-decoration: line-through; text-decoration-thickness: 1.5px; color: #8a2a22; background: #fbe9e7; padding: 1px 3px; border-radius: 3px; }
+.rotulo-red { font: 800 11.5px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; margin: 10px 0 4px; }
+.rotulo-red.sup { color: #8a2a22; margin-top: 0; }
+.rotulo-red.nova { color: var(--laranja-esc); }
+.obs-red { font-size: 13.5px; color: var(--texto-suave); border-top: 1px dashed var(--borda); padding-top: 8px; margin-top: 10px !important; }
+.inc { padding-left: 18px; }
+
+.expl { padding: 14px 20px; background: #fff; border-left: 1px solid var(--borda); display: grid; gap: 10px; align-content: start; font-size: 14px; }
+.expl h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); margin-bottom: 2px; }
+.expl .wwc { background: var(--verde-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .wwc h4 { color: var(--verde); }
+.expl p { margin: 0; }
+
+.assinatura { padding: 14px 22px 20px; border-top: 1px solid var(--borda); font-size: 14.5px; }
+.vazio { padding: 20px 22px; color: var(--texto-suave); display: none; border-top: 1px solid var(--borda); }
+
+.obs ol { margin: 0; padding-left: 20px; display: grid; gap: 10px; }
+.destaque { background: var(--verde-claro); border-left: 5px solid var(--verde); border-radius: 6px; padding: 10px 14px; }
+.fontes ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14px; }
+.rodape { font-size: 13px; color: var(--texto-suave); text-align: center; padding: 0 32px 28px; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 1000px) { .subs { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .topo-int, .barra-int, main { padding-left: 16px; padding-right: 16px; }
+  .barra { position: static; }
+  .art { grid-template-columns: 1fr; }
+  .expl { border-left: 0; border-top: 1px dashed var(--borda); }
+  .art .texto, .expl, .capitulo, .ementa, .assinatura, .decreto-cab { padding-left: 16px; padding-right: 16px; }
+  .contagem { margin-left: 0; width: 100%; }
+}
+@media print {
+  .barra, .topo .voltar { display: none; }
+  body { background: #fff; }
+  .art { break-inside: avoid; }
+}
+.tag.escolha { background: #fde7c4; color: #8a4b00; }
+.aviso { background: var(--laranja-claro); border-left: 5px solid var(--laranja); border-radius: 6px; padding: 12px 16px; }
+.expl .origem { background: var(--azul-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .origem h4 { color: var(--azul-esc); }
+table.anexo { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.anexo td, table.anexo th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+table.anexo td.vaz { color: var(--texto-suave); font-style: italic; }
+main > *, .art .texto, .art .expl { min-width: 0; }
+.rolavel { overflow-x: auto; }
+.rolavel > table { min-width: 520px; }
+table.tabinicio { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.tabinicio td, table.tabinicio th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+.inicio h3 { font-size: 16px; color: var(--azul-esc); margin: 16px 0 6px; }
+details.cartao > summary { list-style: none; cursor: pointer; }
+details.cartao > summary::-webkit-details-marker { display: none; }
+details.cartao > summary h2 { font-size: 19px; color: var(--azul-esc); margin: 0; }
+details.cartao[open] > summary h2 { margin-bottom: 10px; }
+details.cartao.decreto > summary h2 { margin-bottom: 0; }
+details.cartao > summary h2::before { content: "\25B8"; display: inline-block; width: 1.1em; color: var(--azul); transition: transform .15s; }
+details.cartao[open] > summary h2::before { transform: rotate(90deg); }
+details.cartao > summary:focus-visible { outline: 2px solid var(--azul); outline-offset: 4px; border-radius: 4px; }
+.acoes { margin-left: auto; display: flex; gap: 6px; }
+.acoes.solta { margin: 0 0 -8px; justify-content: flex-end; }
+@media (max-width: 600px) { main { padding: 16px 16px 32px; } .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; } .cartao { padding: 16px; } .art .texto { padding: 12px 14px; } }
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-int">
+    <div>
+      <div class="sobre">Painel WWC · SBC · Critério DM9 · Versão v01</div>
+      <h1>Padrão de Serviços de Dados e de Análise</h1>
+      <div class="subtitulo">Rascunho de indicação técnica · 16/11/2026 · Para análise da equipe, do DTI, da Secretaria de Administração e da Procuradoria</div>
+    </div>
+    <a class="voltar" href="index.html#DM9" onclick="if (history.length === 1) { window.close(); return false; }">← Voltar ao painel (DM9)</a>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-int">
+    <span class="rot">Subcritério WWC:</span>
+    <div class="grupo" data-filtro="sub">
+      <button class="chip" type="button" data-v="todos" aria-pressed="true">Todos</button>
+      <button class="chip" type="button" data-v="DM9.1" aria-pressed="false">DM9.1</button>
+      <button class="chip" type="button" data-v="DM9.2" aria-pressed="false">DM9.2</button>
+      <button class="chip" type="button" data-v="DM9.3" aria-pressed="false">DM9.3</button>
+      <button class="chip" type="button" data-v="DM9.4" aria-pressed="false">DM9.4</button>
+      <button class="chip" type="button" data-v="escolha" aria-pressed="false">Só pontos de escolha</button>
+    </div>
+    <span class="contagem" id="contagem"></span>
+    <div class="acoes"><button class="chip" type="button" id="abrir-tudo">Expandir tudo</button><button class="chip" type="button" id="fechar-tudo">Recolher tudo</button></div>
+  </div>
+</div>
+
+<main>
+
+<details class="cartao inicio" open>
+  <summary><h2>O que é esta página</h2></summary>
+  <div class="aviso"><p><b>Rascunho de indicação técnica, não decisão.</b> Este padrão reúne o que os modelos indicados pela WWC fazem para atender ao critério DM9 (padrão de serviço de dados), adaptado aos serviços e às normas de SBC. Instrumento, equipe, colegiado e prazos cabem ao município (DTI, Secretaria de Administração e Procuradoria).</p></div>
+  <h3>O que é este documento</h3>
+  <p>Não é lei nem decreto. É um <b>ato do Departamento de Tecnologia da Informação (DTI)</b>, aprovado pelo(a) Secretário(a) de Administração. Não cria direito nem dever novo para o cidadão: diz como a Prefeitura deve fazer, medir e melhorar os serviços que oferecem dados e análises, como o GeoPortal, o Painel Estatístico e o Perfil por Bairro.</p>
+  <p><b>Para que serve:</b> fazer com que cada serviço de dados e de análise sirva a uma prioridade do Município, parta do que os usuários precisam, seja completo, acessível, seguro e confiável, tenha indicadores publicados e seja revisto todo ano, com uma equipe e um colegiado cuidando do padrão. É também o "padrão documentado e público" que o critério DM9 da What Works Cities pede.</p>
+  <h3>Em que normas se apoia</h3>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Norma</th><th>O que dá a este ato</th></tr></thead><tbody><tr><td><b>Lei Municipal 7.367/2025, art. 645, XIII</b></td><td>O DTI deve "definir a estratégia de dados do Município, estabelecendo princípios, padrões e políticas para a gestão de dados". É o que permite ao DTI editar o Padrão sem esperar a vigência do Decreto 23.403.</td></tr><tr><td><b>Decreto Municipal 23.403/2026, arts. 6º, 7º, 10, 11 e 34</b></td><td>Prevê o eixo de inteligência estratégica e resultados, com ato próprio; dá a coordenação à Secretaria de Administração e cria o CGD; fixa o conteúdo dos indicadores. Vigora em 04/02/2027; o Padrão já usa o formato dos indicadores e passa a integrar o ato do eixo.</td></tr><tr><td><b>Decreto Municipal 23.413/2026, arts. 24 e 25</b></td><td>Exigências de dados nos contratos de tecnologia e indicadores de dados abertos no formato do Decreto 23.403. O Padrão soma-se a essas regras.</td></tr><tr><td><b>Lei Federal 13.146/2015 (Lei Brasileira de Inclusão), art. 63</b></td><td>Obriga a acessibilidade dos sítios mantidos pelo poder público. É a base do ponto 4 (acessível a todos).</td></tr></tbody></table></div>
+  <p>Ressalva: antes do texto final, a WWC espera que os usuários sejam ouvidos (Anexo VI), e o DM9.4 depende da portaria que designa a equipe e o colegiado, o que este texto não substitui (observações 3 e 4, no fim da página).</p>
+  <h3>Por que agora</h3>
+  <p>SBC tem serviços de dados e de análise (GeoPortal, Painel Estatístico, Perfil por Bairro, relatórios da Saúde), mas nenhum documento diz como eles devem ser feitos, medidos ou revistos, nem quem cuida disso. O Decreto 23.403 traz princípios e o formato dos indicadores, mas não é um padrão de serviço de dados e só vigora em fevereiro. O DM9 pede <b>3 de 4 subcritérios</b>, sem janela de tempo, e o CI2.1 depende dele.</p>
+  <h3>De onde vem cada parte</h3>
+  <p>Nada aqui foi inventado do zero: cada parte adapta um modelo já usado por outra cidade, uma norma ou um recurso recomendado pela WWC; o quadro abaixo diz qual. O que é escolha nossa (o instrumento, a equipe, o colegiado até o CGD, o aviso de 30 dias e as datas de revisão) está nas observações 2, 5 e 6.</p>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Modelo</th><th>Por que conta</th><th>O que veio dele</th><th>Onde está neste texto</th></tr></thead><tbody><tr><td><b>Public Digital, exemplo de padrão de serviço de dados (2022)</b></td><td>Modelo do pacote do Fórum da WWC no DM9, com versão em português</td><td>"Por que importa" e "o que se espera" em cada ponto; publicar com propósito; usuários de dados e de análise; definir o sucesso e publicar o desempenho; serviço confiável, sem mudar sem aviso</td><td>Arts. 2º, 3º, 8º e 9º; Anexo I</td></tr><tr><td><b>Maipú (Chile), Estándar de Servicios de Datos</b></td><td>Exemplo aceito pela WWC no DM9 (pacote do Fórum)</td><td>Dez princípios com "como cumprir"; dirigido também aos fornecedores, com exigência nos termos de referência; princípio de qualidade dos dados; plano para retirar o que não serve</td><td>Arts. 1º, 3º, 4º, 10 e 14; Anexo I</td></tr><tr><td><b>Scottsdale (EUA), Padrão de Serviço de Dados (2023)</b></td><td>Exemplo aceito pela WWC no DM9 (pacote do Fórum)</td><td>Oito diretrizes; revisão programada de cada serviço; grupo de governança que mantém o padrão; quando consultar o padrão; documento vivo com caixa de sugestões</td><td>Arts. 4º, 5º, 10, 11 e 15</td></tr><tr><td><b>WWC e Public Digital, guia de autoatendimento do DM9 (2025)</b></td><td>Guia da própria WWC sobre como o DM9 é avaliado</td><td>Demonstrar a base nas necessidades dos usuários; padrão próprio, mensurável e curto; orientações, governança e equipe; aprovação da liderança e publicação</td><td>Arts. 6º, 7º, 11, 12, 13 e 15; Anexos III e VI</td></tr><tr><td><b>Decreto Municipal 23.403/2026 (SBC)</b></td><td>Norma de SBC, em vigor em 04/02/2027</td><td>Formato dos indicadores (art. 34); eixo de inteligência estratégica e resultados com ato próprio; CGD; relatório semestral</td><td>Arts. 8º, 12 e 15; Anexo V</td></tr></tbody></table></div>
+  <h3>Como ler</h3>
+  <p>O padrão responde a cinco perguntas: <b>como deve ser um serviço de dados?</b> (os dez pontos, art. 3º deste padrão e Anexo I), <b>quando o padrão se aplica?</b> (arts. 4º a 6º), <b>como saber se o serviço funciona?</b> (usuários, desempenho e confiabilidade, arts. 7º a 9º), <b>como o serviço melhora?</b> (art. 10) e <b>quem cuida do padrão?</b> (equipe, governança e orientações, arts. 11 a 14). Os artigos citados nesta página são os do texto abaixo, salvo quando outra norma é nomeada. Cada artigo e cada anexo traz ao lado por que foi incluído, a intenção, a origem e a relação com a WWC.</p>
+  <div class="legenda">
+    <span><span class="tag novo">Novo</span> texto proposto</span>
+    <span><span class="tag escolha">Ponto de escolha do município</span> recomendação que o município pode trocar</span>
+    <span><span class="tag sub">DM9.x</span> subcritério da WWC atendido</span>
+  </div>
+</details>
+
+<details class="cartao">
+  <summary><h2>Versões desta recomendação</h2></summary>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Versão</th><th>Data</th><th>O que é</th><th>Situação</th></tr></thead><tbody><tr><td><b>v01</b></td><td>16/11/2026</td><td>Padrão de Serviços de Dados e de Análise: 17 artigos e 6 anexos (os dez pontos, ficha do serviço, lista de verificação, lista de serviços, indicadores, como os usuários foram ouvidos).</td><td>Vigente</td></tr><tr><td><b>v02</b></td><td>—</td><td>Padrão com a consulta às secretarias usuárias e os ajustes da equipe, do DTI, da Secretaria de Administração e da Procuradoria.</td><td>Aguarda a equipe</td></tr></tbody></table></div>
+</details>
+
+<details class="cartao">
+  <summary><h2>O que a WWC pede e onde o padrão responde</h2></summary>
+  <div class="subs">
+    <div class="sub-card">
+      <h3>DM9.1 · Manter, melhorar e tratar como serviço completo</h3>
+      <div class="pede">O padrão se compromete a manter e melhorar continuamente os serviços de dados e de análise e os trata como serviços completos.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Não há padrão. Os serviços existem (GeoPortal, Painel, Perfil), mas nenhum documento diz quem cuida, quando se revê ou o que um serviço deve oferecer.</div>
+      <div class="linha depois"><b>No padrão:</b> Definição de serviço completo, ficha de cada serviço, revisão anual que decide manter, melhorar ou retirar, e revisão anual do próprio padrão.</div>
+      <div class="arts"><a href="#art1">Art. 1º</a><a href="#art2">Art. 2º</a><a href="#art3">Art. 3º</a><a href="#art4">Art. 4º</a><a href="#art5">Art. 5º</a><a href="#art10">Art. 10</a><a href="#art15">Art. 15</a><a href="#anx1">Anexo I</a><a href="#anx2">Anexo II</a><a href="#anx4">Anexo IV</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM9.2 · Acessível, confiável, seguro, ético, orientado aos usuários e medido</h3>
+      <div class="pede">O padrão garante serviços acessíveis, confiáveis, seguros e éticos, orientados pelas necessidades dos usuários, com critérios de sucesso definidos e dados de desempenho associados.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Não há padrão. O Decreto 23.403 traz princípios e o formato dos indicadores, mas não trata de serviços de dados; não há pesquisa com usuários de dados.</div>
+      <div class="linha depois"><b>No padrão:</b> Pontos de acessibilidade, segurança, ética e confiabilidade; usuários identificados e ouvidos, com registro; indicadores no formato do art. 34 do Decreto 23.403, publicados todo ano; Anexo VI com a escuta feita para o próprio padrão.</div>
+      <div class="arts"><a href="#art1">Art. 1º</a><a href="#art3">Art. 3º</a><a href="#art5">Art. 5º</a><a href="#art7">Art. 7º</a><a href="#art8">Art. 8º</a><a href="#art9">Art. 9º</a><a href="#anx1">Anexo I</a><a href="#anx2">Anexo II</a><a href="#anx3">Anexo III</a><a href="#anx5">Anexo V</a><a href="#anx6">Anexo VI</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM9.3 · Boas práticas de desenho, entrega e qualidade</h3>
+      <div class="pede">O padrão inclui boas práticas para o desenho, a entrega e a qualidade dos dados e das análises oferecidos como serviço.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Não há padrão. As boas práticas estão em propostas do projeto (DM3, DM4, DM5, DM8) e na PSI, sem ligação com os serviços.</div>
+      <div class="linha depois"><b>No padrão:</b> Dez pontos com o que se espera, lista de verificação aplicada antes de lançar e a cada revisão, os guias de SBC como orientação e o padrão exigido nas contratações.</div>
+      <div class="arts"><a href="#art1">Art. 1º</a><a href="#art3">Art. 3º</a><a href="#art6">Art. 6º</a><a href="#art13">Art. 13</a><a href="#art14">Art. 14</a><a href="#anx1">Anexo I</a><a href="#anx3">Anexo III</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM9.4 · Equipe, governança e orientações</h3>
+      <div class="pede">A prefeitura tem uma equipe que elabora e gerencia o padrão, uma governança que ajuda na adoção e orientações para as equipes que o usam.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Não há equipe designada nem governança do padrão; o CGD do Decreto 23.403 só será instalado depois de 04/02/2027.</div>
+      <div class="linha depois"><b>No padrão:</b> Equipe do Padrão (DTI e Divisão de Indicadores Sociais, com a comunicação) designada por portaria; colegiado indicado até o CGD; relatório anual; orientações e capacitação.</div>
+      <div class="arts"><a href="#art1">Art. 1º</a><a href="#art4">Art. 4º</a><a href="#art6">Art. 6º</a><a href="#art11">Art. 11</a><a href="#art12">Art. 12</a><a href="#art13">Art. 13</a><a href="#art15">Art. 15</a></div>
+    </div>
+  </div>
+</details>
+
+<details class="cartao decreto" id="decreto">
+  <summary class="decreto-cab">
+    <h2>Texto do padrão</h2>
+    <div class="nota">Use os filtros acima para ver só os artigos de um subcritério ou só os pontos de escolha do município.</div>
+  </summary>
+
+  <div class="ementa" data-bloco="preambulo">
+    <p class="num">ATO DO DEPARTAMENTO DE TECNOLOGIA DA INFORMAÇÃO Nº …… (instrumento a definir)</p>
+    <p class="em">Institui o Padrão de Serviços de Dados e de Análise de São Bernardo do Campo, com os dez pontos que todo serviço segue, a ficha e a revisão anual de cada serviço, os indicadores de desempenho, a Equipe do Padrão, a governança e as orientações.</p>
+    <p>O(A) DIRETOR(A) DO DEPARTAMENTO DE TECNOLOGIA DA INFORMAÇÃO DA SECRETARIA DE ADMINISTRAÇÃO, com a aprovação do(a) SECRETÁRIO(A) DE ADMINISTRAÇÃO, no uso de suas atribuições, considerando o que consta do processo administrativo nº ……………;</p>
+    <p>Considerando o inciso XIII do art. 645 da Lei Municipal nº 7.367, de 15 de janeiro de 2025, que atribui ao DTI definir a estratégia de dados do Município, estabelecendo princípios, padrões e políticas para a gestão de dados;</p>
+    <p>Considerando o Decreto Municipal nº 23.403, de 4 de novembro de 2026, que institui a Política e o Programa Municipal de Governança Digital e de Dados, prevê ato próprio para o eixo de inteligência estratégica e resultados (arts. 6º e 7º) e define o conteúdo dos indicadores (art. 34);</p>
+    <p>Considerando o Decreto Municipal nº 23.413, de 12 de novembro de 2026, que institui a Política Municipal de Dados Abertos;</p>
+    <p>Considerando a Lei Federal nº 13.146, de 6 de julho de 2015 (Lei Brasileira de Inclusão), art. 63, e a Lei Federal nº 13.709, de 14 de agosto de 2018 (Lei Geral de Proteção de Dados Pessoais); e</p>
+    <p>Considerando a necessidade de que os serviços de dados e de análise da Prefeitura sirvam às prioridades do Município, partam das necessidades de quem os usa, sejam confiáveis e seguros e sejam medidos e melhorados,</p>
+    <p>RESOLVE:</p>
+  </div>
+
+  <div class="capitulo">Capítulo I – Do objeto e das definições</div>
+  <article class="art novo" id="art1" data-tipo="novo" data-sub="DM9.1 DM9.2 DM9.3 DM9.4">
+    <div class="texto"><div class="cab"><span class="id">Art. 1º</span><span class="tag novo">Novo</span><span class="tag sub">DM9.1</span><span class="tag sub">DM9.2</span><span class="tag sub">DM9.3</span><span class="tag sub">DM9.4</span></div>
+      <p>Art. 1º Este ato institui o Padrão de Serviços de Dados e de Análise de São Bernardo do Campo, que diz como devem ser desenvolvidos, mantidos, medidos e revistos os serviços de dados e de análise dos órgãos da Administração Direta do Poder Executivo Municipal.</p><p>§ 1º O Padrão aplica-se aos serviços prestados por servidores, por contratados e por parceiros em nome da Prefeitura.</p><p>§ 2º O Padrão será publicado na página de Dados Abertos da Prefeitura, com os seus anexos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM9 pede um padrão documentado e público para desenvolver e implantar serviços de dados e de análise de alta qualidade em toda a Prefeitura. SBC tem serviços desse tipo (GeoPortal, Painel Estatístico, Perfil por Bairro, relatórios da Saúde), mas nenhum documento diz como eles devem ser feitos.</p></div>
+      <div><h4>Intenção</h4><p>Um ato curto, que vale para todos os serviços, inclusive os feitos por fornecedor, como em Maipú. A publicação é parte do próprio ato, porque o critério pede um padrão "público".</p></div>
+      <div class="origem"><h4>Origem</h4><p>Definição do DM9 (WWC v4); Maipú, Estándar de Servicios de Datos (dirigido também aos fornecedores); Scottsdale, Padrão de Serviço de Dados (2023); guia de autoatendimento do DM9 (WWC e Public Digital, 2025: publicar o padrão).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.1 e DM9.2 e DM9.3 e DM9.4</h4><p>Delimita o padrão dos quatro subcritérios.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art2" data-tipo="novo" data-sub="DM9.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 2º</span><span class="tag novo">Novo</span><span class="tag sub">DM9.1</span></div>
+      <p>Art. 2º Para os fins deste ato, considera-se:</p><p class="inc">I - serviço de dados: serviço que dá acesso a dados, como as bases abertas da página de Dados Abertos, as camadas para download do GeoPortal, as interfaces de programação e o atendimento a pedidos de dados;</p><p class="inc">II - serviço de análise: serviço que transforma dados em informação para quem decide ou para a população, como painéis, mapas, gráficos, relatórios, indicadores e estudos;</p><p class="inc">III - usuário de dados: quem usa os dados para fazer as próprias análises ou produtos, como pesquisadores, jornalistas, empresas e desenvolvedores;</p><p class="inc">IV - usuário de análise: quem usa a análise para decidir ou se informar, como o Prefeito, as secretarias, a Câmara e os moradores;</p><p class="inc">V - serviço completo: serviço que oferece, além dos dados ou da análise, a explicação, as limitações, o contato do responsável e os canais para pedir dados e apontar erros;</p><p class="inc">VI - responsável pelo serviço: servidor designado pelo titular do órgão que presta o serviço; e</p><p class="inc">VII - dados de desempenho: medidas, publicadas, de como o serviço funciona e de como é usado.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A página do DM9 define serviços de dados e de análise (interfaces para desenvolvedores; visualizações, mapas e gráficos para quem decide). O DM9.1 pede tratá-los como "serviços completos".</p></div>
+      <div><h4>Intenção</h4><p>Os incisos I e II seguem a definição da página, com exemplos de SBC. A distinção entre usuários de dados e de análise vem da Public Digital e orienta o ponto 2. O inciso V diz o que é "completo", para que o DM9.1 seja verificável.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Página do DM9 na plataforma WWC (glossário: serviços de dados e de análise); Public Digital, "Por que as cidades precisam de serviços de análise e de dados" (2022: usuários de dados e de análise) e "Dados como serviço" (2022: serviço completo, com suporte e comunidade).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.1</h4><p>DM9.1 (serviços completos) e apoio aos demais.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art3" data-tipo="novo" data-sub="DM9.1 DM9.2 DM9.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 3º</span><span class="tag novo">Novo</span><span class="tag sub">DM9.1</span><span class="tag sub">DM9.2</span><span class="tag sub">DM9.3</span></div>
+      <p>Art. 3º Todo serviço de dados e de análise seguirá os dez pontos do Anexo I, cada um com o porquê, o que se espera e como se verifica:</p><p class="inc">I - publicar com propósito;</p><p class="inc">II - conhecer os usuários;</p><p class="inc">III - serviço completo;</p><p class="inc">IV - acessível a todos;</p><p class="inc">V - seguro e ético;</p><p class="inc">VI - transparente e neutro;</p><p class="inc">VII - qualidade e padrões;</p><p class="inc">VIII - confiável e estável;</p><p class="inc">IX - medir e publicar o desempenho; e</p><p class="inc">X - melhorar sempre.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>É o centro do padrão. O DM9.2 pede serviços acessíveis, confiáveis, seguros e éticos, orientados pelos usuários e com critérios de sucesso; o DM9.3 pede boas práticas de desenho, entrega e qualidade.</p></div>
+      <div><h4>Intenção</h4><p>Dez pontos, como os de Maipú, cada um com "por que importa" e "o que se espera", como no modelo da Public Digital, e com "como se verifica", para o padrão ser mensurável, como pede o guia da WWC. Os pontos foram escolhidos e adaptados a SBC, e não copiados: o modelo tem 17 pontos e diz que é ponto de partida.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Public Digital, exemplo de padrão de serviço de dados (17 pontos, versão em português); Maipú (10 princípios com "como cumprir"); Scottsdale (8 diretrizes); Padrão de Serviço do Reino Unido (14 pontos); guia de autoatendimento do DM9 (2025: exclusivo, mensurável, simples).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.1 e DM9.2 e DM9.3</h4><p>DM9.1 (pontos 3 e 10), DM9.2 (pontos 2, 4, 5, 8 e 9) e DM9.3 (pontos 1, 6 e 7).</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo II – Da aplicação do Padrão</div>
+  <article class="art novo" id="art4" data-tipo="novo" data-sub="DM9.1 DM9.4">
+    <div class="texto"><div class="cab"><span class="id">Art. 4º</span><span class="tag novo">Novo</span><span class="tag sub">DM9.1</span><span class="tag sub">DM9.4</span></div>
+      <p>Art. 4º O Padrão será aplicado:</p><p class="inc">I - na criação de serviço de dados ou de análise;</p><p class="inc">II - na mudança relevante de serviço existente;</p><p class="inc">III - na contratação de solução que produza, guarde ou mostre dados ou análises;</p><p class="inc">IV - quando dado antigo for usado pela primeira vez numa análise; e</p><p class="inc">V - na revisão anual de cada serviço (art. 10).</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Padrão que ninguém sabe quando usar fica na gaveta.</p></div>
+      <div><h4>Intenção</h4><p>Dizer em que momentos o padrão é consultado, como faz Scottsdale. O inciso III leva o padrão às compras, como Maipú; o V garante que os serviços que já existem também passem por ele.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Scottsdale (quando consultar o padrão: serviço novo, mudança de serviço e dado antigo usado pela primeira vez numa análise); Maipú (exigência nos termos de referência).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.1 e DM9.4</h4><p>DM9.1 (manter e melhorar continuamente) e DM9.4 (orientação às equipes).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art5" data-tipo="novo" data-sub="DM9.1 DM9.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 5º</span><span class="tag novo">Novo</span><span class="tag sub">DM9.1</span><span class="tag sub">DM9.2</span></div>
+      <p>Art. 5º Cada serviço terá ficha, no modelo do Anexo II, preenchida pelo responsável pelo serviço e publicada na página de Dados Abertos.</p><p>§ 1º A Lista de Serviços de Dados e de Análise (Anexo IV) reúne as fichas e é mantida pela Equipe do Padrão (art. 11).</p><p>§ 2º Os serviços existentes terão a ficha preenchida em até 60 (sessenta) dias da publicação deste ato.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Sem saber quais serviços existem, quem cuida e para quem servem, não dá para aplicar nem medir o padrão.</p></div>
+      <div><h4>Intenção</h4><p>Uma ficha curta por serviço, pública, que é ao mesmo tempo o registro do propósito, dos usuários e dos indicadores. A lista inicial já tem os serviços localizados nas fichas do projeto.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Scottsdale (revisão programada de cada serviço e aviso da sua maturidade); Maipú (variáveis definidas no lançamento); fichas OD3, DM3, DM4 e DM8 (serviços existentes em SBC).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.1 e DM9.2</h4><p>DM9.1 (serviço tratado como serviço, com dono e revisão) e DM9.2 (critérios de sucesso definidos).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art6" data-tipo="novo" data-sub="DM9.3 DM9.4">
+    <div class="texto"><div class="cab"><span class="id">Art. 6º</span><span class="tag novo">Novo</span><span class="tag sub">DM9.3</span><span class="tag sub">DM9.4</span></div>
+      <p>Art. 6º O responsável pelo serviço aplicará a lista de verificação do Anexo III antes de lançar o serviço e em cada revisão anual.</p><p>Parágrafo único. A Equipe do Padrão revisará a lista preenchida dos serviços novos e de uma amostra dos existentes, e registrará as recomendações.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM9.3 pede boas práticas de desenho, entrega e qualidade. Uma lista de verificação é a forma mais simples de saber se foram seguidas.</p></div>
+      <div><h4>Intenção</h4><p>Autoavaliação de quem presta o serviço, com revisão por outra pessoa, como o guia da WWC sugere ("revisão por pares").</p></div>
+      <div class="origem"><h4>Origem</h4><p>Guia de autoatendimento do DM9 (2025: orientações com listas de verificação; governança que pede apresentação de cada ponto e revisão por pares); Maipú (ferramentas para cada princípio).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.3 e DM9.4</h4><p>DM9.3 (boas práticas aplicadas) e DM9.4 (orientação e governança).</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo III – Dos usuários, do desempenho e da revisão</div>
+  <article class="art novo" id="art7" data-tipo="novo" data-sub="DM9.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 7º</span><span class="tag novo">Novo</span><span class="tag sub">DM9.2</span></div>
+      <p>Art. 7º Cada serviço identificará os seus usuários e as necessidades deles a partir das informações disponíveis, como os pedidos pela Lei de Acesso à Informação, as manifestações à Ouvidoria, os pedidos de dados de outros órgãos, os registros de acesso e de download e as consultas feitas.</p><p>§ 1º O serviço novo ouvirá usuários antes de ser lançado, por entrevista, enquete, teste com versão preliminar ou outro meio, seguindo o Protocolo de Escuta e Pesquisa Qualitativa quando a escuta for qualitativa.</p><p>§ 2º A ficha do serviço registrará como os usuários foram ouvidos e o que mudou no serviço por causa disso.</p><p>§ 3º O Anexo VI registra como os usuários foram ouvidos na elaboração deste Padrão.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM9.2 pede serviços orientados pelas necessidades dos usuários, e o guia da WWC diz que a cidade precisa "demonstrar como se baseou nas necessidades dos usuários" e que decisões tomou por causa disso.</p></div>
+      <div><h4>Intenção</h4><p>Partir do que SBC já tem (pedidos pela LAI, Ouvidoria, downloads do GeoPortal) para não depender de pesquisa nova em todo serviço, e ouvir de fato quando o serviço for novo. O § 3º é a prova do DM9.2 para o próprio Padrão.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Guia de autoatendimento do DM9 (2025: demonstrar a base nas necessidades dos usuários; falar com fornecedores, equipes internas, equipe de dados e usuários dos serviços); Scottsdale (enquete pública, entrevistas, protótipo e versão beta); Public Digital, "Dados como serviço" (2022: pesquisa com usuários de dados); DM7 v01.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.2</h4><p>É o "orientados pelas necessidades dos usuários" do DM9.2, com o registro que o guia pede.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art8" data-tipo="novo" data-sub="DM9.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 8º</span><span class="tag novo">Novo</span><span class="tag sub">DM9.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 8º Cada serviço definirá critérios de sucesso e indicadores de desempenho, com a finalidade, a fórmula de cálculo, a fonte de dados, o escopo, o responsável, a periodicidade, a linha de base, quando disponível, a meta e os limites de interpretação, conforme o art. 34 do Decreto Municipal nº 23.403, de 2026.</p><p>§ 1º Os indicadores mínimos estão no Anexo V; o serviço adota os que se aplicam a ele e registra por que os demais não se aplicam.</p><p>§ 2º Os resultados serão publicados na página de Dados Abertos ao menos uma vez por ano.</p><p>§ 3º Ao menos um indicador de cada serviço medirá o uso do serviço em decisões, e não só o número de acessos ou de downloads.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM9.2 pede critérios de sucesso definidos e dados de desempenho associados. O Decreto 23.403 já diz como deve ser um indicador (art. 34), e o Decreto 23.413 manda os indicadores de dados abertos seguirem o mesmo formato (art. 25).</p></div>
+      <div><h4>Intenção</h4><p>Usar o formato de indicador que SBC já adotou por decreto, em vez de inventar outro. O § 3º vem do modelo da Public Digital: o que importa é como os dados mudam as decisões. A periodicidade anual é escolha do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto 23.403/2026, art. 34; Decreto 23.413/2026, art. 25 (disponibilidade, documentação, atualização, licenciamento e uso das bases abertas); Public Digital, exemplo de padrão, ponto 13 ("definir o sucesso e publicar dados de desempenho"); Scottsdale (métricas e dados de desempenho); guia de autoatendimento do DM9 (2025: critérios objetivos; retorno recebido e conformidade das equipes como medidas).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.2</h4><p>É o "critérios de sucesso" e "dados de desempenho" do DM9.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art9" data-tipo="novo" data-sub="DM9.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 9º</span><span class="tag novo">Novo</span><span class="tag sub">DM9.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 9º Para que o serviço seja confiável:</p><p class="inc">I - os dados serão atualizados na periodicidade declarada na ficha, e o atraso será informado na página do serviço;</p><p class="inc">II - a mudança de formato, de nome de arquivo, de nome de coluna ou de endereço, e a retirada do serviço, serão avisadas na página do serviço com ao menos 30 (trinta) dias de antecedência, salvo urgência justificada;</p><p class="inc">III - as versões dos dados e da análise serão identificadas pela data; e</p><p class="inc">IV - a interrupção do serviço será avisada na página enquanto durar.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM9.2 pede serviços confiáveis. Quem constrói em cima de um dado perde o trabalho quando ele muda sem aviso.</p></div>
+      <div><h4>Intenção</h4><p>Regras simples de estabilidade, do ponto "serviço confiável" do modelo da Public Digital, que pede expressamente não mudar sem aviso formatos e nomes de arquivo. O prazo de 30 dias é escolha do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Public Digital, exemplo de padrão, ponto 17 (serviço confiável: tempo no ar, qualidade, aviso de interrupção) e "Desenvolvendo um exemplo de padrão de serviço de dados" (2022: não mudar sem aviso formatos e nomes de arquivo); "Por que as cidades precisam de serviços de análise e de dados" (2022: oferta contínua, previsível e confiável).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.2</h4><p>DM9.2 (confiáveis).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art10" data-tipo="novo" data-sub="DM9.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 10</span><span class="tag novo">Novo</span><span class="tag sub">DM9.1</span></div>
+      <p>Art. 10. Cada serviço será revisto uma vez por ano pelo responsável pelo serviço, com os indicadores, o retorno dos usuários e a lista de verificação, e a revisão concluirá por:</p><p class="inc">I - manter o serviço como está;</p><p class="inc">II - melhorá-lo, com as mudanças e os prazos; ou</p><p class="inc">III - retirá-lo, com aviso prévio (art. 9º, II) e indicação de alternativa aos usuários, quando houver.</p><p>Parágrafo único. A conclusão da revisão e a data da próxima constarão da ficha do serviço.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM9.1 pede que o padrão se comprometa a manter e melhorar continuamente os serviços. Sem revisão marcada, ninguém revisa.</p></div>
+      <div><h4>Intenção</h4><p>Uma revisão por ano, com três saídas possíveis, inclusive a retirada do que não serve, como Maipú prevê. A revisão usa o que os arts. 6º a 8º já produzem, sem trabalho novo.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Scottsdale (revisão programada de cada serviço); Maipú (medir, iterar e melhorar; plano para retirar o que não serve); Public Digital, exemplo de padrão, ponto 10 (iterar e melhorar); Decreto 23.403/2026, art. 22 (revisão periódica).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.1</h4><p>É o DM9.1: manter e melhorar continuamente.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo IV – Da equipe, da governança e das orientações</div>
+  <article class="art novo" id="art11" data-tipo="novo" data-sub="DM9.4 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 11</span><span class="tag novo">Novo</span><span class="tag sub">DM9.4</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 11. A Equipe do Padrão é formada por servidores da Divisão de Dados do Departamento de Tecnologia da Informação e da Divisão de Indicadores Sociais da Secretaria de Planejamento Urbano, com o apoio da área de comunicação, designados por portaria do(a) Secretário(a) de Administração, e compete a ela:</p><p class="inc">I - manter e propor a revisão deste Padrão e dos seus anexos;</p><p class="inc">II - orientar os responsáveis pelos serviços;</p><p class="inc">III - manter a Lista de Serviços de Dados e de Análise (Anexo IV);</p><p class="inc">IV - revisar as listas de verificação (art. 6º, parágrafo único);</p><p class="inc">V - consolidar e publicar os indicadores dos serviços (art. 8º); e</p><p class="inc">VI - receber sugestões sobre o Padrão por canal publicado na página de Dados Abertos.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM9.4 pede uma equipe que elabore e gerencie o padrão. Hoje não há equipe designada para os serviços de dados.</p></div>
+      <div><h4>Intenção</h4><p>Juntar os dois perfis que o guia da WWC pede: quem faz serviços de dados (DTI e Divisão de Indicadores Sociais, que produz o Painel e o Perfil) e quem escreve e comunica (a comunicação, como em Arlington). A designação por portaria e a composição são escolha do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Guia de autoatendimento do DM9 (2025: equipe com dois perfis; em Arlington, o gestor de dados e o de comunicação fizeram o padrão juntos); Scottsdale (grupo que cria e mantém o padrão; caixa de e-mail para sugestões); Lei 7.367/2025, arts. 645, XIII, e 750.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.4</h4><p>É a "equipe que elabora e gerencia o padrão" do DM9.4.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art12" data-tipo="novo" data-sub="DM9.4 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 12</span><span class="tag novo">Novo</span><span class="tag sub">DM9.4</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 12. A adoção do Padrão será acompanhada pelo Comitê de Governança Digital e de Dados (CGD), previsto no art. 11 do Decreto Municipal nº 23.403, de 2026, e, até a sua instalação, pelo colegiado indicado pelo(a) Secretário(a) de Administração na portaria de que trata o art. 11.</p><p>§ 1º O colegiado receberá, uma vez por ano, o relatório da Equipe do Padrão, com o número de serviços com ficha, com lista de verificação e com indicadores publicados, as revisões feitas e as recomendações.</p><p>§ 2º O relatório integrará, depois da vigência do Decreto Municipal nº 23.403, de 2026, os relatórios semestrais do Programa Municipal de Governança Digital e de Dados (art. 35 daquele decreto).</p><p>§ 3º As decisões estratégicas sobre que serviços oferecer e as questões éticas sobre os dados serão levadas ao colegiado.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM9.4 pede uma governança que ajude na adoção do padrão. O CGD do Decreto 23.403 é o lugar natural, mas só será instalado depois de 04/02/2027.</p></div>
+      <div><h4>Intenção</h4><p>Não esperar o CGD: até lá, um colegiado indicado pela Secretaria de Administração, que coordena o Programa; depois, o próprio CGD. O relatório anual é o que o guia chama de "o que se pede às equipes". Qual colegiado é escolha do município (pedido DM9-5).</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto 23.403/2026, arts. 10, 11 e 35; guia de autoatendimento do DM9 (2025: governança que diga por que existe, quem é o dono, onde fica em relação à governança de TI e o que se pede às equipes); Public Digital, "Tomada de decisão sobre dados" (2022: decisões estratégicas e éticas pela governança).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.4</h4><p>É a "governança que ajuda na adoção" do DM9.4.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art13" data-tipo="novo" data-sub="DM9.3 DM9.4">
+    <div class="texto"><div class="cab"><span class="id">Art. 13</span><span class="tag novo">Novo</span><span class="tag sub">DM9.3</span><span class="tag sub">DM9.4</span></div>
+      <p>Art. 13. Integram as orientações deste Padrão, além dos anexos:</p><p class="inc">I - o procedimento de compartilhamento, pedidos e abertura de dados, para os pontos 3 e 5;</p><p class="inc">II - o Guia de Qualidade e Padrões de Dados, para os pontos 6 e 7;</p><p class="inc">III - o Roteiro de Verificação de Publicação e Compartilhamento Seguro, para o ponto 5;</p><p class="inc">IV - o Padrão Municipal de Dados Demográficos, para os pontos 5 e 7;</p><p class="inc">V - a Política de Segurança da Informação e as suas normas complementares, para o ponto 5; e</p><p class="inc">VI - o Decreto Municipal nº 23.409, de 2026, para os serviços que usem inteligência artificial.</p><p>Parágrafo único. O Padrão e as orientações integrarão a capacitação anual prevista no Roteiro de Verificação de Publicação e Compartilhamento Seguro.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM9.3 pede boas práticas para o desenho, a entrega e a qualidade, e o DM9.4 pede orientações para as equipes. As boas práticas já estão escritas nas outras propostas do projeto e nas normas de SBC.</p></div>
+      <div><h4>Intenção</h4><p>Apontar para os guias, em vez de repeti-los, como a ficha recomendou. Assim, o Padrão fica curto e as regras ficam num lugar só. Se algum desses atos não for aprovado, o ponto correspondente continua valendo pelo Anexo I.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Ficha DM9, §§ 3 e 6 (o padrão aponta para os guias); guia de autoatendimento do DM9 (2025: orientações com requisitos, passo a passo, modelos e listas); DM3 v01, DM4 v01, DM5 v01, DM6 v01 e DM8 v01; Decreto 22.453/2023 (PSI); Decreto 23.409/2026.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.3 e DM9.4</h4><p>DM9.3 (boas práticas) e DM9.4 (orientações).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art14" data-tipo="novo" data-sub="DM9.3">
+    <div class="texto"><div class="cab"><span class="id">Art. 14</span><span class="tag novo">Novo</span><span class="tag sub">DM9.3</span></div>
+      <p>Art. 14. Os estudos técnicos preliminares e os termos de referência das contratações de solução que produza, guarde ou mostre dados ou análises exigirão o cumprimento deste Padrão, além do previsto no art. 24 do Decreto Municipal nº 23.413, de 2026.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Parte dos serviços de dados de uma prefeitura é feita por fornecedor. Se o contrato não pede o padrão, o fornecedor não o segue.</p></div>
+      <div><h4>Intenção</h4><p>Levar o Padrão às compras, como Maipú faz, somando-o às exigências que o Decreto 23.413 já fixa para os contratos (controle municipal dos dados, exportação em formato aberto, dicionário).</p></div>
+      <div class="origem"><h4>Origem</h4><p>Maipú (exigência do padrão nos termos de referência; dirigido aos fornecedores); Decreto 23.413/2026, art. 24.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.3</h4><p>DM9.3 (entrega com qualidade, também por terceiros).</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo V – Das disposições finais</div>
+  <article class="art novo" id="art15" data-tipo="novo" data-sub="DM9.1 DM9.4 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 15</span><span class="tag novo">Novo</span><span class="tag sub">DM9.1</span><span class="tag sub">DM9.4</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 15. Este Padrão será revisto uma vez por ano pela Equipe do Padrão, ouvidos os responsáveis pelos serviços e os usuários, e cada versão será publicada com a data, o que mudou e por quê.</p><p>§ 1º A primeira revisão será feita até 30 de junho de 2027, com os resultados das fichas e das primeiras listas de verificação.</p><p>§ 2º Editado o ato do eixo de inteligência estratégica e resultados previsto nos arts. 6º e 7º do Decreto Municipal nº 23.403, de 2026, este Padrão passará a integrá-lo.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O guia da WWC pede aprovar a primeira versão com um plano de revisão e tratar o padrão como documento vivo. O Decreto 23.403 prevê um ato próprio para o eixo de inteligência estratégica e resultados, que é o lugar natural do Padrão.</p></div>
+      <div><h4>Intenção</h4><p>Data certa para a primeira revisão e regra para não haver dois atos sobre o mesmo assunto quando o eixo for regulamentado. A data é escolha do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Guia de autoatendimento do DM9 (2025: aprovação da liderança da primeira versão, com plano de revisão; manter e iterar); Scottsdale (documento vivo, revisto pelo grupo de governança); Decreto 23.403/2026, arts. 6º, 7º e 39, II.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.1 e DM9.4</h4><p>DM9.1 (melhoria contínua do próprio padrão) e DM9.4 (quem revisa).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art16" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 16</span><span class="tag novo">Novo</span></div>
+      <p>Art. 16. Integram este ato os seguintes anexos:</p><p class="inc">I - Anexo I – Os dez pontos do Padrão;</p><p class="inc">II - Anexo II – Ficha do serviço (modelo);</p><p class="inc">III - Anexo III – Lista de verificação;</p><p class="inc">IV - Anexo IV – Lista de Serviços de Dados e de Análise;</p><p class="inc">V - Anexo V – Indicadores mínimos; e</p><p class="inc">VI - Anexo VI – Como os usuários foram ouvidos.</p><p>Parágrafo único. A Equipe do Padrão poderá atualizar os Anexos II a VI, publicando a nova versão com a data e o que mudou; a mudança do Anexo I segue o art. 15.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Anexos aprovados junto com o Padrão viram regra e contam como evidência.</p></div>
+      <div><h4>Intenção</h4><p>O Anexo I é o padrão propriamente dito e só muda na revisão anual; os demais são a parte prática.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Mesmo arranjo das outras versões do projeto (DM5 v01, art. 17; DM8 v01, art. 16).</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio.</p></div>
+    </aside>
+  </article>
+  <article class="art igual" id="art17" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 17</span></div><p>Art. 17. Este ato entra em vigor na data de sua publicação.</p></div>
+  </article>
+  <div class="assinatura" data-bloco="assinatura">São Bernardo do Campo, ………..<br><b>Diretor(a) do Departamento de Tecnologia da Informação · Aprovo: Secretário(a) de Administração</b></div>
+  <div class="capitulo">Anexos</div>
+  <article class="art novo" id="anx1" data-tipo="novo" data-sub="DM9.1 DM9.2 DM9.3">
+    <div class="texto"><div class="cab"><span class="id">Anexo I</span><span class="tag novo">Novo</span><span class="tag sub">DM9.1</span><span class="tag sub">DM9.2</span><span class="tag sub">DM9.3</span></div>
+      <p><b>Anexo I – Os dez pontos do Padrão</b></p><p>Todo serviço de dados e de análise segue os dez pontos (art. 3º).</p><div class="rolavel"><table class="anexo"><thead><tr><th>Ponto</th><th>Por que importa</th><th>O que se espera</th><th>Como se verifica</th></tr></thead><tbody><tr><td>1. Publicar com propósito</td><td>Dado publicado sem pergunta para responder envelhece sem uso. Os primeiros portais seguiram "aberto por padrão" e ganharam fama de dados velhos e com erro.</td><td>Cada serviço diz a que prioridade do Plano de Governo, do PPA ou de política setorial serve e que decisões ou perguntas apoia.</td><td>A ficha do serviço (Anexo II) indica a prioridade e as perguntas.</td></tr><tr><td>2. Conhecer os usuários</td><td>Quem usa dados (pesquisadores, empresas, jornalistas, desenvolvedores) precisa de coisas diferentes de quem usa análises (Prefeito, secretarias, Câmara, moradores).</td><td>A ficha lista os usuários e as necessidades, a partir de pedidos pela Lei de Acesso à Informação, da Ouvidoria, de consultas e de registros de uso. Serviço novo ouve os usuários antes de ser lançado (art. 7º).</td><td>Registro de como os usuários foram ouvidos e do que mudou por causa disso.</td></tr><tr><td>3. Serviço completo</td><td>Arquivo sem explicação, sem contato e sem canal para pedir ou corrigir não resolve o problema de quem usa.</td><td>Cada serviço oferece os dados ou a análise, a explicação (metadados e dicionário), as limitações conhecidas, o contato do responsável, o canal para pedir dados e o canal para apontar erro.</td><td>Lista de verificação (Anexo III), itens do ponto 3.</td></tr><tr><td>4. Acessível a todos</td><td>Serviço que só especialista entende, ou que não funciona com leitor de tela, exclui parte da população.</td><td>Linguagem simples; formatos abertos; páginas que sigam os padrões de acessibilidade na web; alternativa para quem não usa internet, como atendimento presencial ou por telefone.</td><td>Lista de verificação, itens do ponto 4.</td></tr><tr><td>5. Seguro e ético</td><td>Um vazamento ou uma análise enviesada contra um bairro ou um grupo tira a confiança em todos os serviços.</td><td>Proteção de dados pessoais; verificação de publicação segura antes de publicar; dado sensível com acesso restrito e serviço de pedido; dados demográficos no padrão municipal; uso de inteligência artificial nas regras do Decreto 23.409/2026; atenção a viés contra grupo da população ou território.</td><td>Formulário do Roteiro de Verificação e lista de verificação, itens do ponto 5.</td></tr><tr><td>6. Transparente e neutro</td><td>Quem decide e quem é afetado precisa saber de onde vem o número e confiar que ele não foi escolhido para favorecer uma posição.</td><td>Cada serviço informa a origem, o método e as limitações de cada dado, e apresenta as análises sem favorecer posição política.</td><td>Registro de Qualidade do Guia de Qualidade; notas de método publicadas.</td></tr><tr><td>7. Qualidade e padrões</td><td>Dados de órgãos diferentes só se juntam se forem escritos do mesmo jeito; dado errado leva a decisão errada.</td><td>Os dados seguem o Guia de Qualidade e Padrões de Dados (qualidade, metadados e campos comuns), o Padrão Municipal de Dados Demográficos e, quando houver, padrões abertos e de dados cívicos, como o GTFS para o transporte.</td><td>Ficha de regras e metadados da base; lista de verificação, itens do ponto 7.</td></tr><tr><td>8. Confiável e estável</td><td>Quem constrói em cima de um dado (um aplicativo, uma planilha, um relatório) perde o trabalho quando o dado muda sem aviso.</td><td>Atualização na periodicidade declarada; aviso prévio antes de mudar formato, nome de arquivo ou endereço, ou de retirar o serviço (art. 9º); versões identificadas; aviso de interrupção.</td><td>Indicador de atualização em dia (Anexo V) e histórico de avisos.</td></tr><tr><td>9. Medir e publicar o desempenho</td><td>O valor de um serviço de dados está em como ele muda as decisões, e não no número de downloads.</td><td>Cada serviço define critérios de sucesso e indicadores no formato do art. 34 do Decreto 23.403/2026, e publica os resultados ao menos uma vez por ano (art. 8º).</td><td>Indicadores do Anexo V publicados.</td></tr><tr><td>10. Melhorar sempre</td><td>Serviço que não é revisto acumula erro e perde usuários; serviço que ninguém usa custa sem servir.</td><td>Revisão anual de cada serviço, com os indicadores e o retorno dos usuários, que decide manter, melhorar ou retirar (art. 10).</td><td>Ata ou registro da revisão anual, com a decisão.</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>É o padrão propriamente dito: o que a WWC vai ler para avaliar o DM9.1, o DM9.2 e o DM9.3.</p></div>
+      <div><h4>Intenção</h4><p>Dez pontos, cada um em três frases, no formato do modelo da Public Digital, com a coluna "como se verifica" para o padrão ser mensurável. Os pontos 1, 2, 3, 4, 5, 8, 9 e 10 vêm do modelo e de Maipú; o 6 junta "transparente" e "neutro" (democracia como necessidade do usuário); o 7 aponta para os guias de SBC, como o princípio de qualidade de Maipú.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Public Digital, exemplo de padrão de serviço de dados (pontos 1, 2, 3, 4, 8, 10, 11, 12, 13, 16 e 17); Maipú (10 princípios; padrões e protocolos de qualidade); Scottsdale (8 diretrizes); Padrão de Serviço do Reino Unido; Lei 13.146/2015 (Lei Brasileira de Inclusão), art. 63 (acessibilidade dos sítios); Decreto 23.409/2026.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.1 e DM9.2 e DM9.3</h4><p>DM9.1 (pontos 3 e 10), DM9.2 (pontos 2, 4, 5, 8 e 9) e DM9.3 (pontos 1, 6 e 7).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx2" data-tipo="novo" data-sub="DM9.1 DM9.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo II</span><span class="tag novo">Novo</span><span class="tag sub">DM9.1</span><span class="tag sub">DM9.2</span></div>
+      <p><b>Anexo II – Ficha do serviço (modelo)</b></p><p>Uma por serviço, preenchida pelo responsável e publicada na página de Dados Abertos (art. 5º).</p><div class="rolavel"><table class="anexo"><thead><tr><th>Campo</th><th>O que preencher</th></tr></thead><tbody><tr><td>Nome e endereço</td><td>Nome do serviço e onde ele está</td></tr><tr><td>Tipo</td><td>Serviço de dados, de análise ou os dois</td></tr><tr><td>Propósito</td><td>Prioridade do Plano de Governo, do PPA ou de política setorial a que serve; perguntas ou decisões que apoia (ponto 1)</td></tr><tr><td>Usuários</td><td>Usuários de dados e de análise; necessidades conhecidas; de onde vem essa informação (ponto 2)</td></tr><tr><td>Como os usuários foram ouvidos</td><td>Meio, data e o que mudou no serviço por causa disso (art. 7º, § 2º)</td></tr><tr><td>Responsável</td><td>Órgão, unidade e responsável pelo serviço; contato</td></tr><tr><td>Fontes e bases</td><td>Bases usadas, com o órgão responsável por cada uma</td></tr><tr><td>Periodicidade</td><td>Com que frequência é atualizado; data da última atualização</td></tr><tr><td>Canais</td><td>Onde pedir dados e onde apontar erro (ponto 3)</td></tr><tr><td>Indicadores</td><td>Indicadores adotados do Anexo V e por que os demais não se aplicam (art. 8º)</td></tr><tr><td>Revisão</td><td>Data e conclusão da última revisão; data da próxima (art. 10)</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A ficha é o registro mínimo que faz um serviço ser tratado como serviço, com dono, propósito, usuários e revisão.</p></div>
+      <div><h4>Intenção</h4><p>Onze campos, que respondem aos pontos 1, 2, 3, 9 e 10 sem formulário à parte.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Scottsdale (revisão programada e maturidade de cada serviço); Maipú (variáveis definidas no lançamento); Decreto 23.403/2026, art. 21 (registro mínimo de cada iniciativa).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.1 e DM9.2</h4><p>DM9.1 e DM9.2.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx3" data-tipo="novo" data-sub="DM9.2 DM9.3">
+    <div class="texto"><div class="cab"><span class="id">Anexo III</span><span class="tag novo">Novo</span><span class="tag sub">DM9.2</span><span class="tag sub">DM9.3</span></div>
+      <p><b>Anexo III – Lista de verificação</b></p><p>Aplicada pelo responsável antes de lançar o serviço e em cada revisão anual (art. 6º). Resposta: sim, em parte ou não, com a evidência.</p><div class="rolavel"><table class="anexo"><thead><tr><th>Ponto</th><th>Perguntas</th></tr></thead><tbody><tr><td>1. Propósito</td><td>A ficha diz a que prioridade o serviço serve? Diz que decisões ou perguntas ele apoia?</td></tr><tr><td>2. Usuários</td><td>Os usuários estão identificados? Há registro de como foram ouvidos e do que mudou?</td></tr><tr><td>3. Completo</td><td>Há metadados e dicionário? As limitações estão informadas? Há contato, canal de pedido de dados e canal para apontar erro?</td></tr><tr><td>4. Acessível</td><td>O texto está em linguagem simples? Os dados estão em formato aberto? A página foi conferida quanto à acessibilidade? Há alternativa para quem não usa internet?</td></tr><tr><td>5. Seguro e ético</td><td>A publicação passou pelo Roteiro de Verificação? Dado sensível tem acesso restrito? Os dados demográficos seguem o padrão municipal? Há uso de inteligência artificial, e ele segue o Decreto 23.409? Foi conferido se a análise prejudica algum grupo ou território?</td></tr><tr><td>6. Transparente e neutro</td><td>Origem, método e limitações estão publicados? A análise é apresentada sem favorecer posição política?</td></tr><tr><td>7. Qualidade e padrões</td><td>A base tem ficha de regras e registro de qualidade? Os campos comuns seguem o Guia de Qualidade? Há padrão aberto ou cívico aplicável, e ele foi adotado?</td></tr><tr><td>8. Confiável</td><td>A atualização está em dia? Mudanças e interrupções foram avisadas? As versões estão identificadas?</td></tr><tr><td>9. Desempenho</td><td>Os indicadores estão definidos no formato do Anexo V? Os resultados foram publicados? Há indicador de uso em decisões?</td></tr><tr><td>10. Melhorar</td><td>A revisão anual foi feita? A conclusão e a próxima data estão na ficha?</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM9.3 pede boas práticas, e o guia da WWC sugere listas de verificação como orientação às equipes.</p></div>
+      <div><h4>Intenção</h4><p>Uma linha por ponto, com perguntas de sim ou não, para que a verificação leve minutos e seja comparável entre serviços.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Guia de autoatendimento do DM9 (2025: modelos e listas de verificação); Public Digital, exemplo de padrão (caixas de ajuda de cada ponto); Maipú (ferramentas para cada princípio).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.2 e DM9.3</h4><p>DM9.2 e DM9.3 (verificação das boas práticas).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx4" data-tipo="novo" data-sub="DM9.1">
+    <div class="texto"><div class="cab"><span class="id">Anexo IV</span><span class="tag novo">Novo</span><span class="tag sub">DM9.1</span></div>
+      <p><b>Anexo IV – Lista de Serviços de Dados e de Análise</b></p><p>Lista inicial, com os serviços localizados nas fichas do projeto. Os responsáveis e os usuários dependem da resposta da equipe (pedidos DM9-1 e DM9-3); a ficha de cada um vem em até 60 dias (art. 5º, § 2º).</p><div class="rolavel"><table class="anexo"><thead><tr><th>Serviço</th><th>Tipo</th><th>Órgão (fonte declarada)</th><th>O que se sabe</th><th>Responsável</th></tr></thead><tbody><tr><td>GeoPortal</td><td>Dados e análise</td><td>Secretaria de Planejamento Urbano</td><td>Mapas e 13 camadas para download, com dicionário de dados; registra cada download</td><td>A confirmar</td></tr><tr><td>Painel Estatístico</td><td>Análise</td><td>Secretaria de Planejamento Urbano</td><td>Publicação anual desde 2019, com a fonte de cada tabela; só em PDF</td><td>A confirmar</td></tr><tr><td>Perfil Socioeconômico por Bairro</td><td>Análise</td><td>Divisão de Indicadores Sociais</td><td>26 capítulos por bairro ou grupo de bairros (2026); só em PDF</td><td>A confirmar</td></tr><tr><td>Página de Dados Abertos</td><td>Dados</td><td>A confirmar</td><td>Hoje só texto</td><td>A confirmar</td></tr><tr><td>Relatórios do Portal da Saúde</td><td>Análise</td><td>Secretaria de Saúde</td><td>Relatórios publicados no portal</td><td>A confirmar</td></tr><tr><td>BI interno do CIMGE</td><td>Análise (interna)</td><td>A confirmar</td><td>Painéis internos</td><td>A confirmar</td></tr><tr><td>Atendimento a pedidos de dados</td><td>Dados</td><td>Órgãos donos dos dados</td><td>Pelos canais da LAI e, se aprovado, pelo procedimento de compartilhamento (DM3 v01)</td><td>A confirmar</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O padrão precisa saber o que vai governar. A evidência do DM9 também pede mostrar a quem ele se aplica.</p></div>
+      <div><h4>Intenção</h4><p>Começar pelo que já se conhece, sem esperar o inventário completo, e deixar em aberto o que só a equipe pode confirmar.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Fichas OD3 (GeoPortal, página de Dados Abertos), DM2 e DM8 (Painel Estatístico, Perfil por Bairro), DM3 e DM9 (relatórios da Saúde, BI do CIMGE).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.1</h4><p>DM9.1 (os serviços tratados como serviços).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx5" data-tipo="novo" data-sub="DM9.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo V</span><span class="tag novo">Novo</span><span class="tag sub">DM9.2</span></div>
+      <p><b>Anexo V – Indicadores mínimos</b></p><p>No formato do art. 34 do Decreto 23.403/2026. A linha de base é medida no primeiro ano e a meta é definida depois dela; nenhum valor abaixo foi medido.</p><div class="rolavel"><table class="anexo"><thead><tr><th>Indicador</th><th>Finalidade</th><th>Fórmula</th><th>Fonte</th><th>Responsável</th><th>Periodicidade</th><th>Linha de base e meta</th><th>Limites de interpretação</th></tr></thead><tbody><tr><td>Atualização em dia</td><td>Saber se o serviço é confiável</td><td>Bases ou análises atualizadas na periodicidade declarada ÷ total do serviço × 100</td><td>Ficha do serviço e datas de publicação</td><td>Responsável pelo serviço</td><td>Trimestral</td><td>A medir; meta depois da linha de base</td><td>Não mede a qualidade do conteúdo</td></tr><tr><td>Pedidos de dados respondidos no prazo</td><td>Saber se o serviço atende quem pede</td><td>Pedidos respondidos no prazo ÷ pedidos recebidos × 100</td><td>Registro de pedidos (LAI e procedimento de compartilhamento)</td><td>Órgão dono dos dados</td><td>Semestral</td><td>A medir; meta depois da linha de base</td><td>Resposta no prazo não quer dizer pedido atendido</td></tr><tr><td>Erros apontados e corrigidos</td><td>Saber se o canal de erro funciona</td><td>Erros corrigidos no prazo do Guia de Qualidade ÷ erros apontados × 100</td><td>Registro de Qualidade</td><td>Responsável pela base</td><td>Semestral</td><td>A medir; meta depois da linha de base</td><td>Poucos apontamentos podem indicar canal pouco conhecido</td></tr><tr><td>Uso em decisões</td><td>Saber se o serviço muda decisões</td><td>Número de processos, planos ou relatórios que registram uso do serviço no período</td><td>Registro dos órgãos (DM7 v01, art. 12; DM8 v01, art. 12)</td><td>Equipe do Padrão</td><td>Anual</td><td>A medir; meta depois da linha de base</td><td>Depende de os órgãos registrarem o uso</td></tr><tr><td>Retorno dos usuários</td><td>Saber se o serviço atende as necessidades</td><td>Manifestações recebidas e proporção de respostas positivas numa pergunta curta de satisfação</td><td>Canal do serviço e Ouvidoria</td><td>Responsável pelo serviço</td><td>Anual</td><td>A medir; meta depois da linha de base</td><td>Quem responde não representa todos os usuários</td></tr><tr><td>Disponibilidade</td><td>Saber se o serviço on-line está no ar</td><td>Horas no ar ÷ horas do período × 100</td><td>Monitoramento do DTI</td><td>DTI</td><td>Mensal</td><td>A medir; meta depois da linha de base</td><td>Só para serviços on-line</td></tr><tr><td>Conformidade com o Padrão</td><td>Saber se o Padrão está sendo adotado</td><td>Serviços com ficha, lista de verificação e indicadores publicados ÷ serviços da Lista × 100</td><td>Lista de Serviços (Anexo IV)</td><td>Equipe do Padrão</td><td>Anual</td><td>A medir; meta depois da linha de base</td><td>Mede a adoção, não a qualidade dos serviços</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM9.2 pede critérios de sucesso e dados de desempenho. O guia da WWC sugere medir também o retorno recebido e a conformidade das equipes com o padrão.</p></div>
+      <div><h4>Intenção</h4><p>Sete indicadores simples, cada um com os campos do art. 34 do Decreto 23.403, inclusive os limites de interpretação, para que ninguém leia um número como prova do que ele não prova. Nenhuma meta foi fixada sem linha de base.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Decreto 23.403/2026, art. 34; Decreto 23.413/2026, art. 25; Public Digital, exemplo de padrão, pontos 13 e 17; guia de autoatendimento do DM9 (2025: retorno recebido e conformidade das equipes); DM3 v01 (prazo dos pedidos); DM4 v01 (Registro de Qualidade).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.2</h4><p>DM9.2 (dados de desempenho).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx6" data-tipo="novo" data-sub="DM9.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo VI</span><span class="tag novo">Novo</span><span class="tag sub">DM9.2</span></div>
+      <p><b>Anexo VI – Como os usuários foram ouvidos</b></p><p>Registro da elaboração deste Padrão (art. 7º, § 3º). As quatro primeiras linhas são informações que já existiam e foram usadas na v01; a consulta às secretarias usuárias ainda precisa ser feita antes do texto final (pedido DM9-4), e o que ela mudar será registrado aqui.</p><div class="rolavel"><table class="anexo"><thead><tr><th>Fonte</th><th>O que mostra</th><th>O que mudou neste Padrão</th></tr></thead><tbody><tr><td>Pedido pela LAI de 2021 (processo SB.124665/2021), nos relatórios da LAI de 2023 e 2024</td><td>Um usuário pediu os dados GTFS dos ônibus municipais; a Prefeitura respondeu que não estavam ao seu alcance e indicou a concessionária</td><td>Ponto 7 (padrões abertos e cívicos, como o GTFS); art. 14 (o Padrão nos contratos)</td></tr><tr><td>Indicação nº 14.825/2025 da Câmara Municipal (10/10/2025)</td><td>A Câmara propôs ao Executivo estudos para uma política de dados abertos e interoperabilidade</td><td>A Câmara entra entre os usuários de análise (art. 2º, IV); ponto 7 (interoperabilidade)</td></tr><tr><td>PPA 2026–2029, Anexo V, contribuição ID 720</td><td>Um morador sugeriu um portal de dados abertos com orçamento, obras e indicadores sociais</td><td>Ponto 1 (serviço ligado às prioridades); a página de Dados Abertos entra na Lista de Serviços (Anexo IV)</td></tr><tr><td>Registro de downloads do GeoPortal</td><td>O site registra cada clique antes de abrir o arquivo</td><td>Art. 7º (registros de uso como fonte); art. 8º, § 3º (download não basta como medida de valor)</td></tr><tr><td>Consulta às secretarias que usam o Painel Estatístico e o Perfil por Bairro (e, se possível, à Câmara e a uma universidade)</td><td>A fazer, até o início de dezembro de 2026</td><td>A registrar</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O guia da WWC diz que, no DM9.2, a cidade precisa demonstrar como o padrão se baseou nas necessidades dos usuários e que decisões saíram disso.</p></div>
+      <div><h4>Intenção</h4><p>Mostrar, com honestidade, o que já foi considerado e o que falta: a v01 partiu de sinais que já existiam, e a consulta às secretarias é o passo que o guia pede antes de aprovar.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Guia de autoatendimento do DM9 (2025); ficha DM4, §3 (pedido de LAI de 2021); ficha OD1 e proposta do decreto de dados abertos (Indicação 14.825/2025); Estudo 01 e ficha OD1 (PPA, Anexo V, ID 720); ficha OD3 (registro de downloads do GeoPortal).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM9.2</h4><p>É a prova do DM9.2: o padrão orientado pelas necessidades dos usuários.</p></div>
+    </aside>
+  </article>
+  <div class="vazio" id="vazio">Nenhum item corresponde ao filtro escolhido.</div>
+</details>
+
+<details class="cartao obs">
+  <summary><h2>Observações para quem for decidir</h2></summary>
+  <ol>
+    <li><b>Natureza deste texto.</b> É um rascunho de indicação técnica, para servir de base à equipe e à Procuradoria. A decisão cabe ao município.</li>
+    <li class="destaque"><b>Instrumento (ponto de escolha).</b> O texto está escrito como ato do DTI, com base na competência de definir "princípios, padrões e políticas para a gestão de dados" (Lei 7.367/2025, art. 645, XIII), como os documentos do DM3 ao DM5, aprovado pelo(a) Secretário(a) de Administração, que coordena o Programa de Governança Digital e de Dados (Decreto 23.403, art. 10). A aprovação pela Secretaria atende à "aprovação da liderança" que o guia da WWC recomenda. Quando o eixo de inteligência estratégica e resultados for regulamentado, o Padrão passa a fazer parte desse ato (art. 15, § 2º). Pedido à equipe: DM9-2.</li>
+    <li><b>Ouvir os usuários antes do texto final.</b> O guia da WWC diz que a cidade precisa demonstrar como o padrão se baseou nas necessidades dos usuários (DM9.2). A v01 partiu de sinais que já existiam (Anexo VI). Antes de aprovar, falta uma consulta curta às secretarias que usam o Painel Estatístico e o Perfil por Bairro e, se possível, à Câmara e a uma universidade (pedidos DM9-3 e DM9-4), com o registro do que mudou. Sem isso, o DM9.2 fica mais fraco; se a WWC aceitaria só os sinais já existentes é hipótese, que não há como medir daqui.</li>
+    <li><b>Prazo da certificação (18/12/2026).</b> O DM9 não tem janela de tempo e pede 3 de 4. O conjunto mais seguro é DM9.1, DM9.2 e DM9.3, que dependem de um documento aprovado e publicado, com a consulta da observação 3. O DM9.4 depende da portaria que designa a equipe e o colegiado (arts. 11 e 12; pedidos DM9-1 e DM9-5) e reforça. As fichas dos serviços existentes (60 dias) e os primeiros indicadores podem vir depois do envio: o critério pede o padrão, e não os resultados dele. O CI2.1 depende deste padrão.</li>
+    <li><b>Equipe e colegiado (pontos de escolha).</b> A Equipe do Padrão junta o DTI e a Divisão de Indicadores Sociais, que já produz o Painel e o Perfil, com a comunicação, como em Arlington. Até o CGD ser instalado, o texto deixa o colegiado para a Secretaria de Administração indicar; as opções levantadas na ficha são o Comitê Gestor de Proteção de Dados (CGPD, Decreto 22.963/2025) e o GT Cidade Inteligente (Portaria 10.500/2026), que não tem atas localizadas.</li>
+    <li><b>Números escolhidos aqui.</b> São propostas, não medidas: 60 dias para as fichas dos serviços existentes; aviso de 30 dias antes de mudar ou retirar um serviço; revisão anual de cada serviço e do Padrão; primeira revisão até 30/06/2027; indicadores publicados uma vez por ano. Nenhuma meta de indicador foi fixada, porque não há linha de base medida.</li>
+    <li><b>O que ficou de fora.</b> Sete dos 17 pontos do modelo da Public Digital foram fundidos ou deixados de lado para a primeira versão ficar curta, como o guia recomenda: "democracia como necessidade do usuário" entrou no ponto 6 (neutro); "consistente e simples", no ponto 4; "equipe multidisciplinar", na Equipe do Padrão (art. 11); "inspirar os usuários de dados", "experiência entre dados e análise", "tecnologia certa" e "código e dados novos abertos" podem entrar numa revisão. O sprint de seis semanas da WWC com a Public Digital para montar o padrão terminou em 17/11/2026, com inscrições fechadas em 07/10.</li>
+    <li><b>Ligação com outros critérios.</b> O CI2.1 pede que os serviços de análise sigam este padrão; o OD4.1 se apoia nele. Os atos do DTI do DM3 ao DM5, o padrão demográfico (DM8) e este tratam do mesmo assunto e podem virar um documento só numa revisão; por ora, o art. 13 os liga.</li>
+  </ol>
+</details>
+
+<details class="cartao fontes">
+  <summary><h2>Fontes</h2></summary>
+  <ul>
+    <li>What Works Cities, critério DM9 (v4): definição, subcritérios, evidência sugerida e glossário (princípios do design de serviços; serviços de dados e de análise); pacote do Fórum (Scottsdale e Maipú como exemplos; Public Digital como modelo).</li>
+    <li>What Works Cities e Public Digital, "Padrão de serviço de dados (DM9): guia de autoatendimento" (2025, em português), achado no Fórum.</li>
+    <li>Public Digital, exemplo de padrão de serviço de dados (17 pontos, em português) e a série de cinco textos de 2022 ("dados como serviço", serviços de análise, além dos dados abertos, tomada de decisão, o exemplo de padrão).</li>
+    <li>Scottsdale, Padrão de Serviço de Dados (2023, 8 p.); Maipú, Estándar de Servicios de Datos (52 p.); Padrão de Serviço do Reino Unido (página-índice dos 14 pontos).</li>
+    <li>São Bernardo do Campo: Decreto 23.403/2026, arts. 4º, 6º, 7º, 10, 11, 21, 22, 34, 35 e 39; Decreto 23.413/2026, arts. 21, 24 e 25; Lei 7.367/2025, arts. 645, XIII, e 750; relatórios da LAI de 2023 e 2024; Indicação 14.825/2025; PPA 2026–2029, Anexo V.</li>
+    <li>Lei Federal 13.146/2015 (Lei Brasileira de Inclusão), art. 63; Lei Federal 13.709/2018 (LGPD).</li>
+    <li>Recomendações deste projeto: DM3 v01, DM4 v01, DM5 v01, DM6 v01, DM7 v01 e DM8 v01 (`versoes/`); fichas DM9, OD1, OD3, DM4 e DM8.</li>
+  </ul>
+</details>
+
+</main>
+<div class="rodape">Padrão preparado para o Painel WWC · SBC. Rascunho de indicação técnica; não substitui a análise da Procuradoria.</div>
+
+<script>
+(function () {
+  var estado = { sub: 'todos' };
+  var arts = Array.prototype.slice.call(document.querySelectorAll('.art'));
+  var caps = Array.prototype.slice.call(document.querySelectorAll('.capitulo'));
+  var blocos = Array.prototype.slice.call(document.querySelectorAll('[data-bloco]'));
+  function aplicar() {
+    var visiveis = 0;
+    arts.forEach(function (a) {
+      var subs = (a.getAttribute('data-sub') || '').split(' ');
+      var ok = estado.sub === 'todos' || subs.indexOf(estado.sub) >= 0;
+      a.hidden = !ok; if (ok) visiveis++;
+    });
+    caps.forEach(function (c) {
+      var el = c.nextElementSibling, algum = false;
+      while (el && el.classList.contains('art')) { if (!el.hidden) algum = true; el = el.nextElementSibling; }
+      c.hidden = !algum;
+    });
+    blocos.forEach(function (b) { b.hidden = estado.sub !== 'todos'; });
+    document.getElementById('vazio').style.display = visiveis ? 'none' : 'block';
+    document.getElementById('contagem').textContent = visiveis + ' de ' + arts.length + ' itens';
+  }
+  document.querySelectorAll('[data-filtro]').forEach(function (g) {
+    g.addEventListener('click', function (ev) {
+      var b = ev.target.closest('button'); if (!b) return;
+      estado.sub = b.getAttribute('data-v');
+      g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      aplicar();
+    });
+  });
+  document.querySelectorAll('.sub-card .arts a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var alvo = document.querySelector(a.getAttribute('href'));
+      if (alvo && alvo.hidden) {
+        estado.sub = 'todos';
+        document.querySelectorAll('[data-filtro] button').forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-v') === 'todos' ? 'true' : 'false'); });
+        aplicar();
+      }
+    });
+  });
+  aplicar();
+})();
+</script>
+<script>
+(function () {
+  var quadros = Array.prototype.slice.call(document.querySelectorAll('details.cartao'));
+  function abrirAte(el) { var d = el && el.closest('details'); while (d) { d.open = true; d = d.parentElement.closest('details'); } }
+  function irPara(hash) { var alvo = hash && hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1))); if (alvo) { abrirAte(alvo); alvo.scrollIntoView(); } }
+  var a = document.getElementById('abrir-tudo'), f = document.getElementById('fechar-tudo');
+  if (a) a.addEventListener('click', function () { quadros.forEach(function (d) { d.open = true; }); });
+  if (f) f.addEventListener('click', function () { quadros.forEach(function (d) { d.open = false; }); });
+  var antes = [];
+  window.addEventListener('beforeprint', function () { antes = quadros.map(function (d) { return d.open; }); quadros.forEach(function (d) { d.open = true; }); });
+  window.addEventListener('afterprint', function () { quadros.forEach(function (d, i) { d.open = antes[i]; }); });
+  document.querySelectorAll('[data-filtro] button').forEach(function (b) { b.addEventListener('click', function () { var d = document.getElementById('decreto'); if (d) d.open = true; }); });
+  document.querySelectorAll('a[href^="#"]').forEach(function (l) { l.addEventListener('click', function () { var h = l.getAttribute('href'); if (h.length > 1) abrirAte(document.getElementById(h.slice(1))); }); });
+  window.addEventListener('hashchange', function () { irPara(location.hash); });
+  irPara(location.hash);
+})();
+</script>
+</body>
+</html>

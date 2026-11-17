@@ -102,9 +102,10 @@ window.PAINEL = {
       { criterio: 'DM4', assunto: 'Dados das operadoras de patinetes num padrão aberto (GBFS)', documento: 'Decreto 23.119/2025 (credenciamento de bicicletas e patinetes)', acao: 'Atualizar', detalhe: 'só se a Secretaria de Transporte aceitar', prop: { t: 'sem texto; depende da Secretaria de Transporte (DM4-2)' }, refs: ['dec23119'], processo: 'SB 101678/2025' },
       { criterio: 'DM5', assunto: 'Como não publicar nem compartilhar dado pessoal por engano, e o treinamento anual', documento: 'Roteiro de Verificação de Publicação e Compartilhamento Seguro, ato do DTI aprovado pelo Comitê Gestor de Proteção de Dados', acao: 'Criar', detalhe: 'ato do DTI, sem decreto; base do roteiro que o Decreto 23.413 manda editar (art. 21, III)', prop: { t: 'DM5 v01, o roteiro com 19 artigos e 4 anexos', u: 'dm5-v01-publicacao-segura.html' }, refs: ['dec22963', 'dec23413'], processo: 'Sem processo' },
       { criterio: 'DM6', assunto: 'Responsável pela segurança, relato ao Prefeito, continuidade, recuperação, riscos e treinamento', documento: 'Norma Complementar de Segurança da Informação, do DTI, aprovada pela Secretaria de Administração, como prevê a Política de Segurança da Informação (item 12)', acao: 'Criar', detalhe: 'norma complementar, sem decreto; retoma o texto interno do DTI de 2023', prop: { t: 'DM6 v01, a norma com 15 artigos e 4 anexos', u: 'dm6-v01-seguranca.html' }, refs: ['dec22453'], processo: 'SB 86634/2023' },
-      { criterio: 'DM8', assunto: 'Como registrar raça, gênero, idade e deficiência do mesmo jeito em toda a Prefeitura', documento: 'Padrão Municipal de Dados Demográficos, como parte C do Anexo II do Guia de Qualidade (DM4 v01), ou ato próprio', acao: 'Criar', detalhe: 'categorias do IBGE; mantenedora sugerida: Divisão de Indicadores Sociais', prop: { t: 'DM8 v01, a redigir' }, refs: ['lei7367_750', 'dec22452', 'dec20653'], processo: 'Sem processo' },
+      { criterio: 'DM7', assunto: 'Como ouvir a população com método (escuta e pesquisa qualitativa)', documento: 'Protocolo de Escuta e Pesquisa Qualitativa, portaria conjunta da Secretaria da Fazenda, que conduz o "A Voz da Gente", e da Secretaria de Coordenação Governamental', acao: 'Criar', detalhe: 'portaria, sem decreto; baseado no guia do Code for America, o modelo que a própria WWC oferece', prop: { t: 'DM7 v01, o protocolo com 18 artigos e 5 anexos', u: 'dm7-v01-escuta.html' }, refs: ['nm2646'], processo: 'Sem processo' },
+      { criterio: 'DM8', assunto: 'Como registrar raça, gênero, idade e deficiência do mesmo jeito em toda a Prefeitura', documento: 'Padrão Municipal de Dados Demográficos, como parte C do Anexo II do Guia de Qualidade (DM4 v01), ou ato próprio', acao: 'Criar', detalhe: 'categorias do IBGE; mantenedora sugerida: Divisão de Indicadores Sociais', prop: { t: 'DM8 v01, o padrão com 17 artigos e 4 anexos', u: 'dm8-v01-demograficos.html' }, refs: ['lei7367_750', 'dec22452', 'dec20653'], processo: 'Sem processo' },
       { criterio: 'DM8', assunto: 'Dado da própria Prefeitura por bairro e por grupo da população', documento: 'Uma base publicada no padrão (candidata: matrículas da rede municipal)', acao: 'Criar', detalhe: 'publicação de dados, não norma', prop: { t: 'não se aplica (publicação de dados)' }, refs: ['painel_estatistico'], processo: 'Sem processo' },
-      { criterio: 'DM9', assunto: 'Como devem ser os serviços de dados e de análise (padrão de serviço de dados)', documento: 'Padrão de Serviços de Dados e de Análise, ato do DTI publicado na página de Dados Abertos; vira o ato do eixo de inteligência estratégica do Decreto 23.403 quando ele vigorar', acao: 'Criar', detalhe: 'ato do DTI, sem decreto; com consulta curta às secretarias usuárias antes do texto final', prop: { t: 'DM9 v01, a redigir' }, refs: ['lei7367_645', 'dec23403'], processo: 'Sem processo' }
+      { criterio: 'DM9', assunto: 'Como devem ser os serviços de dados e de análise (padrão de serviço de dados)', documento: 'Padrão de Serviços de Dados e de Análise, ato do DTI publicado na página de Dados Abertos; vira o ato do eixo de inteligência estratégica do Decreto 23.403 quando ele vigorar', acao: 'Criar', detalhe: 'ato do DTI, sem decreto; com consulta curta às secretarias usuárias antes do texto final', prop: { t: 'DM9 v01, o padrão com 17 artigos e 6 anexos', u: 'dm9-v01-servicos-dados.html' }, refs: ['lei7367_645', 'dec23403'], processo: 'Sem processo' }
     ]
   },
 
@@ -769,7 +770,7 @@ window.PAINEL = {
         { texto: 'Ler os recursos que a WWC indica', feito: true },
         { texto: 'Validar a análise internamente', feito: true },
         { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM5' },
-        { texto: 'Redigir o roteiro de verificação de publicação e compartilhamento seguro (v01)', feito: false },
+        { texto: 'Redigir o roteiro de verificação de publicação e compartilhamento seguro (v01)', feito: true },
         { texto: 'Aprovar o roteiro (DTI e Comitê Gestor de Proteção de Dados) e publicá-lo', feito: false },
         { texto: 'Realizar e registrar uma capacitação em privacidade até 18/12 e fixar o calendário anual', feito: false },
         { texto: 'Corrigir a planilha da consulta do PPA, se ainda estiver publicada com dados pessoais', feito: false },
@@ -859,7 +860,7 @@ window.PAINEL = {
         { texto: 'Ler os recursos que a WWC indica', feito: true },
         { texto: 'Validar a análise internamente', feito: true },
         { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM6' },
-        { texto: 'Redigir a norma complementar de segurança da informação (v01), a partir da versão interna de 2023', feito: false },
+        { texto: 'Redigir a norma complementar de segurança da informação (v01), a partir da versão interna de 2023', feito: true },
         { texto: 'Aprovar a norma (DTI e Secretaria de Administração) e publicá-la', feito: false },
         { texto: 'Relato documentado do responsável pela segurança ao Prefeito até 18/12 (ata, nota ou apresentação com data)', feito: false },
         { texto: 'Capacitação conjunta em privacidade e segurança até 18/12 (a mesma do DM5.3), com lista de presença, e calendário anual', feito: false },
@@ -904,8 +905,13 @@ window.PAINEL = {
       ],
       evidencias: ['Estratégia ou processo documentado de coleta qualitativa.', 'Resumo de como se garante que os métodos são éticos, equitativos e participativos.', 'Exemplo de protocolo revisado por especialista ou baseado em modelo validado.', 'Exemplo de opinião da comunidade ou dado qualitativo que informou uma decisão.'],
       versoes: [
-        { v: 'v01', data: '—', situacao: 'aguarda', t: 'Protocolo de Escuta e Pesquisa Qualitativa',
-          d: 'A redigir (análise validada em 15/11/2026). Vale para o "A Voz da Gente" e para qualquer escuta qualitativa das secretarias: plano de cada escuta (objetivo, decisão que vai apoiar, perguntas, desenho da amostra, métodos); ética (consentimento informado, coleta mínima, dados pessoais separados das contribuições e nunca publicados, cuidados com crianças); representatividade (perfil de quem participou comparado ao da população e busca ativa de quem ficou de fora); análise com critérios escritos e parecer registrado; devolutiva pública com o que mudou na decisão; revisão por especialista e a cada ciclo.' }
+        { v: 'v01', data: '16/11/2026', situacao: 'vigente', t: 'Protocolo de Escuta e Pesquisa Qualitativa', u: 'dm7-v01-escuta.html',
+          d: 'Rascunho de indicação técnica: 18 artigos e 5 anexos (plano de escuta, métodos, consentimento, análise e devolutiva, registro de escutas). Cobre o DM7.1 e o DM7.2; baseado no guia do Code for America, com revisão por especialista como reforço. Escrito a partir da análise validada em 15/11/2026: Vale para o "A Voz da Gente" e para qualquer escuta qualitativa das secretarias: plano de cada escuta (objetivo, decisão que vai apoiar, perguntas, desenho da amostra, métodos); ética (consentimento informado, coleta mínima, dados pessoais separados das contribuições e nunca publicados, cuidados com crianças); representatividade (perfil de quem participou comparado ao da população e busca ativa de quem ficou de fora); análise com critérios escritos e parecer registrado; devolutiva pública com o que mudou na decisão; revisão por especialista e a cada ciclo.' },
+        { v: 'v02', data: '—', situacao: 'aguarda', t: 'Protocolo com os ajustes da equipe, da Secretaria da Fazenda, da Coordenação Governamental e da Procuradoria',
+          d: 'Só é criada depois de a equipe analisar a v01.' }
+      ],
+      propostas: [
+        { t: 'Protocolo de Escuta e Pesquisa Qualitativa (v01)', u: 'dm7-v01-escuta.html', nota: 'Rascunho de indicação técnica: 18 artigos e 5 anexos, cada um explicado. Cobre o DM7.1 e o DM7.2.' }
       ],
       sbc: {
         tem: [
@@ -941,7 +947,7 @@ window.PAINEL = {
         { texto: 'Validar a análise internamente', feito: true },
         { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM7' },
         { texto: 'Tirar do ar ou anonimizar as planilhas 08 e 09 do PPA (DM5 e DM7)', feito: false },
-        { texto: 'Redigir o protocolo de escuta e pesquisa qualitativa (v01), baseado no guia do Code for America', feito: false },
+        { texto: 'Redigir o protocolo de escuta e pesquisa qualitativa (v01), baseado no guia do Code for America', feito: true },
         { texto: 'Aprovar o protocolo por ato e, se houver tempo, obter parecer de um especialista em métodos de pesquisa', feito: false },
         { texto: 'Publicar o relatório consolidado do ciclo 2026, com a devolutiva da LOA 2027 e o perfil dos participantes', feito: false },
         { texto: 'Reunir as evidências (edital, protocolo, relatório, Anexo V e um caso de decisão) e preparar a resposta', feito: false }
@@ -985,8 +991,13 @@ window.PAINEL = {
       ],
       evidencias: ['Exemplos de conjuntos desagregados.', 'Padrão demográfico seguido por vários órgãos.', 'Como a equipe acessa o padrão ou é treinada nele.'],
       versoes: [
-        { v: 'v01', data: '—', situacao: 'aguarda', t: 'Padrão Municipal de Dados Demográficos',
-          d: 'A redigir (análise validada em 16/11/2026). Parte C do Anexo II do Guia de Qualidade (DM4 v01), mantida pela Divisão de Indicadores Sociais: variáveis e categorias com a fonte de cada uma (cor ou raça do IBGE por autodeclaração; sexo e identidade de gênero, com o nome social, categorias a revisar com o Departamento de Políticas Afirmativas; idade; deficiência pelas perguntas do Censo 2022; escolaridade; renda; bairro); regras de coleta (prefiro não declarar, resposta voluntária salvo quando a lei obriga, perguntas no fim, aviso de finalidade); proteção dos dados sensíveis e supressão de números pequenos na divulgação; mesmas categorias em toda publicação; publicação do padrão e capacitação.' }
+        { v: 'v01', data: '16/11/2026', situacao: 'vigente', t: 'Padrão Municipal de Dados Demográficos', u: 'dm8-v01-demograficos.html',
+          d: 'Rascunho de indicação técnica: 17 artigos e 4 anexos (variáveis e categorias, aviso e perguntas-modelo, lista de verificação, registro de adoção). Fecha o DM8.1; o DM8.2 depende ainda de publicar as tabelas do Perfil em formato aberto, uma base própria por grupo e um caso de decisão. Escrito a partir da análise validada em 16/11/2026: Parte C do Anexo II do Guia de Qualidade (DM4 v01), mantida pela Divisão de Indicadores Sociais: variáveis e categorias com a fonte de cada uma (cor ou raça do IBGE por autodeclaração; sexo e identidade de gênero, com o nome social, categorias a revisar com o Departamento de Políticas Afirmativas; idade; deficiência pelas perguntas do Censo 2022; escolaridade; renda; bairro); regras de coleta (prefiro não declarar, resposta voluntária salvo quando a lei obriga, perguntas no fim, aviso de finalidade); proteção dos dados sensíveis e supressão de números pequenos na divulgação; mesmas categorias em toda publicação; publicação do padrão e capacitação.' },
+        { v: 'v02', data: '—', situacao: 'aguarda', t: 'Padrão com os ajustes da equipe, do DTI, da Secretaria de Planejamento Urbano, do Departamento de Políticas Afirmativas e da Procuradoria',
+          d: 'Só é criada depois de a equipe analisar a v01.' }
+      ],
+      propostas: [
+        { t: 'Padrão Municipal de Dados Demográficos (v01)', u: 'dm8-v01-demograficos.html', nota: 'Rascunho de indicação técnica: 17 artigos e 4 anexos, cada um explicado. Fecha o DM8.1 e diz como publicar os dados do DM8.2.' }
       ],
       sbc: {
         tem: [
@@ -1018,7 +1029,7 @@ window.PAINEL = {
         { texto: 'Ler os recursos que a WWC indica', feito: true },
         { texto: 'Validar a análise internamente', feito: true },
         { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM8' },
-        { texto: 'Redigir o padrão demográfico (v01), como parte C do Anexo II do Guia de Qualidade', feito: false },
+        { texto: 'Redigir o padrão demográfico (v01), como parte C do Anexo II do Guia de Qualidade', feito: true },
         { texto: 'Revisar as categorias de gênero e de deficiência com o Departamento de Políticas Afirmativas e aprovar o padrão', feito: false },
         { texto: 'Publicar em planilha as tabelas do Perfil por Bairro (mesma ação do OD3) e uma base da Prefeitura por bairro e por grupo', feito: false },
         { texto: 'Reunir as evidências (padrão, página onde ele está, Perfil, base própria e um caso de decisão) e preparar a resposta', feito: false }
@@ -1065,8 +1076,13 @@ window.PAINEL = {
       evidencias: ['Padrão de serviço de dados documentado e público.', 'Resumo da equipe, da governança e da orientação de adoção.'],
       nota: 'Pré-requisito do CI2.1 e do OD4.1.',
       versoes: [
-        { v: 'v01', data: '—', situacao: 'aguarda', t: 'Padrão de Serviços de Dados e de Análise de SBC',
-          d: 'A redigir (análise validada em 16/11/2026). Ato do DTI, publicado na página de Dados Abertos, que passa a ser o ato do eixo de inteligência estratégica do Decreto 23.403 quando ele vigorar. Dez pontos: propósito ligado ao Plano de Governo ou ao PPA; conhecer os usuários; serviço completo; acessível a todos; seguro e ético; transparente; qualidade e padrões; confiável e estável (aviso antes de mudar formato); medir e publicar o desempenho; revisão anual de cada serviço. Mais uma seção de quem cuida (equipe, colegiado) e de quando se aplica (serviço novo, mudança, contratação).' }
+        { v: 'v01', data: '16/11/2026', situacao: 'vigente', t: 'Padrão de Serviços de Dados e de Análise de SBC', u: 'dm9-v01-servicos-dados.html',
+          d: 'Rascunho de indicação técnica: 17 artigos e 6 anexos (os dez pontos, ficha do serviço, lista de verificação, lista de serviços, indicadores, como os usuários foram ouvidos). Escreve os quatro subcritérios; antes do texto final, falta a consulta às secretarias usuárias (Anexo VI). Escrito a partir da análise validada em 16/11/2026: Ato do DTI, publicado na página de Dados Abertos, que passa a ser o ato do eixo de inteligência estratégica do Decreto 23.403 quando ele vigorar. Dez pontos: propósito ligado ao Plano de Governo ou ao PPA; conhecer os usuários; serviço completo; acessível a todos; seguro e ético; transparente; qualidade e padrões; confiável e estável (aviso antes de mudar formato); medir e publicar o desempenho; revisão anual de cada serviço. Mais uma seção de quem cuida (equipe, colegiado) e de quando se aplica (serviço novo, mudança, contratação).' },
+        { v: 'v02', data: '—', situacao: 'aguarda', t: 'Padrão com a consulta às secretarias usuárias e os ajustes da equipe, do DTI, da Secretaria de Administração e da Procuradoria',
+          d: 'Só é criada depois de a equipe analisar a v01.' }
+      ],
+      propostas: [
+        { t: 'Padrão de Serviços de Dados e de Análise de SBC (v01)', u: 'dm9-v01-servicos-dados.html', nota: 'Rascunho de indicação técnica: 17 artigos e 6 anexos, cada um explicado. Cobre o DM9.1 ao DM9.4.' }
       ],
       sbc: {
         tem: [
@@ -1098,7 +1114,7 @@ window.PAINEL = {
         { texto: 'Validar a análise internamente', feito: true },
         { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM9' },
         { texto: 'Juntar os sinais dos usuários (pedidos LAI, Câmara, PPA, downloads do GeoPortal) e consultar as secretarias que usam o Painel e o Perfil', feito: false },
-        { texto: 'Redigir o padrão (v01), com dez pontos e a seção de quem cuida', feito: false },
+        { texto: 'Redigir o padrão (v01), com dez pontos e a seção de quem cuida', feito: true },
         { texto: 'Emitir e publicar o padrão pelo DTI, com a data da primeira revisão', feito: false },
         { texto: 'Reunir as evidências (padrão publicado, ato com equipe e colegiado, registro da consulta) e preparar a resposta', feito: false }
       ],

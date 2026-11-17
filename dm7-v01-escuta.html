@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Escuta qualitativa DM7 v01</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f71b3'/%3E%3Crect y='26' width='32' height='6' fill='%23ff8200'/%3E%3Cpath d='M8 20l5-6 4 4 7-9' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #0f71b3; --azul-esc: #0b558a; --azul-claro: #e7f1f8;
+  --laranja: #ff8200; --laranja-esc: #b35b00; --laranja-claro: #fff1e3;
+  --verde: #288827; --verde-claro: #e6f4e6;
+  --texto: #2b2b2b; --texto-suave: #5f6368; --borda: #dde3e8;
+  --fundo: #f3f6f9; --cartao: #ffffff;
+  --raio: 10px; --sombra: 0 1px 3px rgba(15, 40, 70, .08);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 "Open Sans", Arial, sans-serif; }
+a { color: var(--azul); }
+h1, h2, h3, h4 { margin: 0; line-height: 1.25; }
+
+.topo { background: linear-gradient(90deg, var(--azul-esc), var(--azul)); color: #fff; border-bottom: 5px solid var(--laranja); }
+.topo-int { padding: 20px 32px 18px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: flex-end; justify-content: space-between; }
+.topo .sobre { font-size: 13px; letter-spacing: .04em; text-transform: uppercase; opacity: .85; font-weight: 600; }
+.topo h1 { font-size: 26px; font-weight: 800; margin-top: 4px; }
+.topo .subtitulo { font-size: 14px; opacity: .9; margin-top: 4px; }
+.topo .voltar { color: #fff; font-weight: 700; font-size: 14px; text-decoration: none; background: rgba(255,255,255,.16); padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
+.topo .voltar:hover { background: rgba(255,255,255,.28); }
+
+.barra { position: sticky; top: 0; z-index: 20; background: #fff; border-bottom: 1px solid var(--borda); box-shadow: var(--sombra); }
+.barra-int { padding: 10px 32px; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.barra .rot { font-size: 13px; font-weight: 700; color: var(--texto-suave); }
+.grupo { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { border: 1px solid var(--borda); background: #fff; color: var(--texto); padding: 6px 12px; border-radius: 999px; font: 600 13px "Open Sans", sans-serif; cursor: pointer; }
+.chip[aria-pressed=true] { background: var(--azul); border-color: var(--azul); color: #fff; }
+.contagem { font-size: 13px; color: var(--texto-suave); margin-left: auto; }
+
+main { padding: 24px 32px 48px; display: grid; gap: 22px; }
+.cartao { background: var(--cartao); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); padding: 20px 22px; }
+.cartao > h2 { font-size: 19px; color: var(--azul-esc); margin-bottom: 10px; }
+.cartao p { margin: 0 0 10px; }
+.cartao p:last-child { margin-bottom: 0; }
+
+.legenda { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 12px; font-size: 14px; }
+.legenda span { display: inline-flex; align-items: center; gap: 8px; }
+.tag { display: inline-block; font: 800 11px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 5px; }
+.tag.novo { background: var(--laranja); color: #fff; }
+.tag.alterado { background: var(--azul); color: #fff; }
+.tag.igual { background: #eef1f4; color: var(--texto-suave); }
+.tag.sub { background: var(--verde-claro); color: var(--verde); }
+
+.subs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 6px; }
+.sub-card { border: 1px solid var(--borda); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.sub-card h3 { font-size: 16px; color: var(--azul-esc); }
+.sub-card .pede { font-size: 14px; }
+.sub-card .linha { font-size: 13.5px; border-radius: 6px; padding: 7px 10px; }
+.sub-card .hoje { background: #f7f9fb; }
+.sub-card .depois { background: var(--laranja-claro); }
+.sub-card .arts { display: flex; flex-wrap: wrap; gap: 6px; }
+.sub-card .arts a { font-size: 13px; font-weight: 700; text-decoration: none; background: var(--azul-claro); padding: 2px 9px; border-radius: 6px; }
+
+.decreto { padding: 0; overflow: hidden; }
+.decreto-cab { padding: 18px 22px; border-bottom: 1px solid var(--borda); background: #fafbfc; }
+.decreto-cab h2 { font-size: 19px; color: var(--azul-esc); }
+.decreto-cab .nota { font-size: 13.5px; color: var(--texto-suave); margin-top: 4px; }
+.ementa { padding: 18px 22px 6px; font-size: 14.5px; }
+.ementa .num { font-weight: 800; }
+.ementa .em { margin: 8px 0 12px auto; max-width: 520px; font-style: italic; }
+.ementa p { margin: 0 0 8px; }
+.capitulo { padding: 14px 22px 6px; font-weight: 800; color: var(--azul-esc); letter-spacing: .03em; text-transform: uppercase; font-size: 13.5px; border-top: 1px solid var(--borda); background: #fafbfc; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+.art { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); border-top: 1px solid var(--borda); }
+.art .texto { padding: 14px 22px; font-size: 14.5px; }
+.art .texto p { margin: 0 0 7px; }
+.art .texto p:last-child { margin-bottom: 0; }
+.art.igual { grid-template-columns: 1fr; }
+.art.igual .texto { color: #555b61; }
+.art .cab { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+.art .cab .id { font-weight: 800; font-size: 13px; color: var(--texto-suave); }
+.art .cab .antigo { font-size: 12.5px; color: var(--texto-suave); }
+.art.novo .texto { background: var(--laranja-claro); border-left: 5px solid var(--laranja); }
+.art.alterado .texto { background: var(--azul-claro); border-left: 5px solid var(--azul); }
+mark.novo { background: #ffd8ad; color: inherit; padding: 1px 3px; border-radius: 3px; }
+del.sup { text-decoration: line-through; text-decoration-thickness: 1.5px; color: #8a2a22; background: #fbe9e7; padding: 1px 3px; border-radius: 3px; }
+.rotulo-red { font: 800 11.5px "Open Sans", sans-serif; letter-spacing: .05em; text-transform: uppercase; margin: 10px 0 4px; }
+.rotulo-red.sup { color: #8a2a22; margin-top: 0; }
+.rotulo-red.nova { color: var(--laranja-esc); }
+.obs-red { font-size: 13.5px; color: var(--texto-suave); border-top: 1px dashed var(--borda); padding-top: 8px; margin-top: 10px !important; }
+.inc { padding-left: 18px; }
+
+.expl { padding: 14px 20px; background: #fff; border-left: 1px solid var(--borda); display: grid; gap: 10px; align-content: start; font-size: 14px; }
+.expl h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); margin-bottom: 2px; }
+.expl .wwc { background: var(--verde-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .wwc h4 { color: var(--verde); }
+.expl p { margin: 0; }
+
+.assinatura { padding: 14px 22px 20px; border-top: 1px solid var(--borda); font-size: 14.5px; }
+.vazio { padding: 20px 22px; color: var(--texto-suave); display: none; border-top: 1px solid var(--borda); }
+
+.obs ol { margin: 0; padding-left: 20px; display: grid; gap: 10px; }
+.destaque { background: var(--verde-claro); border-left: 5px solid var(--verde); border-radius: 6px; padding: 10px 14px; }
+.fontes ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14px; }
+.rodape { font-size: 13px; color: var(--texto-suave); text-align: center; padding: 0 32px 28px; }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 1000px) { .subs { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .topo-int, .barra-int, main { padding-left: 16px; padding-right: 16px; }
+  .barra { position: static; }
+  .art { grid-template-columns: 1fr; }
+  .expl { border-left: 0; border-top: 1px dashed var(--borda); }
+  .art .texto, .expl, .capitulo, .ementa, .assinatura, .decreto-cab { padding-left: 16px; padding-right: 16px; }
+  .contagem { margin-left: 0; width: 100%; }
+}
+@media print {
+  .barra, .topo .voltar { display: none; }
+  body { background: #fff; }
+  .art { break-inside: avoid; }
+}
+.tag.escolha { background: #fde7c4; color: #8a4b00; }
+.aviso { background: var(--laranja-claro); border-left: 5px solid var(--laranja); border-radius: 6px; padding: 12px 16px; }
+.expl .origem { background: var(--azul-claro); border-radius: 6px; padding: 8px 11px; }
+.expl .origem h4 { color: var(--azul-esc); }
+table.anexo { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.anexo td, table.anexo th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+table.anexo td.vaz { color: var(--texto-suave); font-style: italic; }
+main > *, .art .texto, .art .expl { min-width: 0; }
+.rolavel { overflow-x: auto; }
+.rolavel > table { min-width: 520px; }
+table.tabinicio { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 12px; }
+table.tabinicio td, table.tabinicio th { border-top: 1px solid var(--borda); padding: 7px 10px; text-align: left; vertical-align: top; }
+.inicio h3 { font-size: 16px; color: var(--azul-esc); margin: 16px 0 6px; }
+details.cartao > summary { list-style: none; cursor: pointer; }
+details.cartao > summary::-webkit-details-marker { display: none; }
+details.cartao > summary h2 { font-size: 19px; color: var(--azul-esc); margin: 0; }
+details.cartao[open] > summary h2 { margin-bottom: 10px; }
+details.cartao.decreto > summary h2 { margin-bottom: 0; }
+details.cartao > summary h2::before { content: "\25B8"; display: inline-block; width: 1.1em; color: var(--azul); transition: transform .15s; }
+details.cartao[open] > summary h2::before { transform: rotate(90deg); }
+details.cartao > summary:focus-visible { outline: 2px solid var(--azul); outline-offset: 4px; border-radius: 4px; }
+.acoes { margin-left: auto; display: flex; gap: 6px; }
+.acoes.solta { margin: 0 0 -8px; justify-content: flex-end; }
+@media (max-width: 600px) { main { padding: 16px 16px 32px; } .topo-int, .barra-int { padding-left: 16px; padding-right: 16px; } .cartao { padding: 16px; } .art .texto { padding: 12px 14px; } }
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-int">
+    <div>
+      <div class="sobre">Painel WWC · SBC · Critério DM7 · Versão v01</div>
+      <h1>Protocolo de Escuta e Pesquisa Qualitativa</h1>
+      <div class="subtitulo">Rascunho de indicação técnica · 16/11/2026 · Para análise da equipe, da Secretaria da Fazenda e da Procuradoria</div>
+    </div>
+    <a class="voltar" href="index.html#DM7" onclick="if (history.length === 1) { window.close(); return false; }">← Voltar ao painel (DM7)</a>
+  </div>
+</header>
+
+<div class="barra">
+  <div class="barra-int">
+    <span class="rot">Subcritério WWC:</span>
+    <div class="grupo" data-filtro="sub">
+      <button class="chip" type="button" data-v="todos" aria-pressed="true">Todos</button>
+      <button class="chip" type="button" data-v="DM7.1" aria-pressed="false">DM7.1</button>
+      <button class="chip" type="button" data-v="DM7.2" aria-pressed="false">DM7.2</button>
+      <button class="chip" type="button" data-v="escolha" aria-pressed="false">Só pontos de escolha</button>
+    </div>
+    <span class="contagem" id="contagem"></span>
+    <div class="acoes"><button class="chip" type="button" id="abrir-tudo">Expandir tudo</button><button class="chip" type="button" id="fechar-tudo">Recolher tudo</button></div>
+  </div>
+</div>
+
+<main>
+
+<details class="cartao inicio" open>
+  <summary><h2>O que é esta página</h2></summary>
+  <div class="aviso"><p><b>Rascunho de indicação técnica, não decisão.</b> Este protocolo reúne o que os modelos indicados pela WWC fazem para atender ao critério DM7 (práticas de dados qualitativos) e parte do que o "A Voz da Gente" já faz. Instrumento, coordenação e prazos cabem ao município (Secretaria da Fazenda, Coordenação Governamental e Procuradoria).</p></div>
+  <h3>O que é este documento</h3>
+  <p>Não é lei nem decreto. É uma <b>portaria conjunta</b> da Secretaria da Fazenda, que conduz o Programa "A Voz da Gente, Cidade pra Frente", e da Secretaria de Coordenação Governamental, que articula as secretarias. Não cria direito nem dever novo para o cidadão: organiza como a Prefeitura ouve a população.</p>
+  <p><b>Para que serve:</b> dar método a toda escuta da Prefeitura, das audiências do orçamento às entrevistas e grupos focais das secretarias; proteger quem participa, com consentimento e dados pessoais nunca publicados; conferir se todos os grupos foram ouvidos; analisar com critério; e mostrar o que mudou na decisão. É também o protocolo de pesquisa qualitativa que o critério DM7 da What Works Cities pede.</p>
+  <h3>Em que normas se apoia</h3>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Norma</th><th>O que dá a este ato</th></tr></thead><tbody><tr><td><b>Lei Complementar Federal 101/2000 (LRF), art. 48, § 1º, I</b></td><td>Manda incentivar a participação popular e realizar audiências públicas na elaboração do PPA, da LDO e da LOA. É a base do "A Voz da Gente", que a Secretaria da Fazenda conduz.</td></tr><tr><td><b>Lei Municipal 7.367/2025, arts. 717 a 726</b></td><td>Competência da Coordenação Governamental para a articulação entre as secretarias e as políticas intersetoriais. É o que permite orientar as escutas de todas as secretarias e manter o Registro de Escutas.</td></tr><tr><td><b>Decreto Municipal 21.580/2021 (Lei Federal 13.460/2017)</b></td><td>Avaliação dos serviços por pesquisa com significância estatística (art. 21), relatório da Ouvidoria (art. 22) e Conselho de Usuários com critério de representatividade (arts. 22-A a 22-H). O Protocolo é coerente com essas regras e as usa como fonte.</td></tr><tr><td><b>Lei Federal 13.709/2018 (LGPD), arts. 6º, 7º, 14 e 16</b></td><td>Finalidade, necessidade, consentimento, dados de crianças e eliminação. O Protocolo aplica essas regras aos dados de quem participa.</td></tr></tbody></table></div>
+  <p>Ressalva: tirar do ar as planilhas antigas do PPA (art. 7º, § 3º) e publicar a devolutiva do ciclo 2026 dependem das secretarias, e não só da aprovação deste texto (observações 2 e 3, no fim da página).</p>
+  <h3>Por que agora</h3>
+  <p>SBC ouve a população com regularidade pelo "A Voz da Gente": no PPA 2026–2029, foram 3.398 contribuições, cada uma com resposta escrita, e 1.646 das 1.742 pertinentes entraram no plano. Faltam o rigor escrito (como analisar, quem deveria ter participado), um protocolo para as escutas das secretarias e a correção das planilhas que ainda expõem dados de quem participou. O DM7 pede <b>2 de 2 subcritérios</b>, sem janela de tempo.</p>
+  <h3>De onde vem cada parte</h3>
+  <p>Nada aqui foi inventado do zero: cada parte adapta um modelo já usado por outra cidade, uma norma ou um recurso recomendado pela WWC; o quadro abaixo diz qual. O que é escolha nossa (o instrumento, quem coordena, os prazos e a periodicidade da revisão pelo especialista) está nas observações 2 e 5.</p>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Modelo</th><th>Por que conta</th><th>O que veio dele</th><th>Onde está neste texto</th></tr></thead><tbody><tr><td><b>Code for America, Guia de Prática de Pesquisa Qualitativa (2020)</b></td><td>Recurso da página do DM7 e modelo do pacote do Fórum: o modelo validado que a própria WWC oferece</td><td>Plano de pesquisa com amostra e análise; consentimento informado; dados mínimos e separados; métodos; codificação e conferência; devolver aos participantes</td><td>Arts. 2º a 5º, 7º, 11, 13 e 14; Anexos I a IV</td></tr><tr><td><b>NYC Speaks (Nova York, EUA), 2022</b></td><td>Exemplo aceito pela WWC no DM7 (pacote do Fórum)</td><td>Achado, citação e compromisso da Prefeitura; um responsável pelo engajamento; pesquisa anual</td><td>Arts. 12, 13 e 15; Anexo IV</td></tr><tr><td><b>South Bend (EUA), pesquisa da comunidade</b></td><td>Exemplo aceito pela WWC no DM7 (pacote do Fórum)</td><td>Rotina a cada dois anos, amostra aleatória por instituto externo e decisão documentada</td><td>Arts. 4º, 12 e 14; Anexo II</td></tr><tr><td><b>MDRC (2022) e Urban Institute (Data Chats e kits 01 a 04)</b></td><td>Recursos indicados na página do DM7</td><td>Vieses de não resposta e de cortesia; buscar quem não responde; testar o questionário; conversas sobre dados; revisão do protocolo por comitê de ética</td><td>Arts. 4º, 6º, 8º, 9º e 14; Anexo II</td></tr><tr><td><b>WWC, Guide to Remote Community Engagement (2020)</b></td><td>Material da própria WWC, citado por um kit do Urban Institute</td><td>Práticas institucionalizadas; ficha padronizada; métodos sem internet; publicar o que se ouviu e o que se fez</td><td>Arts. 10, 13, 15 e 16</td></tr><tr><td><b>Resolução CNS 510/2016 (Brasil)</b></td><td>Padrão nacional de ética em pesquisa social; não obriga a escuta da Prefeitura (observação 4)</td><td>Consentimento como processo; direitos do participante; concordância da criança; gradação do risco; devolutiva acessível</td><td>Arts. 5º, 6º, 8º, 13 e 14; Anexo III</td></tr><tr><td><b>Edital do "A Voz da Gente" 2026/2027 (SBC)</b></td><td>Processo de SBC em uso</td><td>Acessibilidade e Libras; revezamento de falas; parecer de pertinência e viabilidade; relatório consolidado</td><td>Arts. 3º, 9º, 10, 11 e 13</td></tr></tbody></table></div>
+  <h3>Como ler</h3>
+  <p>O protocolo responde a seis perguntas: <b>como se planeja uma escuta?</b> (arts. 3º e 4º deste protocolo), <b>como se protege quem participa?</b> (arts. 5º a 8º), <b>todos foram ouvidos?</b> (arts. 9º e 10), <b>como se analisa e se liga à decisão?</b> (arts. 11 e 12), <b>como se devolve à população?</b> (art. 13) e <b>quem revisa e coordena?</b> (arts. 14 a 16). Os artigos citados nesta página são os do texto abaixo, salvo quando outra norma é nomeada. Cada artigo e cada anexo traz ao lado por que foi incluído, a intenção, a origem e a relação com a WWC.</p>
+  <div class="legenda">
+    <span><span class="tag novo">Novo</span> texto proposto</span>
+    <span><span class="tag escolha">Ponto de escolha do município</span> recomendação que o município pode trocar</span>
+    <span><span class="tag sub">DM7.x</span> subcritério da WWC atendido</span>
+  </div>
+</details>
+
+<details class="cartao">
+  <summary><h2>Versões desta recomendação</h2></summary>
+  <div class="rolavel"><table class="tabinicio"><thead><tr><th>Versão</th><th>Data</th><th>O que é</th><th>Situação</th></tr></thead><tbody><tr><td><b>v01</b></td><td>16/11/2026</td><td>Protocolo de Escuta e Pesquisa Qualitativa: 18 artigos e 5 anexos (plano de escuta, métodos, consentimento, análise e devolutiva, registro).</td><td>Vigente</td></tr><tr><td><b>v02</b></td><td>—</td><td>Protocolo com os ajustes da equipe, da Secretaria da Fazenda, da Coordenação Governamental e da Procuradoria.</td><td>Aguarda a equipe</td></tr></tbody></table></div>
+</details>
+
+<details class="cartao">
+  <summary><h2>O que a WWC pede e onde o protocolo responde</h2></summary>
+  <div class="subs">
+    <div class="sub-card">
+      <h3>DM7.1 · Métodos rigorosos, éticos, representativos e participativos</h3>
+      <div class="pede">A prefeitura usa métodos rigorosos de coleta de dados qualitativos (como grupos focais, entrevistas e perguntas abertas em pesquisas), éticos, representativos e/ou participativos, para apoiar as decisões.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Em grande parte: o "A Voz da Gente" tem audiências nos bairros, audiências setoriais e consulta on-line, com resposta a cada contribuição; faltam o rigor escrito (análise, quem participou) e a correção das planilhas que expõem dados pessoais.</div>
+      <div class="linha depois"><b>No protocolo:</b> Plano de cada escuta com amostra, consentimento, dados pessoais nunca publicados, perfil dos participantes comparado com a população e busca de quem faltou, análise com critério e conferência, registro da decisão e devolutiva publicada.</div>
+      <div class="arts"><a href="#art1">Art. 1º</a><a href="#art3">Art. 3º</a><a href="#art4">Art. 4º</a><a href="#art5">Art. 5º</a><a href="#art6">Art. 6º</a><a href="#art7">Art. 7º</a><a href="#art8">Art. 8º</a><a href="#art9">Art. 9º</a><a href="#art10">Art. 10</a><a href="#art11">Art. 11</a><a href="#art12">Art. 12</a><a href="#art13">Art. 13</a><a href="#art15">Art. 15</a><a href="#art16">Art. 16</a><a href="#anx1">Anexo I</a><a href="#anx2">Anexo II</a><a href="#anx3">Anexo III</a><a href="#anx4">Anexo IV</a><a href="#anx5">Anexo V</a></div>
+    </div>
+    <div class="sub-card">
+      <h3>DM7.2 · Protocolo revisado por especialista ou modelo validado</h3>
+      <div class="pede">A prefeitura exige um protocolo para orientar a pesquisa qualitativa, revisado por um especialista em métodos de coleta de dados, e/ou usa um modelo validado de boas práticas elaborado por especialistas.</div>
+      <div class="linha hoje"><b>Hoje em SBC:</b> Não há protocolo exigido nem revisão por especialista; nenhum modelo validado é adotado formalmente.</div>
+      <div class="linha depois"><b>No protocolo:</b> Protocolo aprovado por portaria, baseado no guia do Code for America (o modelo da própria WWC), com revisão por especialista antes da primeira aplicação, a cada 2 anos e nas escutas de maior risco.</div>
+      <div class="arts"><a href="#art1">Art. 1º</a><a href="#art3">Art. 3º</a><a href="#art5">Art. 5º</a><a href="#art7">Art. 7º</a><a href="#art8">Art. 8º</a><a href="#art11">Art. 11</a><a href="#art14">Art. 14</a><a href="#art15">Art. 15</a><a href="#art16">Art. 16</a><a href="#anx1">Anexo I</a><a href="#anx3">Anexo III</a><a href="#anx4">Anexo IV</a></div>
+    </div>
+  </div>
+</details>
+
+<details class="cartao decreto" id="decreto">
+  <summary class="decreto-cab">
+    <h2>Texto do protocolo</h2>
+    <div class="nota">Use os filtros acima para ver só os artigos de um subcritério ou só os pontos de escolha do município.</div>
+  </summary>
+
+  <div class="ementa" data-bloco="preambulo">
+    <p class="num">PORTARIA CONJUNTA Nº …… (instrumento a definir)</p>
+    <p class="em">Institui o Protocolo de Escuta e Pesquisa Qualitativa, com o plano de cada escuta, os métodos, a proteção dos participantes, a representatividade, a análise, a devolutiva, a revisão por especialista e o Registro de Escutas.</p>
+    <p>O(A) SECRETÁRIO(A) DA FAZENDA e o(a) SECRETÁRIO(A) DE COORDENAÇÃO GOVERNAMENTAL, no uso de suas atribuições, considerando o que consta do processo administrativo nº ……………;</p>
+    <p>Considerando o art. 48, § 1º, I, da Lei Complementar Federal nº 101, de 4 de maio de 2000, que manda incentivar a participação popular e realizar audiências públicas durante a elaboração do Plano Plurianual, da Lei de Diretrizes Orçamentárias e da Lei Orçamentária Anual, e o Programa "A Voz da Gente, Cidade pra Frente", que a Secretaria da Fazenda conduz;</p>
+    <p>Considerando os arts. 717 a 726 da Lei Municipal nº 7.367, de 15 de janeiro de 2025, que atribuem à Coordenação Governamental a articulação entre as secretarias e as políticas intersetoriais;</p>
+    <p>Considerando o Decreto Municipal nº 21.580, de 2021, que regulamenta, no Município, a participação, a proteção e a defesa dos direitos do usuário dos serviços públicos (Lei Federal nº 13.460, de 26 de junho de 2017);</p>
+    <p>Considerando a Lei Federal nº 13.709, de 14 de agosto de 2018 (Lei Geral de Proteção de Dados Pessoais), e, como referência de ética, a Resolução nº 510, de 7 de abril de 2016, do Conselho Nacional de Saúde; e</p>
+    <p>Considerando a necessidade de que toda escuta da população feita pela Prefeitura tenha método, proteja quem participa, ouça todos os grupos e mostre o que mudou nas decisões,</p>
+    <p>RESOLVEM:</p>
+  </div>
+
+  <div class="capitulo">Capítulo I – Do objeto e das definições</div>
+  <article class="art novo" id="art1" data-tipo="novo" data-sub="DM7.1 DM7.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 1º</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span><span class="tag sub">DM7.2</span></div>
+      <p>Art. 1º Esta Portaria Conjunta institui o Protocolo de Escuta e Pesquisa Qualitativa, que orienta como os órgãos da Administração Direta do Poder Executivo Municipal ouvem os moradores e outros interessados externos para apoiar as suas decisões.</p><p>§ 1º O Protocolo aplica-se:</p><p class="inc">I - ao Programa "A Voz da Gente, Cidade pra Frente", nas audiências públicas, nas audiências setoriais e nas consultas on-line de elaboração do Plano Plurianual, da Lei de Diretrizes Orçamentárias e da Lei Orçamentária Anual;</p><p class="inc">II - às entrevistas, aos grupos focais, às oficinas, às conversas sobre dados, às observações e às pesquisas com perguntas abertas feitas pelas secretarias para planejar, avaliar ou mudar política, programa ou serviço; e</p><p class="inc">III - à escuta feita por contratado ou parceiro em nome da Prefeitura.</p><p>§ 2º A escuta que tem regra própria em lei, como as audiências públicas orçamentárias e as do Plano Diretor, segue essa regra e, no que não conflitar, este Protocolo.</p><p>§ 3º O Protocolo não se aplica ao tratamento de manifestações individuais pela Ouvidoria, regido pelo Decreto Municipal nº 21.580, de 2021, cujo relatório anual pode servir de fonte para as escutas.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM7 pede um processo documentado para ouvir a população com regularidade e usar o que se ouviu nas decisões. SBC tem o "A Voz da Gente", regido por edital a cada ciclo, mas nenhum documento diz como qualquer escuta da Prefeitura deve ser feita.</p></div>
+      <div><h4>Intenção</h4><p>Um protocolo só, que vale para o programa orçamentário e para as escutas das secretarias, para que o rigor não dependa de quem organiza. O § 2º evita conflito com as audiências que a lei já regula; o § 3º separa a escuta para decidir do tratamento de reclamações.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Definição do DM7 (WWC v4: "estratégia ou processo documentado para coletar com regularidade a opinião da comunidade e dados qualitativos [...] para apoiar as decisões"); Edital de Chamamento do "A Voz da Gente" 2026/2027 (Notícias do Município nº 2646, 29/05/2026, p. 37–51); Lei Complementar Federal 101/2000, art. 48, § 1º, I; Decreto 21.580/2021, art. 22.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1 e DM7.2</h4><p>Delimita o processo de rotina que a definição do DM7 pede e que os dois subcritérios detalham.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art2" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 2º</span><span class="tag novo">Novo</span></div>
+      <p>Art. 2º Para os fins desta Portaria Conjunta, considera-se:</p><p class="inc">I - escuta: atividade planejada para colher opinião, experiência ou proposta de moradores e de outros interessados externos sobre decisão da Prefeitura;</p><p class="inc">II - dado qualitativo: informação não numérica, que descreve em vez de medir, colhida por entrevista, grupo focal, observação, oficina ou pergunta aberta;</p><p class="inc">III - protocolo de pesquisa qualitativa: documento que descreve como a escuta será feita, com objetivos, desenho, método, plano de análise e procedimentos para garantir a segurança dos participantes e a integridade dos dados;</p><p class="inc">IV - plano de escuta: aplicação deste Protocolo a uma escuta determinada, no modelo do Anexo I;</p><p class="inc">V - perfil dos participantes: retrato agregado e sem identificação de quem participou, por território e por grupo da população;</p><p class="inc">VI - devolutiva: resposta pública sobre o que se ouviu, o que foi feito com cada contribuição e o que mudou na decisão; e</p><p class="inc">VII - responsável pela escuta: servidor designado pelo titular do órgão que promove a escuta para conduzir o plano.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A página do DM7 define "dados qualitativos" e "protocolo de pesquisa qualitativa". Usar as mesmas palavras evita discussão sobre o que conta.</p></div>
+      <div><h4>Intenção</h4><p>Os incisos II e III repetem as definições da página do critério; os demais dão nome às peças que o Protocolo exige.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Página do DM7 na plataforma WWC (glossário: dados qualitativos; protocolo de pesquisa qualitativa); Code for America, Guia de Prática de Pesquisa Qualitativa (2020), p. 15–18 (plano de pesquisa).</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio. Liga o texto ao vocabulário do DM7.2.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo II – Do plano de escuta e dos métodos</div>
+  <article class="art novo" id="art3" data-tipo="novo" data-sub="DM7.1 DM7.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 3º</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span><span class="tag sub">DM7.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 3º Toda escuta terá plano, no modelo do Anexo I, aprovado pelo titular do órgão antes do início, com:</p><p class="inc">I - a decisão que a escuta vai apoiar e o prazo dessa decisão;</p><p class="inc">II - os objetivos e as perguntas da escuta;</p><p class="inc">III - o que já se sabe sobre o tema, por dados, escutas anteriores e relatórios da Ouvidoria;</p><p class="inc">IV - o público e o desenho da amostra: quem precisa estar representado, por território e por grupo da população, e como será alcançado (art. 9º);</p><p class="inc">V - os métodos, escolhidos conforme o Anexo II;</p><p class="inc">VI - as medidas de acessibilidade (art. 10);</p><p class="inc">VII - os dados que serão colhidos e por quê, a classificação do risco e os cuidados éticos (arts. 5º a 8º);</p><p class="inc">VIII - o plano de análise e de uso dos resultados (arts. 11 e 12); e</p><p class="inc">IX - a forma e o prazo da devolutiva (art. 13).</p><p>§ 1º Antes de planejar, o responsável verificará se a pergunta já pode ser respondida por dados existentes ou por escuta anterior; nesse caso, a nova escuta se limita ao que falta.</p><p>§ 2º No Programa "A Voz da Gente", o edital de chamamento de cada ciclo, acompanhado do plano de análise do inciso VIII e do desenho da amostra do inciso IV, faz as vezes do plano de escuta.</p><p>§ 3º O plano é público, sem os dados dos participantes.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM7.1 pede métodos rigorosos, e o rigor começa antes da coleta: saber que decisão se quer apoiar, quem precisa ser ouvido e como o que se ouvir será analisado. O edital do "A Voz da Gente" já traz objetivo, público e regras de fala, mas não diz como as contribuições são analisadas nem quem deveria ter participado.</p></div>
+      <div><h4>Intenção</h4><p>O plano é o protocolo aplicado a cada escuta, como no guia do Code for America. O § 1º é o filtro do guia ("já foi feito?"), para não cansar a população com a mesma pergunta. O § 2º aproveita o edital do programa, para não criar papel em dobro. Quem aprova o plano é escolha do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Code for America, Guia (2020), p. 14 (quando pesquisar) e p. 15–18 (plano de pesquisa: justificativa, objetivos, perguntas, métodos, desenho da amostra, recrutamento, cronograma, plano de análise e de uso); Urban Institute, kit 04 de métodos engajados (fase 1: contextualizar as perguntas); Edital do "A Voz da Gente" 2026/2027.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1 e DM7.2</h4><p>É o "método rigoroso" do DM7.1 e o conteúdo do protocolo do DM7.2 (objetivos, desenho, metodologia e plano de análise).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art4" data-tipo="novo" data-sub="DM7.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 4º</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span></div>
+      <p>Art. 4º Os métodos serão escolhidos conforme a pergunta e o público, com base no Anexo II, podendo combinar:</p><p class="inc">I - audiência pública descentralizada e audiência setorial;</p><p class="inc">II - consulta on-line ou em papel com perguntas abertas;</p><p class="inc">III - entrevista individual em profundidade;</p><p class="inc">IV - grupo focal;</p><p class="inc">V - conversa sobre dados, em que moradores discutem dados do próprio bairro;</p><p class="inc">VI - oficina participativa e conselho consultivo de participantes; e</p><p class="inc">VII - pesquisa por amostra, feita pela Prefeitura ou por instituição contratada.</p><p>§ 1º Os roteiros e os questionários serão testados antes com grupo pequeno e diverso de pessoas do público da escuta, e ajustados.</p><p>§ 2º Na entrevista e no grupo focal, haverá ao menos duas pessoas da equipe, uma para conduzir e outra para anotar, e o mesmo roteiro de perguntas para todos os participantes.</p><p>§ 3º A equipe não promete o que a Prefeitura não pode cumprir, não aconselha os participantes e registra o que ouviu sem alterar o sentido.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Audiência e consulta on-line ouvem muita gente, mas pouco a fundo; entrevistas e grupos focais ouvem menos gente com mais profundidade. O DM7.1 cita grupos focais, entrevistas e perguntas abertas como exemplos de método.</p></div>
+      <div><h4>Intenção</h4><p>Dar às secretarias um cardápio, sem obrigar um método. O teste prévio evita o erro relatado pelo Urban Institute, de questionário longo e invasivo que gerou fadiga e respostas ao acaso. As regras dos §§ 2º e 3º são as do guia do Code for America.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Code for America, Guia (2020), p. 9–13 e 22–41 (métodos; entrevistador e anotador; não aconselhar; representar fielmente o que se ouviu); Urban Institute, Guia de Data Chats (2022: conversa de 7 a 12 moradores sobre dados do bairro) e kits 02 e 04 (conselhos consultivos; testar o questionário com grupo pequeno, diverso e representativo); WWC, Guide to Remote Community Engagement (2020: ficha de entrevista padronizada); South Bend (pesquisa por amostra, por instituto externo).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1</h4><p>DM7.1: os métodos que o subcritério nomeia, com roteiro testado e registro fiel.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo III – Da ética e da proteção dos participantes</div>
+  <article class="art novo" id="art5" data-tipo="novo" data-sub="DM7.1 DM7.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 5º</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span><span class="tag sub">DM7.2</span></div>
+      <p>Art. 5º Antes de participar, cada pessoa será informada, em linguagem simples:</p><p class="inc">I - de quem promove a escuta e para que decisão ela serve;</p><p class="inc">II - de como a contribuição será usada e publicada;</p><p class="inc">III - de que a participação é voluntária e pode ser interrompida a qualquer momento, sem prejuízo no atendimento por serviço público;</p><p class="inc">IV - dos dados pessoais que serão colhidos, de quem terá acesso a eles e por quanto tempo serão guardados;</p><p class="inc">V - de se haverá gravação de áudio ou de imagem, que dependerá de autorização própria; e</p><p class="inc">VI - de como receber a devolutiva e com quem falar.</p><p>§ 1º Na entrevista, no grupo focal, na oficina e na conversa sobre dados, o consentimento será registrado no termo do Anexo III, parte B, por escrito, em áudio, em Libras ou em outro meio adequado à pessoa.</p><p>§ 2º Na audiência pública e na consulta aberta, o aviso do Anexo III, parte A, lido ou exibido no início e publicado com o edital ou o formulário, substitui o termo individual.</p><p>§ 3º A pessoa pode pedir, a qualquer tempo antes da devolutiva, que a sua contribuição identificada seja retirada da análise.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM7.1 pede métodos éticos, e o protocolo do DM7.2 precisa ter "procedimentos para garantir a segurança dos participantes". O edital do programa pede consentimento só para contato posterior.</p></div>
+      <div><h4>Intenção</h4><p>Consentimento como processo, não como assinatura. O conteúdo mínimo vem do guia do Code for America e da Resolução CNS 510/2016, que é o padrão brasileiro de ética em pesquisa social. A Resolução não obriga a escuta da Prefeitura, que não é pesquisa científica, mas é a referência que um especialista usaria para revisar o protocolo. O § 2º evita exigir termo de cada pessoa numa audiência aberta.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Code for America, Guia (2020), p. 9–13 (consentimento informado por formulário, com modelo); Resolução CNS 510/2016, arts. 4º, 5º, 9º, 15, 16 e 17 (consentimento como processo, em qualquer meio, com conteúdo mínimo; direito de retirar); Lei 13.709/2018 (LGPD), arts. 7º e 9º; Edital do "A Voz da Gente" 2026/2027, item 3.2 (credenciamento).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1 e DM7.2</h4><p>DM7.1 (ético) e DM7.2 (segurança dos participantes no protocolo).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art6" data-tipo="novo" data-sub="DM7.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 6º</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span></div>
+      <p>Art. 6º Na escuta com crianças e adolescentes:</p><p class="inc">I - haverá consentimento de um dos pais ou do responsável legal e concordância da própria criança ou do adolescente, pedida em linguagem adequada à idade (Anexo III, parte C);</p><p class="inc">II - o roteiro será adaptado à idade, e a atividade terá a presença de profissional da educação ou da assistência social; e</p><p class="inc">III - não se publicará nome, imagem ou outra informação que permita identificar a criança ou o adolescente.</p><p>§ 1º Quando quem é ouvido depende de serviço ou benefício do órgão que faz a escuta, a escuta será conduzida, sempre que possível, por pessoa que não decide sobre o serviço ou o benefício, e o aviso dirá expressamente que a participação não afeta o atendimento.</p><p>§ 2º Na escuta com povos indígenas e comunidades tradicionais, será respeitada a forma de autorização do coletivo, sem prejuízo do consentimento de cada pessoa.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O ciclo da LOA 2027 teve uma audiência com crianças, e não se localizou registro de como ela foi autorizada (pedido DM7-7). Pessoas que dependem de um serviço tendem a elogiar quem as atende, o que o MDRC chama de viés de cortesia.</p></div>
+      <div><h4>Intenção</h4><p>Regras simples para os três casos de maior cuidado que os recursos apontam: crianças, quem depende do serviço e comunidades com autoridade coletiva. O inciso I segue a LGPD para dados de crianças e a Resolução CNS 510 para a concordância da criança (assentimento).</p></div>
+      <div class="origem"><h4>Origem</h4><p>Resolução CNS 510/2016, arts. 2º, I, 11, 12, 13 e 20 (assentimento e consentimento do responsável; relação de dependência; autorização do coletivo); LGPD, art. 14 (dados de crianças, com consentimento de um dos pais ou do responsável legal); Urban Institute, kit 03 (jovens: consentimento de jovens e de responsáveis); MDRC (2022: vieses de cortesia e de não resposta); ata e apresentação da LOA 2027 ("audiência kids").</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1</h4><p>DM7.1 (ético), nos casos em que a ética mais pesa.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art7" data-tipo="novo" data-sub="DM7.1 DM7.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 7º</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span><span class="tag sub">DM7.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 7º Os dados pessoais dos participantes:</p><p class="inc">I - limitam-se aos necessários ao contato, ao credenciamento e ao perfil dos participantes;</p><p class="inc">II - ficam separados das contribuições, ligados a elas apenas por código, em arquivo de acesso restrito ao responsável pela escuta;</p><p class="inc">III - nunca são publicados, nem em planilha, nem em anexo de relatório, nem em apresentação;</p><p class="inc">IV - em gravações, são apagados depois da transcrição e da conferência, salvo autorização para outro uso; e</p><p class="inc">V - são eliminados ao fim do ciclo de devolutiva, mantidos apenas o perfil agregado e as contribuições sem identificação, salvo prazo maior exigido por lei ou pela tabela de temporalidade de documentos.</p><p>§ 1º A publicação de contribuições e de planilhas passará antes pelo Roteiro de Verificação de Publicação e Compartilhamento Seguro.</p><p>§ 2º As perguntas demográficas do perfil seguem o Padrão Municipal de Dados Demográficos: ficam no fim, são voluntárias e têm a opção "prefiro não declarar".</p><p>§ 3º Em até 30 (trinta) dias da publicação desta Portaria Conjunta, os órgãos retirarão do ar, ou substituirão por versão sem identificação, as planilhas e os anexos de escutas anteriores que exponham dado pessoal de participante.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A página oficial do "A Voz da Gente" ainda liga duas planilhas do ciclo do PPA (08 e 09) com nome, idade, bairro, gênero e escolaridade de quem participou. Isso contradiz o "ético" do DM7.1. O edital de 2026 já corrige o rumo (itens 3.2.5 e 6.1), mas não alcança o que foi publicado antes.</p></div>
+      <div><h4>Intenção</h4><p>Separar quem falou do que foi dito, como faz o guia do Code for America com o "documento de vinculação", e nunca publicar o primeiro. O § 3º é a correção imediata, a mesma pedida no DM5, com prazo curto. O prazo de eliminação é escolha do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Code for America, Guia (2020), p. 43–44 (coleta mínima; documento de vinculação separado e de acesso restrito; áudio só até a conferência; apagar ao fim); LGPD, arts. 6º, III, e 16; Resolução CNS 510/2016, art. 9º (privacidade e confidencialidade); Edital do "A Voz da Gente" 2026/2027, itens 3.2.5 e 6.1; ficha DM7, §3 (planilhas 08 e 09 do PPA 2026–2029); DM5 v01 e DM8 v01.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1 e DM7.2</h4><p>DM7.1 (ético) e DM7.2 (integridade dos dados e segurança dos participantes). O § 3º remove a contraevidência que existe hoje.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art8" data-tipo="novo" data-sub="DM7.1 DM7.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 8º</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span><span class="tag sub">DM7.2</span></div>
+      <p>Art. 8º O plano de escuta classificará o risco para os participantes como mínimo, baixo, moderado ou elevado, considerando o tema, o público, os dados colhidos e a possibilidade de identificação, e adotará cuidados proporcionais.</p><p>§ 1º É de risco moderado ou elevado, entre outras, a escuta sobre violência, saúde, uso de drogas, situação de rua, migração ou conflito com a lei, e a escuta com crianças e adolescentes.</p><p>§ 2º O plano de escuta de risco moderado ou elevado será revisado antes do início pelo especialista de que trata o art. 14.</p><p>§ 3º As informações colhidas não serão usadas em prejuízo dos participantes nem para reforçar estigma ou discriminação.</p><p>§ 4º O órgão poderá ressarcir despesas de transporte e de alimentação dos participantes de entrevista, grupo focal ou oficina, observada a disponibilidade orçamentária.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Nem toda escuta pede o mesmo cuidado: perguntar sobre a praça do bairro não é o mesmo que ouvir vítimas de violência.</p></div>
+      <div><h4>Intenção</h4><p>Graduar o cuidado, como a Resolução CNS 510, para que a revisão pelo especialista recaia onde importa e não trave as escutas simples. O § 1º dá exemplos, não uma lista fechada. O § 4º segue o guia do Code for America (compensar o tempo do participante) e a Resolução (ressarcimento de despesas), sem obrigar despesa.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Resolução CNS 510/2016, arts. 3º, VIII e IX, 9º e 18 a 21 (não usar em prejuízo nem acentuar estigma; ressarcimento de despesas; gradação do risco); Code for America, Guia (2020), p. 19 (incentivos); Urban Institute, kit 02 (populações que pedem proteção extra; incentivo que não seja coercitivo).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1 e DM7.2</h4><p>DM7.1 (ético) e DM7.2 (revisão por especialista onde o risco pede).</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo IV – Da representatividade e da acessibilidade</div>
+  <article class="art novo" id="art9" data-tipo="novo" data-sub="DM7.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 9º</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span></div>
+      <p>Art. 9º O responsável pela escuta comparará o perfil dos participantes com o da população do território ou do público da escuta, a partir do Perfil Socioeconômico por Bairro, do Censo do IBGE ou do cadastro do serviço, e registrará os grupos sub-representados.</p><p>§ 1º O perfil será colhido de forma voluntária e sem identificação, por bairro, faixa etária, gênero, cor ou raça, escolaridade e deficiência, no credenciamento, na consulta on-line ou em ficha própria.</p><p>§ 2º Quando um grupo estiver sub-representado, o órgão buscará ouvi-lo ativamente antes de encerrar a escuta, por meios como atividades nos bairros e nos equipamentos públicos que esse grupo frequenta, horários alternativos, parceria com organizações locais, abordagem presencial ou conversa sobre dados.</p><p>§ 3º Na audiência pública, mantém-se o revezamento das falas entre bairros e temas.</p><p>§ 4º O perfil dos participantes e os grupos que continuaram sub-representados constarão da devolutiva (art. 13).</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM7.1 pede métodos representativos. Na consulta on-line do PPA, 68,6% dos 739 respondentes tinham superior completo ou pós-graduação e 66,7% eram mulheres; as audiências nos bairros compensaram em parte, mas não há registro de que a Prefeitura confira quem participou.</p></div>
+      <div><h4>Intenção</h4><p>Medir quem participou e ir atrás de quem faltou, como o MDRC e o Urban Institute recomendam, em vez de presumir que quem veio representa todos. O § 3º mantém a regra do edital, que já promove "a representatividade territorial e temática".</p></div>
+      <div class="origem"><h4>Origem</h4><p>MDRC (2022: viés de não resposta; ouvir quem não responde); Urban Institute, kit 04 (estratégia de amostra e de recrutamento que garanta representatividade; busca ativa de quem costuma não responder) e kit 01 ("ouvir as vozes altas e as baixas"); WWC, Guide to Remote Community Engagement (2020: comunidades em risco de exclusão; conectores comunitários); Edital do "A Voz da Gente" 2026/2027, item 3.4.3; Estudo 01, Anexo C (perfil dos respondentes on-line do PPA).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1</h4><p>É o "representativo" do DM7.1, com a prova: o perfil comparado.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art10" data-tipo="novo" data-sub="DM7.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 10</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span></div>
+      <p>Art. 10. A escuta assegurará:</p><p class="inc">I - local acessível e intérprete de Libras nas audiências públicas e, nas demais escutas, quando solicitado;</p><p class="inc">II - alternativa não digital à consulta on-line, como formulário em papel em equipamento público ou participação por telefone;</p><p class="inc">III - materiais em linguagem simples, com recursos de acessibilidade; e</p><p class="inc">IV - horários e locais que permitam a participação de quem trabalha.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Quem não consegue chegar, ouvir ou usar a internet fica de fora, e a escuta deixa de ser representativa.</p></div>
+      <div><h4>Intenção</h4><p>Estender a todas as escutas o que o edital do "A Voz da Gente" já garante nas audiências: acessibilidade e intérprete de Libras em todas.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Edital do "A Voz da Gente" 2026/2027 (acessibilidade e intérprete de Libras em todas as audiências); WWC, Guide to Remote Community Engagement (2020: exclusão digital; métodos sem internet; opção por telefone); Urban Institute, Guia de Data Chats (local acessível, opção por telefone, linguagem simples).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1</h4><p>DM7.1 (representativo e participativo).</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo V – Da análise e do uso na decisão</div>
+  <article class="art novo" id="art11" data-tipo="novo" data-sub="DM7.1 DM7.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 11</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span><span class="tag sub">DM7.2</span></div>
+      <p>Art. 11. As contribuições serão analisadas com os critérios escritos no plano de escuta:</p><p class="inc">I - cada contribuição recebe registro com código, data, canal, bairro e tema, sem dado pessoal;</p><p class="inc">II - as contribuições são agrupadas por tema, a partir dos temas previstos no plano e dos que surgirem da leitura;</p><p class="inc">III - a secretaria competente emite parecer sobre cada contribuição ou grupo de contribuições, com a conclusão (incorporada, incorporada em parte, já atendida, não incorporada ou fora da competência do Município) e o motivo, no modelo do Anexo IV, parte A;</p><p class="inc">IV - a análise distingue o que foi dito da interpretação da equipe; e</p><p class="inc">V - os temas e as conclusões são conferidos por pessoa da equipe que não fez a primeira análise.</p><p>Parágrafo único. Nas entrevistas, nos grupos focais e nas oficinas, a síntese registra os temas, os achados e trechos sem identificação que os ilustrem.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>No ciclo do PPA, cada contribuição recebeu resposta escrita das secretarias, mas não se localizou orientação escrita sobre como analisar nem com que critério (pedido DM7-2). Sem critério, duas secretarias podem tratar a mesma proposta de formas diferentes.</p></div>
+      <div><h4>Intenção</h4><p>Escrever o que já se faz na prática (parecer de pertinência e viabilidade, itens 5.1 e 5.2 do edital) e acrescentar duas regras de rigor do guia do Code for America: separar fato de interpretação e conferir por uma segunda pessoa. As cinco conclusões do inciso III detalham a devolutiva do PPA, que registrava pertinência, inclusão e uma resposta em texto.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Edital do "A Voz da Gente" 2026/2027, itens 5.1 e 5.2 (encaminhamento às secretarias para parecer de pertinência e viabilidade); PPA 2026–2029, Anexo V (resposta a cada contribuição); Code for America, Guia (2020), p. 45–49 (codificação dedutiva e indutiva; nomear suposições; documentar a síntese; confirmação pela equipe).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1 e DM7.2</h4><p>DM7.1 (rigor da análise) e DM7.2 (plano de análise do protocolo).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art12" data-tipo="novo" data-sub="DM7.1">
+    <div class="texto"><div class="cab"><span class="id">Art. 12</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span></div>
+      <p>Art. 12. O processo administrativo da decisão apoiada pela escuta, como o projeto do Plano Plurianual ou da Lei Orçamentária Anual, o plano setorial ou a mudança de serviço, registrará as contribuições consideradas e o que mudou por causa delas.</p><p>Parágrafo único. Cada órgão que fizer escuta no ano indicará ao Registro de Escutas (Anexo V) ao menos um caso de decisão mudada por ela, com o documento que o comprove.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A definição do DM7 termina em "para apoiar as decisões", e a evidência sugerida no original inclui um exemplo de opinião da comunidade que informou uma decisão. Em SBC, há casos (a reforma do CAPS Assunção entrou no PPA), mas não estão reunidos.</p></div>
+      <div><h4>Intenção</h4><p>Fazer a ligação entre escuta e decisão ficar registrada no próprio processo, como os mapas do NYC Speaks ligam achado, citação e compromisso da Prefeitura. O parágrafo único garante, todo ano, casos para mostrar.</p></div>
+      <div class="origem"><h4>Origem</h4><p>NYC Speaks, mapas de resposta da comunidade (2022: achado, citação e compromisso da Prefeitura); South Bend (a pesquisa de 2020 levou ao plano de recuperação das ruas); evidência sugerida do DM7 no original em inglês (4º item); ficha DM7, §3 (CAPS Assunção no PPA).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1</h4><p>DM7.1 ("para apoiar as decisões") e o 4º item de evidência.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo VI – Da devolutiva</div>
+  <article class="art novo" id="art13" data-tipo="novo" data-sub="DM7.1 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 13</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 13. A devolutiva será publicada na página da escuta e, no Programa "A Voz da Gente", na página do programa, com o conteúdo mínimo do Anexo IV, parte B:</p><p class="inc">I - o que foi perguntado, a quem, quando e por quais métodos;</p><p class="inc">II - o perfil dos participantes comparado com o da população (art. 9º);</p><p class="inc">III - os principais temas ouvidos;</p><p class="inc">IV - a resposta a cada contribuição ou grupo de contribuições, sem identificação;</p><p class="inc">V - o que mudou na decisão e o que não foi acolhido, com o motivo; e</p><p class="inc">VI - os limites da escuta, como os grupos que continuaram sub-representados.</p><p>§ 1º A devolutiva será publicada até a data de envio do projeto de lei à Câmara, no caso do Plano Plurianual, da Lei de Diretrizes Orçamentárias e da Lei Orçamentária Anual, e em até 60 (sessenta) dias do encerramento da escuta, nos demais casos.</p><p>§ 2º Os participantes que informaram contato serão avisados da publicação, e a devolutiva terá versão resumida em linguagem simples.</p><p>§ 3º Os participantes de entrevista, grupo focal ou oficina receberão também a síntese dos achados, em formato acessível.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O edital de 2026 promete publicar as contribuições e um relatório consolidado (item 6.1), mas o do ciclo 2026 não foi localizado (pedido DM7-1). Sem devolutiva, a população não sabe se foi ouvida, e a próxima escuta perde participantes.</p></div>
+      <div><h4>Intenção</h4><p>"Fechar o ciclo": dizer o que se ouviu e o que se fez, como pede o guia da própria WWC. O prazo ligado ao envio do projeto à Câmara faz a devolutiva chegar enquanto a decisão ainda está em debate. Os prazos são escolha do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Edital do "A Voz da Gente" 2026/2027, item 6.1; WWC, Guide to Remote Community Engagement (2020: publicar a ata e o que foi feito em resposta); NYC Speaks (2022); Resolução CNS 510/2016, arts. 3º, IV, e 17, VI (devolver em formato acessível à população pesquisada); Code for America, Guia (2020), p. 45–49 (devolver os resultados aos participantes); PPA 2026–2029, Anexo V.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1</h4><p>DM7.1 (participativo e ligado à decisão) e o 4º item de evidência. A devolutiva publicada é a prova mais forte do DM7.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo VII – Da revisão por especialista e da coordenação</div>
+  <article class="art novo" id="art14" data-tipo="novo" data-sub="DM7.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 14</span><span class="tag novo">Novo</span><span class="tag sub">DM7.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 14. Este Protocolo baseia-se no Guia de Prática de Pesquisa Qualitativa do Code for America, modelo de boas práticas oferecido pela What Works Cities, e será revisado por especialista em métodos de pesquisa qualitativa:</p><p class="inc">I - antes da primeira aplicação e a cada 2 (dois) anos, com parecer registrado; e</p><p class="inc">II - nos planos de escuta de risco moderado ou elevado (art. 8º, § 2º).</p><p>§ 1º O especialista será servidor com formação em métodos de pesquisa, docente de instituição de ensino ou de pesquisa com a qual o Município tenha parceria, ou instituição contratada, sem vínculo com a decisão em causa.</p><p>§ 2º Quando instituição de pesquisa conduzir a escuta como pesquisa científica, e não apenas revisar o protocolo, observará também as normas do sistema de ética em pesquisa, com Comitê de Ética em Pesquisa e registro na Plataforma Brasil.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM7.2 pede um protocolo revisado por especialista em métodos de coleta "e/ou" um modelo validado de boas práticas. O guia do Code for America é o modelo que a própria WWC oferece na página do critério e no pacote do Fórum.</p></div>
+      <div><h4>Intenção</h4><p>Atender pelas duas vias: o Protocolo já nasce do modelo validado, o que basta pelo "e/ou", e a revisão por especialista é reforço e salvaguarda nas escutas de maior risco. O § 2º evita confusão: revisar o protocolo não obriga a passar por comitê de ética; conduzir pesquisa científica, sim. A periodicidade é escolha do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Página do DM7 e pacote do Fórum da WWC (o guia do Code for America é recurso e modelo); Urban Institute, kit 02 (revisão do protocolo por comitê de ética); South Bend (rigor de instituto de pesquisa externo); Resolução CNS 510/2016, arts. 1º, parágrafo único, I, 23 e 28, I.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.2</h4><p>É o DM7.2: modelo validado e revisão por especialista.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art15" data-tipo="novo" data-sub="DM7.1 DM7.2 escolha">
+    <div class="texto"><div class="cab"><span class="id">Art. 15</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span><span class="tag sub">DM7.2</span><span class="tag escolha">Ponto de escolha do município</span></div>
+      <p>Art. 15. A aplicação deste Protocolo será coordenada:</p><p class="inc">I - no Programa "A Voz da Gente", pelo Departamento de Orçamento e Gestão da Secretaria da Fazenda; e</p><p class="inc">II - nas demais escutas, pelo órgão que as promove, com o apoio da Secretaria de Coordenação Governamental.</p><p>§ 1º A Secretaria de Coordenação Governamental manterá o Registro de Escutas (Anexo V), com cada escuta, o plano, a devolutiva e os casos de decisão, e o publicará uma vez por ano.</p><p>§ 2º Os órgãos informarão cada escuta ao Registro no início e no encerramento.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Sem um lugar que reúna as escutas, a Prefeitura não consegue mostrar que tem um processo de rotina, e as secretarias não aprendem umas com as outras (pedido DM7-5).</p></div>
+      <div><h4>Intenção</h4><p>Deixar o programa orçamentário com quem já o conduz e dar a articulação das demais escutas a quem tem, por lei, a articulação entre as secretarias. O Registro é a evidência de rotina que a WWC pede. A divisão de papéis é escolha do município.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Lei Municipal 7.367/2025, arts. 717 a 726 (Coordenação Governamental: articulação intersecretarial e políticas intersetoriais); ata da audiência de elaboração da LOA 2027 (Secretaria da Fazenda, Departamento de Orçamento e Gestão); NYC Speaks (2022: um responsável pelo engajamento entre as secretarias); WWC, Guide to Remote Community Engagement (2020: práticas institucionalizadas de escuta).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1 e DM7.2</h4><p>Dá ao DM7 a rotina documentada que a definição pede.</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="art16" data-tipo="novo" data-sub="DM7.1 DM7.2">
+    <div class="texto"><div class="cab"><span class="id">Art. 16</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span><span class="tag sub">DM7.2</span></div>
+      <p>Art. 16. Este Protocolo será reavaliado ao fim de cada ciclo do Programa "A Voz da Gente", com base nas devolutivas, nas avaliações dos participantes e no parecer do especialista, e as mudanças serão publicadas com a data e o motivo.</p><p>Parágrafo único. Ao fim de cada escuta, os participantes poderão avaliar a atividade em formulário curto, cujo resultado integra a reavaliação.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Um protocolo que não aprende com o uso envelhece.</p></div>
+      <div><h4>Intenção</h4><p>Ligar a revisão ao calendário que já existe, o ciclo orçamentário, e ouvir os participantes sobre a própria escuta, como o guia da WWC sugere para as audiências.</p></div>
+      <div class="origem"><h4>Origem</h4><p>WWC, Guide to Remote Community Engagement (2020: pesquisa de avaliação com os participantes); Urban Institute, Guia de Data Chats (avaliação depois do evento); Code for America, Guia (2020).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1 e DM7.2</h4><p>Mantém os dois subcritérios em dia a cada ciclo.</p></div>
+    </aside>
+  </article>
+  <div class="capitulo">Capítulo VIII – Das disposições finais</div>
+  <article class="art novo" id="art17" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 17</span><span class="tag novo">Novo</span></div>
+      <p>Art. 17. Integram esta Portaria Conjunta os seguintes anexos:</p><p class="inc">I - Anexo I – Plano de escuta (modelo);</p><p class="inc">II - Anexo II – Métodos e quando usar;</p><p class="inc">III - Anexo III – Aviso, termo de consentimento e concordância da criança (modelos);</p><p class="inc">IV - Anexo IV – Análise e devolutiva; e</p><p class="inc">V - Anexo V – Registro de Escutas.</p><p>Parágrafo único. A Secretaria da Fazenda e a Secretaria de Coordenação Governamental poderão atualizar os anexos, publicando a nova versão com a data e o que mudou.</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Anexos aprovados junto com o Protocolo viram regra e contam como evidência.</p></div>
+      <div><h4>Intenção</h4><p>Os modelos são a parte que muda com a prática.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Mesmo arranjo das outras versões do projeto (DM5 v01, art. 17; DM6 v01, art. 14).</p></div>
+      <div class="wwc"><h4>Relação com a WWC</h4><p>Apoio.</p></div>
+    </aside>
+  </article>
+  <article class="art igual" id="art18" data-tipo="novo" data-sub="">
+    <div class="texto"><div class="cab"><span class="id">Art. 18</span></div><p>Art. 18. Esta Portaria Conjunta entra em vigor na data de sua publicação.</p></div>
+  </article>
+  <div class="assinatura" data-bloco="assinatura">São Bernardo do Campo, ………..<br><b>Secretário(a) da Fazenda · Secretário(a) de Coordenação Governamental</b></div>
+  <div class="capitulo">Anexos</div>
+  <article class="art novo" id="anx1" data-tipo="novo" data-sub="DM7.1 DM7.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo I</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span><span class="tag sub">DM7.2</span></div>
+      <p><b>Anexo I – Plano de escuta (modelo)</b></p><p>Preenchido pelo responsável pela escuta e aprovado pelo titular do órgão antes do início (art. 3º). Publicado sem os dados dos participantes.</p><div class="rolavel"><table class="anexo"><thead><tr><th>Item</th><th>O que preencher</th></tr></thead><tbody><tr><td>1. Decisão</td><td>Que decisão a escuta vai apoiar (plano, orçamento, programa, serviço) e até quando ela será tomada</td></tr><tr><td>2. Objetivos e perguntas</td><td>O que se quer saber, em até cinco perguntas de escuta</td></tr><tr><td>3. O que já se sabe</td><td>Dados, escutas anteriores e relatórios da Ouvidoria consultados; o que eles já respondem</td></tr><tr><td>4. Público e amostra</td><td>Quem precisa estar representado, por território e por grupo da população; meta de participação de cada grupo; como cada um será alcançado</td></tr><tr><td>5. Métodos</td><td>Métodos escolhidos no Anexo II e por quê; roteiro ou questionário, com a data do teste prévio</td></tr><tr><td>6. Acessibilidade</td><td>Local, Libras, alternativa não digital, horários (art. 10)</td></tr><tr><td>7. Dados colhidos</td><td>Que dados pessoais e demográficos serão colhidos e por quê; onde ficam; quando serão eliminados (art. 7º)</td></tr><tr><td>8. Risco e cuidados</td><td>Mínimo, baixo, moderado ou elevado, com o motivo e os cuidados; se houver criança, adolescente ou pessoa que depende do serviço, as medidas do art. 6º</td></tr><tr><td>9. Consentimento</td><td>Aviso (Anexo III, parte A) ou termo individual (parte B); concordância da criança (parte C), se houver</td></tr><tr><td>10. Análise</td><td>Temas iniciais; quem faz a análise e quem confere; que secretarias darão parecer (art. 11)</td></tr><tr><td>11. Uso e devolutiva</td><td>Em que processo a decisão será registrada (art. 12); onde e quando a devolutiva será publicada (art. 13)</td></tr><tr><td>12. Equipe e cronograma</td><td>Responsável pela escuta, equipe, datas</td></tr><tr><td>13. Revisão pelo especialista</td><td>Se é exigida (risco moderado ou elevado) e o parecer, quando houver (art. 14)</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O plano é a prova de que a escuta teve método, e o lugar onde as regras do Protocolo viram decisões concretas.</p></div>
+      <div><h4>Intenção</h4><p>Treze itens, na ordem em que a equipe pensa a escuta, de "para que decisão" até "quem revisa".</p></div>
+      <div class="origem"><h4>Origem</h4><p>Code for America, Guia (2020), p. 15–18 (plano de pesquisa); Urban Institute, kit 04 (desenho e teste do questionário; estratégia de amostra); Resolução CNS 510/2016, arts. 18 a 21 (risco).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1 e DM7.2</h4><p>DM7.2 (o protocolo aplicado) e DM7.1 (rigor documentado).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx2" data-tipo="novo" data-sub="DM7.1">
+    <div class="texto"><div class="cab"><span class="id">Anexo II</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span></div>
+      <p><b>Anexo II – Métodos e quando usar</b></p><p>Os métodos podem ser combinados. A escolha é registrada no plano de escuta (item 5).</p><div class="rolavel"><table class="anexo"><thead><tr><th>Método</th><th>Quando usar</th><th>Cuidados</th><th>Referência</th></tr></thead><tbody><tr><td>Audiência pública descentralizada</td><td>Ouvir muitas pessoas, em todos os territórios, sobre prioridades</td><td>Revezamento de falas entre bairros; Libras; registro de cada contribuição; perfil dos participantes</td><td>Edital do "A Voz da Gente"</td></tr><tr><td>Audiência setorial (inclusive com crianças)</td><td>Ouvir um segmento com interesse próprio (terceiro setor, setor produtivo, crianças)</td><td>Com crianças: autorização dos responsáveis, roteiro adaptado e profissional presente (art. 6º)</td><td>Ciclo da LOA 2027</td></tr><tr><td>Consulta on-line ou em papel com perguntas abertas</td><td>Alcançar quem não vai às audiências</td><td>Alternativa em papel; perfil voluntário no fim; o perfil on-line costuma ser pouco representativo</td><td>Consulta do PPA 2026–2029</td></tr><tr><td>Entrevista individual em profundidade</td><td>Entender experiência, motivos e obstáculos</td><td>Roteiro igual para todos; condutor e anotador; consentimento registrado</td><td>Code for America, p. 22–41</td></tr><tr><td>Grupo focal</td><td>Ver como um grupo discute um tema e onde há acordo e desacordo</td><td>Grupo com perfil definido no plano; facilitação neutra; consentimento registrado</td><td>Página do DM7; Urban, kit 04</td></tr><tr><td>Conversa sobre dados</td><td>Confrontar os dados do bairro com a experiência dos moradores</td><td>7 a 12 pessoas; parceiro local; dados em linguagem simples</td><td>Urban, Guia de Data Chats</td></tr><tr><td>Oficina participativa ou conselho consultivo</td><td>Construir proposta com a comunidade ou acompanhar um projeto</td><td>Papéis e poder de decisão claros; remuneração ou ressarcimento, quando houver</td><td>Urban, kits 01 e 02</td></tr><tr><td>Abordagem presencial</td><td>Perguntas curtas a quem usa um equipamento ou serviço</td><td>Poucos minutos; aviso de que não afeta o atendimento</td><td>Code for America (interceptação)</td></tr><tr><td>Pesquisa por amostra</td><td>Medir a opinião de toda a população, com margem de erro conhecida</td><td>Amostra aleatória; de preferência por instituição especializada; perguntas abertas, se o objetivo for qualitativo</td><td>South Bend; Decreto 21.580, art. 21</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM7.1 aceita vários métodos; o que conta é escolher o certo para a pergunta e aplicá-lo bem.</p></div>
+      <div><h4>Intenção</h4><p>Um quadro curto, com os métodos que SBC já usa (audiências, consulta) e os que os recursos da WWC recomendam para ouvir mais a fundo.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Code for America, Guia (2020), p. 22–41; Urban Institute, Guia de Data Chats e kits 01, 02 e 04; South Bend (pesquisa por amostra, por instituto externo); Decreto 21.580/2021, art. 21 (pesquisa com significância estatística); Edital do "A Voz da Gente" 2026/2027.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1</h4><p>DM7.1 (métodos rigorosos, representativos e participativos).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx3" data-tipo="novo" data-sub="DM7.1 DM7.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo III</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span><span class="tag sub">DM7.2</span></div>
+      <p><b>Anexo III – Aviso, termo de consentimento e concordância da criança (modelos)</b></p><p>Parte A – Aviso para audiência pública e consulta aberta (lido ou exibido no início e publicado com o edital ou o formulário):</p><p>"Esta escuta é promovida pela [órgão] para apoiar [decisão]. A participação é voluntária. As contribuições serão analisadas pelas secretarias e publicadas sem o seu nome, com a resposta da Prefeitura a cada uma, em [página] até [data]. Os seus dados de contato e o seu perfil (bairro, idade, gênero, cor ou raça, escolaridade, deficiência) são opcionais, servem para avisá-lo da devolutiva e para saber se todos os grupos da população foram ouvidos, nunca serão publicados e serão eliminados em [prazo]. Participar ou não participar não afeta nenhum atendimento. Dúvidas: [contato]."</p><p>Parte B – Termo de consentimento para entrevista, grupo focal, oficina e conversa sobre dados (registrado por escrito, em áudio, em Libras ou em outro meio adequado):</p><div class="rolavel"><table class="anexo"><thead><tr><th>Item</th><th>Texto-modelo</th></tr></thead><tbody><tr><td>Quem e para quê</td><td>Esta escuta é feita pela [órgão] para apoiar [decisão].</td></tr><tr><td>O que acontece</td><td>Vamos conversar por cerca de [tempo] sobre [tema]. [A conversa será gravada em áudio só para conferir as anotações, se você autorizar.]</td></tr><tr><td>Voluntário</td><td>Você não é obrigado a participar, pode deixar de responder qualquer pergunta e pode parar a qualquer momento. Isso não afeta nenhum atendimento.</td></tr><tr><td>Seus dados</td><td>Seu nome e seu contato ficam guardados à parte, só com [responsável], e serão eliminados em [prazo]. O que você disser será usado sem o seu nome.</td></tr><tr><td>Riscos e cuidados</td><td>[Descrever, conforme o risco do plano.]</td></tr><tr><td>Retirada</td><td>Você pode pedir, até [data da devolutiva], que a sua fala seja retirada da análise.</td></tr><tr><td>Devolutiva</td><td>O resultado será publicado em [página] até [data], e você será avisado se deixar contato.</td></tr><tr><td>Contato</td><td>[Nome do responsável pela escuta, telefone ou e-mail institucional.]</td></tr><tr><td>Registro</td><td>Concordo em participar: [ ] sim [ ] não. Autorizo a gravação em áudio: [ ] sim [ ] não. Data, nome e forma do registro (assinatura, áudio, Libras).</td></tr></tbody></table></div><p>Parte C – Concordância da criança ou do adolescente (pedida depois do consentimento do responsável, com palavras adequadas à idade):</p><p>"Nós somos da Prefeitura e queremos saber o que você pensa sobre [tema], para melhorar [decisão]. Você não é obrigado a participar e pode parar quando quiser, sem nenhum problema. Não vamos contar para ninguém o seu nome nem mostrar a sua foto. Você quer participar?"</p></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>Consentimento só protege se a pessoa entende o que está aceitando, e modelos prontos evitam que cada equipe redija o seu.</p></div>
+      <div><h4>Intenção</h4><p>Três modelos curtos: um aviso para as escutas abertas, que não exige termo individual, um termo para as escutas com conversa a fundo e um texto para a criança, sem palavras difíceis.</p></div>
+      <div class="origem"><h4>Origem</h4><p>Code for America, Guia (2020), p. 9–13 (formulário de consentimento, com modelo); Resolução CNS 510/2016, arts. 12 e 17 (assentimento; conteúdo mínimo do registro do consentimento); LGPD, arts. 9º e 14.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1 e DM7.2</h4><p>DM7.1 (ético) e DM7.2 (segurança dos participantes).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx4" data-tipo="novo" data-sub="DM7.1 DM7.2">
+    <div class="texto"><div class="cab"><span class="id">Anexo IV</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span><span class="tag sub">DM7.2</span></div>
+      <p><b>Anexo IV – Análise e devolutiva</b></p><p>A parte A é preenchida durante a análise (art. 11) e publicada sem dado pessoal; a parte B é o conteúdo mínimo da devolutiva (art. 13).</p><p><b>Parte A – Ficha de análise e parecer</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Código</th><th>Data</th><th>Canal</th><th>Bairro</th><th>Tema</th><th>Resumo da contribuição</th><th>Secretaria</th><th>Conclusão</th><th>Motivo</th><th>Conferido por</th></tr></thead><tbody><tr><td colspan="10" class="vaz">Preenchido a cada registro.</td></tr></tbody></table></div><p><b>Parte B – Conteúdo mínimo da devolutiva</b></p><div class="rolavel"><table class="anexo"><thead><tr><th>Seção</th><th>O que contém</th></tr></thead><tbody><tr><td>1. A escuta</td><td>O que foi perguntado, a quem, quando e por quais métodos; quantas contribuições por canal</td></tr><tr><td>2. Quem participou</td><td>Perfil dos participantes comparado com o da população; grupos sub-representados e o que se fez para ouvi-los</td></tr><tr><td>3. O que ouvimos</td><td>Principais temas, com trechos sem identificação</td></tr><tr><td>4. O que fizemos</td><td>Resposta a cada contribuição ou grupo de contribuições (parte A); o que mudou na decisão; o que não foi acolhido e por quê</td></tr><tr><td>5. Limites</td><td>O que a escuta não alcançou e o que fica para a próxima</td></tr><tr><td>6. Versão resumida</td><td>Uma página em linguagem simples, enviada a quem deixou contato</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>A ficha é a prova de que houve critério na análise; a devolutiva é a prova de que a escuta chegou à decisão.</p></div>
+      <div><h4>Intenção</h4><p>A ficha tem as colunas da devolutiva do PPA (contribuição e resposta), mais o tema, a conclusão padronizada e quem conferiu. A devolutiva segue a ordem do NYC Speaks: o que ouvimos, o que fizemos.</p></div>
+      <div class="origem"><h4>Origem</h4><p>PPA 2026–2029, Anexo V (resposta a cada contribuição); Edital do "A Voz da Gente" 2026/2027, itens 5.1, 5.2 e 6.1; NYC Speaks (2022); Code for America, Guia (2020), p. 45–49.</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1 e DM7.2</h4><p>DM7.1 e o 4º item de evidência (opinião da comunidade que informou uma decisão).</p></div>
+    </aside>
+  </article>
+  <article class="art novo" id="anx5" data-tipo="novo" data-sub="DM7.1">
+    <div class="texto"><div class="cab"><span class="id">Anexo V</span><span class="tag novo">Novo</span><span class="tag sub">DM7.1</span></div>
+      <p><b>Anexo V – Registro de Escutas</b></p><p>Mantido pela Secretaria de Coordenação Governamental e publicado uma vez por ano (art. 15). Sem dado pessoal.</p><div class="rolavel"><table class="anexo"><thead><tr><th>Nº</th><th>Órgão</th><th>Tema</th><th>Decisão apoiada</th><th>Período</th><th>Métodos</th><th>Participantes</th><th>Perfil comparado?</th><th>Risco</th><th>Revisão do especialista</th><th>Devolutiva (endereço)</th><th>Caso de decisão</th></tr></thead><tbody><tr><td colspan="12" class="vaz">Preenchido a cada registro.</td></tr></tbody></table></div></div>
+    <aside class="expl">
+      <div><h4>Por quê</h4><p>O DM7 pede um processo "de rotina". O Registro mostra, numa tabela, quantas escutas houve, com que método e o que mudaram.</p></div>
+      <div><h4>Intenção</h4><p>Uma linha por escuta, preenchida no início e no fim. É o documento que se mostra à WWC para provar a rotina e os casos de decisão.</p></div>
+      <div class="origem"><h4>Origem</h4><p>WWC, Guide to Remote Community Engagement (2020: práticas institucionalizadas); NYC Speaks (2022: um responsável pelo engajamento entre as secretarias); mesmo arranjo dos registros das outras versões do projeto (DM5 v01, Anexo IV; DM6 v01, Anexo IV).</p></div>
+      <div class="wwc"><h4>Relação com a WWC · DM7.1</h4><p>DM7.1 (rotina e ligação com decisões).</p></div>
+    </aside>
+  </article>
+  <div class="vazio" id="vazio">Nenhum item corresponde ao filtro escolhido.</div>
+</details>
+
+<details class="cartao obs">
+  <summary><h2>Observações para quem for decidir</h2></summary>
+  <ol>
+    <li><b>Natureza deste texto.</b> É um rascunho de indicação técnica, para servir de base à equipe e à Procuradoria. A decisão cabe ao município.</li>
+    <li class="destaque"><b>Instrumento e coordenação (pontos de escolha).</b> O texto está escrito como portaria conjunta da Secretaria da Fazenda, que conduz o "A Voz da Gente" (ata da audiência da LOA 2027), e da Secretaria de Coordenação Governamental, que articula as secretarias (Lei 7.367/2025, arts. 717 a 726). Uma portaria conjunta obriga o programa orçamentário e orienta as demais escutas; se a equipe quiser exigir o Protocolo de todas as secretarias com mais força, o caminho é decreto, com o mesmo texto. O DM7.2 diz "a prefeitura exige um protocolo": a portaria basta para isso no programa, que é a principal escuta de SBC. Pedido à equipe: DM7-6 (e DM7-2, sobre quem coordena).</li>
+    <li><b>Prazo da certificação (18/12/2026).</b> O DM7 não tem janela de tempo, mas pede 2 de 2. Para marcar "Sim" até o envio, precisam existir: o Protocolo aprovado (DM7.2) e as planilhas 08 e 09 do PPA fora do ar ou sem identificação (art. 7º, § 3º; pedido DM7-3), sem o que o "ético" do DM7.1 fica em xeque. Reforçam, se couberem antes de 18/12: a devolutiva do ciclo 2026 publicada (pedido DM7-1), um caso de decisão documentado (pedido DM7-7) e o parecer do especialista (art. 14; pedido DM7-6). A WWC aceitar o Protocolo sem nenhuma escuta ainda feita sob ele é hipótese, que não há como medir daqui; o DM7.1 se apoia no que o "A Voz da Gente" já fez.</li>
+    <li><b>Resolução CNS 510/2016.</b> Não obriga a escuta da Prefeitura: a Resolução vale para pesquisa científica e exclui a pesquisa de opinião pública com participantes não identificados (art. 1º, parágrafo único, I). Foi usada como referência de ética (consentimento, crianças, risco, devolutiva), por ser o padrão nacional que um especialista brasileiro usaria para revisar o protocolo. Só passa a obrigar se uma universidade conduzir a pesquisa como pesquisa científica (art. 14, § 2º).</li>
+    <li><b>Números escolhidos aqui.</b> São propostas, não medidas: 30 dias para tirar do ar as planilhas antigas; devolutiva até o envio do projeto à Câmara (PPA, LDO e LOA) ou em 60 dias (demais escutas); revisão pelo especialista a cada 2 anos; conversa sobre dados com 7 a 12 pessoas (o número do guia do Urban Institute).</li>
+    <li><b>O que ficou de fora.</b> Contratar instituto de pesquisa para uma pesquisa periódica por amostra, como South Bend: é o reforço mais forte, mas tem custo e prazo de contratação que não cabem até 18/12. Um conselho consultivo permanente de participantes, como o do MDRC: pode vir depois. O Conselho de Usuários dos Serviços Públicos (Decreto 21.580, arts. 22-A a 22-H) pode ser ouvido nas escutas sobre serviços, se estiver instalado (pedido DM7-4). A pesquisa anual de satisfação do Atende Bem continua como está: é quantitativa, só com perguntas fechadas, e pode alimentar o item 3 do plano de escuta.</li>
+    <li><b>Ligação com outros critérios.</b> As perguntas de perfil seguem o padrão demográfico do DM8 (DM8 v01), e a publicação de planilhas passa pelo roteiro do DM5 (DM5 v01). O perfil dos participantes comparado com a população é também uma forma de usar dados desagregados numa decisão (DM8.2).</li>
+  </ol>
+</details>
+
+<details class="cartao fontes">
+  <summary><h2>Fontes</h2></summary>
+  <ul>
+    <li>What Works Cities, critério DM7 (v4): definição, subcritérios, evidência sugerida (4 itens no original em inglês) e glossário (dados qualitativos; protocolo de pesquisa qualitativa); pacote do Fórum (NYC Speaks, South Bend e o guia do Code for America como modelo).</li>
+    <li>Code for America, Guia de Prática de Pesquisa Qualitativa (2020, 50 p.; tradução para o português de 2025).</li>
+    <li>MDRC, "Colocar a experiência vivida no centro da ciência de dados" (2022); Urban Institute, Guia de Data Chats (2022) e Guia de voz e compartilhamento de poder da comunidade, com os kits 01 a 04 (2021).</li>
+    <li>NYC Speaks, mapas de resposta da comunidade (2022); South Bend, pesquisa da comunidade (página e relatório de 2024, sumário executivo e questionário).</li>
+    <li>What Works Cities, "The Guide to Remote Community Engagement" (2020).</li>
+    <li>Resolução CNS nº 510/2016 (ética em pesquisa em Ciências Humanas e Sociais), lida por inteiro.</li>
+    <li>São Bernardo do Campo: Edital de Chamamento do "A Voz da Gente" 2026/2027 (Notícias do Município nº 2646, p. 37–51); PPA 2026–2029, Anexo V e planilhas 08 e 09; apresentação, ata e mensagem da LOA 2027; Decreto 21.580/2021 (com o Decreto 22.243/2023); Lei 7.367/2025, arts. 717 a 726.</li>
+    <li>Lei Complementar Federal 101/2000, art. 48; Lei Federal 13.709/2018 (LGPD), arts. 6º, 7º, 9º, 14 e 16; Lei Federal 13.460/2017.</li>
+    <li>Recomendações deste projeto: DM5 v01 e DM8 v01 (`versoes/`); ficha DM7.</li>
+  </ul>
+</details>
+
+</main>
+<div class="rodape">Protocolo preparado para o Painel WWC · SBC. Rascunho de indicação técnica; não substitui a análise da Procuradoria.</div>
+
+<script>
+(function () {
+  var estado = { sub: 'todos' };
+  var arts = Array.prototype.slice.call(document.querySelectorAll('.art'));
+  var caps = Array.prototype.slice.call(document.querySelectorAll('.capitulo'));
+  var blocos = Array.prototype.slice.call(document.querySelectorAll('[data-bloco]'));
+  function aplicar() {
+    var visiveis = 0;
+    arts.forEach(function (a) {
+      var subs = (a.getAttribute('data-sub') || '').split(' ');
+      var ok = estado.sub === 'todos' || subs.indexOf(estado.sub) >= 0;
+      a.hidden = !ok; if (ok) visiveis++;
+    });
+    caps.forEach(function (c) {
+      var el = c.nextElementSibling, algum = false;
+      while (el && el.classList.contains('art')) { if (!el.hidden) algum = true; el = el.nextElementSibling; }
+      c.hidden = !algum;
+    });
+    blocos.forEach(function (b) { b.hidden = estado.sub !== 'todos'; });
+    document.getElementById('vazio').style.display = visiveis ? 'none' : 'block';
+    document.getElementById('contagem').textContent = visiveis + ' de ' + arts.length + ' itens';
+  }
+  document.querySelectorAll('[data-filtro]').forEach(function (g) {
+    g.addEventListener('click', function (ev) {
+      var b = ev.target.closest('button'); if (!b) return;
+      estado.sub = b.getAttribute('data-v');
+      g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      aplicar();
+    });
+  });
+  document.querySelectorAll('.sub-card .arts a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var alvo = document.querySelector(a.getAttribute('href'));
+      if (alvo && alvo.hidden) {
+        estado.sub = 'todos';
+        document.querySelectorAll('[data-filtro] button').forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-v') === 'todos' ? 'true' : 'false'); });
+        aplicar();
+      }
+    });
+  });
+  aplicar();
+})();
+</script>
+<script>
+(function () {
+  var quadros = Array.prototype.slice.call(document.querySelectorAll('details.cartao'));
+  function abrirAte(el) { var d = el && el.closest('details'); while (d) { d.open = true; d = d.parentElement.closest('details'); } }
+  function irPara(hash) { var alvo = hash && hash.length > 1 && document.getElementById(decodeURIComponent(hash.slice(1))); if (alvo) { abrirAte(alvo); alvo.scrollIntoView(); } }
+  var a = document.getElementById('abrir-tudo'), f = document.getElementById('fechar-tudo');
+  if (a) a.addEventListener('click', function () { quadros.forEach(function (d) { d.open = true; }); });
+  if (f) f.addEventListener('click', function () { quadros.forEach(function (d) { d.open = false; }); });
+  var antes = [];
+  window.addEventListener('beforeprint', function () { antes = quadros.map(function (d) { return d.open; }); quadros.forEach(function (d) { d.open = true; }); });
+  window.addEventListener('afterprint', function () { quadros.forEach(function (d, i) { d.open = antes[i]; }); });
+  document.querySelectorAll('[data-filtro] button').forEach(function (b) { b.addEventListener('click', function () { var d = document.getElementById('decreto'); if (d) d.open = true; }); });
+  document.querySelectorAll('a[href^="#"]').forEach(function (l) { l.addEventListener('click', function () { var h = l.getAttribute('href'); if (h.length > 1) abrirAte(document.getElementById(h.slice(1))); }); });
+  window.addEventListener('hashchange', function () { irPara(location.hash); });
+  irPara(location.hash);
+})();
+</script>
+</body>
+</html>
