@@ -101,7 +101,8 @@ window.PAINEL = {
       { criterio: 'DM4', assunto: 'Como garantir que os dados estão certos (qualidade e padrões)', documento: 'Guia de Qualidade e Padrões de Dados do DTI, com padrões de campos comuns e formulário de metadados, e formulário "aponte um erro nos dados"', acao: 'Criar', detalhe: 'ato do DTI, sem decreto', prop: { t: 'DM4 v01, o guia com 24 artigos e 5 anexos', u: 'dm4-v01-qualidade.html' }, refs: ['lei7367_645', 'cambridge_dm4'], processo: 'Sem processo' },
       { criterio: 'DM4', assunto: 'Dados das operadoras de patinetes num padrão aberto (GBFS)', documento: 'Decreto 23.119/2025 (credenciamento de bicicletas e patinetes)', acao: 'Atualizar', detalhe: 'só se a Secretaria de Transporte aceitar', prop: { t: 'sem texto; depende da Secretaria de Transporte (DM4-2)' }, refs: ['dec23119'], processo: 'SB 101678/2025' },
       { criterio: 'DM8', assunto: 'Como registrar raça, gênero, idade e deficiência do mesmo jeito em toda a Prefeitura', documento: 'Padrão Municipal de Dados Demográficos, como parte C do Anexo II do Guia de Qualidade (DM4 v01), ou ato próprio', acao: 'Criar', detalhe: 'categorias do IBGE; mantenedora sugerida: Divisão de Indicadores Sociais', prop: { t: 'DM8 v01, a redigir' }, refs: ['lei7367_750', 'dec22452', 'dec20653'], processo: 'Sem processo' },
-      { criterio: 'DM8', assunto: 'Dado da própria Prefeitura por bairro e por grupo da população', documento: 'Uma base publicada no padrão (candidata: matrículas da rede municipal)', acao: 'Criar', detalhe: 'publicação de dados, não norma', prop: { t: 'não se aplica (publicação de dados)' }, refs: ['painel_estatistico'], processo: 'Sem processo' }
+      { criterio: 'DM8', assunto: 'Dado da própria Prefeitura por bairro e por grupo da população', documento: 'Uma base publicada no padrão (candidata: matrículas da rede municipal)', acao: 'Criar', detalhe: 'publicação de dados, não norma', prop: { t: 'não se aplica (publicação de dados)' }, refs: ['painel_estatistico'], processo: 'Sem processo' },
+      { criterio: 'DM9', assunto: 'Como devem ser os serviços de dados e de análise (padrão de serviço de dados)', documento: 'Padrão de Serviços de Dados e de Análise, ato do DTI publicado na página de Dados Abertos; vira o ato do eixo de inteligência estratégica do Decreto 23.403 quando ele vigorar', acao: 'Criar', detalhe: 'ato do DTI, sem decreto; com consulta curta às secretarias usuárias antes do texto final', prop: { t: 'DM9 v01, a redigir' }, refs: ['lei7367_645', 'dec23403'], processo: 'Sem processo' }
     ]
   },
 
@@ -122,6 +123,7 @@ window.PAINEL = {
   // com breve contexto e o que mudou no entendimento. Ajuste de layout ou correção de link do painel não entra.
   // Conferência interna de critério já fechado que não muda nada também não entra (usuário, 2026-10-28: não gerar incerteza na equipe).
   historico: [
+    { data: '2026-11-16', texto: 'DM9: análise validada. Cartão completo, com os cenários de resposta (hoje, "Não"; com o padrão publicado, "Sim"), e passo no roteiro, com os pedidos à equipe (DM9-1 a DM9-5). O sprint da WWC para montar o padrão terminou em 17/11, com inscrições fechadas em 07/10; o caminho é o padrão do DTI, com consulta curta às secretarias usuárias.' },
     { data: '2026-11-16', texto: 'DM9: ficha aberta, em análise. SBC não tem padrão de serviço de dados. O Decreto 23.403/2026 traz os ingredientes (princípios de acessibilidade, segurança e continuidade, indicadores com linha de base e meta) e prevê um ato próprio para o eixo de inteligência estratégica e resultados, que é o lugar natural do padrão, mas só vigora em fevereiro de 2027. Um guia da WWC em português, achado no Fórum, mostra como a avaliação é feita: o padrão precisa ser próprio da cidade, partir das necessidades dos usuários, ser mensurável, aprovado e publicado. Caminho: um padrão curto, de dez pontos, emitido pelo DTI, com a equipe que o mantém e quem acompanha a adoção. Classificação: dá para criar até o prazo (3 de 4).' },
     { data: '2026-11-16', texto: 'DM8: análise validada. Cartão completo, com os cenários de resposta, e passo no roteiro, com os pedidos à equipe (DM8-1 a DM8-6). As categorias de gênero do padrão ficam para o Departamento de Políticas Afirmativas revisar, como fez Cambridge com a comissão LGBTQ+ da cidade; o projeto não propõe lista própria.' },
     { data: '2026-11-16', texto: 'DM8: ficha aberta, em análise. SBC já publica dados por bairro e por grupo da população: o Perfil Socioeconômico por Bairro 2026 traz, para cada bairro, idade, sexo, cor ou raça e vulnerabilidade, a partir do Censo 2022 processado pela Secretaria de Planejamento Urbano, no mesmo modelo do atlas de San Antonio que a WWC cita. Falta formato aberto, falta um dado da própria Prefeitura separado por grupo (hoje só por território) e falta um caso de decisão documentado (DM8.2). O DM8.1 não existe: não há padrão demográfico único, embora a Prefeitura já use o quesito cor ou raça do IBGE nas cotas e o nome social em todos os cadastros. Caminho: um padrão curto com as categorias do IBGE, como parte do Guia de Qualidade do DM4. Classificação: dá para criar até o prazo (2 de 2).' },
@@ -1023,15 +1025,79 @@ window.PAINEL = {
       codigo: 'DM9', area: 'DM', ordem: 11,
       titulo: 'Padrão de serviço de dados',
       definicao: 'A prefeitura tem um padrão documentado e público para desenvolver e implantar serviços de dados e de análise de dados de alta qualidade em toda a prefeitura.',
-      regra: { min: 3, total: 4 }, janela: 'Sem janela', ficha: 'em_analise', plataforma: { resposta: 'Vazio' },
+      regra: { min: 3, total: 4 }, janela: 'Sem janela', plataforma: { resposta: 'Vazio' },
+      ficha: 'rascunho', classificacao: 'criar',
+      cenarios: {
+        hoje: { marcar: 'Não', conta: 'Não há padrão; os decretos de 2026 trazem princípios, mas nenhum documento trata de serviços de dados; o critério pede 3 de 4',
+          texto: 'A Prefeitura instituiu em novembro de 2026 a Política e o Programa Municipal de Governança Digital e de Dados (Decreto 23.403/2026), que prevê princípios de acessibilidade, inclusão, segurança, proteção de dados e continuidade, indicadores com fórmula, linha de base e meta, e um ato próprio para o eixo de inteligência estratégica e resultados. O padrão de serviços de dados e de análise será esse ato.',
+          porques: [
+            { p: 'Há equipe e governança do padrão (DM9.4)?', r: 'O Programa é coordenado pela Secretaria de Administração, com o Comitê de Governança Digital e de Dados, a instalar após a vigência do decreto, em fevereiro de 2027.' }
+          ] },
+        melhorias: { marcar: 'Sim', conta: '3 de 4, ou 4 de 4 com a equipe designada',
+          depende: ['DTI emite e publica o padrão (DM9-2)', 'Consulta aos usuários registrada antes do texto final (DM9-3, DM9-4)', 'Equipe e colegiado indicados (DM9-1, DM9-5)'],
+          texto: 'O Padrão de Serviços de Dados e de Análise de São Bernardo do Campo [PENDENTE: ato], publicado em [PENDENTE: link], define dez pontos que todo serviço de dados e de análise da Prefeitura deve seguir, do propósito à medição de desempenho, com indicadores no formato do Decreto 23.403/2026 e revisão anual de cada serviço. Foi elaborado a partir dos pedidos de dados recebidos pela Lei de Acesso à Informação e de consulta às secretarias usuárias [PENDENTE: registro]. É mantido pelo Departamento de Tecnologia da Informação com a Divisão de Indicadores Sociais, e sua adoção é acompanhada por [PENDENTE: colegiado].',
+          porques: [
+            { p: 'Basta adaptar o modelo da Public Digital?', r: 'Não. O guia do DM9 da própria WWC pede um padrão próprio da cidade, que mostre como partiu das necessidades dos usuários (DM9.2), seja mensurável, aprovado pela liderança e publicado.' }
+          ] }
+      },
+      resumo: 'SBC não tem padrão de serviço de dados. O Decreto 23.403/2026 traz os ingredientes (princípios de acessibilidade, segurança e continuidade; indicadores com linha de base e meta) e prevê um ato próprio para o eixo de inteligência estratégica e resultados, o lugar natural do padrão, mas só vigora em fevereiro de 2027. Há serviços que o padrão governaria (GeoPortal, Painel Estatístico, Perfil por Bairro) e sinais do que os usuários pedem (pedidos de dados pela LAI, Câmara, PPA). O guia da WWC em português diz como a avaliação é feita: padrão próprio, baseado nas necessidades dos usuários, mensurável, aprovado e publicado. O caminho é um padrão curto, de dez pontos, emitido pelo DTI, com a equipe que o mantém e quem acompanha a adoção. Pede 3 de 4.',
       subcriterios: [
-        { cod: 'DM9.1', texto: 'O padrão se compromete a manter e melhorar continuamente os serviços de dados e de análise ao longo do tempo e os trata como serviços completos.' },
-        { cod: 'DM9.2', texto: 'O padrão garante serviços de dados e de análise acessíveis, confiáveis, seguros e éticos, orientados pelas necessidades dos usuários, com critérios de sucesso definidos e dados de desempenho associados.' },
-        { cod: 'DM9.3', texto: 'O padrão inclui boas práticas para o desenho, a entrega e a qualidade dos dados e das análises oferecidos como serviço.' },
-        { cod: 'DM9.4', texto: 'Para apoiar a aplicação do padrão de serviços de dados, a prefeitura tem uma equipe que o elabora e o gerencia, uma governança que ajuda na adoção e orientações para apoiar as equipes que o usam.' }
+        { cod: 'DM9.1', texto: 'O padrão se compromete a manter e melhorar continuamente os serviços de dados e de análise ao longo do tempo e os trata como serviços completos.', situacao: 'nao_tem', classificacao: 'criar',
+          nota: 'Não há padrão. Resolve-se no texto: cada serviço tratado como completo (dados, explicação, limitações, contato e canal de pedido) e revisão programada de cada serviço, como em Scottsdale.', refs: ['dec23403'] },
+        { cod: 'DM9.2', texto: 'O padrão garante serviços de dados e de análise acessíveis, confiáveis, seguros e éticos, orientados pelas necessidades dos usuários, com critérios de sucesso definidos e dados de desempenho associados.', situacao: 'nao_tem', classificacao: 'criar',
+          nota: 'Não há padrão. Pontos de acessibilidade, confiabilidade, segurança e ética; indicadores no formato do art. 34 do Decreto 23.403; e o registro de como os usuários foram ouvidos (pedidos de dados pela LAI, Indicação da Câmara, item 720 do PPA e uma consulta curta às secretarias que usam o Painel e o Perfil). O guia da WWC exige mostrar essa base.', refs: ['dec23403', 'lai2021_gtfs', 'ind14825', 'ppa720'] },
+        { cod: 'DM9.3', texto: 'O padrão inclui boas práticas para o desenho, a entrega e a qualidade dos dados e das análises oferecidos como serviço.', situacao: 'nao_tem', classificacao: 'criar',
+          nota: 'Não há padrão. O texto aponta para as boas práticas já propostas: compartilhamento e pedidos (DM3 v01), qualidade e metadados (DM4 v01), padrão demográfico (DM8) e publicação segura (DM5), em vez de repeti-las.' },
+        { cod: 'DM9.4', texto: 'Para apoiar a aplicação do padrão de serviços de dados, a prefeitura tem uma equipe que o elabora e o gerencia, uma governança que ajuda na adoção e orientações para apoiar as equipes que o usam.', situacao: 'nao_tem', classificacao: 'criar',
+          nota: 'Não há equipe designada nem governança do padrão. Dá para criar, com risco: designar no ato a equipe (DTI e Divisão de Indicadores Sociais) e quem acompanha a adoção até o CGD existir (CGPD ou GT Cidade Inteligente). Depende de quem a Prefeitura indicar.', refs: ['lei7367_645', 'lei7367_750'] }
       ],
       evidencias: ['Padrão de serviço de dados documentado e público.', 'Resumo da equipe, da governança e da orientação de adoção.'],
-      nota: 'Pré-requisito do CI2.1 e do OD4.1.'
+      nota: 'Pré-requisito do CI2.1 e do OD4.1.',
+      versoes: [
+        { v: 'v01', data: '—', situacao: 'aguarda', t: 'Padrão de Serviços de Dados e de Análise de SBC',
+          d: 'A redigir (análise validada em 16/11/2026). Ato do DTI, publicado na página de Dados Abertos, que passa a ser o ato do eixo de inteligência estratégica do Decreto 23.403 quando ele vigorar. Dez pontos: propósito ligado ao Plano de Governo ou ao PPA; conhecer os usuários; serviço completo; acessível a todos; seguro e ético; transparente; qualidade e padrões; confiável e estável (aviso antes de mudar formato); medir e publicar o desempenho; revisão anual de cada serviço. Mais uma seção de quem cuida (equipe, colegiado) e de quando se aplica (serviço novo, mudança, contratação).' }
+      ],
+      sbc: {
+        tem: [
+          { titulo: 'Decreto 23.403/2026: ingredientes e lugar do padrão', texto: 'Princípios de acessibilidade, inclusão, segurança, proteção de dados e continuidade (art. 4º); ato próprio para cada eixo, entre eles o de inteligência estratégica e resultados (arts. 6º e 7º); indicadores com fórmula, fonte, linha de base e meta (art. 34); relatório semestral (art. 35). Vigora em 04/02/2027.' },
+          { titulo: 'Competência do DTI (Lei 7.367/2025, art. 645, XIII)', texto: 'Definir "princípios, padrões e políticas para a gestão de dados": base para o padrão sair como ato do DTI antes de 18/12, como os documentos do DM2 ao DM4.' }
+        ],
+        incompleto: [
+          { titulo: 'Serviços de dados e de análise existentes', texto: 'GeoPortal (13 camadas, dicionário de dados, registro de cada download), Painel Estatístico e Perfil por Bairro (PDF), relatórios do Portal da Saúde.', falta: 'Nenhum documento diz como devem ser feitos, medidos ou revistos.' },
+          { titulo: 'Sinais do que os usuários pedem', texto: 'Pedidos de dados pela LAI (um de 2021 pedia os dados GTFS dos ônibus), Indicação 14.825/2025 da Câmara e a sugestão de portal de dados abertos no PPA (item 720).', falta: 'Não há consulta a usuários de dados; o guia da WWC pede mostrar essa base (DM9-3, DM9-4).' }
+        ],
+        naoTem: [
+          { titulo: 'Padrão de serviço de dados', texto: 'Nenhum documento trata de serviços de dados e de análise (DM9.1 a DM9.3).' },
+          { titulo: 'Equipe e governança do padrão', texto: 'Ninguém designado para elaborar e manter o padrão nem colegiado que acompanhe a adoção (DM9.4).' }
+        ],
+        naoServe: [
+          { titulo: 'Decreto 23.413/2026 (dados abertos)', texto: 'Padrões técnicos e relatório anual de um serviço só, o de dados abertos; não cobre os serviços de análise.' },
+          { titulo: 'Decreto 23.215/2026 (Política de Atendimento)', texto: 'Padrões do atendimento presencial; não trata de dados.' }
+        ]
+      },
+      modelos: [
+        { nome: 'WWC e Public Digital: guia de autoatendimento do DM9 (2025, em português)', cobre: ['DM9.1', 'DM9.2', 'DM9.3', 'DM9.4'], texto: 'Achado no Fórum; não está na página do critério. Três apoios (orientações, governança, equipe); mostrar a base nas necessidades dos usuários; padrão próprio, mensurável, curto, aprovado pela liderança e publicado; modelo em branco para o primeiro rascunho.' },
+        { nome: 'Public Digital: exemplo de padrão de serviço de dados (em português)', cobre: ['DM9.1', 'DM9.2', 'DM9.3'], texto: 'Recurso da página e modelo do pacote do Fórum. 17 pontos, cada um com por que importa e o que significa, do propósito à confiabilidade, com "definir o sucesso e publicar dados de desempenho". É ponto de partida, não para copiar.', u: 'https://drive.google.com/file/d/13h4OKZOFXOejj5g-xkl3jajBJixf02_6/view' },
+        { nome: 'Maipú (Chile): Estándar de Servicios de Datos', cobre: ['DM9.1', 'DM9.2', 'DM9.3'], texto: 'Exemplo aceito no pacote do Fórum. 10 princípios com como cumprir e ferramentas; vale também para fornecedores, com exigência nos termos de referência; princípio próprio de qualidade dos dados.', u: 'https://datos.municipalidadmaipu.cl/servicios/est%C3%A1ndar' },
+        { nome: 'Scottsdale (EUA): Data Service Standard (2023)', cobre: ['DM9.1', 'DM9.4'], texto: 'Exemplo aceito no pacote do Fórum. Oito páginas, oito diretrizes; revisão programada de cada serviço; grupo de governança que mantém o padrão; quando consultar o padrão; documento vivo com caixa de sugestões.', u: 'https://drive.google.com/file/d/1Y58RqcyTYEk7SwNaUF4ts7N52RRf7wrm/view' }
+      ],
+      plano: [
+        { texto: 'Levantar o que SBC já tem', feito: true },
+        { texto: 'Ler os recursos que a WWC indica', feito: true },
+        { texto: 'Validar a análise internamente', feito: true },
+        { texto: 'Receber da equipe as respostas pedidas', feito: false, ancora: 'pedidos-DM9' },
+        { texto: 'Juntar os sinais dos usuários (pedidos LAI, Câmara, PPA, downloads do GeoPortal) e consultar as secretarias que usam o Painel e o Perfil', feito: false },
+        { texto: 'Redigir o padrão (v01), com dez pontos e a seção de quem cuida', feito: false },
+        { texto: 'Emitir e publicar o padrão pelo DTI, com a data da primeira revisão', feito: false },
+        { texto: 'Reunir as evidências (padrão publicado, ato com equipe e colegiado, registro da consulta) e preparar a resposta', feito: false }
+      ],
+      pedidos: [
+        { texto: 'Quem mantém hoje os serviços de dados e de análise (GeoPortal, Painel Estatístico, Perfil por Bairro, Portal da Saúde, BI do CIMGE) e se o DTI (Divisão de Dados) e a Divisão de Indicadores Sociais podem ser a equipe que elabora e mantém o padrão', refs: ['lei7367_dti', 'lei7367_750'], status: 'a_pedir' },
+        { texto: 'Se o DTI aceita emitir o padrão como ato próprio, como os documentos do DM2 ao DM4, e publicá-lo na página de Dados Abertos antes de 18/12; quem aprova', refs: ['lei7367_645'], status: 'a_pedir' },
+        { texto: 'Que informação existe sobre quem usa os dados: pedidos de dados pela LAI e pela Ouvidoria, downloads do GeoPortal, acessos ao Painel e ao Perfil, pedidos das secretarias', refs: ['lai2021_gtfs', 'geoportal'], status: 'a_pedir' },
+        { texto: 'Se dá para ouvir, até o início de dezembro, as secretarias que usam o Painel e o Perfil (e, se possível, a Câmara e uma universidade) sobre o rascunho do padrão', refs: ['painel_estatistico', 'perfil_bairros'], status: 'a_pedir' },
+        { texto: 'Que colegiado acompanha a adoção do padrão até o CGD ser instalado (CGPD, GT Cidade Inteligente ou outro)', refs: ['cgpd', 'port10500', 'dec23403'], status: 'a_pedir' }
+      ]
     },
     {
       codigo: 'CI1', area: 'CI', ordem: 12,
