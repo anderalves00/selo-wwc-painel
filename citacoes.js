@@ -7,6 +7,47 @@ window.CIT = {
 "Art. 12. As respostas serão fornecidas pelas Secretarias consultadas, por mensagem eletrônica ou por correspondência, diretamente ao solicitante, no prazo de até 20 (vinte) dias da data da solicitação, conforme o § 1º do art. 11 da Lei Federal nº 12.527, de 2011, prorrogáveis por mais 10 (dez) dias, mediante prévia justificativa."
 ]
 },
+"dec22963:art2": {
+"fonte": "Decreto nº 22.963/2025 (Programa de Proteção de Dados)",
+"rotulo": "Art. 2",
+"trechos": [
+"Art. 2º O Programa de Proteção de Dados é constituído por ações destinadas à:",
+"I - elaboração de um conjunto de diagnósticos que permita mapear os tratamentos de dados pessoais e dados pessoais sensíveis que são realizados pelo Poder Executivo Municipal, além de possibilitar a análise dos riscos envolvidos;",
+"II - implementação de políticas e boas práticas, definição de competências e atribuições, criação e aperfeiçoamento de instrumentos, processos de trabalho, desenvolvimento de metodologias, minutas-padrão, modelos de documentação e procedimentos, e atividades atinentes à privacidade, bem como a produção de textos normativos e regulamentos;",
+"III - identificação de riscos e respostas para a sua mitigação; e",
+"IV - promoção da capacitação para os agentes públicos, especialmente em temas relativos à proteção e governança de dados."
+]
+},
+"dec22963:art2:II": {
+"fonte": "Decreto nº 22.963/2025 (Programa de Proteção de Dados)",
+"rotulo": "Art. 2",
+"trechos": [
+"Art. 2º O Programa de Proteção de Dados é constituído por ações destinadas à:",
+"[…]",
+"II - implementação de políticas e boas práticas, definição de competências e atribuições, criação e aperfeiçoamento de instrumentos, processos de trabalho, desenvolvimento de metodologias, minutas-padrão, modelos de documentação e procedimentos, e atividades atinentes à privacidade, bem como a produção de textos normativos e regulamentos;",
+"[…]"
+],
+"inteiro": "dec22963:art2"
+},
+"dec22963:art5": {
+"fonte": "Decreto nº 22.963/2025 (Programa de Proteção de Dados)",
+"rotulo": "Art. 5",
+"trechos": [
+"Art. 5º Fica estabelecida a responsabilidade das áreas envolvidas na administração executiva do Município para assegurar a adequada implementação e operacionalização do Programa de Proteção de Dados, conforme os seguintes parâmetros:",
+"I - responsabilidades do Departamento de Tecnologia da Informação (SA-3):",
+"a) implementar e administrar, direta ou indiretamente, métodos de desenvolvimento, implantação e gerenciamento de serviços de Tecnologia da Informação e Comunicação - TIC, que promovam a proteção dos dados pessoais;",
+"b) zelar pela conformidade dos serviços de Tecnologia da Informação e Comunicação - TIC a todas as políticas e normas de proteção de dados pessoais;",
+"c) avaliar os novos sistemas, aplicativos e bancos de dados que possam realizar tratamento de dados pessoais a serem implementados pelos órgãos e entidades da Administração Pública Municipal Direta;",
+"d) atualizar e adequar a política de segurança da informação sob sua responsabilidade para o atendimento às exigências constantes da Lei Geral de Proteção de Dados Pessoais - LGPD; e",
+"e) oferecer subsídios técnicos necessários à edição das diretrizes para implantação do Programa de Proteção e Dados, além de orientar, do ponto de vista tecnológico, o Comitê Gestor de Proteção de Dados - CGPD;",
+"II - responsabilidades das Secretarias Municipais e órgãos da Administração Pública Municipal:",
+"a) adotar e implementar políticas e procedimentos internos para o tratamento adequado de dados pessoais, conforme as diretrizes estabelecidas pelo Programa de Proteção de Dados;",
+"b) garantir que todos os processos e atividades realizadas nas suas respectivas áreas cumpram as disposições da Lei Geral de Proteção de Dados Pessoais - LGPD e demais normativas relacionadas;",
+"c) assegurar a capacitação de seus servidores em temas relacionados à proteção de dados e à privacidade, conforme as orientações do Comitê Gestor de Proteção de Dados - CGPD;",
+"d) realizar avaliações periódicas dos dados pessoais tratados, para garantir a conformidade com as políticas de privacidade e segurança estabelecidas; e",
+"e) identificar e comunicar riscos relacionados ao tratamento de dados pessoais à Controladoria-Geral do Município e ao Comitê Gestor de Proteção de Dados - CGPD."
+]
+},
 "dec23119:art7": {
 "fonte": "Decreto nº 23.119/2025 (bicicletas e patinetes)",
 "rotulo": "Art. 7",
@@ -26,6 +67,17 @@ window.CIT = {
 "Parágrafo único. A fiscalização quanto ao uso e circulação dos equipamentos que compõe o sistema é de competência exclusiva do Município de São Bernardo do Campo mediante a efetivação das atribuições da Secretaria de Transporte, Mobilidade e Infraestrutura de São Bernardo do Campo ou outro órgão daquela, nos termos do Código de Trânsito Brasileiro - CTB."
 ]
 },
+"dec23119:art7:VII": {
+"fonte": "Decreto nº 23.119/2025 (bicicletas e patinetes)",
+"rotulo": "Art. 7",
+"trechos": [
+"Art. 7º Compete às Operadoras do Sistema:",
+"[…]",
+"VII - fornecer à Secretaria de Transporte, Mobilidade e Infraestrutura os dados diários anonimizados de utilização de cada equipamento que compõe o serviço informando horários e trajetos, pontos de início e de encerramento das viagens, fluxo de uso por faixas horárias (manhã/tarde/noite), quantidades de viagens e número de usuários cadastrados/aderentes à plataforma, quilometragem percorrida e todos os demais relatórios que a Administração reputar relevantes à potencialização das políticas públicas de mobilidade urbana;",
+"[…]"
+],
+"inteiro": "dec23119:art7"
+},
 "dec23403:art11": {
 "fonte": "Decreto nº 23.403/2026 (Governança Digital e de Dados)",
 "rotulo": "Art. 11",
@@ -44,6 +96,18 @@ window.CIT = {
 "§ 5º O exercício das funções no CGD não será remunerado e o apoio administrativo será prestado pela Secretaria de Administração com os meios disponíveis.",
 "§ 6º Poderão participar das reuniões, na qualidade de convidados e sem direito a voto, representantes do Centro de Inovação e Tecnologia (CEITEC), de instituições de ensino e pesquisa e de outros parceiros, observados a pauta, os instrumentos aplicáveis e o regime de impedimentos, conflitos de interesses, sigilo e restrições de acesso à informação."
 ]
+},
+"dec23403:art11:p3.I": {
+"fonte": "Decreto nº 23.403/2026 (Governança Digital e de Dados)",
+"rotulo": "Art. 11",
+"trechos": [
+"Art. 11. O Comitê de Governança Digital e de Dados (CGD) será instituído por Portaria do Chefe do Poder Executivo, posterior à publicação deste Decreto, como colegiado de articulação dos órgãos e entidades participantes e de deliberação sobre matérias comuns do Programa, observadas as diretrizes deste Capítulo e as competências legalmente atribuídas aos agentes municipais.",
+"[…]",
+"§ 3º O Departamento de Tecnologia da Informação (DTI) prestará apoio técnico permanente, sem direito a voto adicional ao da Secretaria de Administração, observadas as seguintes disposições:",
+"I - o Comitê Gestor de Proteção de Dados (CGPD) e o Encarregado pelo Tratamento de Dados Pessoais deverão ser ouvidos nas matérias afetas às suas atribuições; e",
+"[…]"
+],
+"inteiro": "dec23403:art11"
 },
 "dec23403:art12": {
 "fonte": "Decreto nº 23.403/2026 (Governança Digital e de Dados)",
@@ -83,6 +147,14 @@ window.CIT = {
 "trechos": [
 "Art. 20. Os registros de acompanhamento individualizarão a autoria e responsabilidade técnica, a decisão institucional, a execução pelas unidades competentes e o resultado verificado.",
 "Parágrafo único. A participação em instância de cooperação não implica transferência de competência ou assunção automática de responsabilidade pelos atos de outros agentes."
+]
+},
+"dec23403:art26": {
+"fonte": "Decreto nº 23.403/2026 (Governança Digital e de Dados)",
+"rotulo": "Art. 26",
+"trechos": [
+"Art. 26. A integração e o compartilhamento dependerão de finalidade e competência demonstradas, observância das bases jurídicas e sigilos aplicáveis, minimização, destinatários definidos, autorizações cabíveis e medidas de segurança e rastreabilidade.",
+"Parágrafo único. Integração tecnológica, solução de sistema, gerenciamento de banco de dados ou fonte de referência não constituem, por si, fundamento jurídico para reunir indiscriminadamente registros pessoais ou substituir cadastros setoriais."
 ]
 },
 "dec23403:art3": {
@@ -219,6 +291,16 @@ window.CIT = {
 "§ 6º O uso de ferramentas de apoio de baixo risco de que trata o § 1º do art. 6º deste Decreto observará autorização de uso simplificada, mediante inclusão em catálogo de ferramentas admitidas mantido pelo Departamento de Tecnologia da Informação, com as restrições de uso aplicáveis."
 ]
 },
+"dec23409:art9:p1": {
+"fonte": "Decreto nº 23.409/2026 (Inteligência Artificial)",
+"rotulo": "Art. 9",
+"trechos": [
+"Art. 9º A utilização institucional de sistema de inteligência artificial dependerá de autorização de uso compatível com o risco e restrita aos casos de uso expressamente autorizados.",
+"§ 1º A avaliação para autorização de uso considerará, conforme aplicável, aspectos funcionais, jurídicos, tecnológicos, contratuais, éticos, de acessibilidade, segurança da informação, proteção de dados, propriedade intelectual, continuidade, interoperabilidade, economicidade e dependência tecnológica.",
+"[…]"
+],
+"inteiro": "dec23409:art9"
+},
 "dec23413:art12": {
 "fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
 "rotulo": "Art. 12",
@@ -256,6 +338,17 @@ window.CIT = {
 "Parágrafo único. O ponto focal de dados abertos poderá ser o representante do órgão no Comitê de Governança Digital e de Dados."
 ]
 },
+"dec23413:art14:II": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 14",
+"trechos": [
+"Art. 14. Compete ao titular de cada órgão da Administração Direta:",
+"[…]",
+"II- decidir sobre a classificação e a abertura das bases de seu órgão, de forma motivada;",
+"[…]"
+],
+"inteiro": "dec23413:art14"
+},
 "dec23413:art15": {
 "fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
 "rotulo": "Art. 15",
@@ -264,6 +357,24 @@ window.CIT = {
 "I - monitorar a implementação do PMDA;",
 "II - orientar as unidades sobre o cumprimento das normas de dados abertos; e",
 "III - apresentar relatório anual sobre o cumprimento do PMDA, com recomendações sobre as medidas necessárias à sua implementação e ao seu aperfeiçoamento."
+]
+},
+"dec23413:art15:III": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 15",
+"trechos": [
+"Art. 15. A autoridade responsável pelo monitoramento da aplicação da Lei Federal nº 12.527, de 2011, no Poder Executivo municipal, nos termos do Decreto Municipal nº 18.882, de 2014, assegurará a publicação e a atualização do PMDA e exercerá as seguintes atribuições:",
+"[…]",
+"III - apresentar relatório anual sobre o cumprimento do PMDA, com recomendações sobre as medidas necessárias à sua implementação e ao seu aperfeiçoamento."
+],
+"inteiro": "dec23413:art15"
+},
+"dec23413:art17": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 17",
+"trechos": [
+"Art. 17. O Comitê de Governança Digital e de Dados (CGD), instituído nos termos do art. 11 do Decreto Municipal nº 23.403, de 2026, acompanhará a execução desta Política como iniciativa do Programa Municipal de Governança Digital e de Dados e apreciará o PMDA e suas revisões, ouvidos o Comitê Gestor de Proteção de Dados (CGPD) e o(a) Encarregado(a) pelo Tratamento de Dados Pessoais nas matérias afetas às suas atribuições, sem autorizar abertura de bases, despesas ou contratações, nos termos do art. 11, § 3º, inciso I, e do art. 12, § 1º, daquele Decreto.",
+"Parágrafo único. As decisões de classificação, abertura e publicação técnica das bases integrarão a matriz de decisões de que trata o art. 18 do Decreto Municipal nº 23.403, de 2026."
 ]
 },
 "dec23413:art18": {
@@ -283,6 +394,52 @@ window.CIT = {
 "§ 3º O PMDA será publicado no portal oficial do Município e revisto ao final de sua vigência ou, motivadamente, quando houver alteração relevante de prioridade ou capacidade."
 ]
 },
+"dec23413:art18:II": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 18",
+"trechos": [
+"Art. 18. O PMDA conterá, no mínimo:",
+"[…]",
+"II - critérios de priorização, motivados e públicos;",
+"[…]"
+],
+"inteiro": "dec23413:art18"
+},
+"dec23413:art18:V": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 18",
+"trechos": [
+"Art. 18. O PMDA conterá, no mínimo:",
+"[…]",
+"V - mecanismos de participação social na priorização;",
+"[…]"
+],
+"inteiro": "dec23413:art18"
+},
+"dec23413:art18:V+p2": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 18",
+"trechos": [
+"Art. 18. O PMDA conterá, no mínimo:",
+"[…]",
+"V - mecanismos de participação social na priorização;",
+"[…]",
+"§ 2º A proposta do PMDA será submetida a consulta pública por prazo não inferior a 15 (quinze) dias.",
+"[…]"
+],
+"inteiro": "dec23413:art18"
+},
+"dec23413:art18:p2": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 18",
+"trechos": [
+"Art. 18. O PMDA conterá, no mínimo:",
+"[…]",
+"§ 2º A proposta do PMDA será submetida a consulta pública por prazo não inferior a 15 (quinze) dias.",
+"[…]"
+],
+"inteiro": "dec23413:art18"
+},
 "dec23413:art19": {
 "fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
 "rotulo": "Art. 19",
@@ -296,25 +453,6 @@ window.CIT = {
 "Parágrafo único. As bases de divulgação obrigatória terão precedência sobre as demais."
 ]
 },
-"dec23413:art2": {
-"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
-"rotulo": "Art. 2",
-"trechos": [
-"Art. 2º Para os fins deste Decreto, considera-se:",
-"I - dado: sequência de símbolos ou valores, representada em qualquer meio, produzida como resultado de processo natural ou artificial;",
-"II - dado acessível ao público: dado que não esteja sujeito a sigilo ou a restrição de acesso, nos termos da Lei Federal nº 12.527, de 2011, e da legislação específica;",
-"III - dados abertos: dados acessíveis ao público, representados em meio digital, estruturados em formato aberto, processáveis por máquina, referenciados na internet e disponibilizados sob licença aberta que permita sua livre utilização, consumo ou tratamento por qualquer pessoa, física ou jurídica;",
-"IV - formato aberto: formato de arquivo não proprietário, cuja especificação esteja documentada publicamente e seja de livre conhecimento e implementação, livre de patentes ou de qualquer outra restrição legal quanto à sua utilização;",
-"V - base de dados: conjunto estruturado de dados mantido por órgão ou entidade, em sistema ou arquivo, para finalidade determinada;",
-"VI- metadados: informações que descrevem a base de dados, incluindo origem, responsável, cobertura, periodicidade de atualização, data da última atualização, licença e limitações conhecidas;",
-"VII - dicionário de dados: documento que descreve cada campo da base, seu significado, formato, domínio de valores e regras de preenchimento;",
-"VIII - Catálogo Municipal de Bases de Dados: registro das bases de dados dos órgãos, composto por inventário de acesso restrito e por catálogo público de dados abertos;",
-"IX - Plano Municipal de Dados Abertos (PMDA): instrumento de planejamento e coordenação das ações de abertura, com vigência bienal;",
-"X - responsável pela base: agente designado pelo titular do órgão para manter a qualidade, a documentação e a atualização da base, sem transferência de competência decisória, observadas as responsabilidades funcionais por domínio de dados definidas na regulamentação do eixo de dados e interoperabilidade;",
-"XI - anonimização: utilização de meios técnicos razoáveis e disponíveis no momento do tratamento, por meio dos quais um dado perde a possibilidade de associação, direta ou indireta, a um indivíduo; e",
-"XII - publicação segura: conjunto de verificações prévias à publicação destinadas a impedir a divulgação indevida de dados pessoais, informações sigilosas ou dados protegidos por direitos de terceiros."
-]
-},
 "dec23413:art20": {
 "fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
 "rotulo": "Art. 20",
@@ -325,6 +463,17 @@ window.CIT = {
 "§ 1º O inventário será atualizado pelos responsáveis pelas bases sempre que houver criação, alteração relevante ou descontinuidade de base.",
 "§ 2º O inventário registrará informações descritivas das bases, sem reunir o conteúdo de dados pessoais nelas contido, observados o art. 14, § 3º, e o art. 26, parágrafo único, do Decreto Municipal nº 23.403, de 2026."
 ]
+},
+"dec23413:art20:II": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 20",
+"trechos": [
+"Art. 20. O Catálogo Municipal de Bases de Dados será composto por:",
+"[…]",
+"II- catálogo público, com as bases abertas, seus metadados e dicionários de dados.",
+"[…]"
+],
+"inteiro": "dec23413:art20"
 },
 "dec23413:art21": {
 "fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
@@ -337,6 +486,17 @@ window.CIT = {
 "IV - periodicidades de atualização e regras de versionamento; e",
 "V- requisitos de interfaces de programação, quando cabíveis."
 ]
+},
+"dec23413:art21:III": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 21",
+"trechos": [
+"Art. 21. Os padrões técnicos de dados abertos definirão, entre outros:",
+"[…]",
+"III - roteiro de verificação de publicação segura;",
+"[…]"
+],
+"inteiro": "dec23413:art21"
 },
 "dec23413:art22": {
 "fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
@@ -358,6 +518,16 @@ window.CIT = {
 "§ 5º Os pedidos de abertura e as respectivas respostas integrarão base de dados aberta, resguardada a identidade dos requerentes."
 ]
 },
+"dec23413:art23:p5": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 23",
+"trechos": [
+"Art. 23. Qualquer interessado poderá solicitar a abertura de base de dados pelos canais de acesso à informação do Município, observados os procedimentos e prazos da Lei Federal nº 12.527, de 2011, e do Decreto Municipal nº 18.882, de 2014.",
+"[…]",
+"§ 5º Os pedidos de abertura e as respectivas respostas integrarão base de dados aberta, resguardada a identidade dos requerentes."
+],
+"inteiro": "dec23413:art23"
+},
 "dec23413:art27": {
 "fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
 "rotulo": "Art. 27",
@@ -376,6 +546,48 @@ window.CIT = {
 "IV - 12 (doze) meses, para a publicação das bases de divulgação obrigatória previstas no art. 7º deste Decreto, ressalvada justificativa técnica registrada no PMDA.",
 "Parágrafo único. As ações e os prazos deste artigo integrarão o plano inicial e o Plano Executivo de que trata o art. 39 do Decreto Municipal nº 23.403, de 2026, sem prejuízo de sua exigibilidade."
 ]
+},
+"dec23413:art28:II": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 28",
+"trechos": [
+"Art. 28. A implementação desta Política observará os seguintes prazos, contados da entrada em vigor deste Decreto:",
+"[…]",
+"II - 90 (noventa) dias, para a edição dos padrões técnicos e a conclusão do inventário preliminar;",
+"[…]"
+],
+"inteiro": "dec23413:art28"
+},
+"dec23413:art2": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 2",
+"trechos": [
+"Art. 2º Para os fins deste Decreto, considera-se:",
+"I - dado: sequência de símbolos ou valores, representada em qualquer meio, produzida como resultado de processo natural ou artificial;",
+"II - dado acessível ao público: dado que não esteja sujeito a sigilo ou a restrição de acesso, nos termos da Lei Federal nº 12.527, de 2011, e da legislação específica;",
+"III - dados abertos: dados acessíveis ao público, representados em meio digital, estruturados em formato aberto, processáveis por máquina, referenciados na internet e disponibilizados sob licença aberta que permita sua livre utilização, consumo ou tratamento por qualquer pessoa, física ou jurídica;",
+"IV - formato aberto: formato de arquivo não proprietário, cuja especificação esteja documentada publicamente e seja de livre conhecimento e implementação, livre de patentes ou de qualquer outra restrição legal quanto à sua utilização;",
+"V - base de dados: conjunto estruturado de dados mantido por órgão ou entidade, em sistema ou arquivo, para finalidade determinada;",
+"VI- metadados: informações que descrevem a base de dados, incluindo origem, responsável, cobertura, periodicidade de atualização, data da última atualização, licença e limitações conhecidas;",
+"VII - dicionário de dados: documento que descreve cada campo da base, seu significado, formato, domínio de valores e regras de preenchimento;",
+"VIII - Catálogo Municipal de Bases de Dados: registro das bases de dados dos órgãos, composto por inventário de acesso restrito e por catálogo público de dados abertos;",
+"IX - Plano Municipal de Dados Abertos (PMDA): instrumento de planejamento e coordenação das ações de abertura, com vigência bienal;",
+"X - responsável pela base: agente designado pelo titular do órgão para manter a qualidade, a documentação e a atualização da base, sem transferência de competência decisória, observadas as responsabilidades funcionais por domínio de dados definidas na regulamentação do eixo de dados e interoperabilidade;",
+"XI - anonimização: utilização de meios técnicos razoáveis e disponíveis no momento do tratamento, por meio dos quais um dado perde a possibilidade de associação, direta ou indireta, a um indivíduo; e",
+"XII - publicação segura: conjunto de verificações prévias à publicação destinadas a impedir a divulgação indevida de dados pessoais, informações sigilosas ou dados protegidos por direitos de terceiros."
+]
+},
+"dec23413:art2:VI+VII": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 2",
+"trechos": [
+"Art. 2º Para os fins deste Decreto, considera-se:",
+"[…]",
+"VI- metadados: informações que descrevem a base de dados, incluindo origem, responsável, cobertura, periodicidade de atualização, data da última atualização, licença e limitações conhecidas;",
+"VII - dicionário de dados: documento que descreve cada campo da base, seu significado, formato, domínio de valores e regras de preenchimento;",
+"[…]"
+],
+"inteiro": "dec23413:art2"
 },
 "dec23413:art5": {
 "fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
@@ -412,6 +624,16 @@ window.CIT = {
 "IX - inventário das bases de dados e catálogo de dados abertos disponíveis."
 ]
 },
+"dec23413:art7:IX": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 7",
+"trechos": [
+"Art. 7º Serão disponibilizados em formato aberto, na forma e no cronograma do PMDA, sem prejuízo de outras bases priorizadas:",
+"[…]",
+"IX - inventário das bases de dados e catálogo de dados abertos disponíveis."
+],
+"inteiro": "dec23413:art7"
+},
 "dec23413:art9": {
 "fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
 "rotulo": "Art. 9",
@@ -422,17 +644,6 @@ window.CIT = {
 "§ 3º A verificação será realizada, sempre que viável, por agente distinto daquele que preparou a base.",
 "§ 4º O(A) Encarregado(a) pelo Tratamento de Dados Pessoais orientará sobre anonimização e riscos aos titulares, com autonomia técnica, sem substituir a decisão do titular do órgão responsável pela base, nos termos do art. 19, parágrafo único, do Decreto Municipal nº 23.403, de 2026.",
 "§ 5º As conclusões da verificação de publicação segura observarão as categorias do art. 24, § 1º, do Decreto Municipal nº 23.403, de 2026, e a aceitação de risco residual não dispensará obrigação legal ou condição indispensável."
-]
-},
-"dec23416:art1": {
-"fonte": "Decreto nº 23.416/2026 (Interoperabilidade)",
-"rotulo": "Art. 1",
-"trechos": [
-"Art. 1º Este Decreto estabelece diretrizes, responsabilidades e procedimentos para a interoperabilidade de dados, informações, sistemas e serviços digitais no âmbito dos órgãos da Administração Direta do Poder Executivo.",
-"§ 1º Este Decreto constitui ato específico do eixo de dados e interoperabilidade do Programa Municipal de Governança Digital e de Dados (PMGD), instituídos pelo Decreto Municipal nº 23.403, de 4 de novembro de 2026, cujas diretrizes e instâncias se aplicam à sua execução, nos termos de seus arts. 7º e 8º",
-"§ 2º A participação das entidades da Administração Indireta será formalizada por ato da autoridade competente, observados seus regimes jurídicos e sua autonomia, com definição do alcance, dos responsáveis e das condições de execução, nos termos do art. 5º. do Decreto Municipal nº 23.403, de 2026.",
-"§ 3º A interoperabilidade com outros Poderes, entes federativos, instituições ou particulares dependerá de competência, instrumento jurídico e condições de compartilhamento aplicáveis ao caso.",
-"§ 4º Este Decreto não altera as competências estabelecidas em outros atos, observados o parágrafo único do art. 10 e o art. 38 do Decreto Municipal nº 23.403, de 2026."
 ]
 },
 "dec23416:art12": {
@@ -495,6 +706,28 @@ window.CIT = {
 "§ 3º A avaliação da necessidade de Relatório de Impacto à Proteção de Dados Pessoais e de outros registros será feita pelo controlador, observadas as orientações do (a) Encarregado (a), as normas da Autoridade Nacional de Proteção de Dados e as regras municipais."
 ]
 },
+"dec23416:art1": {
+"fonte": "Decreto nº 23.416/2026 (Interoperabilidade)",
+"rotulo": "Art. 1",
+"trechos": [
+"Art. 1º Este Decreto estabelece diretrizes, responsabilidades e procedimentos para a interoperabilidade de dados, informações, sistemas e serviços digitais no âmbito dos órgãos da Administração Direta do Poder Executivo.",
+"§ 1º Este Decreto constitui ato específico do eixo de dados e interoperabilidade do Programa Municipal de Governança Digital e de Dados (PMGD), instituídos pelo Decreto Municipal nº 23.403, de 4 de novembro de 2026, cujas diretrizes e instâncias se aplicam à sua execução, nos termos de seus arts. 7º e 8º",
+"§ 2º A participação das entidades da Administração Indireta será formalizada por ato da autoridade competente, observados seus regimes jurídicos e sua autonomia, com definição do alcance, dos responsáveis e das condições de execução, nos termos do art. 5º. do Decreto Municipal nº 23.403, de 2026.",
+"§ 3º A interoperabilidade com outros Poderes, entes federativos, instituições ou particulares dependerá de competência, instrumento jurídico e condições de compartilhamento aplicáveis ao caso.",
+"§ 4º Este Decreto não altera as competências estabelecidas em outros atos, observados o parágrafo único do art. 10 e o art. 38 do Decreto Municipal nº 23.403, de 2026."
+]
+},
+"dec23416:art1:p3": {
+"fonte": "Decreto nº 23.416/2026 (Interoperabilidade)",
+"rotulo": "Art. 1",
+"trechos": [
+"Art. 1º Este Decreto estabelece diretrizes, responsabilidades e procedimentos para a interoperabilidade de dados, informações, sistemas e serviços digitais no âmbito dos órgãos da Administração Direta do Poder Executivo.",
+"[…]",
+"§ 3º A interoperabilidade com outros Poderes, entes federativos, instituições ou particulares dependerá de competência, instrumento jurídico e condições de compartilhamento aplicáveis ao caso.",
+"[…]"
+],
+"inteiro": "dec23416:art1"
+},
 "dec23416:art22": {
 "fonte": "Decreto nº 23.416/2026 (Interoperabilidade)",
 "rotulo": "Art. 22",
@@ -514,6 +747,16 @@ window.CIT = {
 "III - 180 (cento e oitenta) dias, para a publicação da relação prevista no art. 18 deste Decreto e para o plano de revisão das integrações existentes, priorizadas por risco, relevância do serviço, volume e natureza dos dados, incidentes e capacidade técnica.",
 "Parágrafo único. As ações e os prazos deste artigo e o cronograma de revisão das integrações existentes serão incorporados ao plano inicial e ao Plano Executivo de que trata o art. 39 do Decreto Municipal nº 23.403, de 2026, sem prejuízo de sua exigibilidade."
 ]
+},
+"dec23416:art29:I": {
+"fonte": "Decreto nº 23.416/2026 (Interoperabilidade)",
+"rotulo": "Art. 29",
+"trechos": [
+"Art. 29. A implementação deste Decreto observará os seguintes prazos, contados de sua entrada em vigor:",
+"I - 90 (noventa) dias, para a edição dos padrões técnicos de interoperabilidade pelo DTI e a definição do processo de registro previsto no art. 12 deste Decreto;",
+"[…]"
+],
+"inteiro": "dec23416:art29"
 },
 "dec23416:art33": {
 "fonte": "Decreto nº 23.416/2026 (Interoperabilidade)",
@@ -535,6 +778,16 @@ window.CIT = {
 "VI - manter documentação técnica e histórico de versões dos padrões municipais.",
 "Parágrafo único. A avaliação técnica do DTI não substitui a decisão da autoridade competente quanto à finalidade, à base jurídica, à autorização de acesso ou à legitimidade do tratamento, observado o art. 17 do Decreto Municipal nº 23.403, de 2026."
 ]
+},
+"dec23416:art7:I": {
+"fonte": "Decreto nº 23.416/2026 (Interoperabilidade)",
+"rotulo": "Art. 7",
+"trechos": [
+"Art. 7º Compete ao Departamento de Tecnologia da Informação (DTI), no âmbito de suas atribuições:",
+"I - propor e manter os padrões técnicos de interoperabilidade, incluindo arquitetura, formatos, interfaces, protocolos, identificadores e requisitos mínimos de segurança;",
+"[…]"
+],
+"inteiro": "dec23416:art7"
 },
 "lei14129:art34": {
 "fonte": "Lei Federal nº 14.129/2021 (Governo Digital)",
@@ -562,5 +815,16 @@ window.CIT = {
 "XI - gestão pública orientada por resultados, indicadores e evidências; e",
 "XII - cooperação entre o poder público, instituições de ensino e pesquisa, iniciativa privada e demais atores da sociedade."
 ]
+},
+"lei7639:art2:IV": {
+"fonte": "Lei nº 7.639/2026 (SBC+i)",
+"rotulo": "Art. 2",
+"trechos": [
+"Art. 2º São princípios e diretrizes do Programa SBC+i:",
+"[…]",
+"IV - governança e utilização estratégica de dados e informações;",
+"[…]"
+],
+"inteiro": "lei7639:art2"
 }
 };

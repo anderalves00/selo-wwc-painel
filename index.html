@@ -223,9 +223,11 @@ details.nao-serve > summary { cursor: pointer; font-weight: 600; color: var(--te
 .cenario .porque { margin: 8px 0 0; font-size: 14px; }
 .cen-tema { margin: 0 0 10px; font-size: 15px; }
 .cita { text-decoration: underline dotted; text-underline-offset: 3px; cursor: help; }
-#dica { position: fixed; z-index: 50; max-width: min(560px, calc(100vw - 32px)); max-height: 60vh; overflow: auto; background: #fff; color: var(--texto); border: 1px solid var(--borda); border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,.18); padding: 10px 14px; font-size: 14px; line-height: 1.45; }
+#dica { position: fixed; z-index: 50; max-width: min(560px, calc(100vw - 32px)); max-height: min(340px, 50vh); overflow-y: auto; overscroll-behavior: contain; background: #fff; color: var(--texto); border: 1px solid var(--borda); border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,.18); padding: 10px 14px; font-size: 14px; line-height: 1.45; }
 #dica[hidden] { display: none; }
-#dica .fonte { display: block; color: var(--texto-suave); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 4px; }
+#dica .fonte { display: block; position: sticky; top: -10px; margin: -10px -14px 4px; padding: 8px 14px 6px; background: #fff; border-bottom: 1px solid var(--borda); color: var(--texto-suave); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+#dica .pulo { color: var(--texto-suave); }
+#dica .inteiro-dica { font-size: 12px; padding: 2px 8px; margin-top: 6px; cursor: pointer; }
 #dica p { margin: 4px 0; }
 #dica .cita { cursor: pointer; }
 #dica .voltar-dica { font-size: 12px; padding: 2px 8px; margin-bottom: 6px; cursor: pointer; }
@@ -332,7 +334,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
 </div>
 <footer>Página de trabalho da equipe. Não indexada por buscadores. As respostas só são inseridas na plataforma depois da validação da equipe.</footer>
 
-<script src="dados.js?v=BE9A1DEF4A"></script>
+<script src="dados.js?v=0A124FB33A"></script>
 <script src="citacoes.js"></script>
 <script>
 (function () {
@@ -340,7 +342,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
   const $ = (s, r = document) => r.querySelector(s);
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 // Citação com dica: [[dec23403|Decreto nº 23.403/2026]] mostra a referência; [[dec23403:art4|art. 4º]] mostra o texto do artigo (citacoes.js)
-const cita = h => h.replace(/\[\[([a-z0-9_]+(?::art\d+)?)\|([^\]]+)\]\]/g, '<span class="cita" tabindex="0" data-cita="$1">$2</span>');
+const cita = h => h.replace(/\[\[([a-z0-9_]+(?::art\d+(?::[A-Za-z0-9.+]+)?)?)\|([^\]]+)\]\]/g, '<span class="cita" tabindex="0" data-cita="$1">$2</span>');
 (() => {
   const CIT = window.CIT || {}, REF = window.REFS || {};
   const dica = document.createElement('div');
@@ -349,9 +351,10 @@ const cita = h => h.replace(/\[\[([a-z0-9_]+(?::art\d+)?)\|([^\]]+)\]\]/g, '<spa
   let alvo = null, historico = [], fechar = null, abertoEm = 0;
   const conteudo = k => {
     const voltar = historico.length ? '<button type="button" class="voltar-dica">← voltar</button>' : '';
-    if (CIT[k]) return voltar + `<span class="fonte">${esc(CIT[k].fonte)}</span>` + CIT[k].trechos.map(p => `<p>${esc(p)}</p>`).join('');
+    if (CIT[k]) return `<span class="fonte">${esc(CIT[k].fonte)}</span>` + voltar + CIT[k].trechos.map(p => p === '[…]' ? '<p class="pulo">[…]</p>' : `<p>${esc(p)}</p>`).join('')
+      + (CIT[k].inteiro && CIT[CIT[k].inteiro] ? `<button type="button" class="inteiro-dica" data-ir="${esc(CIT[k].inteiro)}">ver o artigo inteiro</button>` : '');
     const r = REF[k];
-    if (r) return voltar + `<span class="fonte">Referência</span><p><b>${esc(r.t)}</b></p><p>${esc(r.d || '')}</p>${r.u ? `<p><a href="${esc(r.u)}" target="_blank" rel="noopener">Abrir o documento</a></p>` : ''}`;
+    if (r) return `<span class="fonte">Referência</span>` + voltar + `<p><b>${esc(r.t)}</b></p><p>${esc(r.d || '')}</p>${r.u ? `<p><a href="${esc(r.u)}" target="_blank" rel="noopener">Abrir o documento</a></p>` : ''}`;
     return '';
   };
   function mostrar(el) {
@@ -368,6 +371,8 @@ const cita = h => h.replace(/\[\[([a-z0-9_]+(?::art\d+)?)\|([^\]]+)\]\]/g, '<spa
   dica.addEventListener('click', e => {
     e.stopPropagation();
     if (e.target.closest('.voltar-dica')) { const k = historico.pop(); dica.dataset.atual = k; dica.innerHTML = conteudo(k); dica.scrollTop = 0; return; }
+    const ir = e.target.closest('.inteiro-dica');
+    if (ir) { historico.push(dica.dataset.atual); dica.dataset.atual = ir.dataset.ir; dica.innerHTML = conteudo(ir.dataset.ir); dica.scrollTop = 0; return; }
     const el = e.target.closest('.cita'); if (!el || !conteudo(el.dataset.cita)) return;
     historico.push(dica.dataset.atual); dica.dataset.atual = el.dataset.cita; dica.innerHTML = conteudo(el.dataset.cita); dica.scrollTop = 0;
   });
