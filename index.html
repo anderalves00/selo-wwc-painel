@@ -221,6 +221,16 @@ details.nao-serve > summary { cursor: pointer; font-weight: 600; color: var(--te
 .cenario .cen-texto { margin-top: 10px; padding: 10px 12px; border-left: 3px solid var(--azul); background: #f4f7fa; font-size: 14px; border-radius: 0 6px 6px 0; }
 .cenario details { margin-top: 10px; }
 .cenario .porque { margin: 8px 0 0; font-size: 14px; }
+.cen-tema { margin: 0 0 10px; font-size: 15px; }
+.cen-tema .area { color: var(--texto-suave); }
+.cenario .cen-resp { margin-top: 10px; padding: 10px 12px; border-left: 3px solid var(--azul); background: #f4f7fa; font-size: 14px; border-radius: 0 6px 6px 0; }
+.cenario .cen-resp p { margin: 4px 0 0; }
+.cenario .cen-sec { font-weight: 700; margin-top: 2px; }
+.cenario .cen-sub { margin-top: 12px; }
+.cenario .cen-perg { font-weight: 600; }
+.cenario .cen-igual { color: var(--texto-suave); font-size: 12px; }
+.cenario .cen-fora { margin-top: 4px; padding: 6px 8px; background: #eef1f4; border-radius: 6px; color: var(--texto-suave); }
+.cenario .cen-final { margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--borda); }
 .vazio-ficha { margin-top: 16px; padding: 12px 14px; border: 1px dashed #b7c3cd; border-radius: 8px; color: var(--texto-suave); font-size: 14px; }
 .oculto { display: none !important; }
 footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
@@ -314,7 +324,7 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
 </div>
 <footer>Página de trabalho da equipe. Não indexada por buscadores. As respostas só são inseridas na plataforma depois da validação da equipe.</footer>
 
-<script src="dados.js?v=5B0715560B"></script>
+<script src="dados.js?v=A444C4C169"></script>
 <script>
 (function () {
   const P = window.PAINEL;
@@ -495,12 +505,26 @@ footer { padding: 0 32px 32px; color: var(--texto-suave); font-size: 13px; }
   function cenariosHtml(c) {
     const s = c.cenarios; if (!s) return '';
     const destaca = t => esc(t).replace(/\[PENDENTE:([^\]]*)\]/g, '<mark>[PENDENTE:$1]</mark>');
+    const subsC = c.subcriterios || [];
+    const resp = x => {
+      const intro = x.intro || (s.hoje && s.hoje.intro) || '';
+      const blocos = subsC.map(sc => {
+        const r = (x.subs || []).find(y => y.cod === sc.cod) || {};
+        const base = r.igual ? ((s.hoje.subs || []).find(y => y.cod === sc.cod) || {}).resp : r.resp;
+        const corpo = base
+          ? `<p>${destaca(base)}${r.igual ? ' <span class="cen-igual">(igual à de hoje)</span>' : ''}</p>`
+          : `<div class="cen-fora"><span class="tag t-cinza">Não atende hoje · fica fora da resposta</span>${r.fora ? ' ' + esc(r.fora) : ''}</div>`;
+        return `<div class="cen-sub"><div class="cen-perg">${esc(sc.cod)}: ${esc(sc.oficial || sc.texto)}</div>${corpo}</div>`;
+      }).join('');
+      return `<div class="cen-resp">${intro ? `<div class="cen-sec">Introdução</div><p>${destaca(intro)}${!x.intro ? ' <span class="cen-igual">(igual à de hoje)</span>' : ''}</p>` : ''}${blocos}
+        <div class="cen-final">O seu governo municipal atende aos critérios descritos na definição e nos subcritérios? <b>${esc(x.marcar)}</b></div></div>`;
+    };
     const card = (x, rot) => !x ? '' : `<div class="cenario"><div class="cen-topo"><b>${rot}</b><span class="tag ${/^Sim/.test(x.marcar) ? 't-verde' : 't-laranja'}">Marcar: ${esc(x.marcar)}</span></div>
       ${x.conta ? `<div class="nota" style="margin-top:6px">${esc(x.conta)}</div>` : ''}
       ${x.depende && x.depende.length ? `<div class="cen-dep"><b>Depende de:</b><ul>${x.depende.map(d => `<li>${esc(d)}</li>`).join('')}</ul></div>` : ''}
-      <div class="cen-texto">${destaca(x.texto)}</div>
+      ${x.subs ? resp(x) : `<div class="cen-texto">${destaca(x.texto)}</div>`}
       ${x.porques && x.porques.length ? `<details class="nao-serve"><summary>Perguntas que podem surgir (${x.porques.length})</summary>${x.porques.map(p => `<p class="porque"><b>${esc(p.p)}</b><br>${esc(p.r)}</p>`).join('')}</details>` : ''}</div>`;
-    return `<h3 id="cenarios-${c.codigo}">Cenários de resposta à WWC</h3><div class="nota" style="margin:0 0 8px">Duas respostas redigidas como se fossem a oficial. O envio usa a de hoje, que só cita o que já existe; a outra mostra o que as melhorias propostas acrescentam e do que elas dependem.</div><div class="cenarios">${card(s.hoje, 'Hoje')}${card(s.melhorias, 'Com as melhorias')}</div>`;
+    return `<h3 id="cenarios-${c.codigo}">Cenários de resposta à WWC</h3><div class="nota" style="margin:0 0 8px">Duas respostas redigidas como se fossem a oficial. O envio usa a de hoje, que só cita o que já existe; a outra mostra o que as melhorias propostas acrescentam e do que elas dependem.${s.hoje && s.hoje.subs ? ' Escritas no modelo da equipe: introdução e, para cada subcritério, o texto da plataforma seguido da resposta.' : ''}</div>${s.hoje && s.hoje.subs ? `<div class="cen-tema"><span class="area">${esc(((P.areas || []).find(a => a.id === c.area) || {}).nome || '')}</span> · <b>${esc(c.codigo)} – ${esc(c.titulo)}</b></div>` : ''}<div class="cenarios">${card(s.hoje, 'Hoje')}${card(s.melhorias, 'Com as melhorias')}</div>`;
   }
 
   // Resposta para a plataforma: espelha os campos que a equipe preenche (resposta, texto livre, evidências)
