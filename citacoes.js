@@ -487,6 +487,17 @@ window.CIT = {
 "V- requisitos de interfaces de programação, quando cabíveis."
 ]
 },
+"dec23413:art21:II": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 21",
+"trechos": [
+"Art. 21. Os padrões técnicos de dados abertos definirão, entre outros:",
+"[…]",
+"II - metadados mínimos e modelo de dicionário de dados;",
+"[…]"
+],
+"inteiro": "dec23413:art21"
+},
 "dec23413:art21:III": {
 "fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
 "rotulo": "Art. 21",
@@ -577,6 +588,17 @@ window.CIT = {
 "XII - publicação segura: conjunto de verificações prévias à publicação destinadas a impedir a divulgação indevida de dados pessoais, informações sigilosas ou dados protegidos por direitos de terceiros."
 ]
 },
+"dec23413:art2:VI": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 2",
+"trechos": [
+"Art. 2º Para os fins deste Decreto, considera-se:",
+"[…]",
+"VI- metadados: informações que descrevem a base de dados, incluindo origem, responsável, cobertura, periodicidade de atualização, data da última atualização, licença e limitações conhecidas;",
+"[…]"
+],
+"inteiro": "dec23413:art2"
+},
 "dec23413:art2:VI+VII": {
 "fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
 "rotulo": "Art. 2",
@@ -584,6 +606,17 @@ window.CIT = {
 "Art. 2º Para os fins deste Decreto, considera-se:",
 "[…]",
 "VI- metadados: informações que descrevem a base de dados, incluindo origem, responsável, cobertura, periodicidade de atualização, data da última atualização, licença e limitações conhecidas;",
+"VII - dicionário de dados: documento que descreve cada campo da base, seu significado, formato, domínio de valores e regras de preenchimento;",
+"[…]"
+],
+"inteiro": "dec23413:art2"
+},
+"dec23413:art2:VII": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 2",
+"trechos": [
+"Art. 2º Para os fins deste Decreto, considera-se:",
+"[…]",
 "VII - dicionário de dados: documento que descreve cada campo da base, seu significado, formato, domínio de valores e regras de preenchimento;",
 "[…]"
 ],
@@ -788,6 +821,29 @@ window.CIT = {
 "[…]"
 ],
 "inteiro": "dec23416:art7"
+},
+"dec23416:art8": {
+"fonte": "Decreto nº 23.416/2026 (Interoperabilidade)",
+"rotulo": "Art. 8",
+"trechos": [
+"Art. 8º Compete à unidade responsável pela fonte, no âmbito de suas atribuições:",
+"I - identificar a fonte de referência e designar responsável funcional pelo dado ou serviço;",
+"II - informar significado, qualidade, limitações, periodicidade, origem e condições de atualização dos dados;",
+"III - avaliar as solicitações de acesso segundo sua competência, a finalidade informada, a legislação e os controles aplicáveis;",
+"IV - corrigir os dados na origem e comunicar as correções aos destinos que deles dependam; e",
+"V - adotar medidas de correção, suspensão ou encerramento do fluxo quando houver inconsistência, desvio de finalidade, risco ou alteração normativa."
+]
+},
+"dec23416:art8:II": {
+"fonte": "Decreto nº 23.416/2026 (Interoperabilidade)",
+"rotulo": "Art. 8",
+"trechos": [
+"Art. 8º Compete à unidade responsável pela fonte, no âmbito de suas atribuições:",
+"[…]",
+"II - informar significado, qualidade, limitações, periodicidade, origem e condições de atualização dos dados;",
+"[…]"
+],
+"inteiro": "dec23416:art8"
 },
 "lei14129:art34": {
 "fonte": "Lei Federal nº 14.129/2021 (Governo Digital)",
