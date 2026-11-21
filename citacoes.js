@@ -453,6 +453,17 @@ window.CIT = {
 "Parágrafo único. As bases de divulgação obrigatória terão precedência sobre as demais."
 ]
 },
+"dec23413:art19:II": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 19",
+"trechos": [
+"Art. 19. A priorização das bases considerará:",
+"[…]",
+"II - demanda da sociedade, inclusive a recorrência de pedidos de acesso à informação;",
+"[…]"
+],
+"inteiro": "dec23413:art19"
+},
 "dec23413:art20": {
 "fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
 "rotulo": "Art. 20",
@@ -539,6 +550,13 @@ window.CIT = {
 ],
 "inteiro": "dec23413:art23"
 },
+"dec23413:art25": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 25",
+"trechos": [
+"Art. 25. Os indicadores da Política observarão o art. 34 do Decreto Municipal nº 23.403, de 2026, e medirão, no mínimo, a disponibilidade, a documentação, a atualização, o licenciamento e o uso das bases abertas."
+]
+},
 "dec23413:art27": {
 "fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
 "rotulo": "Art. 27",
@@ -565,6 +583,17 @@ window.CIT = {
 "Art. 28. A implementação desta Política observará os seguintes prazos, contados da entrada em vigor deste Decreto:",
 "[…]",
 "II - 90 (noventa) dias, para a edição dos padrões técnicos e a conclusão do inventário preliminar;",
+"[…]"
+],
+"inteiro": "dec23413:art28"
+},
+"dec23413:art28:III": {
+"fonte": "Decreto nº 23.413/2026 (Dados Abertos)",
+"rotulo": "Art. 28",
+"trechos": [
+"Art. 28. A implementação desta Política observará os seguintes prazos, contados da entrada em vigor deste Decreto:",
+"[…]",
+"III - 180 (cento e oitenta) dias, para a aprovação da primeira edição do PMDA;e",
 "[…]"
 ],
 "inteiro": "dec23413:art28"
